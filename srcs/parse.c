@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 14:49:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 15:09:06 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	**getargv(char *input)
 {
 	char	**argv;
 
-	argv = ft_split(input, ' ');
+	argv = ft_split_space(input);
+//	argv = ft_split(input, ' ');
 	return (argv);
 }
 

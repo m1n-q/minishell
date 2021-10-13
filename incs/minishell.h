@@ -46,4 +46,6 @@ int		putchar(int c);
 int		is_builtin(char *arg);
 int		run_builtin(char **argv);
 
+/* ft_split_space */
+char	**ft_split_space(char const *s);
 #endif
