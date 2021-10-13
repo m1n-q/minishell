@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 19:51:08 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/13 20:03:56 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@ int			is_builtin(char *arg);
 int			run_builtin(char **argv);
 
 /* ft_split_space_utils */
-int		ft_isspace(char c);
-int		cnt_s(char const *s);
-int		cnt_d_q(char *s, int ret, t_cmd *cmd);
-int		cnt_s_q(char *s, int ret, t_cmd *cmd);
-int		cnt_s_len(char const *s, t_cmd *cmd);
+int			ft_isspace(char c);
+int			cnt_s(char const *s);
+int			cnt_d_q(char *s, int ret, t_cmd *cmd);
+int			cnt_s_q(char *s, int ret, t_cmd *cmd);
+int			cnt_s_len(char const *s, t_cmd *cmd);
 
 /* ft_split_space */
-char	**ft_split_space(char const *s, t_cmd *cmd);
+char		**ft_split_space(char const *s, t_cmd *cmd);
 
 /* redirection */
-void	read_file(char *filename);
-void	write_file(char *filename);
+void		read_file(char *filename);
+void		write_file(char *filename);
 
 #endif
