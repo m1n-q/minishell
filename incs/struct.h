@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 20:06:50 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/12 20:08:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 18:48:24 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,10 @@ typedef struct s_cmd
 	char	*path;
 	char	**argv;
 }				t_cmd;
+typedef struct s_exit
+{
+	int	pid;
+	int	status;
+}				t_exit;
 
 #endif

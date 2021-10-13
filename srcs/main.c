@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 15:42:26 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/13 19:08:17 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main()
 {
 	char	*input;
 	int		error;
+	t_exit	ext;
 
 	error = init_terminal_data();
 	if (error)
@@ -53,8 +54,11 @@ int	main()
 	signal(SIGINT, sig_handler);
 	while ((input = readline(prompt)))
 	{
-		if (!run(parse(input)))
-			return (0);
+		ext = run(parse(input));
+		if (ext.pid == CHILD)
+			return (ext.status);
+		else if (ext.pid == PARENT_EXIT)
+			return (ext.status);
 		add_history(input);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 15:34:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 19:27:38 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_builtin(char *arg)
 	return (0);
 }
 
-int	cd(char **argv)
+int	__cd(char **argv)
 {
 	char	*home;
 
@@ -57,7 +57,7 @@ int	cd(char **argv)
 	return (0);
 }
 
-int	pwd(char **argv)
+int	__pwd(char **argv)
 {
 	char	*cwd;
 
@@ -70,21 +70,83 @@ int	pwd(char **argv)
 	return (0);
 }
 
+int	__env(char **argv)
+{
+	extern char **environ;
+	int			i;
+
+	(void)argv;
+	i = -1;
+	while (environ[++i])
+		printf("%s\n", environ[i]);				/* $LINES, $COLUMNS */
+	return (0);
+}
+
+int	__echo(char **argv)
+{
+	int	flag_n;
+	int	i;
+
+	flag_n = 0;
+	i = 0;
+	if (argv[1])
+	{
+		if (!ft_strncmp(argv[1], "-n", ft_strlen(argv[1])))
+		{
+			flag_n = 1;
+			i++;
+		}
+		while (argv[++i])						/* have to know argc (if echo "" "" abc) */
+			printf("%s ", argv[i]);				/* trailing space */
+	}
+	if (!flag_n)
+		printf("\n");
+	return (0);
+}
+
+int __exit(char **argv)
+{
+	long long	exit_code;
+	int			len;
+
+	// if (argc > 2)							/* have to know argc */
+	// 	return ();								/* exit: too many arguments */
+
+	exit_code = 0LL;
+	if (argv[1])
+	{
+		exit_code = atonum(argv[1], &len);
+		if (exit_code == NON_NUMERIC)			/* exit: string: numeric argument required */
+			return (-1);
+	}
+	return ((int)exit_code);
+}
+
+int	__export(char **argv)
+{
+	(void)argv;
+	return (0);
+}
+
+int	__unset(char **argv)
+{
+	(void)argv;
+	return (0);
+}
+
 int	run_builtin(char **argv)
 {
 	if (!ft_strncmp(argv[0], "cd", 2))
-		return (cd(argv));
+		return (__cd(argv));
 	if (!ft_strncmp(argv[0], "pwd", 3))
-		return (pwd(argv));
-	// if (!ft_strncmp(argv[0], "env", 3))
-	// 	return (env(argv));
-	// if (!ft_strncmp(argv[0], "exit", 4))
-	// 	return (exit(argv));
-	// if (!ft_strncmp(argv[0], "echo", 4))
-	// 	return (echo(argv));
-	// if (!ft_strncmp(argv[0], "unset", 5))
-	// 	return (unset(argv));
-	// if (!ft_strncmp(argv[0], "export", 6))
-	// 	return (export(argv));
+		return (__pwd(argv));
+	if (!ft_strncmp(argv[0], "env", 3))
+		return (__env(argv));
+	if (!ft_strncmp(argv[0], "echo", 4))
+		return (__echo(argv));
+	if (!ft_strncmp(argv[0], "unset", 5))
+		return (__unset(argv));
+	if (!ft_strncmp(argv[0], "export", 6))
+		return (__export(argv));
 	return (0);
 }
