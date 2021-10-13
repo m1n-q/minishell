@@ -8,12 +8,14 @@ INC_DIR = incs
 SRC_DIR = srcs
 OBJS =  ${SRCS:.c=.o}
 SRCS =  $(SRC_DIR)/main.c \
+		$(SRC_DIR)/ft_split_space_utils.c \
 		$(SRC_DIR)/ft_split_space.c \
 		$(SRC_DIR)/parse.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/error.c \
-		$(SRC_DIR)/builtin.c
+		$(SRC_DIR)/builtin.c \
+		$(SRC_DIR)/redirection.c
 
 
 all : $(NAME)
