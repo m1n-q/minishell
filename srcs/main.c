@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 15:25:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 15:42:26 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ int	init_terminal_data(void)
 	return (0);
 }
 
+void	sig_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+}
+
 int	main()
 {
 	char	*input;
@@ -39,6 +50,7 @@ int	main()
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
+	signal(SIGINT, sig_handler);
 	while ((input = readline(prompt)))
 	{
 		if (!run(parse(input)))
