@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/12 20:25:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 15:05:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,7 @@ int		run(t_cmd cmd);
 
 /* utils */
 int		putchar(int c);
+
+/* ft_split_space */
+char	**ft_split_space(char const *s);
 #endif
