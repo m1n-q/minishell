@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 19:32:45 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/13 20:12:56 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	**getargv(char *input, t_cmd *cmd)
 	char	**argv;
 
 	argv = ft_split_space(input, cmd);
-//	argv = ft_split(input, ' ');
 	return (argv);
 }
 
@@ -52,17 +51,7 @@ t_cmd	parse(char *input)
 	int				i;
 
 	init_q_r(&cmd);
-
 	cmd.argv = getargv(input, &cmd);
-
-	/* print all arguments */
-	int	j = 0;
-	while (cmd.argv[j])
-	{
-		printf("argv[%d] : %s\n", j, cmd.argv[j]);
-		j++;
-	}
-
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);

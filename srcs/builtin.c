@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 19:27:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 20:19:55 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,12 @@ int	__echo(char **argv)
 			flag_n = 1;
 			i++;
 		}
-		while (argv[++i])						/* have to know argc (if echo "" "" abc) */
-			printf("%s ", argv[i]);				/* trailing space */
+		while (argv[++i])
+		{
+			printf("%s", argv[i]);
+			if (argv[i + 1] != NULL)
+				printf(" ");
+		}
 	}
 	if (!flag_n)
 		printf("\n");

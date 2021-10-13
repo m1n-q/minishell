@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 19:08:17 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 20:15:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	main()
 	signal(SIGINT, sig_handler);
 	while ((input = readline(prompt)))
 	{
+		if (!input[0])
+			continue ;
 		ext = run(parse(input));
 		if (ext.pid == CHILD)
 			return (ext.status);
