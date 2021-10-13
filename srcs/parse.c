@@ -39,9 +39,11 @@ t_cmd	parse(char *input)
 	struct dirent	*dirent;
 	int				i;
 
-	paths = getpaths();
 	cmd.argv = getargv(input);
 	cmd.path = NULL;
+	if (is_builtin(cmd.argv[0]))
+		return (cmd);
+	paths = getpaths();
 	i = -1;
 	while (paths[++i])
 	{
