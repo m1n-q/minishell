@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:12:58 by kyumlee           #+#    #+#             */
 /*   Updated: 2021/10/13 19:49:52 by kyumlee          ###   ########.fr       */
@@ -29,7 +29,7 @@ char	**ft_split_space(char const *s, t_cmd *cmd)
 		if (!ft_isspace(*s))
 		{
 			ret[i] = (char *)malloc(sizeof(char) * (cnt_s_len(s, cmd) + 1));
-			if (!ret[i])
+			if (!ret[i])        /* have to free prev malloced */
 				return (0);
 			if (*s == '"')
 				ft_strlcpy(ret[i], s + 1, cnt_s_len(s, cmd) - 1);

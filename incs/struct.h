@@ -25,4 +25,10 @@ typedef struct s_cmd
 	int		r_out_a;
 }			t_cmd;
 
+typedef struct s_exit
+{
+	int	pid;
+	int	status;
+}				t_exit;
+
 #endif

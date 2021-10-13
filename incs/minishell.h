@@ -30,22 +30,28 @@
 
 # define PROMPT "\e[1;46mminishell\e[0m "
 # define BUILTIN -4242
+# define CHILD 0
+# define PARENT -1
+# define PARENT_EXIT -2
+# define NON_NUMERIC -4444444444LL
 
 /* error */
-int		puterr(int error);
+int			puterr(int error);
 
 /* parse */
-t_cmd	parse(char *input);
+t_cmd		parse(char *input);
 
 /* run */
-int		run(t_cmd cmd);
+t_exit		run(t_cmd cmd);
 
 /* utils */
-int		putchar(int c);
+int			putchar(int c);
+long long 	atonum(const char *str, int *len);
 
 /* built-in */
-int		is_builtin(char *arg);
-int		run_builtin(char **argv);
+int			__exit(char **argv);
+int			is_builtin(char *arg);
+int			run_builtin(char **argv);
 
 /* ft_split_space_utils */
 int		ft_isspace(char c);
@@ -60,4 +66,5 @@ char	**ft_split_space(char const *s, t_cmd *cmd);
 /* redirection */
 void	read_file(char *filename);
 void	write_file(char *filename);
+
 #endif
