@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/12 20:24:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 14:49:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ t_cmd	parse(char *input)
 	struct dirent	*dirent;
 	int				i;
 
-	paths = getpaths();
 	cmd.argv = getargv(input);
 	cmd.path = NULL;
+	if (is_builtin(cmd.argv[0]))
+		return (cmd);
+	paths = getpaths();
 	i = -1;
 	while (paths[++i])
 	{

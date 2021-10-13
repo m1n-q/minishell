@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/12 20:25:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/13 15:30:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "struct.h"
 
 # define PROMPT "\e[1;46mminishell\e[0m "
+# define BUILTIN -4242
 
 /* error */
 int		puterr(int error);
@@ -40,4 +41,9 @@ int		run(t_cmd cmd);
 
 /* utils */
 int		putchar(int c);
+
+/* built-in */
+int		is_builtin(char *arg);
+int		run_builtin(char **argv);
+
 #endif
