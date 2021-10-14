@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 20:12:56 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 20:46:34 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**getargv(char *input, t_cmd *cmd)
 {
 	char	**argv;
 
-	argv = ft_split_space(input, cmd);
+	argv = split_space_tmp(input, cmd);
 	return (argv);
 }
 

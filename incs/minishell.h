@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:31:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 20:46:50 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			cnt_s_q(char *s, int ret, t_cmd *cmd);
 int			cnt_s_len(char const *s, t_cmd *cmd);
 
 /* ft_split_space */
-char		**ft_split_space(char const *s, t_cmd *cmd);
+char		**split_space_tmp(char const *s, t_cmd *cmd);
 
 /* redirection */
 void		read_file(char *filename);
