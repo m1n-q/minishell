@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 20:19:55 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 19:56:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,16 @@ int __exit(char **argv)
 	int			len;
 
 	// if (argc > 2)							/* have to know argc */
-	// 	return ();								/* exit: too many arguments */
-
+	// 	return ();								/* exit: too many arguments => it does not exit */
 	exit_code = 0LL;
 	if (argv[1])
 	{
 		exit_code = atonum(argv[1], &len);
 		if (exit_code == NON_NUMERIC)			/* exit: string: numeric argument required */
+		{
+			puterr(ENONUM);
 			return (-1);
+		}
 	}
 	return ((int)exit_code);
 }

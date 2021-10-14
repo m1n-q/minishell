@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 20:15:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 19:58:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ int	main()
 			return (ext.status);
 		else if (ext.pid == PARENT_EXIT)
 			return (ext.status);
+		else if (ext.pid == BUILTIN && ext.status)
+			puterr(ext.status);
+		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
+			puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
+
 		add_history(input);
 		free(input);
 	}

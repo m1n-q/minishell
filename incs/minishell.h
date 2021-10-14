@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 13:46:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 19:31:30 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define PROMPT "\e[1;46mminishell\e[0m "
 
 # define CHILD 0
-# define PARENT -1
+# define BUILTIN -1
 # define PARENT_EXIT -2
 
 # define AMP 1LL
