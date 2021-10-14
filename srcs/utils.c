@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 18:40:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:28:27 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,23 @@ long long atonum(const char *str, int *len)
 		str++;
 	}
 	return ((sign * ret));
+}
+
+int	get_argc(char **argv)
+{
+	int	len;
+
+	len = 0;
+	while (argv[len])
+		len++;
+	return (len);
+}
+
+void	free_till(int index, char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (++i < index)
+		free(arr[i]);
 }

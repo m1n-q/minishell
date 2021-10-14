@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 21:06:11 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:29:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main()
 	int		error;
 	t_exit	ext;
 
+	environ = environ_to_heap();						/* to modify || unset || extend and free prev */
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
@@ -65,7 +66,6 @@ int	main()
 			puterr(ext.status);
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
-
 		add_history(input);
 		free(input);
 	}

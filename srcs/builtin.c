@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 21:01:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:33:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,22 @@ int	__pwd(char **argv)
 
 int	__env(char **argv)
 {
-	extern char **environ;
 	int			i;
 
 	(void)argv;
 	i = -1;
 	while (environ[++i])
-		printf("%s\n", environ[i]);				/* $LINES, $COLUMNS */
+		printf("%s\n", environ[i]);				/* What is $LINES, $COLUMNS */
+	return (0);
+}
+
+int	__env__(char **argv)
+{
+	int			i;
+
+	i = -1;
+	while (argv[++i])
+		printf("%s\n", argv[i]);				/* What is $LINES, $COLUMNS */
 	return (0);
 }
 
@@ -128,13 +137,49 @@ int __exit(char **argv)
 	return ((int)exit_code);
 }
 
+char	**environ_to_heap(void)
+{
+	int		i;
+	int		num_env;
+	char	**new_environ;
+
+	num_env = get_argc(environ);
+	new_environ = (char **)ft_calloc(num_env + 1, sizeof(char *));
+	if (!new_environ)
+		return (NULL);
+
+	i = -1;
+	while (environ[++i])
+	{
+		new_environ[i] = ft_strdup(environ[i]);
+		if (!new_environ[i])
+		{
+			free_till(i, new_environ);
+			free(new_environ);
+			return (NULL);
+		}
+	}
+	return (new_environ);
+}
+
 int	__export(char **argv)
 {
-	/* if (no arg) */
-	/* if (arg w/o '=value') { VAR='' } */
-	/* if (arg 'VAR=value') { VAR='value' } */
+	int		argc;
+	int		num_env;
+	char	**new_environ;
 
-	(void)argv;
+	argc = get_argc(argv);
+	if (argc == 1)
+		return (__env(argv));				//NOTE: export: TMP="" / env: TMP=
+	/* if (arg w/o '=value') { VAR='' } */
+	num_env = get_argc(environ);
+	new_environ = (char **)ft_calloc(num_env + 2, sizeof(char *));
+	ft_memcpy(new_environ, environ, sizeof(char *) * num_env);
+	new_environ[num_env] = "newenviron=inserted";
+	free(environ);
+	environ = new_environ;
+
+	/* if (arg 'VAR=value') { VAR='value' } */
 	return (0);
 }
 

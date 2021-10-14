@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 21:06:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 22:27:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,16 @@ t_exit		run(t_cmd cmd);
 
 /* utils */
 int			putchar(int c);
+int			get_argc(char **argv);
 long long 	atonum(const char *str, int *len);
+void		free_till(int index, char **arr);
+
 
 /* built-in */
 int			__exit(char **argv);
 int			is_builtin(char *arg);
 int			run_builtin(char **argv);
+char		**environ_to_heap(void);
 
 /* ft_split_space_utils */
 int			ft_isspace(char c);
