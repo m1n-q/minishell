@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/12 16:46:25 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 19:55:56 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,20 @@ int	puterr(int error)
 	if (error < 0)
 	{
 		if (error == ENOTERMENV)
-			ft_putstr_fd("Specify a termtype with $TERM\n", STDERR_FILENO);
+			ft_putstr_fd("specify a termtype with $TERM", STDERR_FILENO);
 		if (error == ENOTERMENT)
-			ft_putstr_fd("No such terminal entry\n", STDERR_FILENO);
+			ft_putstr_fd("no such terminal entry", STDERR_FILENO);
 		if (error == ENOTERMINFO)
-			ft_putstr_fd("Cannot find terminfo database\n", STDERR_FILENO);
-		return (error);
+			ft_putstr_fd("cannot find terminfo database", STDERR_FILENO);
+		if (error == ENOCMD)
+			ft_putstr_fd("command not found", STDERR_FILENO);
+		if (error == ENONUM)
+			ft_putstr_fd("numeric argument required", STDERR_FILENO);
+		if (error == E2MANY)
+			ft_putstr_fd("too many arguments", STDERR_FILENO);
 	}
-	return (errno);
+	else
+		ft_putstr_fd(strerror(error), STDERR_FILENO);
+	printf("\n");
+	return (error);
 }
