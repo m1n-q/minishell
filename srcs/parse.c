@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 15:09:06 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/14 23:28:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ t_cmd	parse(char *input)
 
 	paths = getpaths();
 	cmd.argv = getargv(input);
+	int	j = -1;
+	while (cmd.argv[++j])
+		printf("argv[%d] : %s\n", j, cmd.argv[j]);
 	cmd.path = NULL;
 	i = -1;
 	while (paths[++i])

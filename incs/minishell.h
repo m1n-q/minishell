@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 15:05:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/15 00:15:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,21 @@ int		run(t_cmd cmd);
 int		putchar(int c);
 
 /* ft_split_space */
-char	**ft_split_space(char const *s);
+char	**ft_split_space(char *s);
+
+/* ft_split_space_cpy */
+char	*cpy_str(char *s, char *ret);
+
+/* ft_split_space_check */
+int		ft_isspace(char c);
+int		check_quotes(char *s);
+
+/* ft_split_space_str */
+int		cnt_str_len(char *s);
+char	*malloc_str(char *s, char **ret, int i, int len);
+
+/* ft_split_space_strs */
+char	**malloc_strs(char *s);
+void	free_strs(char **ret, int i);
+
 #endif
