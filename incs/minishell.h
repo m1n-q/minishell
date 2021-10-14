@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 20:46:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 21:06:02 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define REDIRECT_IN 5LL
 # define REDIRECT_OUT 6LL
 # define REDIRECT_APPEND 7LL
+
+extern char	**environ;
 
 /* error */
 int			puterr(int error);

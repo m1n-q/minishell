@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:56:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 21:01:29 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,10 @@ int __exit(char **argv)
 
 int	__export(char **argv)
 {
+	/* if (no arg) */
+	/* if (arg w/o '=value') { VAR='' } */
+	/* if (arg 'VAR=value') { VAR='value' } */
+
 	(void)argv;
 	return (0);
 }

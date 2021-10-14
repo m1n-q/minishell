@@ -6,14 +6,14 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:58:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 21:06:11 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-char	term_buffer[2048];
-char	*prompt = PROMPT;
+char		term_buffer[2048];
+char		*prompt = PROMPT;
 
 int	init_terminal_data(void)
 {

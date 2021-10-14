@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:58:18 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 21:05:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static int has_slash(char *arg)
 
 t_exit	run(t_cmd cmd)
 {
-	extern char	**environ;
 	t_exit		ext;
 
 	if (!cmd.path)
