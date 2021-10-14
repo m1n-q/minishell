@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 19:48:56 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/13 19:52:13 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/14 17:49:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,34 @@
 int	ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\r'
-			|| c == '\n' || c == '\v' || c == '\f');
+		|| c == '\n' || c == '\v' || c == '\f');
 }
 
 int	cnt_s(char const *s)
 {
 	int	ret;
+	int	i;
 
 	ret = 0;
-	if (!*s)
+	i = -1;
+	if (!s[0])
 		return (0);
-	while (*s)
+	while (s[++i])
 	{
-		if (!ft_isspace(*s) && (ft_isspace(*(s + 1)) || !*(s + 1)))
+		if (s[i++] == '"')
+		{
+			i++;
+			while (s[i] != '"')
+				i++;
+		}
+		else if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] != '\'')
+				i++;
+		}
+		if (!ft_isspace(s[i]) && (ft_isspace(s[i + 1]) || !s[i + 1]))
 			ret++;
-		s++;
 	}
 	return (ret);
 }
@@ -82,6 +95,18 @@ int	cnt_s_len(char const *s, t_cmd *cmd)
 		return (cnt_s_q(tmp, ret, cmd));
 	while (*tmp)
 	{
+		if (*tmp == '\'')
+		{
+			ret++;
+			while (*++tmp != '\'')
+				ret++;
+		}
+		if (*tmp == '"')
+		{
+			ret++;
+			while (*++tmp != '"')
+				ret++;
+		}
 		if (!ft_isspace(*tmp))
 			ret++;
 		else
