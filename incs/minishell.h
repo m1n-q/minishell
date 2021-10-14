@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 20:03:56 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 13:46:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,20 @@
 # include "myerror.h"
 # include "struct.h"
 
+# define NON_NUMERIC -4444444444LL
 # define PROMPT "\e[1;46mminishell\e[0m "
-# define BUILTIN -4242
+
 # define CHILD 0
 # define PARENT -1
 # define PARENT_EXIT -2
-# define NON_NUMERIC -4444444444LL
+
+# define AMP 1LL
+# define ENV 2LL
+# define PIPE 3LL
+# define HEREDOC 4LL
+# define REDIRECT_IN 5LL
+# define REDIRECT_OUT 6LL
+# define REDIRECT_APPEND 7LL
 
 /* error */
 int			puterr(int error);
