@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
 /*   Updated: 2021/10/15 00:22:42 by kyumlee          ###   ########.fr       */

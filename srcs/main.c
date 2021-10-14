@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/12 20:25:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/14 19:58:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,41 @@ int	init_terminal_data(void)
 	return (0);
 }
 
+void	sig_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+}
+
 int	main()
 {
 	char	*input;
 	int		error;
+	t_exit	ext;
 
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
+	signal(SIGINT, sig_handler);
 	while ((input = readline(prompt)))
 	{
-		if (!run(parse(input)))
-			return (0);
+		if (!input[0])
+			continue ;
+		ext = run(parse(input));
+		if (ext.pid == CHILD)
+			return (ext.status);
+		else if (ext.pid == PARENT_EXIT)
+			return (ext.status);
+		else if (ext.pid == BUILTIN && ext.status)
+			puterr(ext.status);
+		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
+			puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
+
 		add_history(input);
 		free(input);
 	}
