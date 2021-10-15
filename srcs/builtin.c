@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 22:33:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 16:55:45 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,6 @@ int	__env(char **argv)
 	return (0);
 }
 
-int	__env__(char **argv)
-{
-	int			i;
-
-	i = -1;
-	while (argv[++i])
-		printf("%s\n", argv[i]);				/* What is $LINES, $COLUMNS */
-	return (0);
-}
-
 int	__echo(char **argv)
 {
 	int	flag_n;
@@ -137,55 +127,19 @@ int __exit(char **argv)
 	return ((int)exit_code);
 }
 
-char	**environ_to_heap(void)
-{
-	int		i;
-	int		num_env;
-	char	**new_environ;
-
-	num_env = get_argc(environ);
-	new_environ = (char **)ft_calloc(num_env + 1, sizeof(char *));
-	if (!new_environ)
-		return (NULL);
-
-	i = -1;
-	while (environ[++i])
-	{
-		new_environ[i] = ft_strdup(environ[i]);
-		if (!new_environ[i])
-		{
-			free_till(i, new_environ);
-			free(new_environ);
-			return (NULL);
-		}
-	}
-	return (new_environ);
-}
-
 int	__export(char **argv)
 {
 	int		argc;
-	int		num_env;
-	char	**new_environ;
 
 	argc = get_argc(argv);
 	if (argc == 1)
 		return (__env(argv));				//NOTE: export: TMP="" / env: TMP=
-	/* if (arg w/o '=value') { VAR='' } */
-	num_env = get_argc(environ);
-	new_environ = (char **)ft_calloc(num_env + 2, sizeof(char *));
-	ft_memcpy(new_environ, environ, sizeof(char *) * num_env);
-	new_environ[num_env] = "newenviron=inserted";
-	free(environ);
-	environ = new_environ;
+	// printf("'%s'\n", getenv("newstring"));		// "newstring"=""   -> return ""
+	// printf("'%s'\n", getenv("ko"));				// "ko"				-> return NULL
+	// while (argc)
+	extend_envp();
+	printf("inserted?'%s'\n", getenv("newenviron"));
 
-	/* if (arg 'VAR=value') { VAR='value' } */
-	return (0);
-}
-
-int	__unset(char **argv)
-{
-	(void)argv;
 	return (0);
 }
 

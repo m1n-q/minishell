@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 22:27:52 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 16:24:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ void		free_till(int index, char **arr);
 int			__exit(char **argv);
 int			is_builtin(char *arg);
 int			run_builtin(char **argv);
+
+/* environ */
 char		**environ_to_heap(void);
+int			__unset(char **argv);
+int			extend_envp(void);
 
 /* ft_split_space_utils */
 int			ft_isspace(char c);

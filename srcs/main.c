@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 22:29:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 16:36:02 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,15 @@ int	main()
 	int		error;
 	t_exit	ext;
 
+	// int i = -1;
+	// while (environ[++i])
+	// 	printf("before dup [%p : %s]\n", environ[i], environ[i]);
 	environ = environ_to_heap();						/* to modify || unset || extend and free prev */
+
+	// i = -1;
+	// while (environ[++i])
+	// 	printf("after dup : [%p : %s]\n", environ[i], environ[i]);
+
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
