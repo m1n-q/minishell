@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 16:55:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 17:41:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 char	**environ_to_heap(void)
 {
 	int		i;
-	int		num_env;
+	int		env_len;
 	char	**new_environ;
 
-	num_env = get_argc(environ);
-	new_environ = (char **)ft_calloc(num_env + 1, sizeof(char *));
+	env_len = get_argc(environ);
+	new_environ = (char **)ft_calloc(env_len + 1, sizeof(char *));
 	if (!new_environ)
 		return (NULL);
 
@@ -74,13 +74,13 @@ char	**check_arg(char *arg)
 
 int	extend_envp(void)
 {
-	int		num_env;
+	int		env_len;
 	char	**new_environ;
 
-	num_env = get_argc(environ);
-	new_environ = (char **)ft_calloc(num_env + 2, sizeof(char *));
-	ft_memmove(new_environ, environ, sizeof(char *) * num_env);
-	new_environ[num_env] = ft_strdup("newenviron=inserted");
+	env_len = get_argc(environ);
+	new_environ = (char **)ft_calloc(env_len + 2, sizeof(char *));
+	ft_memmove(new_environ, environ, sizeof(char *) * env_len);
+	new_environ[env_len] = ft_strdup("newenviron=inserted");
 	free(environ);	//NOTE: need to free all elems ? maybe it can be reused ..
 	environ = new_environ;
 
@@ -122,13 +122,13 @@ t_envent	get_envent(char *arg)
 	*/
 }
 
-int	__unset(char **argv)
+int	remove_envent(char *arg)
 {
 	t_envent	env;
 	int			env_len;
 	char		**new_environ;
 
-	env = get_envent(argv[1]);
+	env = get_envent(arg);
 	if (env.string)
 	{
 		env_len = get_argc(environ);
@@ -142,5 +142,17 @@ int	__unset(char **argv)
 		free(environ);
 		environ = new_environ;
 	}
+	return (0);
+}
+
+int	__unset(char **argv)
+{
+	int	i;
+
+	if (!argv || !*argv)
+		return (-1);
+	i = -1;
+	while (argv[++i])
+		remove_envent(argv[i]);
 	return (0);
 }
