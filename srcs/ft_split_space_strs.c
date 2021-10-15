@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 23:58:17 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 00:23:33 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/15 19:01:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int	cnt_strs(char *s)
 		if (s[i] && !ft_isspace(s[i]))
 		{
 			ret++;
-			if ((s[i] == '"' || s[i] == '\'')
-				&& (i == 0 || (ft_isspace(s[i - 1]) && i > 0)))
+			if (is_q(s[i]) && (i == 0 || (ft_isspace(s[i - 1]) && i > 0)))
 				i += skip_q(&s[i], s[i]);
 			while (s[i] && !ft_isspace(s[i]))
 				i++;

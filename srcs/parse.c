@@ -6,11 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/14 23:28:22 by kyumlee          ###   ########.fr       */
-=======
-/*   Updated: 2021/10/13 20:12:56 by mishin           ###   ########.fr       */
->>>>>>> d10e3031a963a5403b68c1e1d67c8e12289bede2
+/*   Updated: 2021/10/15 15:30:55 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +34,11 @@ char	**getpaths(void)
 	return (paths);
 }
 
-char	**getargv(char *input, t_cmd *cmd)
+char	**getargv(char *input)
 {
 	char	**argv;
 
-	argv = ft_split_space(input, cmd);
+	argv = ft_split_space(input);
 	return (argv);
 }
 
@@ -54,16 +50,11 @@ t_cmd	parse(char *input)
 	struct dirent	*dirent;
 	int				i;
 
-<<<<<<< HEAD
 	paths = getpaths();
 	cmd.argv = getargv(input);
 	int	j = -1;
 	while (cmd.argv[++j])
 		printf("argv[%d] : %s\n", j, cmd.argv[j]);
-=======
-	init_q_r(&cmd);
-	cmd.argv = getargv(input, &cmd);
->>>>>>> d10e3031a963a5403b68c1e1d67c8e12289bede2
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);

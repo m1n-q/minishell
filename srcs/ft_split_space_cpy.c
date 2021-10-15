@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 00:23:22 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/15 17:45:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*trim_q(char *s)
 	j = 0;
 	while (++i < (int)ft_strlen(s) - 2)
 	{
-		if (s[j] == '"' || s[j] == '\'')
+		if (is_q(s[j]))
+//		if (s[j] == '"' || s[j] == '\'')
 			j++;
 		ret[i] = s[j++];
 	}
@@ -39,7 +40,8 @@ int	has_q(char *s)
 {
 	while (*s)
 	{
-		if (*s == '"' || *s == '\'')
+		if (is_q(*s))
+//		if (*s == '"' || *s == '\'')
 			return (1);
 		s++;
 	}
@@ -71,7 +73,8 @@ char	*cpy_str(char *s, char *ret)
 
 	i = 0;
 	j = 0;
-	if (*s == '"' || *s == '\'')
+	if (is_q(*s))
+//	if (*s == '"' || *s == '\'')
 		return (cpy_q_str(s, ret, i, j));
 	else
 	{

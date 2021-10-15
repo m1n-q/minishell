@@ -6,11 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/15 00:15:24 by kyumlee          ###   ########.fr       */
-=======
-/*   Updated: 2021/10/14 19:31:30 by mishin           ###   ########.fr       */
->>>>>>> d10e3031a963a5403b68c1e1d67c8e12289bede2
+/*   Updated: 2021/10/15 17:44:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +54,7 @@ t_exit		run(t_cmd cmd);
 
 /* utils */
 int			putchar(int c);
-long long 	atonum(const char *str, int *len);
+long long	atonum(const char *str, int *len);
 
 /* built-in */
 int			__exit(char **argv);
@@ -73,29 +69,26 @@ int			cnt_s_q(char *s, int ret, t_cmd *cmd);
 int			cnt_s_len(char const *s, t_cmd *cmd);
 
 /* ft_split_space */
-<<<<<<< HEAD
-char	**ft_split_space(char *s);
+char		**ft_split_space(char *s);
 
 /* ft_split_space_cpy */
-char	*cpy_str(char *s, char *ret);
+char		*cpy_str(char *s, char *ret);
 
 /* ft_split_space_check */
-int		ft_isspace(char c);
-int		check_quotes(char *s);
+int			ft_isspace(char c);
+int			is_q(char c);
+int			check_quotes(char *s);
 
 /* ft_split_space_str */
-int		cnt_str_len(char *s);
-char	*malloc_str(char *s, char **ret, int i, int len);
+int			cnt_str_len(char *s);
+char		*malloc_str(char *s, char **ret, int i, int len);
 
 /* ft_split_space_strs */
-char	**malloc_strs(char *s);
-void	free_strs(char **ret, int i);
-=======
-char		**ft_split_space(char const *s, t_cmd *cmd);
+char		**malloc_strs(char *s);
+void		free_strs(char **ret, int i);
 
 /* redirection */
 void		read_file(char *filename);
 void		write_file(char *filename);
->>>>>>> d10e3031a963a5403b68c1e1d67c8e12289bede2
 
 #endif

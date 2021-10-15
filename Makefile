@@ -8,7 +8,6 @@ INC_DIR = incs
 SRC_DIR = srcs
 OBJS =  ${SRCS:.c=.o}
 SRCS =  $(SRC_DIR)/main.c \
-		$(SRC_DIR)/ft_split_space_utils.c \
 		$(SRC_DIR)/ft_split_space.c \
 		$(SRC_DIR)/ft_split_space_check.c \
 		$(SRC_DIR)/ft_split_space_cpy.c \

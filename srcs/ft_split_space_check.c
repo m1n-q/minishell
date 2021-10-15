@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 23:58:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 00:18:01 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/15 18:41:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ int	ft_isspace(char c)
 		|| c == '\r' || c == '\v' || c == '\f');
 }
 
+int	is_q(char c)
+{
+	return (c == '"' || c == '\'');
+}
+
 /* check the quotes. if match return 0, if not return 1 */
 int	check_pairs(char *s, char c)
 {
 	int	ret;
 
 	ret = 0;
-	if (*s != '"' && *s != '\'')
+	if (!is_q(*s))
 		return (ret);
 	if (*s == c)
 	{
@@ -50,7 +55,7 @@ int	check_quotes(char *s)
 
 	while (*s)
 	{
-		if (*s == '"' || *s == '\'')
+		if (is_q(*s))
 			break ;
 		s++;
 	}
