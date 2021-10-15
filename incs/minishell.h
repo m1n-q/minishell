@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 19:08:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 21:16:39 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			putchar(int c);
 int			get_argc(char **argv);
 long long 	atonum(const char *str, int *len);
 void		free_till(int index, char **arr);
+int			is_equal(char *s1, char *s2);
 
 
 /* built-in */
@@ -71,6 +72,8 @@ char		**environ_to_heap(void);
 int			check_arg(char *arg);
 int			__unset(char **argv);
 int			append_envent(char *arg);
+t_envent	get_envent(char *arg);
+int			print_including_empty(void);
 
 /* ft_split_space_utils */
 int			ft_isspace(char c);

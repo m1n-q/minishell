@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 19:53:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 21:14:36 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,19 @@ char	**environ_to_heap(void)
 char	*get_env_including_empty(char *arg)
 {
 	int		i;
-	char	*env;
+	char	*env_val;
+	char	*env_string;
+	char	*tmp;
 
-	env = getenv(arg);
-	if (env)
-		return (env);
-	i = -1;
+	env_val = getenv(arg);
+	if (env_val)
+	{
+		tmp = ft_strjoin(arg, "=");
+		env_string = ft_strjoin(tmp, env_val);
+		free(tmp);
+		return (env_string);
+	}
+	i = -1;						// searching env without value
 	while (environ[++i])
 		if (ft_strlen(environ[i]) == ft_strlen(arg) && \
 			!ft_strncmp(environ[i], arg, ft_strlen(arg)))
@@ -54,34 +61,25 @@ char	*get_env_including_empty(char *arg)
 	return (NULL);
 }
 
+//NOTE: env.string will be filled if env.name already exists
 t_envent	get_envent(char *arg)
 {
 	char		*pos;
-	char		*tmp;
 	t_envent	env;
 	int			i;
 
 	env.index = -1;
-	env.val = NULL;
 	env.string = NULL;
 	pos = ft_strchr(arg, '=');
-	if (pos)							/* export arg=val */
+	if (pos)							/* export 'arg=val' */
 	{
-		env.name = ft_substr(arg, 0, (size_t)(pos - arg));
-		env.val = getenv(env.name);			//DEBUG: getenv cannot catch names existing w/o val
-		if (env.val)						//NOTE: arg=val & exist
-		{
-			tmp = ft_strjoin(env.name, "=");
-			env.string = ft_strjoin(tmp, env.val);
-			free(tmp);
-		}
+		env.name = ft_substr(arg, 0, (size_t)(pos - arg));		//FIXIT: free
+		env.string = get_env_including_empty(env.name);
 	}
-	else								/* export arg */
+	else								/* export 'arg' */
 	{
-		//DEBUG: cannot catch existing with val
 		env.name = arg;
-		env.string = get_env_including_empty(arg);	//NOTE: arg & exist
-											//WARN: if NULL, arg & not exist
+		env.string = get_env_including_empty(arg);
 	}
 	if (env.string)
 	{
@@ -136,35 +134,36 @@ int	check_arg(char *arg)
 
 	env = get_envent(arg);
 	pos = ft_strchr(arg, '=');
-	printf("arg:%s, pos:%s, string:%s\n", arg, pos,env.string);
 	if (env.string)
 	{
-		if (pos)		/* if exists and has value : modify existing entry */
+		if (pos)		/* if exists && str=='name=value' : modify existing entry */
 		{
 			remove_envent(env);
 			append_envent(arg);
 		}
-		else			/* if exists and just name : ignore */
-		{
-			printf("here.. i get env.string\n");
+		else			/* if exists && str=='name' : ignore */
 			return (0);
-		}
 	}
 	else
 	{
-		if (pos)		/* if new and has value : append new entry */
+		if (pos)		/* if new && str=='name=value' : append new entry */
 			append_envent(arg);
-		else			/* if new and just name : append new entry */
-		{
+		else			/* if new && str=='name' : append new entry */
 			append_envent(arg);
-			printf("im  here.. because no env.string\n");
-		}
 	}
-
-	//NOTE:: export print just 'arg', env cannot know
+	//NOTE:: export print just 'arg', env(getenv) cannot know
 	return (0);
 }
 
+int	print_including_empty(void)
+{
+	int			i;
+
+	i = -1;
+	while (environ[++i])
+		printf("%s\n", environ[i]);				/* Only 'NAME'='VAL' */
+	return (0);
+}
 
 int	__unset(char **argv)
 {

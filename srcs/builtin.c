@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 19:07:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 21:19:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 */
 
 //NOTE: need to handle additional (not supported) args
-
 int	is_builtin(char *arg)
 {
 	if (!ft_strncmp(arg, "cd", 2) || \
@@ -77,7 +76,10 @@ int	__env(char **argv)
 	(void)argv;
 	i = -1;
 	while (environ[++i])
-		printf("%s\n", environ[i]);				/* Only 'NAME'='VAL' */
+	{
+		if (getenv(get_envent(environ[i]).name))
+			printf("%s\n", environ[i]);					/* Only 'name' that has '=value' */
+	}
 	return (0);
 }
 
@@ -134,9 +136,7 @@ int	__export(char **argv)
 
 	argc = get_argc(argv);
 	if (argc == 1)
-		return (__env(argv));			//FIXIT: export INCLUDES just 'NAME'
-	// printf("'%s'\n", getenv("newstring"));		// "newstring"=""   -> return ""
-	// printf("'%s'\n", getenv("ko"));				// "ko"				-> return NULL
+		return (print_including_empty());			/* print including just 'name' */
 
 	i = 0;
 	while (argv[++i])
