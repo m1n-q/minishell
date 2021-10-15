@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 16:55:45 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 19:07:59 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	__env(char **argv)
 	(void)argv;
 	i = -1;
 	while (environ[++i])
-		printf("%s\n", environ[i]);				/* What is $LINES, $COLUMNS */
+		printf("%s\n", environ[i]);				/* Only 'NAME'='VAL' */
 	return (0);
 }
 
@@ -129,17 +129,18 @@ int __exit(char **argv)
 
 int	__export(char **argv)
 {
+	int		i;
 	int		argc;
 
 	argc = get_argc(argv);
 	if (argc == 1)
-		return (__env(argv));				//NOTE: export: TMP="" / env: TMP=
+		return (__env(argv));			//FIXIT: export INCLUDES just 'NAME'
 	// printf("'%s'\n", getenv("newstring"));		// "newstring"=""   -> return ""
 	// printf("'%s'\n", getenv("ko"));				// "ko"				-> return NULL
-	// while (argc)
-	extend_envp();
-	printf("inserted?'%s'\n", getenv("newenviron"));
 
+	i = 0;
+	while (argv[++i])
+		check_arg(argv[i]);
 	return (0);
 }
 
