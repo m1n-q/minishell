@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 17:44:19 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/16 23:05:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ char		*malloc_str(char *s, char **ret, int i, int len);
 /* ft_split_space_strs */
 char		**malloc_strs(char *s);
 void		free_strs(char **ret, int i);
-char		**split_space_tmp(char const *s, t_cmd *cmd);
-
 
 /* redirection */
 void		read_file(char *filename);
