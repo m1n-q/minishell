@@ -43,6 +43,8 @@
 # define REDIRECT_OUT 6LL
 # define REDIRECT_APPEND 7LL
 
+extern char	**environ;
+
 /* error */
 int			puterr(int error);
 
@@ -54,12 +56,23 @@ t_exit		run(t_cmd cmd);
 
 /* utils */
 int			putchar(int c);
-long long	atonum(const char *str, int *len);
+int			get_argc(char **argv);
+long long 	atonum(const char *str, int *len);
+void		free_till(int index, char **arr);
+int			is_equal(char *s1, char *s2);
 
 /* built-in */
 int			__exit(char **argv);
 int			is_builtin(char *arg);
 int			run_builtin(char **argv);
+
+/* environ */
+char		**environ_to_heap(void);
+int			check_arg(char *arg);
+int			__unset(char **argv);
+int			append_envent(char *arg);
+t_envent	get_envent(char *arg);
+int			print_including_empty(void);
 
 /* ft_split_space_utils */
 int			ft_isspace(char c);
@@ -86,6 +99,8 @@ char		*malloc_str(char *s, char **ret, int i, int len);
 /* ft_split_space_strs */
 char		**malloc_strs(char *s);
 void		free_strs(char **ret, int i);
+char		**split_space_tmp(char const *s, t_cmd *cmd);
+
 
 /* redirection */
 void		read_file(char *filename);

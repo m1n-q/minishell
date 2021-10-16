@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:56:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 21:19:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 */
 
 //NOTE: need to handle additional (not supported) args
-
 int	is_builtin(char *arg)
 {
 	if (!ft_strncmp(arg, "cd", 2) || \
@@ -72,13 +71,15 @@ int	__pwd(char **argv)
 
 int	__env(char **argv)
 {
-	extern char **environ;
 	int			i;
 
 	(void)argv;
 	i = -1;
 	while (environ[++i])
-		printf("%s\n", environ[i]);				/* $LINES, $COLUMNS */
+	{
+		if (getenv(get_envent(environ[i]).name))
+			printf("%s\n", environ[i]);					/* Only 'name' that has '=value' */
+	}
 	return (0);
 }
 
@@ -130,13 +131,16 @@ int __exit(char **argv)
 
 int	__export(char **argv)
 {
-	(void)argv;
-	return (0);
-}
+	int		i;
+	int		argc;
 
-int	__unset(char **argv)
-{
-	(void)argv;
+	argc = get_argc(argv);
+	if (argc == 1)
+		return (print_including_empty());			/* print including just 'name' */
+
+	i = 0;
+	while (argv[++i])
+		check_arg(argv[i]);
 	return (0);
 }
 
