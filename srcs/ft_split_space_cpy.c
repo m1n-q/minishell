@@ -6,87 +6,98 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 17:45:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/16 15:28:37 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
-/* for words that have q marks in between the letters, trim those q marks */
+/* trim q marks if they are within a string */
 char	*trim_q(char *s)
 {
 	int		i;
-	int		j;
+	char	c;
 	char	*ret;
 
 	ret = malloc(sizeof(char) * (ft_strlen(s) - 2 + 1));
 	if (!ret)
 		return (0);
-	i = -1;
-	j = 0;
-	while (++i < (int)ft_strlen(s) - 2)
+	i = 0;
+	while (*s)
 	{
-		if (is_q(s[j]))
-//		if (s[j] == '"' || s[j] == '\'')
-			j++;
-		ret[i] = s[j++];
+		if (is_q(*s))
+		{
+			c = *s++;
+			while (*s && *s != c)
+				ret[i++] = *s++;
+		}
+		else
+			ret[i++] = *s++;
 	}
 	ret[i] = 0;
 	return (ret);
 }
 
-/* check if a word has q marks in between the letters */
+/* check if there are q marks within a string */
 int	has_q(char *s)
 {
 	while (*s)
 	{
 		if (is_q(*s))
-//		if (*s == '"' || *s == '\'')
 			return (1);
 		s++;
 	}
 	return (0);
 }
 
-/* copy a word that is enclosed by q marks from s to ret */
-char	*cpy_q_str(char *s, char *ret, int i, int j)
+/* copy a string that is enclosed by q marks from (s) to (ret) */
+char	*cpy_with_q(char *s, char *ret)
 {
-	if (s[i] == '"')
-	{
-		while (s[++i] != '"')
-			ret[j++] = s[i];
-	}
-	else if (s[i] == '\'')
-	{
-		while (s[++i] != '\'')
-			ret[j++] = s[i];
-	}
-	ret[j] = 0;
+	char	c;
+	int		i;
+
+	c = *s++;
+	i = 0;
+	while (*s != c)
+		ret[i++] = *s++;
+	while (*++s && !ft_isspace(*s))
+		ret[i++] = *s;
+	ret[i] = 0;
 	return (ret);
 }
 
-/* copy a word from s to ret */
-char	*cpy_str(char *s, char *ret)
+/* copy a string that is not enclosed by q marks from (s) to (ret) */
+char	*cpy_wo_q(char *s, char *ret)
 {
+	char	c;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
-	if (is_q(*s))
-//	if (*s == '"' || *s == '\'')
-		return (cpy_q_str(s, ret, i, j));
-	else
+	while (*s)
 	{
-		while (s[i])
+		ret[i++] = *s++;
+		if (is_q(*s))
 		{
-			ret[j++] = s[i++];
-			if (s[i] == ' ')
-				break ;
+			c = *s++;
+			ret[i++] = c;
+			while (*s && *s != c)
+				ret[i++] = *s++;
+			ret[i++] = *s++;
 		}
+		if (ft_isspace(*s))
+			break ;
 	}
-	ret[j] = 0;
+	ret[i] = 0;
 	if (has_q(ret))
 		ret = trim_q(ret);
 	return (ret);
+}
+
+/* copy a string from (s) to (ret) */
+char	*cpy_str(char *s, char *ret)
+{
+	if (is_q(*s))
+		return (cpy_with_q(s, ret));
+	else
+		return (cpy_wo_q(s, ret));
 }

@@ -6,30 +6,27 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 23:58:17 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 19:01:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/16 15:26:48 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
-/* when counting how many strings there are, skip the quotes. */
-int	skip_q(char *s, char c)
+/* skip q marks when counting how many strings there are */
+char	*skip_q(char *s, char c)
 {
-	int	i;
-
-	i = 1;
-	while (s[i])
+	s++;
+	while (*s)
 	{
-		if (s[i] == c)
+		if (*s == c)
 			break ;
-		i++;
+		s++;
 	}
-	i++;
-	return (i);
+	s++;
+	return (s);
 }
 
-/* count how many words there are
- * MODIFICATION NEEDED!! (for input case: [a' "w" ']) */
+/* count how many strings there are */
 int	cnt_strs(char *s)
 {
 	int	i;
@@ -37,22 +34,28 @@ int	cnt_strs(char *s)
 
 	i = 0;
 	ret = 0;
-	while (s[i])
+	while (*s)
 	{
-		if (s[i] && !ft_isspace(s[i]))
+		if (*s && !ft_isspace(*s))
 		{
 			ret++;
-			if (is_q(s[i]) && (i == 0 || (ft_isspace(s[i - 1]) && i > 0)))
-				i += skip_q(&s[i], s[i]);
-			while (s[i] && !ft_isspace(s[i]))
-				i++;
+			if (is_q(*s) && (*s == s[0] || (*s && ft_isspace(*(s - 1)))))
+				s = skip_q(s, *s);
+			while (*s && !ft_isspace(*s))
+			{
+				if (is_q(*s))
+					s = skip_q(s, *s);
+				else
+					s++;
+			}
 		}
-		while (ft_isspace(s[i]))
-			i++;
+		while (ft_isspace(*s))
+			s++;
 	}
 	return (ret);
 }
 
+/* malloc strings */
 char	**malloc_strs(char *s)
 {
 	int		num_of_strs;

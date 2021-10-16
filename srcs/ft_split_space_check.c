@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 23:58:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 18:41:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/16 15:27:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_q(char c)
 	return (c == '"' || c == '\'');
 }
 
-/* check the quotes. if match return 0, if not return 1 */
+/* check if q marks match. if match return 0, if not return 1 */
 int	check_pairs(char *s, char c)
 {
 	int	ret;
@@ -34,15 +34,13 @@ int	check_pairs(char *s, char c)
 	if (*s == c)
 	{
 		ret++;
-		s++;
-		while (*s)
+		while (*++s)
 		{
 			if (*s == c)
 			{
 				ret--;
 				break ;
 			}
-			s++;
 		}
 	}
 	return (ret);

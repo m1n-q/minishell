@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/15 19:00:51 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/16 15:24:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
+/* parsing pipe and redirections */
 char	*pipe_redir(char *s)
 {
 	if (ft_strlen(s) == 1)
