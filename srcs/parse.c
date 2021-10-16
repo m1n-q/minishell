@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 21:03:16 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:30:55 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ char	**getpaths(void)
 	return (paths);
 }
 
-char	**getargv(char *input, t_cmd *cmd)
+char	**getargv(char *input)
 {
 	char	**argv;
 
-	argv = split_space_tmp(input, cmd);
+	argv = ft_split_space(input);
 	return (argv);
 }
 
@@ -50,8 +50,11 @@ t_cmd	parse(char *input)
 	struct dirent	*dirent;
 	int				i;
 
-	init_q_r(&cmd);
-	cmd.argv = getargv(input, &cmd);
+	paths = getpaths();
+	cmd.argv = getargv(input);
+	int	j = -1;
+	while (cmd.argv[++j])
+		printf("argv[%d] : %s\n", j, cmd.argv[j]);
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);

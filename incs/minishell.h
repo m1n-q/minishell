@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 21:16:39 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/15 17:44:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ long long 	atonum(const char *str, int *len);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 
-
 /* built-in */
 int			__exit(char **argv);
 int			is_builtin(char *arg);
@@ -83,7 +82,25 @@ int			cnt_s_q(char *s, int ret, t_cmd *cmd);
 int			cnt_s_len(char const *s, t_cmd *cmd);
 
 /* ft_split_space */
+char		**ft_split_space(char *s);
+
+/* ft_split_space_cpy */
+char		*cpy_str(char *s, char *ret);
+
+/* ft_split_space_check */
+int			ft_isspace(char c);
+int			is_q(char c);
+int			check_quotes(char *s);
+
+/* ft_split_space_str */
+int			cnt_str_len(char *s);
+char		*malloc_str(char *s, char **ret, int i, int len);
+
+/* ft_split_space_strs */
+char		**malloc_strs(char *s);
+void		free_strs(char **ret, int i);
 char		**split_space_tmp(char const *s, t_cmd *cmd);
+
 
 /* redirection */
 void		read_file(char *filename);
