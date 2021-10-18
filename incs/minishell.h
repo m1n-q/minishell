@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/16 23:05:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 18:12:18 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,16 @@ char		**ft_split_space(char *s);
 /* ft_split_space_cpy */
 char		*cpy_str(char *s, char *ret);
 
-/* ft_split_space_check */
+/* ft_split_space_utils */
 int			ft_isspace(char c);
 int			is_q(char c);
-int			check_quotes(char *s);
+int			quotes_match(char *s);
+int			is_empty_q(char *s);
+char		*skip_empty_q(char *s);
+int			has_q(char *s);
+
+/* ft_split_space_utils2 */
+
 
 /* ft_split_space_str */
 int			cnt_str_len(char *s);

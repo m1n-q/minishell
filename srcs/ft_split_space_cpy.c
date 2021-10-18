@@ -6,50 +6,29 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/17 17:29:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/19 01:24:41 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
-char	*cpy_wo_q(char *s, char *ret);
-
-/* trim q marks if they are within a string */
-char	*trim_q(char *s)
+/* typecast pipes and redirections */
+char	*case_pipe_redir(char *s)
 {
-	int		i;
-	char	c;
-	char	*ret;
+	size_t	len;
 
-	ret = malloc(sizeof(char) * (ft_strlen(s) - 2 + 1));
-	if (!ret)
-		return (0);
-	i = 0;
-	while (*s)
-	{
-		if (is_q(*s))
-		{
-			c = *s++;
-			while (*s && *s != c)
-				ret[i++] = *s++;
-		}
-		else
-			ret[i++] = *s++;
-	}
-	ret[i] = 0;
-	return (ret);
-}
-
-/* check if there are q marks within a string */
-int	has_q(char *s)
-{
-	while (*s)
-	{
-		if (is_q(*s))
-			return (1);
-		s++;
-	}
-	return (0);
+	len = ft_strlen(s);
+	if (len == 1 && *s == '|')
+		return ((char *)PIPE);
+	if (len == 1 && *s == '<')
+		return ((char *)REDIRECT_IN);
+	if (len == 1 && *s == '>')
+		return ((char *)REDIRECT_OUT);
+	if (len == 2 && !ft_strncmp(s, "<<", len))
+		return ((char *)HEREDOC);
+	if (len == 2 && !ft_strncmp(s, ">>", len))
+		return ((char *)REDIRECT_APPEND);
+	return (s);
 }
 
 /* copy a string that is enclosed by q marks from (s) to (ret) */
@@ -59,17 +38,16 @@ char	*cpy_with_q(char *s, char *ret)
 	int		i;
 
 	i = 0;
-	while (is_q(*s) && *s && *(s + 1) && *s == *(s + 1))
-		s += 2;
-	if (*s && !is_q(*s))
-		return (cpy_wo_q(s, ret));
-	else if (*s && is_q(*s))
+	while (*s && !ft_isspace(*s))
 	{
 		c = *s++;
-		while (*s != c)
+		while (*s && *s != c)
 			ret[i++] = *s++;
-		while (*++s && !ft_isspace(*s))
-			ret[i++] = *s;
+		if (*++s && !ft_isspace(*s))
+		{
+			while (*s && !ft_isspace(*s) && !is_q(*s))
+				ret[i++] = *s++;
+		}
 	}
 	ret[i] = 0;
 	return (ret);
@@ -82,25 +60,20 @@ char	*cpy_wo_q(char *s, char *ret)
 	int		i;
 
 	i = 0;
-	while (*s)
+	ret[i++] = *s++;
+	while (*s && !ft_isspace(*s))
 	{
-		ret[i++] = *s++;
-		while (*s && *(s + 1) && *s == *(s + 1))
-			s += 2;
-		if (*s && is_q(*s))
+		if (is_q(*s))
 		{
 			c = *s++;
-			ret[i++] = c;
 			while (*s && *s != c)
 				ret[i++] = *s++;
-			ret[i++] = *s++;
 		}
-		if (ft_isspace(*s))
-			break ;
+		else
+			ret[i++] = *s++;
 	}
 	ret[i] = 0;
-	if (has_q(ret))
-		ret = trim_q(ret);
+	ret = case_pipe_redir(ret);
 	return (ret);
 }
 
