@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/17 16:30:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/18 15:28:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*pipe_redir(char *s)
 			s = (char *)PIPE;
 		else if (*s == '<')
 			s = (char *)REDIRECT_IN;
-		else if (*s == '<')
+		else if (*s == '>')
 			s = (char *)REDIRECT_OUT;
 	}
 	else if (ft_strlen(s) == 2)
