@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 15:30:55 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/18 15:38:59 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ t_cmd	parse(char *input)
 	cmd.argv = getargv(input);
 	int	j = -1;
 	while (cmd.argv[++j])
-		printf("argv[%d] : %s\n", j, cmd.argv[j]);
+	{
+		if (cmd.argv[j] > (char *)10LL)
+			printf("argv[%d] : %s\n", j, cmd.argv[j]);
+		else
+			printf("argv[%d] : 🌈\n", j);
+	}
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);

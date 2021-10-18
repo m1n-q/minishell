@@ -6,14 +6,14 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/18 15:28:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 15:33:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
 /* parsing pipe and redirections */
-char	*pipe_redir(char *s)
+char	*pipe_redir(char *s)		//FIXME: free org "s" if changed
 {
 	if (ft_strlen(s) == 1)
 	{
