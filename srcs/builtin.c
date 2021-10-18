@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 21:19:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:16:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	__echo(char **argv)
 	i = 0;
 	if (argv[1])
 	{
-		if (!ft_strncmp(argv[1], "-n", ft_strlen(argv[1])))
+		if (is_equal(argv[1], "-n"))
 		{
 			flag_n = 1;
 			i++;

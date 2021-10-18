@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/18 15:38:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:27:18 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_cmd	parse(char *input)
 		else
 			printf("argv[%d] : 🌈\n", j);
 	}
+	printf("====================================\n");
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);

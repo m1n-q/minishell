@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 21:21:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:20:03 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ int	main()
 	char	*input;
 	int		error;
 	t_exit	ext;
+	int		stdin_copied;
+	int		stdout_copied;
 
+	stdin_copied = dup(STDIN_FILENO);
+	stdout_copied = dup(STDOUT_FILENO);
 	environ = environ_to_heap();						/* to modify || unset || extend and free prev */
 	error = init_terminal_data();
 	if (error)
@@ -66,7 +70,11 @@ int	main()
 			puterr(ext.status);
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
+		restore_stream(stdin_copied, STDIN_FILENO);
+		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
 		free(input);
 	}
+	close(stdin_copied);
+	close(stdout_copied);
 }

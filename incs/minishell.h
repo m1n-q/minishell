@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/16 23:05:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 17:02:38 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ char		**malloc_strs(char *s);
 void		free_strs(char **ret, int i);
 
 /* redirection */
-void		read_file(char *filename);
-void		write_file(char *filename);
-
+int			redirect_in(char *arg);
+int			redirect_out(char *arg);
+int			redirect_append(char *arg);
+int			restore_stream(int std_copied, int std_org);
 #endif
