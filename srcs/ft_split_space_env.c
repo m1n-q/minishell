@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/20 00:47:56 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/20 01:23:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*case_env(char *s)
 	{
 		if (*s && *(s + 1) && *s == '$' && !ft_isspace(*(s + 1)))
 			s += join_env_val(s + 1, &ret);
+		if (*s == '"')
+			s++;
 		if (!*s || ft_isspace(*s))
 			break ;
 		else
