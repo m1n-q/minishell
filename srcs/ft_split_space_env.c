@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/19 17:43:34 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/20 00:47:56 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,55 +36,53 @@ char	*join_char(char *s, char c)
 	return (ret);
 }
 
-char	*join_env_val(char *s, char *ret, int *i)
+int	join_env_val(char *s, char **ret)
 {
-	int		j;
-	int		len;
+	int		i;
 	char	*tmp;
 
-	j = ++(*i);
-	len = 0;
-	while (is_env(s[*i]) && len++)
-		(*i)++;
-	tmp = malloc(sizeof(char) * (len + 1));
+	i = 0;
+	while (is_env(s[i]))
+		i++;
+	tmp = malloc(sizeof(char) * (i + 1));
 	if (!tmp)
 		return (0);
-	ft_strlcpy(tmp, &s[j], len + 1);
-	if (ret)
-		ret = ft_strjoin(ret, getenv(tmp));
+	ft_strlcpy(tmp, s, i + 1);
+	if (*ret)
+		*ret = ft_strjoin(*ret, getenv(tmp));
 	else
-		ret = getenv(tmp);
-	*i += len;
+		*ret = getenv(tmp);
 	free(tmp);
-	return (ret);
+	i++;
+	return (i);
 }
 
-char	*join_rest(char *s, char *ret, int *i)
+int	join_rest(char *s, char **ret)
 {
-	while (s[*i] && !is_env(s[*i]))
+	int	i;
+
+	i = 0;
+	while (s[i] && !is_env(s[i]) && s[i] != '$')
 	{
-		ret = join_char(ret, s[*i]);
-		(*i)++;
+		*ret = join_char(*ret, s[i]);
+		i++;
 	}
-	return (ret);
+	return (i);
 }
 
 char	*case_env(char *s)
 {
 	char	*ret;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
-	while (s[i])
+	ret = 0;
+	while (*s)
 	{
-		if (s[i] == '$')
-			ret = join_env_val(s, ret, &i);
-		else
-			ret = join_rest(s, ret, &i);
-		if (ft_isspace(s[i]))
+		if (*s && *(s + 1) && *s == '$' && !ft_isspace(*(s + 1)))
+			s += join_env_val(s + 1, &ret);
+		if (!*s || ft_isspace(*s))
 			break ;
+		else
+			s += join_rest(s, &ret);
 	}
 	return (ret);
 }
