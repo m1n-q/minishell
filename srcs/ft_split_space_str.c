@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:04:21 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/17 16:32:20 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/19 00:55:13 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ int	case_q(char *s)
 	int		ret;
 	char	c;
 
-	ret = 0;
-	c = *s++;
-	while (*s++ != c)
-		ret++;
-	ret += 2;
-	while (*s && !ft_isspace(*s++))
-		ret++;
+	ret = 2;
+	if (is_q(*s))
+	{
+		c = *s++;
+		while (*s && *s++ != c)
+			ret++;
+		while (*s && !ft_isspace(*s++))
+			ret++;
+	}
 	return (ret);
 }
 
@@ -63,8 +65,9 @@ int	cnt_str_len(char *s)
 /* malloc a string */
 char	*malloc_str(char *s, char **ret, int i, int len)
 {
-	if (is_q(*s))
-		len -= 2;
+	char	*tmp;
+
+	tmp = s;
 	ret[i] = malloc(sizeof(char) * (len + 1));
 	if (!ret[i])
 	{

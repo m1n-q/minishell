@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 21:21:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 15:20:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ void	sig_handler(int signum)
 	}
 }
 
+int	skip_space(char *s)
+{
+	while (ft_isspace(*s))
+		s++;
+	if (!*s)
+		return (1);
+	return (0);
+}
+
 int	main()
 {
 	char	*input;
@@ -55,7 +64,7 @@ int	main()
 	signal(SIGINT, sig_handler);
 	while ((input = readline(prompt)))
 	{
-		if (!input[0])
+		if (!input[0] || skip_space(input))
 			continue ;
 		ext = run(parse(input));
 		if (ext.pid == CHILD)
