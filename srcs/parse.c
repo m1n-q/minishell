@@ -52,6 +52,14 @@ t_cmd	parse(char *input)
 
 	paths = getpaths();
 	cmd.argv = getargv(input);
+	int	j = -1;
+	while (cmd.argv[++j])
+	{
+		if (cmd.argv[j] > (char *)10LL)
+			printf("argv[%d] : %s\n", j, cmd.argv[j]);
+		else
+			printf("argv[%d] : 🌈\n", j);
+	}
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);
