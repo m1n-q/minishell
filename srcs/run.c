@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 13:15:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:15:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,60 @@
 // 	}
 // 	restore_stream();
 // }
+
+int	check_redirection(char **argv)
+{
+	int		i;
+	int		count;
+
+	count = 0;
+	i = -1;
+	while (argv[++i])
+	{
+		if (argv[i] == (char *)REDIRECT_OUT || \
+			argv[i] == (char *)REDIRECT_IN)
+		{
+			count++;
+			if (argv[i + 1])
+			{
+				if (argv[i] == (char *)REDIRECT_OUT)
+					redirect_out(argv[i + 1]);
+				else if (argv[i] == (char *)REDIRECT_IN)		//NOTE: what if i == 0 and redirect_in
+					redirect_in(argv[i + 1]);
+			}
+		}
+	}
+	return (count);
+}
+
+int	get_argv_without_redirection(char ***argv, int count_redirection)
+{
+	char	**new_argv;
+	int		argc;
+	int		i;
+	int		j;
+
+	argc = get_argc(*argv);
+	new_argv = (char **)ft_calloc(argc - count_redirection + 1, sizeof(char *));
+	if (!new_argv)
+		return (-1);
+
+	i = -1;
+	j = -1;
+	while ((*argv)[++i])
+	{
+		if ((*argv)[i] > (char *)10LL)
+			new_argv[++j] = (*argv)[i];
+		else
+		{
+			if ((*argv)[i + 1])				//TODO: test cases
+				i += 1;
+		}
+	}
+	free((*argv));
+	(*argv) = new_argv;
+	return (0);
+}
 
 /*
 	1. If the command contains no slashes
@@ -48,6 +102,9 @@ t_exit	run(t_cmd cmd)
 {
 	t_exit		ext;
 
+	get_argv_without_redirection(&cmd.argv, check_redirection(cmd.argv));
+	// for (int i = 0; cmd.argv[i]; i++)
+	// 	printf("new argv[%d] : %s\n", i, cmd.argv[i]);
 	if (!cmd.path)
 	{
 		if (ft_strlen(cmd.argv[0]) == 4 && !ft_strncmp(cmd.argv[0], "exit", 4))
@@ -73,3 +130,6 @@ t_exit	run(t_cmd cmd)
 		ext.pid = wait(&ext.status);
 	return (ext);
 }
+
+
+

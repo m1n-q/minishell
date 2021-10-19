@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/14 19:57:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 19:49:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	redirect_out(char *arg)
 	/* else */
 	std_copied = dup(STDOUT_FILENO);
 	fd = open(arg, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	dup2(fd, STDIN_FILENO);
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	return (std_copied);
 }
@@ -64,9 +64,23 @@ int	redirect_append(char *arg)
 	return (std_copied);
 }
 
+/* 1) copy std -> restore to (0, 1) -> close(copied) */
+/* 2) copy std and keep them stored till program ends */
 int	restore_stream(int std_copied, int std_org)
 {
 	dup2(std_copied, std_org);
-	close(std_copied);
+	// close(std_copied);
 	return (0);
 }
+
+/*
+	new1 == new1
+	1 == stdout
+	...	1 = new1;
+	... return ( org_stdout );
+
+	new3 == new3
+	1 == new1
+	...	1 = new3;
+	... return (new1);
+*/

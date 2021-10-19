@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:55:56 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:29:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	puterr(int error)
 	}
 	else
 		ft_putstr_fd(strerror(error), STDERR_FILENO);
-	printf("\n");
+	write(STDERR_FILENO, "\n", 1);
 	return (error);
 }
