@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/18 18:12:18 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/19 16:47:34 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,14 @@ int			run_builtin(char **argv);
 char		**environ_to_heap(void);
 int			check_arg(char *arg);
 int			__unset(char **argv);
+char		*get_env_including_empty(char *arg);
 int			append_envent(char *arg);
 t_envent	get_envent(char *arg);
 int			print_including_empty(void);
+
+/* ft_split_space_env */
+int			is_env(char c);
+char		*case_env(char *s);
 
 /* ft_split_space_utils */
 int			ft_isspace(char c);
