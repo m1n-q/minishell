@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 00:11:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 00:58:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ int	get_argv_without_redirection(int count_redirection, char ***argv)
 				i += 1;
 		}
 	}
-	free((*argv));
+
+	/* if pipe.method 2, free each cmd.argv*/
+	// free((*argv));
 	(*argv) = new_argv;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 00:06:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 00:55:38 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,21 @@ t_cmd	*split_pipe(char **argv, int *size)
 		i_pipe++;
 		if (argv[i_pipe] == (char *)PIPE || argv[i_pipe] == NULL)
 		{
-			(*cmd_table).argv = (char **)ft_calloc(i_pipe - pos + 1, sizeof(char *));
-			ft_memcpy((*cmd_table).argv, &argv[pos], (i_pipe - pos) * sizeof(char *));
+			/* method 1 */
+			// (*cmd_table).argv = (char **)ft_calloc(i_pipe - pos + 1, sizeof(char *));
+			// ft_memcpy((*cmd_table).argv, &argv[pos], (i_pipe - pos) * sizeof(char *));
+
+			/* method 2 */
+			(*cmd_table).argv = argv + pos;
 			pos = i_pipe + 1;
+
 			(*cmd_table).io_table.stdin_fd = 0;
 			(*cmd_table).io_table.stdout_fd = 1;
 			(*cmd_table).io_table.stderr_fd = 2;
 
 			if (argv[i_pipe] == NULL)
 				break ;
+			argv[i_pipe] = NULL;	/* method 2 */
 			cmd_table++;
 		}
 	}
