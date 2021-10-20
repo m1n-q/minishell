@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 01:32:24 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/20 18:27:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,15 @@ int			redirect_in(char *arg);
 int			redirect_out(char *arg);
 int			redirect_append(char *arg);
 int			restore_stream(int std_copied, int std_org);
+int			check_redirection(t_cmd cmd);
+int			get_argv_without_redirection(int count_redirection, char ***argv);
+
+/* pipe */
+int			count_pipe(char	**argv);
+t_cmd		*split_pipe(char **argv, int *size);
+
+char		**get_argv(char *input);
+char		**get_paths(void);
+int			fill_path(t_cmd *cmd);
+
 #endif

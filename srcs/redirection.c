@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/18 19:49:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/20 16:38:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int	redirect_in(char *arg)
 
 	std_copied = dup(STDIN_FILENO);
 	fd = open(arg, O_RDONLY);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	return (std_copied);
+	// dup2(fd, STDIN_FILENO);
+	// close(fd);
+	// return (std_copied);
+	return (fd);
 }
 
 int	redirect_out(char *arg)
@@ -40,9 +41,10 @@ int	redirect_out(char *arg)
 	/* else */
 	std_copied = dup(STDOUT_FILENO);
 	fd = open(arg, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	return (std_copied);
+	// dup2(fd, STDOUT_FILENO);
+	// close(fd);
+	// return (std_copied);
+	return (fd);
 }
 
 int	redirect_append(char *arg)
@@ -59,9 +61,10 @@ int	redirect_append(char *arg)
 	/* else */
 	std_copied = dup(STDOUT_FILENO);
 	fd = open(arg, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	return (std_copied);
+	// dup2(fd, STDOUT_FILENO);
+	// close(fd);
+	// return (std_copied);
+	return (fd);
 }
 
 /* 1) copy std -> restore to (0, 1) -> close(copied) */

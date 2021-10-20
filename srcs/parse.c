@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 01:33:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/20 17:31:03 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_q_r(t_cmd *cmd)
 	cmd->r_out_a = 0;
 }
 
-char	**getpaths(void)
+char	**get_paths(void)
 {
 	char	**paths;
 	char	*env;
@@ -34,7 +34,7 @@ char	**getpaths(void)
 	return (paths);
 }
 
-char	**getargv(char *input)
+char	**get_argv(char *input)
 {
 	char	**argv;
 
@@ -50,8 +50,8 @@ t_cmd	parse(char *input)
 	struct dirent	*dirent;
 	int				i;
 
-	paths = getpaths();
-	cmd.argv = getargv(input);
+	paths = get_paths();
+	cmd.argv = get_argv(input);
 	int	j = -1;
 	while (cmd.argv[++j])
 	{
@@ -64,7 +64,6 @@ t_cmd	parse(char *input)
 	cmd.path = NULL;
 	if (is_builtin(cmd.argv[0]))
 		return (cmd);
-	paths = getpaths();
 	i = -1;
 	while (paths[++i])
 	{
@@ -83,3 +82,5 @@ t_cmd	parse(char *input)
 	free(paths);
 	return (cmd);
 }
+
+

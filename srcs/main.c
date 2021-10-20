@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 01:33:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 00:13:55 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,18 @@ int	skip_space(char *s)
 	return (0);
 }
 
+
 int	main()
 {
 	char	*input;
 	int		error;
 	t_exit	ext;
+	t_cmd	*cmd_table;
 	int		stdin_copied;
 	int		stdout_copied;
+	char	**argv;
+
+	int		len_cmd_table;
 
 	stdin_copied = dup(STDIN_FILENO);
 	stdout_copied = dup(STDOUT_FILENO);
@@ -66,11 +71,38 @@ int	main()
 	if (error)
 		return (puterr(error));
 	signal(SIGINT, sig_handler);
-	while ((input = readline(prompt)))
+
+
+
+
+
+	int	i = -1;
+
+	while ((input = readline(prompt)) && (i = -1))
 	{
 		if (!input[0] || skip_space(input))
 			continue ;
-		ext = run(parse(input));
+
+		argv = get_argv(input);
+		cmd_table = split_pipe(argv, &len_cmd_table);
+		while (++i < len_cmd_table)
+		{
+			// printf("%d : %s\n", i, cmd_table[i].argv[0]);
+			get_argv_without_redirection(check_redirection(cmd_table[i]), &(cmd_table[i].argv));
+			fill_path(&cmd_table[i]);
+		}
+
+
+		// printf("get argv w/o redir: %s\n", cmd_table[0].argv[0]);
+		i = -1;
+		while (++i < len_cmd_table)
+		{
+			// printf("cmd_table[%d].argv[0] %s\n",i, cmd_table[0].argv[0]);
+			ext = run(cmd_table[i]);
+		}
+
+
+		// ext = run(parse(input));
 		if (ext.pid == CHILD)
 			return (ext.status);
 		else if (ext.pid == PARENT_EXIT)

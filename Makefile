@@ -20,7 +20,8 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/error.c \
 		$(SRC_DIR)/builtin.c \
 		$(SRC_DIR)/redirection.c \
-		$(SRC_DIR)/environ.c
+		$(SRC_DIR)/environ.c \
+		$(SRC_DIR)/pipe.c
 
 
 all : $(NAME)
