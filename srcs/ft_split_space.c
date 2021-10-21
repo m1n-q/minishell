@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 17:41:44 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/21 17:58:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,20 @@ char	*rm_empty_q(char *s)
 
 int	cnt_pipe_redir(char *s)
 {
-	int	i;
-	int	ret;
+	int		i;
+	int		ret;
+	char	c;
 
 	i = 0;
 	ret = 0;
 	while (s[i])
 	{
+		if (is_q(s[i]))
+		{
+			c = s[i++];
+			while (s[i] && s[i] != c)
+				i++;
+		}
 		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i] != s[i + 1])
 		{
 			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
@@ -88,16 +95,25 @@ char	*split_pipe_redir(char *s)
 {
 	int		i;
 	int		j;
+	char	c;
 	char	*ret;
 
 	i = -1;
 	j = 0;
+	if (!cnt_pipe_redir(s))
+		return (s);
 	ret = malloc(sizeof(char) * ((int)ft_strlen(s) + cnt_pipe_redir(s) + 1));
 	if (!ret)
 		return (0);
 	while (++i < (int)ft_strlen(s) + cnt_pipe_redir(s))
 	{
-		if (s[j] == '|' || s[j] == '<' || s[j] == '>')
+		if (is_q(s[j]))
+		{
+			c = s[j++];
+			while (s[j] && s[j] != c)
+				ret[i++] = s[j++];
+		}
+		else if (s[j] == '|' || s[j] == '<' || s[j] == '>')
 		{
 			if (j > 0 && s[j - 1] != s[j])
 				ret[i++] = ' ';
