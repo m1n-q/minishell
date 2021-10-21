@@ -6,24 +6,24 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 23:58:17 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/18 18:18:16 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/22 00:33:06 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
 /* skip q marks when counting how many strings there are */
-char	*skip_q(char *s, char c)
+int	skip_q(char *s)
 {
-	s++;
-	while (*s)
-	{
-		if (*s == c)
-			break ;
-		s++;
-	}
-	s++;
-	return (s);
+	int		i;
+	char	c;
+
+	i = 0;
+	c = s[i++];
+	while (s[i] != c)
+		i++;
+	i++;
+	return (i);
 }
 
 /* count how many strings there are */
@@ -40,11 +40,11 @@ int	cnt_strs(char *s)
 		{
 			ret++;
 			if (is_q(*s) && (*s == s[0] || (*s && ft_isspace(*(s - 1)))))
-				s = skip_q(s, *s);
+				s += skip_q(s);
 			while (*s && !ft_isspace(*s))
 			{
 				if (is_q(*s))
-					s = skip_q(s, *s);
+					s += skip_q(s);
 				else
 					s++;
 			}

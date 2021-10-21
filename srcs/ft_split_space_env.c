@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/20 01:23:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/21 14:10:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_env(char c)
 {
-	return (ft_isdigit(c) || (c >= 'A' && c <= 'Z') || c == '_');
+	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
 }
 
 char	*join_char(char *s, char c)

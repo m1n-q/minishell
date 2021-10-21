@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 23:58:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/19 01:23:20 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/22 00:17:35 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,9 @@ int	is_q(char c)
 	return (c == '"' || c == '\'');
 }
 
-/* if the numbers of each quotes are odd (mismatch) return 0,
- * otherwise return 1 */
-int	quotes_match(char *s)
+int	is_pipe_rin_rout(char c)
 {
-	char	c;
-	int		cnt_q;
-
-	cnt_q = 0;
-	while (*s)
-	{
-		if (is_q(*s))
-		{
-			c = *s++;
-			cnt_q++;
-			while (*s)
-			{
-				if (*s == c)
-				{
-					cnt_q--;
-					break ;
-				}
-				s++;
-			}
-		}
-		s++;
-	}
-	return (1);
+	return (c == '|' || c == '<' || c == '>');
 }
 
 int	is_empty_q(char *s)

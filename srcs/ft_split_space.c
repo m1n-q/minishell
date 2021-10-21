@@ -6,11 +6,40 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/19 01:22:49 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/22 00:17:31 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
+
+/* if the numbers of each of the quotes are odd (mismatch) return 0,
+ * otherwise return 1 */
+int	quotes_match(char *s)
+{
+	char	c;
+	int		cnt_q;
+
+	cnt_q = 0;
+	while (*s)
+	{
+		if (is_q(*s))
+		{
+			c = *s++;
+			cnt_q++;
+			while (*s)
+			{
+				if (*s == c)
+				{
+					cnt_q--;
+					break ;
+				}
+				s++;
+			}
+		}
+		s++;
+	}
+	return (1);
+}
 
 int	cnt_empty_q(char *s)
 {
@@ -64,6 +93,7 @@ char	**ft_split_space(char *s)
 	if (!quotes_match(s))
 		return (0);
 	s = rm_empty_q(s);
+	s = split_pipe_redir(s);
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;
@@ -74,11 +104,10 @@ char	**ft_split_space(char *s)
 			str_len = cnt_str_len(s);
 			ret[i] = malloc_str(s, ret, i, str_len);
 			ret[i] = cpy_str(s, ret[i]);
-			s += str_len;
+			s += str_len - 1;
 			i++;
 		}
-		else
-			s++;
+		s++;
 	}
 	ret[i] = 0;
 	return (ret);
