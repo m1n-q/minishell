@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 00:56:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 22:17:12 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,41 +78,61 @@ int	main()
 
 	int	i = -1;
 
-	while ((input = readline(prompt)) && (i = -1))
+	while ((input = readline(prompt)))
 	{
 		if (!input[0] || skip_space(input))
 			continue ;
 
 		argv = get_argv(input);
 		cmd_table = split_pipe(argv, &len_cmd_table);
+		i = -1;
 		while (++i < len_cmd_table)
 		{
 			// printf("%d : %s\n", i, cmd_table[i].argv[0]);
 			get_argv_without_redirection(check_redirection(cmd_table[i]), &(cmd_table[i].argv));
 			fill_path(&cmd_table[i]);
+			// printf("get argv w/o redir: %s\n", cmd_table[i].argv[0]);
 		}
 
 
-		// printf("get argv w/o redir: %s\n", cmd_table[0].argv[0]);
+		/*
+			make pipe;
+			connect pipe;
+			set stream(redirection);
+		*/
+
+		i = -1;
+		while (++i < len_cmd_table - 1)			// except last entry
+		{
+			make_pipe(&cmd_table[i]);
+			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
+		}
+
+
 		i = -1;
 		while (++i < len_cmd_table)
 		{
 			// printf("cmd_table[%d].argv[0] %s\n",i, cmd_table[0].argv[0]);
 			ext = run(cmd_table[i]);
+			if (ext.pid == CHILD)		/* only if execve failed */
+			{
+				return (ext.status);	//FIXIT: clarify name & usage: status / exitcode
+ 			}
+		}
+		if (ext.pid != CHILD)
+		{
+			ext.pid = waitpid(0, &ext.status, 0);	//TODO: get exitcode of last arg
+			sleep(1);			//FIXIT: tmply set delay to wait print of all forked processes
 		}
 
-
-		// ext = run(parse(input));
-		if (ext.pid == CHILD)
-			return (ext.status);
-		else if (ext.pid == PARENT_EXIT)
-			return (ext.status);
-		else if (ext.pid == BUILTIN && ext.status)
-			puterr(ext.status);
-		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
-			puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
-		restore_stream(stdin_copied, STDIN_FILENO);
-		restore_stream(stdout_copied, STDOUT_FILENO);
+		// if (ext.pid == PARENT_EXIT)	/* elif */
+		// 	return (ext.status);
+		// else if (ext.pid == BUILTIN && ext.status)
+		// 	puterr(ext.status);
+		// else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
+		// 	puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
+		// restore_stream(stdin_copied, STDIN_FILENO);
+		// restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
 		free(input);
 	}

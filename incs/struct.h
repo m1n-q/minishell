@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 20:06:50 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 17:30:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 01:42:21 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_cmd
 	int				here_doc;
 	int				r_out_a;
 	t_io_table		io_table;
+	int				pipe[2];
 }			t_cmd;
 
 typedef struct s_exit

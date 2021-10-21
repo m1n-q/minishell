@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 00:58:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 22:13:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int	fill_path(t_cmd *cmd)
 	else
 	{
 		if (is_builtin(cmd->argv[0]))			//NOTE:it includes __exit case
-			cmd->path = "built-in";			//FIXME
+			cmd->path = "built-in";			//FIXME: "built-in" can be input
 		else
 			cmd->path = get_path(cmd->argv[0]);	//NOTE:it includes ENOCMD case
 	}
@@ -186,23 +186,37 @@ t_exit	run(t_cmd cmd)
 {
 	t_exit		ext;
 
-	printf("cmd.path : %s\n", cmd.path);
-	if (is_equal(cmd.path, "built-in"))	//FIXME:
+	// printf("cmd.path : %s\n", cmd.path);
+	if (is_equal(cmd.path, "built-in"))		//FIXME: "built-in" can be input
 	{
 		if (is_equal("exit", cmd.argv[0]))
 			return ((t_exit){PARENT_EXIT, __exit(cmd.argv)});
 		else
 			return ((t_exit){BUILTIN, run_builtin(cmd.argv)});
 	}
+
+
 	ext.pid = fork();
 	ext.status = 0;
+	if (ext.pid < 0)
+	{
+		printf("fork failed\n");
+	}
 	if (ext.pid == CHILD)
 	{
+		dup2(cmd.io_table.stdout_fd, STDOUT_FILENO);
+		dup2(cmd.io_table.stdin_fd, STDIN_FILENO);
+			// connect_pipe(cmd, next);
+		// printf("[in run] i am child\n");
 		if (execve(cmd.path, cmd.argv, environ) == -1)			/* if has slash and execve fail -> No such file or directory */
 			ext.status = errno;
+			// printf("fail!");
 	}
 	else if (ext.pid > 0)
-		ext.pid = wait(&ext.status);
+		// ext.pid = waitpid(0, &ext.status, 0);
+		// waitpid(ext.pid, &ext.status, 0);
+		;
 	return (ext);
+
 }
 	// return ((t_exit){BUILTIN, ENOCMD});				/* Command not found */

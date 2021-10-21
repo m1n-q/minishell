@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 18:27:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 22:06:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,10 @@ int			get_argv_without_redirection(int count_redirection, char ***argv);
 /* pipe */
 int			count_pipe(char	**argv);
 t_cmd		*split_pipe(char **argv, int *size);
+int			make_pipe(t_cmd *cmd);
+int			connect_pipe(t_cmd to_be_in, t_cmd to_be_out);
+int			set_pipe_stream(t_cmd *cmd, t_cmd *next);
+
 
 char		**get_argv(char *input);
 char		**get_paths(void);

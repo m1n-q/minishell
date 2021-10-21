@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 00:55:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/21 22:06:08 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ t_cmd	*split_pipe(char **argv, int *size)
 
 	argc = get_argc(argv);
 	num_pipe = count_pipe(argv);
+	*size = (num_pipe + 1);
 	cmd_table = (t_cmd *)malloc(sizeof(t_cmd) * (num_pipe + 1));
 	if (!cmd_table)
 		return (NULL);
+
 	if (num_pipe == 0)
 	{
 		cmd_table[0].argv = argv;
@@ -63,6 +65,9 @@ t_cmd	*split_pipe(char **argv, int *size)
 			(*cmd_table).io_table.stdin_fd = 0;
 			(*cmd_table).io_table.stdout_fd = 1;
 			(*cmd_table).io_table.stderr_fd = 2;
+			(*cmd_table).pipe[0] = 0;
+			(*cmd_table).pipe[1] = 1;
+
 
 			if (argv[i_pipe] == NULL)
 				break ;
@@ -71,13 +76,31 @@ t_cmd	*split_pipe(char **argv, int *size)
 		}
 	}
 	cmd_table -= num_pipe;
-	*size = (num_pipe + 1);
 	return (cmd_table);
 }
 
-int	make_pipes(t_cmd *cmd_table)
+int	make_pipe(t_cmd *cmd)
 {
-	//do sth;
-	(void)cmd_table;
+	pipe(cmd->pipe);
+	return (0);
+}
+
+int	connect_pipe(t_cmd to_be_in, t_cmd to_be_out)
+{
+	// printf("to be in : [%d, %d]\n", to_be_in.pipe[0], to_be_in.pipe[1]);
+	// printf("to be out : [%d, %d]\n", to_be_out.pipe[0], to_be_out.pipe[1]);
+	dup2(to_be_in.pipe[0], 0);
+	close(to_be_in.pipe[1]);
+
+	dup2(to_be_out.pipe[1], 1);
+	close(to_be_out.pipe[0]);
+
+	return (0);
+}
+
+int	set_pipe_stream(t_cmd *cmd, t_cmd *next)
+{
+	cmd->io_table.stdout_fd = cmd->pipe[1];
+	next->io_table.stdin_fd = cmd->pipe[0];
 	return (0);
 }
