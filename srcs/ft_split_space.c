@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/19 01:22:49 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/21 17:41:44 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,64 @@ char	*rm_empty_q(char *s)
 	return (ret);
 }
 
+int	cnt_pipe_redir(char *s)
+{
+	int	i;
+	int	ret;
+
+	i = 0;
+	ret = 0;
+	while (s[i])
+	{
+		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i] != s[i + 1])
+		{
+			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
+				ret++;
+			if (s[i + 1] && !ft_isspace(s[i + 1]))
+				ret++;
+		}
+		else if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i] == s[i + 1])
+		{
+			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
+				ret++;
+			if (s[i + 2] && !ft_isspace(s[i + 2]))
+				ret++;
+			i++;
+		}
+		i++;
+	}
+	return (ret);
+}
+
+char	*split_pipe_redir(char *s)
+{
+	int		i;
+	int		j;
+	char	*ret;
+
+	i = -1;
+	j = 0;
+	ret = malloc(sizeof(char) * ((int)ft_strlen(s) + cnt_pipe_redir(s) + 1));
+	if (!ret)
+		return (0);
+	while (++i < (int)ft_strlen(s) + cnt_pipe_redir(s))
+	{
+		if (s[j] == '|' || s[j] == '<' || s[j] == '>')
+		{
+			if (j > 0 && s[j - 1] != s[j])
+				ret[i++] = ' ';
+			ret[i++] = s[j++];
+			if (s[j] == s[j - 1])
+				ret[i++] = s[j++];
+			ret[i] = ' ';
+		}
+		else
+			ret[i] = s[j++];
+	}
+	ret[i] = 0;
+	return (ret);
+}
+
 char	**ft_split_space(char *s)
 {
 	int		i;
@@ -64,6 +122,7 @@ char	**ft_split_space(char *s)
 	if (!quotes_match(s))
 		return (0);
 	s = rm_empty_q(s);
+	s = split_pipe_redir(s);
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;
@@ -74,11 +133,10 @@ char	**ft_split_space(char *s)
 			str_len = cnt_str_len(s);
 			ret[i] = malloc_str(s, ret, i, str_len);
 			ret[i] = cpy_str(s, ret[i]);
-			s += str_len;
+			s += str_len - 1;
 			i++;
 		}
-		else
-			s++;
+		s++;
 	}
 	ret[i] = 0;
 	return (ret);
