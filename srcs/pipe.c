@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 22:06:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 00:39:27 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int	make_pipe(t_cmd *cmd)
 
 int	connect_pipe(t_cmd to_be_in, t_cmd to_be_out)
 {
-	// printf("to be in : [%d, %d]\n", to_be_in.pipe[0], to_be_in.pipe[1]);
-	// printf("to be out : [%d, %d]\n", to_be_out.pipe[0], to_be_out.pipe[1]);
 	dup2(to_be_in.pipe[0], 0);
 	close(to_be_in.pipe[1]);
 

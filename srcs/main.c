@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 22:17:12 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 00:48:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ void	sig_handler(int signum)
 	}
 }
 
-int	skip_space(char *s)
-{
-	while (ft_isspace(*s))
-		s++;
-	if (!*s)
-		return (1);
-	return (0);
-}
-
-
 int	main()
 {
 	char	*input;
@@ -64,6 +54,7 @@ int	main()
 
 	int		len_cmd_table;
 
+
 	stdin_copied = dup(STDIN_FILENO);
 	stdout_copied = dup(STDOUT_FILENO);
 	environ = environ_to_heap();						/* to modify || unset || extend and free prev */
@@ -71,10 +62,6 @@ int	main()
 	if (error)
 		return (puterr(error));
 	signal(SIGINT, sig_handler);
-
-
-
-
 
 	int	i = -1;
 
@@ -88,18 +75,9 @@ int	main()
 		i = -1;
 		while (++i < len_cmd_table)
 		{
-			// printf("%d : %s\n", i, cmd_table[i].argv[0]);
-			get_argv_without_redirection(check_redirection(cmd_table[i]), &(cmd_table[i].argv));
+			get_argv_without_redirection(check_redirection(&cmd_table[i]), &(cmd_table[i].argv));
 			fill_path(&cmd_table[i]);
-			// printf("get argv w/o redir: %s\n", cmd_table[i].argv[0]);
 		}
-
-
-		/*
-			make pipe;
-			connect pipe;
-			set stream(redirection);
-		*/
 
 		i = -1;
 		while (++i < len_cmd_table - 1)			// except last entry
@@ -112,18 +90,16 @@ int	main()
 		i = -1;
 		while (++i < len_cmd_table)
 		{
-			// printf("cmd_table[%d].argv[0] %s\n",i, cmd_table[0].argv[0]);
+			set_redir_stream(&cmd_table[i]);
 			ext = run(cmd_table[i]);
 			if (ext.pid == CHILD)		/* only if execve failed */
-			{
 				return (ext.status);	//FIXIT: clarify name & usage: status / exitcode
- 			}
 		}
-		if (ext.pid != CHILD)
-		{
-			ext.pid = waitpid(0, &ext.status, 0);	//TODO: get exitcode of last arg
-			sleep(1);			//FIXIT: tmply set delay to wait print of all forked processes
-		}
+		// if (ext.pid != CHILD)
+		// {
+		// 	ext.pid = waitpid(0, &ext.status, 0);	//TODO: get exitcode of last arg
+		// 	sleep(1);			//FIXIT: tmply set delay to wait print of all forked processes
+		// }
 
 		// if (ext.pid == PARENT_EXIT)	/* elif */
 		// 	return (ext.status);
@@ -139,3 +115,10 @@ int	main()
 	close(stdin_copied);
 	close(stdout_copied);
 }
+
+/*
+	get redir info;
+	make pipe;
+	connect pipe;
+	set redirection;
+*/

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/21 22:06:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 00:39:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			get_argc(char **argv);
 long long 	atonum(const char *str, int *len);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
+int			skip_space(char *s);
 
 /* built-in */
 int			__exit(char **argv);
@@ -115,9 +116,10 @@ void		free_strs(char **ret, int i);
 int			redirect_in(char *arg);
 int			redirect_out(char *arg);
 int			redirect_append(char *arg);
+int			set_redir_stream(t_cmd *cmd);
 int			restore_stream(int std_copied, int std_org);
-int			check_redirection(t_cmd cmd);
-int			get_argv_without_redirection(int count_redirection, char ***argv);
+int			check_redirection(t_cmd *cmd);
+int			get_argv_without_redirection(int count_redir, char ***argv);
 
 /* pipe */
 int			count_pipe(char	**argv);

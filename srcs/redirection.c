@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/20 16:38:37 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 00:20:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,18 @@ int	redirect_append(char *arg)
 	return (fd);
 }
 
+
+int	set_redir_stream(t_cmd *cmd)
+{
+	if (cmd->redir_flag)
+	{
+		cmd->io_table.stdin_fd = cmd->redir.stdin_fd;
+		cmd->io_table.stdout_fd = cmd->redir.stdout_fd;
+		cmd->io_table.stderr_fd = cmd->redir.stderr_fd;
+	}
+	return (0);
+}
+
 /* 1) copy std -> restore to (0, 1) -> close(copied) */
 /* 2) copy std and keep them stored till program ends */
 int	restore_stream(int std_copied, int std_org)
@@ -87,3 +99,4 @@ int	restore_stream(int std_copied, int std_org)
 	...	1 = new3;
 	... return (new1);
 */
+
