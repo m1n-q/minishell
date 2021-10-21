@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/19 16:46:38 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/21 23:52:17 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*cpy_wo_q(char *s, char *ret)
 			c = *s++;
 			while (*s && *s != c)
 				ret[i++] = *s++;
+			s++;
 		}
 		else
 			ret[i++] = *s++;

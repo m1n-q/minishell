@@ -6,11 +6,40 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 17:58:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/22 00:17:31 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
+
+/* if the numbers of each of the quotes are odd (mismatch) return 0,
+ * otherwise return 1 */
+int	quotes_match(char *s)
+{
+	char	c;
+	int		cnt_q;
+
+	cnt_q = 0;
+	while (*s)
+	{
+		if (is_q(*s))
+		{
+			c = *s++;
+			cnt_q++;
+			while (*s)
+			{
+				if (*s == c)
+				{
+					cnt_q--;
+					break ;
+				}
+				s++;
+			}
+		}
+		s++;
+	}
+	return (1);
+}
 
 int	cnt_empty_q(char *s)
 {
@@ -50,80 +79,6 @@ char	*rm_empty_q(char *s)
 			ret[i++] = *s++;
 		if (!*s)
 			break ;
-	}
-	ret[i] = 0;
-	return (ret);
-}
-
-int	cnt_pipe_redir(char *s)
-{
-	int		i;
-	int		ret;
-	char	c;
-
-	i = 0;
-	ret = 0;
-	while (s[i])
-	{
-		if (is_q(s[i]))
-		{
-			c = s[i++];
-			while (s[i] && s[i] != c)
-				i++;
-		}
-		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i] != s[i + 1])
-		{
-			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
-				ret++;
-			if (s[i + 1] && !ft_isspace(s[i + 1]))
-				ret++;
-		}
-		else if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i] == s[i + 1])
-		{
-			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
-				ret++;
-			if (s[i + 2] && !ft_isspace(s[i + 2]))
-				ret++;
-			i++;
-		}
-		i++;
-	}
-	return (ret);
-}
-
-char	*split_pipe_redir(char *s)
-{
-	int		i;
-	int		j;
-	char	c;
-	char	*ret;
-
-	i = -1;
-	j = 0;
-	if (!cnt_pipe_redir(s))
-		return (s);
-	ret = malloc(sizeof(char) * ((int)ft_strlen(s) + cnt_pipe_redir(s) + 1));
-	if (!ret)
-		return (0);
-	while (++i < (int)ft_strlen(s) + cnt_pipe_redir(s))
-	{
-		if (is_q(s[j]))
-		{
-			c = s[j++];
-			while (s[j] && s[j] != c)
-				ret[i++] = s[j++];
-		}
-		else if (s[j] == '|' || s[j] == '<' || s[j] == '>')
-		{
-			if (j > 0 && s[j - 1] != s[j])
-				ret[i++] = ' ';
-			ret[i++] = s[j++];
-			if (s[j] == s[j - 1])
-				ret[i++] = s[j++];
-			ret[i] = ' ';
-		}
-		else
-			ret[i] = s[j++];
 	}
 	ret[i] = 0;
 	return (ret);
