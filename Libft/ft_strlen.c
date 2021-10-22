@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/13 17:12:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/20 17:48:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	ret;
 
+	if (s == NULL)
+		return (0);
 	ret = 0;
 	while (*s++)
 		ret++;
