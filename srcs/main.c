@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 19:45:55 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 22:58:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,8 @@ int	init_terminal_data(void)
 	return (0);
 }
 
-void	sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-}
+
+
 
 int	main()
 {
@@ -55,13 +47,26 @@ int	main()
 	int		len_cmd_table;
 
 
+	TTY	org_setting;
+	TTY	my_setting;
+	if (isatty(STDIN_FILENO))
+	{
+		tcgetattr(STDIN_FILENO, &org_setting);
+		tcgetattr(STDIN_FILENO, &my_setting);
+
+		my_setting.c_lflag &= ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &my_setting);
+	}
+
 	stdin_copied = dup(STDIN_FILENO);
 	stdout_copied = dup(STDOUT_FILENO);
 	environ = environ_to_heap();					/* to modify || unset || extend and free prev */
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
-	signal(SIGINT, sig_handler);
+	// signal(SIGINT, sig_handler);
+	signal(SIGINT, sig_handler_parent);
+	signal(SIGQUIT, SIG_IGN);
 
 	while ((input = readline(prompt)))
 	{
@@ -85,6 +90,8 @@ int	main()
 			puterr(ext.status);
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			puterr(WEXITSTATUS(ext.status));		/* child process exit status (not built-in func) */
+		// else if (WIFSIGNALED(ext.status))
+		// 	printf("signal : %d\n", WTERMSIG(ext.status));
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
@@ -92,5 +99,7 @@ int	main()
 	}
 	close(stdin_copied);
 	close(stdout_copied);
+
+	tcsetattr(STDIN_FILENO, TCSANOW, &org_setting);
 }
 
