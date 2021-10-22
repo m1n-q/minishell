@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 00:39:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 19:45:11 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ extern char	**environ;
 int			puterr(int error);
 
 /* parse */
+char		**get_argv(char *input);
 t_cmd		parse(char *input);
 
 /* run */
@@ -113,24 +114,27 @@ char		**malloc_strs(char *s);
 void		free_strs(char **ret, int i);
 
 /* redirection */
-int			redirect_in(char *arg);
-int			redirect_out(char *arg);
-int			redirect_append(char *arg);
-int			set_redir_stream(t_cmd *cmd);
-int			restore_stream(int std_copied, int std_org);
-int			check_redirection(t_cmd *cmd);
-int			get_argv_without_redirection(int count_redir, char ***argv);
+int			redir_in(char *arg);
+int			redir_out(char *arg);
+int			redir_append(char *arg);
+int			check_redir(t_cmd *cmd, int *count_redir);
+int			trim_redir(char ***argv, int count_redir);
 
 /* pipe */
 int			count_pipe(char	**argv);
 t_cmd		*split_pipe(char **argv, int *size);
 int			make_pipe(t_cmd *cmd);
-int			connect_pipe(t_cmd to_be_in, t_cmd to_be_out);
 int			set_pipe_stream(t_cmd *cmd, t_cmd *next);
 
+/* stream */
+int			connect_stream(t_io_table stream);
+int			destroy_stream(t_io_table stream);
+int			restore_stream(int std_copied, int std_org);
 
-char		**get_argv(char *input);
+/* path */
 char		**get_paths(void);
-int			fill_path(t_cmd *cmd);
+int			set_path(t_cmd *cmd);
 
+/* cmd */
+int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/22 00:20:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 19:29:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 //NOTE: '>' 을 기준으로 쪼개서 run 해야 할 듯..
 
-int	redirect_in(char *arg)
+int	redir_in(char *arg)
 {
 	int	fd;
-	int std_copied;
+	// int std_copied;
 
-	std_copied = dup(STDIN_FILENO);
+	// std_copied = dup(STDIN_FILENO);
 	fd = open(arg, O_RDONLY);
 	// dup2(fd, STDIN_FILENO);
 	// close(fd);
@@ -27,10 +27,10 @@ int	redirect_in(char *arg)
 	return (fd);
 }
 
-int	redirect_out(char *arg)
+int	redir_out(char *arg)
 {
 	int	fd;
-	int	std_copied;
+	// int	std_copied;
 
 	/* if AMP && instream */
 	// redirect instream to . . .
@@ -39,18 +39,20 @@ int	redirect_out(char *arg)
 	// redirect to outstream, not to arg
 
 	/* else */
-	std_copied = dup(STDOUT_FILENO);
+	// std_copied = dup(STDOUT_FILENO);
+
 	fd = open(arg, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	// printf("fd %d opened\n", fd);
 	// dup2(fd, STDOUT_FILENO);
 	// close(fd);
 	// return (std_copied);
 	return (fd);
 }
 
-int	redirect_append(char *arg)
+int	redir_append(char *arg)
 {
 	int	fd;
-	int	std_copied;
+	// int	std_copied;
 
 	/* if AMP && instream */
 	// redirect instream to . . .
@@ -59,7 +61,7 @@ int	redirect_append(char *arg)
 	// Not redirect to outstream, >>&1 : append to filename '1'
 
 	/* else */
-	std_copied = dup(STDOUT_FILENO);
+	// std_copied = dup(STDOUT_FILENO);
 	fd = open(arg, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	// dup2(fd, STDOUT_FILENO);
 	// close(fd);
@@ -67,36 +69,68 @@ int	redirect_append(char *arg)
 	return (fd);
 }
 
-
-int	set_redir_stream(t_cmd *cmd)
+int	check_redir(t_cmd *cmd, int *count_redir)
 {
-	if (cmd->redir_flag)
+	int			i;
+	int			count;
+
+	count = 0;
+	i = -1;
+	while (cmd->argv[++i])
 	{
-		cmd->io_table.stdin_fd = cmd->redir.stdin_fd;
-		cmd->io_table.stdout_fd = cmd->redir.stdout_fd;
-		cmd->io_table.stderr_fd = cmd->redir.stderr_fd;
+		if (cmd->argv[i] == (char *)REDIRECT_OUT || \
+			cmd->argv[i] == (char *)REDIRECT_IN)
+		{
+			count++;
+			if (cmd->argv[i + 1])
+			{
+				if (cmd->argv[i] == (char *)REDIRECT_OUT)
+				{
+					if (cmd->redir_stream.out != -1)
+						close(cmd->redir_stream.out);
+					cmd->redir_stream.out = redir_out(cmd->argv[i + 1]);
+				}
+
+				else if (cmd->argv[i] == (char *)REDIRECT_IN)		//NOTE: what if i == 0 and redir_in
+				{
+					if (cmd->redir_stream.in != -1)
+						close(cmd->redir_stream.in);
+					cmd->redir_stream.in = redir_in(cmd->argv[i + 1]);
+				}
+			}
+		}
 	}
+	*count_redir = count;
 	return (0);
 }
 
-/* 1) copy std -> restore to (0, 1) -> close(copied) */
-/* 2) copy std and keep them stored till program ends */
-int	restore_stream(int std_copied, int std_org)
+int	trim_redir(char ***argv, int count_redir)
 {
-	dup2(std_copied, std_org);
-	// close(std_copied);
+	char	**new_argv;
+	int		argc;
+	int		i;
+	int		j;
+
+	argc = get_argc(*argv);
+	new_argv = (char **)ft_calloc(argc - count_redir + 1, sizeof(char *));
+	if (!new_argv)
+		return (-1);
+
+	i = -1;
+	j = -1;
+	while ((*argv)[++i])
+	{
+		if ((*argv)[i] > (char *)10LL)
+			new_argv[++j] = (*argv)[i];
+		else
+		{
+			if ((*argv)[i + 1])				//TODO: test cases
+				i += 1;
+		}
+	}
+
+	/* if pipe.method 2, free each cmd.argv*/
+	// free((*argv));
+	(*argv) = new_argv;
 	return (0);
 }
-
-/*
-	new1 == new1
-	1 == stdout
-	...	1 = new1;
-	... return ( org_stdout );
-
-	new3 == new3
-	1 == new1
-	...	1 = new3;
-	... return (new1);
-*/
-

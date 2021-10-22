@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 20:06:50 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 00:18:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 19:49:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 typedef struct s_io_table
 {
-	int		stdin_fd;
-	int		stdout_fd;
-	int		stderr_fd;
+	int		in;
+	int		out;
+	int		err;
 }				t_io_table;
 
 typedef struct s_cmd
@@ -30,10 +30,9 @@ typedef struct s_cmd
 	int				r_out;
 	int				here_doc;
 	int				r_out_a;
-	t_io_table		io_table;
-	t_io_table		redir;
 	int				pipe[2];
-	int				redir_flag;
+	t_io_table		redir_stream;
+	t_io_table		pipe_stream;
 }			t_cmd;
 
 typedef struct s_exit

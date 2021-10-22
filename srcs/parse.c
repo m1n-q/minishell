@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:50:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 17:31:03 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 19:46:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ void	init_q_r(t_cmd *cmd)
 	cmd->r_out = 0;
 	cmd->here_doc = 0;
 	cmd->r_out_a = 0;
-}
-
-char	**get_paths(void)
-{
-	char	**paths;
-	char	*env;
-
-	env = getenv("PATH");
-	paths = ft_split(env, ':');
-	return (paths);
 }
 
 char	**get_argv(char *input)
