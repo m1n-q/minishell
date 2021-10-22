@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/22 19:29:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/22 21:03:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 					if (cmd->redir_stream.in != -1)
 						close(cmd->redir_stream.in);
 					cmd->redir_stream.in = redir_in(cmd->argv[i + 1]);
+				}
+
+				else if (cmd->argv[i] == (char *)REDIRECT_APPEND)		//NOTE: what if i == 0 and redir_in
+				{
+					if (cmd->redir_stream.out != -1)
+						close(cmd->redir_stream.out);
+					cmd->redir_stream.out = redir_append(cmd->argv[i + 1]);
 				}
 			}
 		}
