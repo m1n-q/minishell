@@ -6,12 +6,13 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 14:10:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/23 00:43:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
+/* check if a character is an available character for enviroment variable */
 int	is_env(char c)
 {
 	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
@@ -36,7 +37,22 @@ char	*join_char(char *s, char c)
 	return (ret);
 }
 
-int	join_env_val(char *s, char **ret)
+/* join all the characters other than the environment variables */
+int	join_rest(char *s, char **ret)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && !is_env(s[i]) && s[i] != '$')
+	{
+		*ret = join_char(*ret, s[i]);
+		i++;
+	}
+	return (i);
+}
+
+/* join the value of the environment variables */
+int	join_env_var(char *s, char **ret)
 {
 	int		i;
 	char	*tmp;
@@ -57,19 +73,9 @@ int	join_env_val(char *s, char **ret)
 	return (i);
 }
 
-int	join_rest(char *s, char **ret)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && !is_env(s[i]) && s[i] != '$')
-	{
-		*ret = join_char(*ret, s[i]);
-		i++;
-	}
-	return (i);
-}
-
+/* if the first letter is a dollar-sign or 
+ * a double quotation mark followed by a dollar sign
+ */
 char	*case_env(char *s)
 {
 	char	*ret;
@@ -78,7 +84,7 @@ char	*case_env(char *s)
 	while (*s)
 	{
 		if (*s && *(s + 1) && *s == '$' && !ft_isspace(*(s + 1)))
-			s += join_env_val(s + 1, &ret);
+			s += join_env_var(s + 1, &ret);
 		if (*s == '"')
 			s++;
 		if (!*s || ft_isspace(*s))

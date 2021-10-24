@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/22 00:17:31 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/23 00:39:20 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	quotes_match(char *s)
 	return (1);
 }
 
+/* count empty sets of quotes */
 int	cnt_empty_q(char *s)
 {
 	int		ret;
@@ -59,7 +60,7 @@ int	cnt_empty_q(char *s)
 	return (ret);
 }
 
-/* remove all empty q's in the beginning */
+/* remove all empty sets of quotes */
 char	*rm_empty_q(char *s)
 {
 	int		i;
