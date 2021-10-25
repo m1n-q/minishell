@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 16:55:21 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/26 00:19:45 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,43 @@ extern unsigned char	g_exit_code;
 ◦ export with no options
 */
 
+/*
+	static int
+	builtin_status (result)
+		int result;
+	{
+	int r;
+
+	switch (result)
+	{
+	case EX_USAGE:
+		r = EX_BADUSAGE;
+		break;
+	case EX_REDIRFAIL:
+	case EX_BADSYNTAX:
+	case EX_BADASSIGN:
+	case EX_EXPFAIL:
+		r = EXECUTION_FAILURE;
+		break;
+	default:
+		r = EXECUTION_SUCCESS;
+		break;
+	}
+	return (r);
+	}
+*/
+
 //NOTE: need to handle additional (not supported) args
+//TODO: builtin error : common / individual
 int	is_builtin(char *arg)
 {
-	if (is_equal(arg, "cd") || is_equal(arg, "pwd")
-		|| is_equal(arg, "env") || is_equal(arg, "echo")
-		|| is_equal(arg, "exit") || is_equal(arg, "unset")
-		|| is_equal(arg, "export"))
+	if (is_equal(arg, "cd") || \
+		is_equal(arg, "pwd") || \
+		is_equal(arg, "env") || \
+		is_equal(arg, "echo") || \
+		is_equal(arg, "exit") || \
+		is_equal(arg, "unset") || \
+		is_equal(arg, "export"))
 		return (1);
 	return (0);
 }
@@ -50,7 +80,7 @@ int	__cd(char **argv)
 	{
 		if (chdir(argv[1]) == -1)
 		{
-			g_exit_code = BUILTIN_ERR;
+			g_exit_code = EXECUTION_FAILURE;
 			return (errno);
 		}
 	}
@@ -65,7 +95,7 @@ int	__pwd(char **argv)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		g_exit_code = BUILTIN_ERR;
+		g_exit_code = EXECUTION_FAILURE;
 		return (errno);
 	}
 	printf("%s\n", cwd);
@@ -147,7 +177,7 @@ int	__export(char **argv)
 	i = 0;
 	while (argv[++i])
 		if (!check_arg(argv[i]))
-			g_exit_code = BUILTIN_ERR;
+			g_exit_code = EXECUTION_FAILURE;
 	return (0);
 }
 

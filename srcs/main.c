@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 19:44:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 00:20:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,25 @@ int	main()
 		{
 			ext = run(cmd_table[i]);
 			if (ext.pid == CHILD)					/* only if execve failed */
-				exit(ext.code);				//FIXIT: clarify name & usage: status / exitcode
+				exit(ext.code);
 		}
 		if (ext.pid == PARENT_EXIT)
 			exit(ext.code);
 		else if (ext.pid == BUILTIN && ext.code)
-			puterr(ext.code);
-		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
-			puterr(WEXITSTATUS(ext.status));		/* child process exit status (not built-in func) */
+			// puterr(ext.code);
+			g_exit_code = ext.code;
+		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))		/* child process exit status (not built-in func) */
+			g_exit_code = WEXITSTATUS(ext.status);
 		else if (WIFSIGNALED(ext.status))
-			write(stdout_copied, "\n", 2);
+		{
+			write(stdout_copied, "\n", 1);
+			if (WTERMSIG(ext.status) == SIGINT)
+				g_exit_code = EX_SIGINT;
+			else if (WTERMSIG(ext.status) == SIGQUIT)
+				g_exit_code = EX_SIGQUIT;
+		}
+		else
+			g_exit_code = 0;			//NOTE: if execve succeed, cannot reach g_exit_code or sth
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
