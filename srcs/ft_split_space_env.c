@@ -6,17 +6,17 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/25 15:13:07 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/25 16:55:15 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
-extern int g_exit_code;
+extern unsigned char	g_exit_code;
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)
 {
-	return (ft_isdigit(c) || ft_isalpha(c) || c == '_' || c == '?');
+	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
 }
 
 char	*join_char(char *s, char c)
@@ -59,7 +59,7 @@ int	join_env_var(char *s, char **ret)
 	char	*tmp;
 
 	i = 0;
-	while (is_env(s[i]))
+	while (is_env(s[i]) || s[i] == '?')
 		i++;
 	tmp = malloc(sizeof(char) * (i + 1));
 	if (!tmp)
@@ -83,7 +83,6 @@ int	join_env_var(char *s, char **ret)
  */
 char	*case_env(char *s)
 {
-	printf("g_exit_code in ENV : %d\n", g_exit_code);
 	char	*ret;
 
 	ret = 0;

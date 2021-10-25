@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/14 19:59:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 16:17:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@
 # define ENOCMD				-10	/* Command not found */
 # define ENONUM				-11	/* Numeric argument required */
 # define E2MANY				-12	/* Too many arguments */
+# define BUILTIN_ERR		1
 
 #endif
