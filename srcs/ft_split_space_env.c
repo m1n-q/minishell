@@ -6,15 +6,17 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 14:10:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/25 15:13:07 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
+extern int g_exit_code;
+/* check if a character is an available character for enviroment variable */
 int	is_env(char c)
 {
-	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
+	return (ft_isdigit(c) || ft_isalpha(c) || c == '_' || c == '?');
 }
 
 char	*join_char(char *s, char c)
@@ -36,27 +38,7 @@ char	*join_char(char *s, char c)
 	return (ret);
 }
 
-int	join_env_val(char *s, char **ret)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (is_env(s[i]))
-		i++;
-	tmp = malloc(sizeof(char) * (i + 1));
-	if (!tmp)
-		return (0);
-	ft_strlcpy(tmp, s, i + 1);
-	if (*ret)
-		*ret = ft_strjoin(*ret, getenv(tmp));
-	else
-		*ret = getenv(tmp);
-	free(tmp);
-	i++;
-	return (i);
-}
-
+/* join all the characters other than the environment variables */
 int	join_rest(char *s, char **ret)
 {
 	int	i;
@@ -70,15 +52,45 @@ int	join_rest(char *s, char **ret)
 	return (i);
 }
 
+/* join the value of the environment variables */
+int	join_env_var(char *s, char **ret)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (is_env(s[i]))
+		i++;
+	tmp = malloc(sizeof(char) * (i + 1));
+	if (!tmp)
+		return (0);
+	ft_strlcpy(tmp, s, i + 1);
+	if (*ret && ft_strncmp(tmp, "?", 1))
+		*ret = ft_strjoin(*ret, getenv(tmp));
+	else if (!*ret && ft_strncmp(tmp, "?", 1))
+		*ret = getenv(tmp);
+	else if (*ret && !ft_strncmp(tmp, "?", 1) && ft_strlen(tmp) == 1)
+		*ret = ft_strjoin(*ret, ft_itoa(g_exit_code));
+	else if (!*ret && !ft_strncmp(tmp, "?", 1) && ft_strlen(tmp) == 1)
+		*ret = ft_itoa(g_exit_code);
+	free(tmp);
+	i++;
+	return (i);
+}
+
+/* if the first letter is a dollar-sign or 
+ * a double quotation mark followed by a dollar sign
+ */
 char	*case_env(char *s)
 {
+	printf("g_exit_code in ENV : %d\n", g_exit_code);
 	char	*ret;
 
 	ret = 0;
 	while (*s)
 	{
 		if (*s && *(s + 1) && *s == '$' && !ft_isspace(*(s + 1)))
-			s += join_env_val(s + 1, &ret);
+			s += join_env_var(s + 1, &ret);
 		if (*s == '"')
 			s++;
 		if (!*s || ft_isspace(*s))

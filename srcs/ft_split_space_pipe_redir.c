@@ -6,12 +6,14 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 22:15:20 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/22 00:32:06 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/23 00:47:07 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
+/* check if a string contains a pipe or redirection
+ * maybe we can use a function from libft */
 int	check_pipe_redir(char *s)
 {
 	while (*s)
@@ -23,6 +25,7 @@ int	check_pipe_redir(char *s)
 	return (0);
 }
 
+/* count the number of pipes and redirections */
 void	cnt_pipe_redir(char *s, int *cnt)
 {
 	int	i;
@@ -51,6 +54,8 @@ void	cnt_pipe_redir(char *s, int *cnt)
 	}
 }
 
+/* insert space before and after the pipes and redirections
+ * if they are not separated by space within a string */
 void	cpy_pipe_redir(char *s, char *ret, int *i, int *j)
 {
 	if (*j > 0 && s[(*j) - 1] != s[*j] && !ft_isspace(s[(*j) - 1]))
@@ -62,6 +67,7 @@ void	cpy_pipe_redir(char *s, char *ret, int *i, int *j)
 		ret[(*i)++] = ' ';
 }
 
+/* insert spaces between the pipes and redirections in the original string */
 void	cpy_with_space(char *s, int len, char *ret, int i)
 {
 	int		j;

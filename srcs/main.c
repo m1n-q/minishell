@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 19:45:55 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 15:04:09 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char		term_buffer[2048];
 char		*prompt = PROMPT;
+int			g_exit_code;
 
 int	init_terminal_data(void)
 {
