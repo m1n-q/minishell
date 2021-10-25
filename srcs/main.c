@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 18:28:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 19:44:14 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int	main()
 		{
 			ext = run(cmd_table[i]);
 			if (ext.pid == CHILD)					/* only if execve failed */
-				return (ext.status);				//FIXIT: clarify name & usage: status / exitcode
+				exit(ext.code);				//FIXIT: clarify name & usage: status / exitcode
 		}
 		if (ext.pid == PARENT_EXIT)
-			return (ext.status);
-		else if (ext.pid == BUILTIN && ext.status)
-			puterr(ext.status);
+			exit(ext.code);
+		else if (ext.pid == BUILTIN && ext.code)
+			puterr(ext.code);
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			puterr(WEXITSTATUS(ext.status));		/* child process exit status (not built-in func) */
 		else if (WIFSIGNALED(ext.status))

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 18:19:39 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 19:44:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ t_exit	run(t_cmd cmd)
 	if (is_equal(cmd.path, "built-in"))		//FIXME: "built-in" can be input
 	{
 		if (is_equal("exit", cmd.argv[0]))
-			return ((t_exit){PARENT_EXIT, __exit(cmd.argv)});
+			return ((t_exit){PARENT_EXIT, 0, __exit(cmd.argv)});
 		else
-			return ((t_exit){BUILTIN, run_builtin(cmd.argv)});
+			return ((t_exit){BUILTIN, 0, run_builtin(cmd.argv)});
 	}
 
 	ext.pid = fork();
 	ext.status = 0;
+	ext.code = 0;
 	if (ext.pid < 0)
 		printf("fork failed\n");
 
@@ -44,7 +45,7 @@ t_exit	run(t_cmd cmd)
 		connect_stream(cmd.pipe_stream);
 		connect_stream(cmd.redir_stream);
 		if (execve(cmd.path, cmd.argv, environ) == -1)			/* if has slash and execve fail -> No such file or directory */
-			ext.status = errno;				//FIXIT: clarify name & usage: status / exitcode
+			ext.code = errno;				//FIXIT: clarify name & usage: status / exitcode
 	}
 
 	else if (ext.pid > 0)
