@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 16:28:58 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/25 18:28:07 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@ int	init_terminal_data(void)
 	return (0);
 }
 
-void	sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-}
-
 int	main()
 {
 	char	*input;
@@ -55,14 +44,18 @@ int	main()
 	int		i;
 	int		len_cmd_table;
 
-
 	stdin_copied = dup(STDIN_FILENO);
 	stdout_copied = dup(STDOUT_FILENO);
 	environ = environ_to_heap();					/* to modify || unset || extend and free prev */
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
-	signal(SIGINT, sig_handler);
+
+	signal(SIGINT, sig_handler_interactive);
+	signal(SIGQUIT, SIG_IGN);
+	rl_signal_event_hook = sigint_event_hook;
+	extern int _rl_echo_control_chars;
+	_rl_echo_control_chars = 0;
 
 	while ((input = readline(prompt)))
 	{
@@ -86,6 +79,8 @@ int	main()
 			puterr(ext.status);
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			puterr(WEXITSTATUS(ext.status));		/* child process exit status (not built-in func) */
+		else if (WIFSIGNALED(ext.status))
+			write(stdout_copied, "\n", 2);
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
@@ -93,5 +88,19 @@ int	main()
 	}
 	close(stdin_copied);
 	close(stdout_copied);
+
 }
 
+	// TTY	org_setting;
+	// TTY	my_setting;
+	// if (isatty(STDIN_FILENO))
+	// {
+	// 	tcgetattr(STDIN_FILENO, &org_setting);
+	// 	tcgetattr(STDIN_FILENO, &my_setting);
+
+	// 	// my_setting.c_lflag &= ~ECHOCTL;
+	// 	tcsetattr(STDIN_FILENO, TCSANOW, &my_setting);
+	// }
+
+	/* restore */
+	// tcsetattr(STDIN_FILENO, TCSANOW, &org_setting);

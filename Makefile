@@ -25,7 +25,8 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/pipe.c \
 		$(SRC_DIR)/stream.c \
 		$(SRC_DIR)/path.c \
-		$(SRC_DIR)/cmd.c
+		$(SRC_DIR)/cmd.c \
+		$(SRC_DIR)/signal.c
 
 
 all : $(NAME)
