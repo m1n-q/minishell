@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 22:07:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 18:19:39 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,21 @@ t_exit	run(t_cmd cmd)
 
 	if (ext.pid == CHILD)
 	{
-		signal(SIGINT, sig_handler_child);
-		signal(SIGQUIT, sig_handler_child);
+		signal(SIGQUIT, SIG_DFL);
 		connect_stream(cmd.pipe_stream);
 		connect_stream(cmd.redir_stream);
 		if (execve(cmd.path, cmd.argv, environ) == -1)			/* if has slash and execve fail -> No such file or directory */
-			ext.status = errno;		//FIXIT: clarify name & usage: status / exitcode
+			ext.status = errno;				//FIXIT: clarify name & usage: status / exitcode
 	}
 
 	else if (ext.pid > 0)
 	{
 		destroy_stream(cmd.pipe_stream);
 		destroy_stream(cmd.redir_stream);
-		ext.pid = wait(&ext.status);
+		ext.pid = wait(&ext.status);		//FIXIT: have to be async
 	}
 
 	return (ext);
 }
-
 
 // return ((t_exit){BUILTIN, ENOCMD});				/* Command not found */
