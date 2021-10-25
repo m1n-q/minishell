@@ -6,16 +6,17 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/23 00:43:32 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/25 15:13:07 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
+extern int g_exit_code;
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)
 {
-	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
+	return (ft_isdigit(c) || ft_isalpha(c) || c == '_' || c == '?');
 }
 
 char	*join_char(char *s, char c)
@@ -64,10 +65,14 @@ int	join_env_var(char *s, char **ret)
 	if (!tmp)
 		return (0);
 	ft_strlcpy(tmp, s, i + 1);
-	if (*ret)
+	if (*ret && ft_strncmp(tmp, "?", 1))
 		*ret = ft_strjoin(*ret, getenv(tmp));
-	else
+	else if (!*ret && ft_strncmp(tmp, "?", 1))
 		*ret = getenv(tmp);
+	else if (*ret && !ft_strncmp(tmp, "?", 1) && ft_strlen(tmp) == 1)
+		*ret = ft_strjoin(*ret, ft_itoa(g_exit_code));
+	else if (!*ret && !ft_strncmp(tmp, "?", 1) && ft_strlen(tmp) == 1)
+		*ret = ft_itoa(g_exit_code);
 	free(tmp);
 	i++;
 	return (i);
@@ -78,6 +83,7 @@ int	join_env_var(char *s, char **ret)
  */
 char	*case_env(char *s)
 {
+	printf("g_exit_code in ENV : %d\n", g_exit_code);
 	char	*ret;
 
 	ret = 0;
