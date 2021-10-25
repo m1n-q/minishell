@@ -43,43 +43,49 @@ void	sig_handler(int signum)
 	}
 }
 
-int	skip_space(char *s)
-{
-	while (ft_isspace(*s))
-		s++;
-	if (!*s)
-		return (1);
-	return (0);
-}
-
 int	main()
 {
 	char	*input;
 	int		error;
 	t_exit	ext;
+	t_cmd	*cmd_table;
 	int		stdin_copied;
 	int		stdout_copied;
+	char	**argv;
+	int		i;
+	int		len_cmd_table;
+
 
 	stdin_copied = dup(STDIN_FILENO);
 	stdout_copied = dup(STDOUT_FILENO);
-	environ = environ_to_heap();						/* to modify || unset || extend and free prev */
+	environ = environ_to_heap();					/* to modify || unset || extend and free prev */
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
 	signal(SIGINT, sig_handler);
+
 	while ((input = readline(prompt)))
 	{
 		if (!input[0] || skip_space(input))
 			continue ;
-		ext = run(parse(input));
-		if (ext.pid == CHILD)
-			return (ext.status);
-		else if (ext.pid == PARENT_EXIT)
+
+		argv = get_argv(input);
+		cmd_table = split_pipe(argv, &len_cmd_table);
+		check_cmd_table(cmd_table, len_cmd_table);
+
+		i = -1;
+		while (++i < len_cmd_table)
+		{
+			ext = run(cmd_table[i]);
+			if (ext.pid == CHILD)					/* only if execve failed */
+				return (ext.status);				//FIXIT: clarify name & usage: status / exitcode
+		}
+		if (ext.pid == PARENT_EXIT)
 			return (ext.status);
 		else if (ext.pid == BUILTIN && ext.status)
 			puterr(ext.status);
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
-			puterr(WEXITSTATUS(ext.status));			/* child process exit status (not built-in func) */
+			puterr(WEXITSTATUS(ext.status));		/* child process exit status (not built-in func) */
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
@@ -88,3 +94,4 @@ int	main()
 	close(stdin_copied);
 	close(stdout_copied);
 }
+

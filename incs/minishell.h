@@ -49,6 +49,7 @@ extern char	**environ;
 int			puterr(int error);
 
 /* parse */
+char		**get_argv(char *input);
 t_cmd		parse(char *input);
 
 /* run */
@@ -60,6 +61,7 @@ int			get_argc(char **argv);
 long long 	atonum(const char *str, int *len);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
+int			skip_space(char *s);
 
 /* built-in */
 int			__exit(char **argv);
@@ -105,8 +107,27 @@ int			is_empty_q(char *s);
 int			has_q(char *s);
 
 /* redirection */
-int			redirect_in(char *arg);
-int			redirect_out(char *arg);
-int			redirect_append(char *arg);
+int			redir_in(char *arg);
+int			redir_out(char *arg);
+int			redir_append(char *arg);
+int			check_redir(t_cmd *cmd, int *count_redir);
+int			trim_redir(char ***argv, int count_redir);
+
+/* pipe */
+int			count_pipe(char	**argv);
+t_cmd		*split_pipe(char **argv, int *size);
+int			make_pipe(t_cmd *cmd);
+int			set_pipe_stream(t_cmd *cmd, t_cmd *next);
+
+/* stream */
+int			connect_stream(t_io_table stream);
+int			destroy_stream(t_io_table stream);
 int			restore_stream(int std_copied, int std_org);
+
+/* path */
+char		**get_paths(void);
+int			set_path(t_cmd *cmd);
+
+/* cmd */
+int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 #endif
