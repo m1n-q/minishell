@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:04:21 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 23:50:23 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/26 10:35:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	case_q(char *s)
 	char	c;
 
 	ret = 2;
+	if (is_empty_q(s))
+		return (ret);
 	if (is_q(*s))
 	{
 		c = *s++;
