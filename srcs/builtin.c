@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/18 20:16:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 16:55:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern unsigned char	g_exit_code;
 /*
 ◦ cd with only a relative or absolute path
 ◦ pwd with no options
@@ -25,13 +26,10 @@
 //NOTE: need to handle additional (not supported) args
 int	is_builtin(char *arg)
 {
-	if (!ft_strncmp(arg, "cd", 2) || \
-		!ft_strncmp(arg, "pwd", 3) || \
-		!ft_strncmp(arg, "env", 3) || \
-		!ft_strncmp(arg, "echo", 4) || \
-		!ft_strncmp(arg, "exit", 4) || \
-		!ft_strncmp(arg, "unset", 5) || \
-		!ft_strncmp(arg, "export", 6))
+	if (is_equal(arg, "cd") || is_equal(arg, "pwd")
+		|| is_equal(arg, "env") || is_equal(arg, "echo")
+		|| is_equal(arg, "exit") || is_equal(arg, "unset")
+		|| is_equal(arg, "export"))
 		return (1);
 	return (0);
 }
@@ -51,7 +49,10 @@ int	__cd(char **argv)
 	else
 	{
 		if (chdir(argv[1]) == -1)
+		{
+			g_exit_code = BUILTIN_ERR;
 			return (errno);
+		}
 	}
 	return (0);
 }
@@ -63,7 +64,10 @@ int	__pwd(char **argv)
 	(void)argv;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
+	{
+		g_exit_code = BUILTIN_ERR;
 		return (errno);
+	}
 	printf("%s\n", cwd);
 	free(cwd);
 	return (0);
@@ -123,9 +127,11 @@ int __exit(char **argv)
 		if (exit_code == NON_NUMERIC)			/* exit: string: numeric argument required */
 		{
 			puterr(ENONUM);
+			g_exit_code = (unsigned char)-1;
 			return (-1);
 		}
 	}
+	g_exit_code = (int)exit_code;
 	return ((int)exit_code);
 }
 
@@ -140,23 +146,24 @@ int	__export(char **argv)
 
 	i = 0;
 	while (argv[++i])
-		check_arg(argv[i]);
+		if (!check_arg(argv[i]))
+			g_exit_code = BUILTIN_ERR;
 	return (0);
 }
 
 int	run_builtin(char **argv)
 {
-	if (!ft_strncmp(argv[0], "cd", 2))
+	if (is_equal(argv[0], "cd"))
 		return (__cd(argv));
-	if (!ft_strncmp(argv[0], "pwd", 3))
+	if (is_equal(argv[0], "pwd"))
 		return (__pwd(argv));
-	if (!ft_strncmp(argv[0], "env", 3))
+	if (is_equal(argv[0], "env"))
 		return (__env(argv));
-	if (!ft_strncmp(argv[0], "echo", 4))
+	if (is_equal(argv[0], "echo"))
 		return (__echo(argv));
-	if (!ft_strncmp(argv[0], "unset", 5))
+	if (is_equal(argv[0], "unset"))
 		return (__unset(argv));
-	if (!ft_strncmp(argv[0], "export", 6))
+	if (is_equal(argv[0], "export"))
 		return (__export(argv));
 	return (0);
 }

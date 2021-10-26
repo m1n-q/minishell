@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   myerror.h                                          :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 16:17:30 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
+/*   Updated: 2021/10/25 18:18:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MYERROR_H
-# define MYERROR_H
+#include "minishell.h"
 
-# define ENOTERMENV			-4	/* Specify a termtype with $TERM */
-# define ENOTERMENT			-5	/* No such terminal entry */
-# define ENOTERMINFO		-6	/* Cannot find terminfo database */
-# define ENOCMD				-10	/* Command not found */
-# define ENONUM				-11	/* Numeric argument required */
-# define E2MANY				-12	/* Too many arguments */
-# define BUILTIN_ERR		1
+void	sig_handler_interactive(int signum)
+{
+	if (signum == SIGINT)
+		return ;
+}
 
-#endif
+int	sigint_event_hook(void)
+{
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);		// replace rl_line_buffer(line gathered so far) to ""
+	rl_redisplay();				// redisplay prompt?
+	return (0);
+}

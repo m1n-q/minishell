@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/22 21:03:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 16:47:59 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 	while (cmd->argv[++i])
 	{
 		if (cmd->argv[i] == (char *)REDIRECT_OUT || \
-			cmd->argv[i] == (char *)REDIRECT_IN)
+			cmd->argv[i] == (char *)REDIRECT_IN || \
+			cmd->argv[i] == (char *)REDIRECT_APPEND)
 		{
 			count++;
 			if (cmd->argv[i + 1])

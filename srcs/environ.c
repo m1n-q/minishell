@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 21:14:36 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 16:57:15 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,30 @@ int	remove_envent(t_envent env)
 	return (0);
 }
 
+/* check if the variable name is valid (0~9, a~z, A~Z, _) */
+int	is_valid_var_name(char *s)
+{
+	int	i;
+
+	if (!ft_isalpha(s[0]) && s[0] != '_')
+		return (0);
+	i = 1;
+	while (s[i] != '=')
+	{
+		if (!ft_isdigit(s[i]) && !ft_isalpha(s[i]) && s[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	check_arg(char *arg)
 {
 	char		*pos;
 	t_envent	env;
 
+	if (!is_valid_var_name(arg))
+		return (0);
 	env = get_envent(arg);
 	pos = ft_strchr(arg, '=');
 	if (env.string)
@@ -142,7 +161,7 @@ int	check_arg(char *arg)
 			append_envent(arg);
 		}
 		else			/* if exists && str=='name' : ignore */
-			return (0);
+			return (1);
 	}
 	else
 	{
@@ -152,7 +171,7 @@ int	check_arg(char *arg)
 			append_envent(arg);
 	}
 	//NOTE:: export print just 'arg', env(getenv) cannot know
-	return (0);
+	return (1);
 }
 
 int	print_including_empty(void)

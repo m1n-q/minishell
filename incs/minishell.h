@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 20:52:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/25 18:27:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,8 @@ int			set_path(t_cmd *cmd);
 
 /* cmd */
 int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
+
+/* signal */
+void		sig_handler_interactive(int signum);
+int			sigint_event_hook(void);
 #endif

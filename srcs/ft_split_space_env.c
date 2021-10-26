@@ -12,11 +12,11 @@
 
 #include "./../incs/minishell.h"
 
-extern int g_exit_code;
+extern unsigned char	g_exit_code;
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)
 {
-	return (ft_isdigit(c) || ft_isalpha(c) || c == '_' || c == '?');
+	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
 }
 
 int	join_exit_code(char **ret)
@@ -62,6 +62,7 @@ int	join_non_env(char *s, char **ret)
 
 	i = 0;
 	while (s[i] && s[i] != '$' && s[i] != '"')
+  {
 		i++;
 	tmp = malloc(sizeof(char) * (i + 1));
 	ft_strlcpy(tmp, s, i + 1);
