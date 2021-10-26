@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 00:20:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 19:52:18 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,17 @@ int	main()
 		}
 		if (ext.pid == PARENT_EXIT)
 			exit(ext.code);
+
+		/* get builtin exit code */
 		else if (ext.pid == BUILTIN && ext.code)
 			// puterr(ext.code);
 			g_exit_code = ext.code;
-		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))		/* child process exit status (not built-in func) */
+
+		/* get child process exit status */
+		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			g_exit_code = WEXITSTATUS(ext.status);
+
+		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
 		{
 			write(stdout_copied, "\n", 1);
@@ -88,8 +94,10 @@ int	main()
 			else if (WTERMSIG(ext.status) == SIGQUIT)
 				g_exit_code = EX_SIGQUIT;
 		}
+
+		/* if none of above, it means cmd succeeds*/
 		else
-			g_exit_code = 0;			//NOTE: if execve succeed, cannot reach g_exit_code or sth
+			g_exit_code = 0;					//NOTE: if execve succeed, cannot reach g_exit_code or sth
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
