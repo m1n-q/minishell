@@ -6,20 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 18:49:52 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 21:35:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 22:57:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-intmax_t	strtoimax(char *str, char **ep, int base)
-{
-	(void)str;
-	(void)ep;
-	(void)base;
-
-	return (0);
-}
 
 int legal_variable_starter(char c)
 {

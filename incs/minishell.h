@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 21:46:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 22:57:22 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "struct.h"
 
 # define NON_NUMERIC -4444444444LL
+# define NULL_BYTE -5555555555LL
 # define PROMPT "\e[1;46mminishell\e[0m "
 
 # define CHILD 0
@@ -62,11 +63,12 @@ t_exit		run(t_cmd cmd);
 /* utils */
 int			putchar(int c);
 int			get_argc(char **argv);
-long long 	atonum(const char *str, int *len);
+int			atonum(const char *str, int *len, long long *retval);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
+int			isoption(char *s, char c);
 
 /* built-in */
 int			__exit(char **argv);
@@ -148,4 +150,9 @@ int			sigint_event_hook(void);
 
 int			builtin_error(char *command, char *arg, char *message);
 char		*get_coloned_str(char *a, char *b);
+
+void		sh_neednumarg (char *command, char *s);
+
+/* islegal */
+int			legal_number(char *string, intmax_t *result);
 #endif

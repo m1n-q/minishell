@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 21:35:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 22:56:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ int	putchar(int c)
 	return (c);
 }
 
-long long atonum(const char *str, int *len)
+int atonum(const char *str, int *len, long long *retval)
 {
 	long long ret;
 	int sign;
 
 	ret = 0;
 	sign = 1;
+	if (!str)
+		return (-1);
 	if ((*str == '-' || *str == '+') && ++(*len))
 		if (*str++ == '-')
 			sign *= -1;
 	if (!('0' <= *str && *str <= '9'))
-		return (NON_NUMERIC);
+		return (-1);
 	while (*str)
 	{
 		(*len)++;
@@ -43,7 +45,8 @@ long long atonum(const char *str, int *len)
 		}
 		str++;
 	}
-	return ((sign * ret));
+	*retval = (sign * ret);
+	return (0);
 }
 
 int	get_argc(char **argv)
@@ -139,4 +142,7 @@ intmax_t	ft_strtoimax(const char *nptr, char **endptr)	//FIXME
 	return (acc);
 }
 
-
+int	isoption(char *s, char c)
+{
+	return (s[0] == '-' && !s[2] && s[1] == c);
+}
