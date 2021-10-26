@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 16:55:21 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/26 18:44:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,56 +23,122 @@ extern unsigned char	g_exit_code;
 ◦ export with no options
 */
 
+/*
+	static int
+	builtin_status (result)
+		int result;
+	{
+	int r;
+
+	switch (result)
+	{
+	case EX_USAGE:
+		r = EX_BADUSAGE;
+		break;
+	case EX_REDIRFAIL:
+	case EX_BADSYNTAX:
+	case EX_BADASSIGN:
+	case EX_EXPFAIL:
+		r = EXECUTION_FAILURE;
+		break;
+	default:
+		r = EXECUTION_SUCCESS;
+		break;
+	}
+	return (r);
+	}
+*/
+
 //NOTE: need to handle additional (not supported) args
+//NOTE: in bash, echo & pwd could get sh_wrerror (ferror(stdout))
+//TODO: builtin error : common / individual
 int	is_builtin(char *arg)
 {
-	if (is_equal(arg, "cd") || is_equal(arg, "pwd")
-		|| is_equal(arg, "env") || is_equal(arg, "echo")
-		|| is_equal(arg, "exit") || is_equal(arg, "unset")
-		|| is_equal(arg, "export"))
+	if (is_equal(arg, "cd") || \
+		is_equal(arg, "pwd") || \
+		is_equal(arg, "env") || \
+		is_equal(arg, "echo") || \
+		is_equal(arg, "exit") || \
+		is_equal(arg, "unset") || \
+		is_equal(arg, "export"))
 		return (1);
 	return (0);
 }
 
+int	bindpwd(char *oldpwd)
+{
+	char	*tmp;
+	char	*otmp;
+
+	otmp = ft_strjoin("OLDPWD=", oldpwd);
+	tmp = ft_strjoin("PWD=", getcwd(NULL, 0));
+	check_arg(tmp);
+	check_arg(otmp);
+	free(tmp);
+	free(otmp);
+	return (EXECUTION_SUCCESS);
+}
+
+//NOTE: CDPATH
 int	__cd(char **argv)
 {
-	char	*home;
+	char	*dirname;
+	char	*cwd;
 
+	cwd = getcwd(NULL, 0);
 	if (argv[1] == NULL)
 	{
-		home = getenv("HOME");
-		if (!home)
-			return (0);
-		else
-			chdir(home);
-	}
-	else
-	{
-		if (chdir(argv[1]) == -1)
+		dirname = getenv("HOME");
+		if (!dirname)
 		{
-			g_exit_code = BUILTIN_ERR;
-			return (errno);
+			builtin_error(argv[0], NULL, "HOME not set");
+			return (EXECUTION_FAILURE);
 		}
 	}
-	return (0);
+	else if (is_equal(argv[1], "-"))
+	{
+		dirname = getenv("OLDPWD");
+		if (!dirname)
+		{
+			builtin_error(argv[0], NULL, "OLDPWD not set");
+			return (EXECUTION_FAILURE);
+		}
+		printf("%s\n", dirname);
+	}
+	else
+		dirname = argv[1];
+
+	if (chdir(dirname) == 0)
+		return (bindpwd(cwd));
+
+	builtin_error(argv[0], dirname, strerror(errno));
+	return (EXECUTION_FAILURE);
 }
 
 int	__pwd(char **argv)
 {
 	char	*cwd;
+	char	*error_str;
 
-	(void)argv;
+	(void)argv;	//TODO: check opt, print invalid option
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		g_exit_code = BUILTIN_ERR;
-		return (errno);
+		error_str = ft_strjoin\
+		("pwd: error retrieving current directory: \
+		getcwd: cannot access parent directories: ", \
+		strerror(errno));			//TODO: error for join
+		ft_putstr_fd(error_str, STDERR_FILENO);
+
+		free(error_str);
+		return (EXECUTION_FAILURE);
 	}
 	printf("%s\n", cwd);
 	free(cwd);
-	return (0);
+	return (EXECUTION_SUCCESS);
 }
 
+//TODO: getopt and handle
 int	__env(char **argv)
 {
 	int			i;
@@ -113,6 +179,10 @@ int	__echo(char **argv)
 	return (0);
 }
 
+/*
+	if (list && list->word && ISOPTION (list->word->word, '-'))
+		list = list->next;
+*/
 int __exit(char **argv)
 {
 	long long	exit_code;
@@ -135,6 +205,7 @@ int __exit(char **argv)
 	return ((int)exit_code);
 }
 
+//TODO: getopt and handle
 int	__export(char **argv)
 {
 	int		i;
@@ -147,7 +218,7 @@ int	__export(char **argv)
 	i = 0;
 	while (argv[++i])
 		if (!check_arg(argv[i]))
-			g_exit_code = BUILTIN_ERR;
+			g_exit_code = EXECUTION_FAILURE;
 	return (0);
 }
 

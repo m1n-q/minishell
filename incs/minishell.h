@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 18:27:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 17:58:38 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include "readline/readline.h"
 # include "readline/history.h"
@@ -47,6 +48,9 @@ extern char	**environ;
 
 /* error */
 int			puterr(int error);
+int			check_error(char *command);
+void		file_error(char *command);
+void		internal_error(char *command, char *err_string);
 
 /* parse */
 char		**get_argv(char *input);
@@ -134,4 +138,7 @@ int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 /* signal */
 void		sig_handler_interactive(int signum);
 int			sigint_event_hook(void);
+
+int			builtin_error(char *command, char *arg, char *message);
+char		*get_coloned_str(char *a, char *b);
 #endif
