@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 00:19:45 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 16:29:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,51 @@ int	is_builtin(char *arg)
 	return (0);
 }
 
+int	bindpwd(char *oldpwd)
+{
+	char	*tmp;
+	char	*otmp;
+
+	otmp = ft_strjoin("OLDPWD=", oldpwd);
+	tmp = ft_strjoin("PWD=", getcwd(NULL, 0));
+	check_arg(tmp);
+	check_arg(otmp);
+	return (EXECUTION_SUCCESS);
+}
+
+//NOTE: CDPATH
 int	__cd(char **argv)
 {
-	char	*home;
+	char	*dirname;
+	char	*cwd;
 
+	cwd = getcwd(NULL, 0);
 	if (argv[1] == NULL)
 	{
-		home = getenv("HOME");
-		if (!home)
-			return (0);
-		else
-			chdir(home);
-	}
-	else
-	{
-		if (chdir(argv[1]) == -1)
+		dirname = getenv("HOME");
+		if (!dirname)
 		{
-			g_exit_code = EXECUTION_FAILURE;
-			return (errno);
+			builtin_error(argv[0], "HOME not set");
+			return (EXECUTION_FAILURE);
 		}
 	}
-	return (0);
+	else if (is_equal(argv[1], "-"))
+	{
+		dirname = getenv("OLDPWD");
+		if (!dirname)
+		{
+			builtin_error(argv[0], "OLDPWD not set");
+			return (EXECUTION_FAILURE);
+		}
+	}
+	else
+		dirname = argv[1];
+
+	if (chdir(dirname) == 0)
+		return (bindpwd(cwd));
+	// if (errno != ENOENT && errno != ENAMETOOLONG)
+	// 	errno = ENOTDIR;
+	return (EXECUTION_FAILURE);
 }
 
 int	__pwd(char **argv)
