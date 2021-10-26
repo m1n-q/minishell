@@ -6,27 +6,35 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 23:52:17 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/26 12:06:00 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
+int	has_dollar_sign(char *s)
+{
+	while (*s)
+	{
+		if (*s == '$')
+			return (1);
+		s++;
+	}
+	return (0);
+}
+
 /* typecast pipes and redirections */
 char	*case_pipe_redir(char *s)
 {
-	size_t	len;
-
-	len = ft_strlen(s);
-	if (len == 1 && *s == '|')
+	if (is_equal(s, "|"))
 		return ((char *)PIPE);
-	if (len == 1 && *s == '<')
+	if (is_equal(s, "<"))
 		return ((char *)REDIRECT_IN);
-	if (len == 1 && *s == '>')
+	if (is_equal(s, ">"))
 		return ((char *)REDIRECT_OUT);
-	if (len == 2 && !ft_strncmp(s, "<<", len))
+	if (is_equal(s, "<<"))
 		return ((char *)HEREDOC);
-	if (len == 2 && !ft_strncmp(s, ">>", len))
+	if (is_equal(s, ">>"))
 		return ((char *)REDIRECT_APPEND);
 	return (s);
 }
@@ -38,10 +46,15 @@ char	*cpy_with_q(char *s, char *ret)
 	int		i;
 
 	i = 0;
+	if (is_empty_q(s))
+	{
+		ret[0] = 0;
+		return (ret);
+	}
 	while (*s && !ft_isspace(*s))
 	{
 		c = *s++;
-		if (c == '"' && *s == '$')
+		if (has_dollar_sign(s) && c == '"')
 			return (case_env(s));
 		while (*s && *s != c)
 			ret[i++] = *s++;
@@ -62,7 +75,7 @@ char	*cpy_wo_q(char *s, char *ret)
 	int		i;
 
 	i = 0;
-	if (*s == '$')
+	if (has_dollar_sign(s))
 		return (case_env(s));
 	ret[i++] = *s++;
 	while (*s && !ft_isspace(*s))

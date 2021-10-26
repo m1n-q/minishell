@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/23 00:39:20 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/26 12:08:27 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	cnt_empty_q(char *s)
 	ret = 0;
 	while (*s)
 	{
-		if (is_empty_q(s))
+		if (is_empty_q(s) && *(s + 2) && !ft_isspace(*(s + 2)))
 		{
 			ret++;
 			s += 2;
@@ -74,7 +74,7 @@ char	*rm_empty_q(char *s)
 		return (0);
 	while (*s)
 	{
-		if (is_empty_q(s))
+		if (is_empty_q(s) && *(s + 2) && !ft_isspace(*(s + 2)))
 			s += 2;
 		else
 			ret[i++] = *s++;
