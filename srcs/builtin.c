@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 18:06:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 18:44:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ extern unsigned char	g_exit_code;
 */
 
 //NOTE: need to handle additional (not supported) args
+//NOTE: in bash, echo & pwd could get sh_wrerror (ferror(stdout))
 //TODO: builtin error : common / individual
 int	is_builtin(char *arg)
 {
@@ -114,7 +115,6 @@ int	__cd(char **argv)
 	return (EXECUTION_FAILURE);
 }
 
-//TODO: getopt and handle
 int	__pwd(char **argv)
 {
 	char	*cwd;
@@ -138,6 +138,7 @@ int	__pwd(char **argv)
 	return (EXECUTION_SUCCESS);
 }
 
+//TODO: getopt and handle
 int	__env(char **argv)
 {
 	int			i;
@@ -178,6 +179,10 @@ int	__echo(char **argv)
 	return (0);
 }
 
+/*
+	if (list && list->word && ISOPTION (list->word->word, '-'))
+		list = list->next;
+*/
 int __exit(char **argv)
 {
 	long long	exit_code;
@@ -200,6 +205,7 @@ int __exit(char **argv)
 	return ((int)exit_code);
 }
 
+//TODO: getopt and handle
 int	__export(char **argv)
 {
 	int		i;

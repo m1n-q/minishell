@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 16:57:15 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/26 18:31:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,15 @@ int	print_including_empty(void)
 	return (0);
 }
 
+/*
+	if (var && !unset_function && non_unsettable_p (var))
+		builtin_error (_("%s: cannot unset"), name);
+	if (var && readonly_p (var))
+		builtin_error (_("%s: cannot unset: readonly %s", name, unset_function ? "function" : "variable")
+
+	=> no (readonly || non_unsettable) var in minishell.
+*/
+//TODO: getopt and handle
 int	__unset(char **argv)
 {
 	t_envent	env;

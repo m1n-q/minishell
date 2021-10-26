@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:50:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 17:58:41 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 18:59:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*get_coloned_str(char *a, char *b)
 {
-	char *tmp;
-	char *coloned_str;
+	char	*tmp;
+	char	*coloned_str;
 
 	tmp = ft_strjoin(a, ": ");
 	if (!tmp)
@@ -25,6 +25,21 @@ char	*get_coloned_str(char *a, char *b)
 	if (!coloned_str)
 		return (NULL);
 	return (coloned_str);
+}
+
+char	*get_quoted_str(char *s)
+{
+	char	*tmp;
+	char	*quoted_str;
+
+	tmp = ft_strjoin("`", s);
+	if (!tmp)
+		return (NULL);
+	quoted_str = ft_strjoin(tmp, "'");
+	free(tmp);
+	if (!quoted_str)
+		return (NULL);
+	return (quoted_str);
 }
 
 int	builtin_error(char *command, char *arg, char *message)
@@ -44,12 +59,21 @@ int	builtin_error(char *command, char *arg, char *message)
 
 void	sh_invalidopt(char *command, char *opt)
 {
-	// char *error_str;
+	builtin_error(command, opt, "invalid option");
+}
 
-	// error_str = get_coloned_str(command, opt);
-	// if (!error_str)
-	// 	return ;
+void	sh_invalidid (char *command, char *s)
+{
+	char	*qs;
 
-	builtin_error (command, opt, "invalid option");
-	// free(error_str);
+	qs = get_quoted_str(s);
+	if (!qs)
+		return ;
+	builtin_error(command, qs, "not a valid identifier");
+	free(qs);
+}
+
+void	sh_neednumarg (char *command, char *s)
+{
+	builtin_error (command, s, "numeric argument required");
 }

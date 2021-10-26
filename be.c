@@ -1,180 +1,4 @@
 
-
-/*****************************************************/
-/*					echo error                       */
-/*****************************************************/
-
-int
-echo_builtin (list)
-     WORD_LIST *list;
-{
-  int display_return, do_v9, i, len;
-  char *temp, *s;
-
-  do_v9 = xpg_echo;
-  display_return = 1;
-
-  if (posixly_correct && xpg_echo)
-    goto just_echo;
-
-  for (; list && (temp = list->word->word) && *temp == '-'; list = list->next)
-    {
-      /* If it appears that we are handling options, then make sure that
-	 all of the options specified are actually valid.  Otherwise, the
-	 string should just be echoed. */
-      temp++;
-
-      for (i = 0; temp[i]; i++)
-	{
-	  if (strchr (VALID_ECHO_OPTIONS, temp[i]) == 0)
-	    break;
-	}
-
-      /* echo - and echo -<nonopt> both mean to just echo the arguments. */
-      if (*temp == 0 || temp[i])
-	break;
-
-      /* All of the options in TEMP are valid options to ECHO.
-	 Handle them. */
-      while (i = *temp++)
-	{
-	  switch (i)
-	    {
-	    case 'n':
-	      display_return = 0;
-	      break;
-#if defined (V9_ECHO)
-	    case 'e':
-	      do_v9 = 1;
-	      break;
-	    case 'E':
-	      do_v9 = 0;
-	      break;
-#endif /* V9_ECHO */
-	    default:
-	      goto just_echo;	/* XXX */
-	    }
-	}
-    }
-
-just_echo:
-
-  clearerr (stdout);	/* clear error before writing and testing success */
-
-  while (list)
-    {
-      i = len = 0;
-      temp = do_v9 ? ansicstr (list->word->word, STRLEN (list->word->word), 1, &i, &len)
-		   : list->word->word;
-      if (temp)
-	{
-	  if (do_v9)
-	    {
-	      for (s = temp; len > 0; len--)
-		putchar (*s++);
-	    }
-	  else
-	    printf ("%s", temp);
-#if defined (SunOS5)
-	  fflush (stdout);	/* Fix for bug in SunOS 5.5 printf(3) */
-#endif
-	}
-      if (do_v9 && temp)
-	free (temp);
-      list = list->next;
-      if (i)
-	{
-	  display_return = 0;
-	  break;
-	}
-      if (list)
-	putchar(' ');
-    }
-
-  if (display_return)
-    putchar ('\n');
-  fflush (stdout);
-  if (ferror (stdout))
-    {
-      sh_wrerror ();
-      clearerr (stdout);
-      return (EXECUTION_FAILURE);
-    }
-  return (EXECUTION_SUCCESS);
-}
-
-
-
-/*****************************************************/
-/*					pwd error                        */
-/*****************************************************/
-
-int
-pwd_builtin (list)
-     WORD_LIST *list;
-{
-  char *directory;
-  int opt, pflag;
-
-  verbatim_pwd = no_symbolic_links;
-  pflag = 0;
-  reset_internal_getopt ();
-  while ((opt = internal_getopt (list, "LP")) != -1)
-    {
-      switch (opt)
-	{
-	case 'P':
-	  verbatim_pwd = pflag = 1;
-	  break;
-	case 'L':
-	  verbatim_pwd = 0;
-	  break;
-	default:
-	  builtin_usage ();
-	  return (EXECUTION_FAILURE);
-	}
-    }
-  list = loptend;
-
-#define tcwd the_current_working_directory
-
-  directory = tcwd ? (verbatim_pwd ? sh_physpath (tcwd, 0) : tcwd)
-		   : get_working_directory ("pwd");
-
-  /* Try again using getcwd() if canonicalization fails (for instance, if
-     the file system has changed state underneath bash). */
-  if ((tcwd && directory == 0) ||
-      (posixly_correct && same_file (".", tcwd, (struct stat *)0, (struct stat *)0) == 0))
-    directory = resetpwd ("pwd");
-
-#undef tcwd
-
-  if (directory)
-    {
-      printf ("%s\n", directory);
-      /* This is dumb but posix-mandated. */
-      if (posixly_correct && pflag)
-	setpwd (directory);
-      if (directory != the_current_working_directory)
-	free (directory);
-      fflush (stdout);
-      if (ferror (stdout))
-	{
-	  sh_wrerror ();
-	  clearerr (stdout);
-	  return (EXECUTION_FAILURE);
-	}
-
-      return (EXECUTION_SUCCESS);
-    }
-  else
-    return (EXECUTION_FAILURE);
-}
-
-
-/*****************************************************/
-/*			     	env error                       * /
-/*****************************************************/
 /*****************************************************/
 /*					unset error                      */
 /*****************************************************/
@@ -207,36 +31,17 @@ unset_builtin (list)
 
   list = loptend;
 
-  if (unset_function && unset_variable)
-    {
-      builtin_error (_("cannot simultaneously unset a function and a variable"));
-      return (EXECUTION_FAILURE);
-    }
-
   while (list)
     {
       SHELL_VAR *var;
       int tem;
-#if defined (ARRAY_VARS)
-      char *t;
-#endif
 
       name = list->word->word;
-
-#if defined (ARRAY_VARS)
-      unset_array = 0;
-      if (!unset_function && valid_array_reference (name))
-	{
-	  t = strchr (name, '[');
-	  *t++ = '\0';
-	  unset_array++;
-	}
-#endif
 
       /* Bash allows functions with names which are not valid identifiers
 	 to be created when not in posix mode, so check only when in posix
 	 mode when unsetting a function. */
-      if (((unset_function && posixly_correct) || !unset_function) && legal_identifier (name) == 0)
+      if (legal_identifier (name) == 0)
 	{
 	  sh_invalidid (name);
 	  NEXT_VARIABLE ();
@@ -257,39 +62,6 @@ unset_builtin (list)
 			 name, unset_function ? "function" : "variable");
 	  NEXT_VARIABLE ();
 	}
-
-      /* Unless the -f option is supplied, the name refers to a variable. */
-#if defined (ARRAY_VARS)
-      if (var && unset_array)
-	{
-	  if (array_p (var) == 0)
-	    {
-	      builtin_error (_("%s: not an array variable"), name);
-	      NEXT_VARIABLE ();
-	    }
-	  else
-	    {
-	      tem = unbind_array_element (var, t);
-	      if (tem == -1)
-		any_failed++;
-	    }
-	}
-      else
-#endif /* ARRAY_VARS */
-      tem = unset_function ? unbind_func (name) : unbind_variable (name);
-
-      /* This is what Posix.2 draft 11+ says.  ``If neither -f nor -v
-	 is specified, the name refers to a variable; if a variable by
-	 that name does not exist, a function by that name, if any,
-	 shall be unset.'' */
-      if (tem == -1 && !unset_function && !unset_variable)
-	tem = unbind_func (name);
-
-      /* SUSv3, POSIX.1-2001 say:  ``Unsetting a variable or function that
-	 was not previously set shall not be considered an error.'' */
-
-      if (unset_function == 0)
-	stupidly_hack_special_variables (name);
 
       list = list->next;
     }
@@ -372,21 +144,6 @@ set_or_show_attributes (list, attribute, nodefs)
 	{
 	  name = list->word->word;
 
-	  if (functions_only)		/* xxx -f name */
-	    {
-	      var = find_function (name);
-	      if (var == 0)
-		{
-		  builtin_error (_("%s: not a function"), name);
-		  any_failed++;
-		}
-	      else
-		SETVARATTR (var, attribute, undo);
-
-	      list = list->next;
-	      continue;
-	    }
-
 	  /* xxx [-np] name[=value] */
 	  assign = assignment (name, 0);
 
@@ -417,24 +174,7 @@ set_or_show_attributes (list, attribute, nodefs)
 	      name[assign] = '=';
 	      if (aflags & ASS_APPEND)
 		name[assign - 1] = '+';
-#if defined (ARRAY_VARS)
-	      /* Let's try something here.  Turn readonly -a xxx=yyy into
-		 declare -ra xxx=yyy and see what that gets us. */
-	      if (arrays_only)
-		{
-		  tlist = list->next;
-		  list->next = (WORD_LIST *)NULL;
-		  w = make_word ("-ra");
-		  nlist = make_word_list (w, list);
-		  opt = declare_builtin (nlist);
-		  if (opt != EXECUTION_SUCCESS)
-		    assign_error++;
-		  list->next = tlist;
-		  dispose_word (w);
-		  free (nlist);
-		}
-	      else
-#endif
+
 	      /* This word has already been expanded once with command
 		 and parameter expansion.  Call do_assignment_no_expand (),
 		 which does not do command or parameter substitution.  If
@@ -463,15 +203,6 @@ set_or_show_attributes (list, attribute, nodefs)
 	}
       else
 	variable_list = all_shell_variables ();
-
-#if defined (ARRAY_VARS)
-      if (attribute & att_array)
-	{
-	  arrays_only++;
-	  if (attribute != att_array)
-	    attribute &= ~att_array;
-	}
-#endif
 
       if (variable_list)
 	{
@@ -586,6 +317,88 @@ show_var_attributes (var, pattr, nodefs)
 }
 
 
+/*****************************************************/
+/*					unset error                      */
+/*****************************************************/
 
 
+////////////////////////////////////////////////////////////////////////////////
+static int
+exit_or_logout (list)
+     WORD_LIST *list;
+{
+  int exit_value;
 
+
+  /* Get return value if present.  This means that you can type
+     `logout 5' to a shell, and it returns 5. */
+
+  /* If we're running the exit trap (running_trap == 1, since running_trap
+     gets set to SIG+1), and we don't have a argument given to `exit'
+     (list == 0), use the exit status we saved before running the trap
+     commands (trap_saved_exit_value). */
+  exit_value = (running_trap == 1 && list == 0) ? trap_saved_exit_value : get_exitstat (list);
+
+  bash_logout ();
+
+  last_command_exit_value = exit_value;
+
+  /* Exit the program. */
+  jump_to_top_level (EXITPROG);
+  /*NOTREACHED*/
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/* Get an eight-bit status value from LIST */
+int
+get_exitstat (list)
+     WORD_LIST *list;
+{
+  int status;
+  intmax_t sval;
+  char *arg;
+
+  if (list && list->word && ISOPTION (list->word->word, '-'))
+    list = list->next;
+
+  if (list == 0)
+    return (last_command_exit_value);
+
+  arg = list->word->word;
+  if (arg == 0 || legal_number (arg, &sval) == 0)
+    {
+      sh_neednumarg (list->word->word ? list->word->word : "`'");
+      return 255;
+    }
+  no_args (list->next);
+
+  status = sval & 255;
+  return status;
+}
+////////////////////////////////////////////////////////////////////////////////
+
+
+int
+no_options (list)
+     WORD_LIST *list;
+{
+  reset_internal_getopt ();
+  if (internal_getopt (list, "") != -1)
+    {
+      builtin_usage ();
+      return (1);
+    }
+  return (0);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void
+no_args (list)
+     WORD_LIST *list;
+{
+  if (list)
+    {
+      builtin_error (_("too many arguments"));
+      jump_to_top_level (DISCARD);
+    }
+}
