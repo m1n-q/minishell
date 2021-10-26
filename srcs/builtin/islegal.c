@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 18:49:52 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 19:00:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 21:35:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	legal_number(char *string, intmax_t *result)
 	if (result)
 		*result = 0;
 	errno = 0;
-	value = strtoimax(string, &ep, 10);		//FIXME
+	value = ft_strtoimax(string, &ep);
 	if (errno)
-		return 0; /* errno is set on overflow or underflow */
+		return (0); /* errno is set on overflow or underflow */
 
 	/* Skip any trailing whitespace, since strtoimax does not. */
 	while (whitespace(*ep))
@@ -67,11 +67,8 @@ int	legal_number(char *string, intmax_t *result)
 	{
 		if (result)
 			*result = value;
-
-		/* The SunOS4 implementation of strtol() will happily ignore
-		overflow conditions, so this cannot do overflow correctly
-		on those systems. */
 		return (1);
 	}
 	return (0);
 }
+

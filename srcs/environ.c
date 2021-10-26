@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 18:31:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 21:42:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,30 +181,5 @@ int	print_including_empty(void)
 	i = -1;
 	while (environ[++i])
 		printf("%s\n", environ[i]);				/* Only 'NAME'='VAL' */
-	return (0);
-}
-
-/*
-	if (var && !unset_function && non_unsettable_p (var))
-		builtin_error (_("%s: cannot unset"), name);
-	if (var && readonly_p (var))
-		builtin_error (_("%s: cannot unset: readonly %s", name, unset_function ? "function" : "variable")
-
-	=> no (readonly || non_unsettable) var in minishell.
-*/
-//TODO: getopt and handle
-int	__unset(char **argv)
-{
-	t_envent	env;
-	int			i;
-
-	if (!argv || !*argv)
-		return (-1);
-	i = 0;
-	while (argv[++i])
-	{
-		env = get_envent(argv[i]);
-		remove_envent(env);
-	}
 	return (0);
 }
