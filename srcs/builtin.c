@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 16:29:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/26 18:06:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	bindpwd(char *oldpwd)
 	tmp = ft_strjoin("PWD=", getcwd(NULL, 0));
 	check_arg(tmp);
 	check_arg(otmp);
+	free(tmp);
+	free(otmp);
 	return (EXECUTION_SUCCESS);
 }
 
@@ -88,7 +90,7 @@ int	__cd(char **argv)
 		dirname = getenv("HOME");
 		if (!dirname)
 		{
-			builtin_error(argv[0], "HOME not set");
+			builtin_error(argv[0], NULL, "HOME not set");
 			return (EXECUTION_FAILURE);
 		}
 	}
@@ -97,34 +99,43 @@ int	__cd(char **argv)
 		dirname = getenv("OLDPWD");
 		if (!dirname)
 		{
-			builtin_error(argv[0], "OLDPWD not set");
+			builtin_error(argv[0], NULL, "OLDPWD not set");
 			return (EXECUTION_FAILURE);
 		}
+		printf("%s\n", dirname);
 	}
 	else
 		dirname = argv[1];
 
 	if (chdir(dirname) == 0)
 		return (bindpwd(cwd));
-	// if (errno != ENOENT && errno != ENAMETOOLONG)
-	// 	errno = ENOTDIR;
+
+	builtin_error(argv[0], dirname, strerror(errno));
 	return (EXECUTION_FAILURE);
 }
 
+//TODO: getopt and handle
 int	__pwd(char **argv)
 {
 	char	*cwd;
+	char	*error_str;
 
-	(void)argv;
+	(void)argv;	//TODO: check opt, print invalid option
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		g_exit_code = EXECUTION_FAILURE;
-		return (errno);
+		error_str = ft_strjoin\
+		("pwd: error retrieving current directory: \
+		getcwd: cannot access parent directories: ", \
+		strerror(errno));			//TODO: error for join
+		ft_putstr_fd(error_str, STDERR_FILENO);
+
+		free(error_str);
+		return (EXECUTION_FAILURE);
 	}
 	printf("%s\n", cwd);
 	free(cwd);
-	return (0);
+	return (EXECUTION_SUCCESS);
 }
 
 int	__env(char **argv)
