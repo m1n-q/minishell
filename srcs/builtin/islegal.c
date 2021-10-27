@@ -6,24 +6,24 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 18:49:52 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 22:57:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/27 18:45:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int legal_variable_starter(char c)
+int	legal_variable_starter(char c)
 {
-	return (isalpha(c) || (c == '_'));
+	return (ft_isalpha(c) || (c == '_'));
 }
 
-int legal_variable_char(char c)
+int	legal_variable_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');
 }
 
-int legal_identifier(char *name)
+int	legal_identifier(char *name)
 {
 	register char	*s;
 	unsigned char	c;

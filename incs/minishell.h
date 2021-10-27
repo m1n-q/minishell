@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 22:57:22 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/27 18:58:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,14 @@ int			__unset(char **argv);
 int			__export(char **argv);
 int			is_builtin(char *arg);
 int			run_builtin(char **argv);
+int			export_internal(char *arg);
 
 /* environ */
 char		**environ_to_heap(void);
-int			check_arg(char *arg);
 char		*get_env_including_empty(char *arg);
-int			append_envent(char *arg);
-t_envent	get_envent(char *arg);
+int			add_envent(char *name, char *value);
+t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
-int			print_including_empty(void);
 
 /* ft_split_space */
 char		**ft_split_space(char *s);
@@ -148,11 +147,20 @@ int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 void		sig_handler_interactive(int signum);
 int			sigint_event_hook(void);
 
+/* islegal */
+int			legal_variable_starter(char c);
+int			legal_variable_char(char c);
+int			legal_identifier(char *name);
+int			legal_number(char *string, intmax_t *result);
+
+/* variable */
+t_var		unbind_var(char *arg, int *aflag);
+char		*bind_var(t_var var, int assign_pos, int *aflag);
+int			get_assign_pos(const char *string);
+
+/* not categoried yet */
 int			builtin_error(char *command, char *arg, char *message);
 char		*get_coloned_str(char *a, char *b);
-
 void		sh_neednumarg (char *command, char *s);
-
-/* islegal */
-int			legal_number(char *string, intmax_t *result);
+void		sh_invalidid (char *command, char *s);
 #endif

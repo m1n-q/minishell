@@ -26,6 +26,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/path.c \
 		$(SRC_DIR)/cmd.c \
 		$(SRC_DIR)/signal.c \
+		$(SRC_DIR)/variable.c \
 		$(SRC_DIR)/builtin/islegal.c \
 		$(SRC_DIR)/builtin/builtin.c \
 		$(SRC_DIR)/builtin/builtin_error.c \
