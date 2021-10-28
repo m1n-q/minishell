@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 18:58:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 21:05:45 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 # define REDIRECT_OUT 6LL
 # define REDIRECT_APPEND 7LL
 
+# define TIL_SEC 0
+# define TIL_END 1
 extern char	**environ;
 
 /* error */
@@ -68,7 +70,6 @@ void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
-int			isoption(char *s, char c);
 
 /* built-in */
 int			__exit(char **argv);
@@ -159,8 +160,14 @@ char		*bind_var(t_var var, int assign_pos, int *aflag);
 int			get_assign_pos(const char *string);
 
 /* not categoried yet */
-int			builtin_error(char *command, char *arg, char *message);
+int			builtin_error(char *command, char *arg, char *message, int optflag);
 char		*get_coloned_str(char *a, char *b);
-void		sh_neednumarg (char *command, char *s);
-void		sh_invalidid (char *command, char *s);
+void		sh_neednumarg(char *command, char *s);
+void		sh_invalidid(char *command, char *s);
+void		sh_invalidopt(char *command, char *opt);
+int			isoption(char *s, int optlen);
+void		builtin_usage(char *command, char *usage);
+
+
+
 #endif

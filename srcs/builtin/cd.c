@@ -6,11 +6,15 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 18:35:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 19:53:33 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	cd: usage: cd [dir]
+*/
 
 int	bindpwd(char *oldpwd)
 {
@@ -32,13 +36,22 @@ int	__cd(char **argv)
 	char	*dirname;
 	char	*cwd;
 
+	if (argv[1])
+	{
+		if (isoption(argv[1], TIL_END))
+		{
+			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
+			return (EXECUTION_FAILURE);
+		}
+	}
+
 	cwd = getcwd(NULL, 0);
 	if (argv[1] == NULL)
 	{
 		dirname = getenv("HOME");
 		if (!dirname)
 		{
-			builtin_error(argv[0], NULL, "HOME not set");
+			builtin_error(argv[0], NULL, "HOME not set", 0);
 			return (EXECUTION_FAILURE);
 		}
 	}
@@ -47,7 +60,7 @@ int	__cd(char **argv)
 		dirname = getenv("OLDPWD");
 		if (!dirname)
 		{
-			builtin_error(argv[0], NULL, "OLDPWD not set");
+			builtin_error(argv[0], NULL, "OLDPWD not set", 0);
 			return (EXECUTION_FAILURE);
 		}
 		printf("%s\n", dirname);
@@ -58,6 +71,6 @@ int	__cd(char **argv)
 	if (chdir(dirname) == 0)
 		return (bindpwd(cwd));
 
-	builtin_error(argv[0], dirname, strerror(errno));
+	builtin_error(argv[0], dirname, strerror(errno), 0);
 	return (EXECUTION_FAILURE);
 }

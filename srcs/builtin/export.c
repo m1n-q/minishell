@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 18:59:18 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 21:35:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,32 +105,47 @@ int	export_internal(char *arg)
 	aflag = 0;
 	asspos = get_assign_pos(arg);
 	error = check_name_part(arg, asspos, &aflag);
-
+	if (error)
+		return (error);
 	assign_or_just_add(arg, aflag);
 
-
 	/* when list, it is precedence of return value */
-	if (error == EX_BADASSIGN)
-		return (EX_BADASSIGN);
-	else if (error == EXECUTION_FAILURE)	// if any error=1
-		return (EXECUTION_FAILURE);
+	/*
+		return (assign_error ? EX_BADASSIGN
+						: ((any_failed == 0) ? EXECUTION_SUCCESS
+												: EXECUTION_FAILURE));
+	*/
 	return (EXECUTION_SUCCESS);
 }
 
-//TODO: getopt and handle
 int	__export(char **argv)
 {
 	int		i;
 	int		argc;
+	int		tmp;
+	int		error;
 
+	error = 0;
+	tmp = 0;
 	argc = get_argc(argv);
 	if (argc == 1)
 		return (print_including_empty());			/* print including just 'name' */
 
+	if (argv[1])
+	{
+		if (isoption(argv[1], TIL_END))
+		{
+			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
+			return (EXECUTION_FAILURE);
+		}
+	}
+
 	i = 0;
 	while (argv[++i])
-		if (!export_internal(argv[i]))
-			// g_exit_code = EXECUTION_FAILURE;
-			;
-	return (0);
+	{
+		tmp = export_internal(argv[i]);
+		if (tmp > error)
+			error = tmp;
+	}
+	return (error);
 }

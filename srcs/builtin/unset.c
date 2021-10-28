@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 17:31:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 20:14:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,20 @@
 
 	=> no (readonly || non_unsettable) var in minishell.
 */
-//TODO: getopt and handle
+
 int	__unset(char **argv)
 {
 	t_envent	env;
 	int			i;
 
-	if (!argv || !*argv)
-		return (-1);
+	if (argv[1])
+	{
+		if (isoption(argv[1], TIL_END))
+		{
+			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
+			return (EXECUTION_FAILURE);
+		}
+	}
 	i = 0;
 	while (argv[++i])
 	{

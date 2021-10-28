@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 21:40:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 19:53:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@ int	__pwd(char **argv)
 	char	*cwd;
 	char	*error_str;
 
-	(void)argv;	//TODO: check opt, print invalid option
+
+	if (argv[1])
+	{
+		if (isoption(argv[1], TIL_END))
+		{
+			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
+			return (EXECUTION_FAILURE);
+		}
+	}
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

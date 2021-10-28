@@ -37,7 +37,8 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/builtin/echo.c \
 		$(SRC_DIR)/builtin/exit.c \
 		$(SRC_DIR)/builtin/unset.c \
-		$(SRC_DIR)/builtin/export.c
+		$(SRC_DIR)/builtin/export.c \
+		$(SRC_DIR)/builtin/option.c
 
 all : $(NAME)
 

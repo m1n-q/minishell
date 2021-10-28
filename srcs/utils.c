@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 22:56:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 19:25:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,4 @@ intmax_t	ft_strtoimax(const char *nptr, char **endptr)	//FIXME
 	if (endptr != NULL)
 		*endptr = (char *)(any ? s - 1 : nptr);
 	return (acc);
-}
-
-int	isoption(char *s, char c)
-{
-	return (s[0] == '-' && !s[2] && s[1] == c);
 }

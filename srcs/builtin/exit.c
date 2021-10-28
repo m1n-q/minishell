@@ -6,14 +6,14 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 23:01:41 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 21:05:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //NOTE: case (argv[1] == NULL): NULL cannot be argument in minishell
-int __exit(char **argv)
+int	__exit(char **argv)
 {
 	int			exit_code;
 	int			argc;
@@ -31,7 +31,7 @@ int __exit(char **argv)
 	}
 	if (argc > 2)
 	{
-		builtin_error(argv[0], NULL, "too many arguments");
+		builtin_error(argv[0], NULL, "too many arguments", 0);
 		return (-1);
 	}
 	exit_code = retval & 255;
