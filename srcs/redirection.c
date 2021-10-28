@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/26 16:47:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 16:27:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,24 @@ int	redir_append(char *arg)
 	return (fd);
 }
 
+int	redir_heredoc(char *eof)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(TMP_HD_FILE, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	while (1)
+	{
+		line = readline("> ");
+		if (is_equal(line, eof))
+			break ;
+		ft_putendl_fd(line, fd);
+	}
+	close(fd);
+	fd = open(TMP_HD_FILE, O_RDONLY); 
+	return (fd);
+}
+
 int	check_redir(t_cmd *cmd, int *count_redir)
 {
 	int			i;
@@ -80,7 +98,8 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 	{
 		if (cmd->argv[i] == (char *)REDIRECT_OUT || \
 			cmd->argv[i] == (char *)REDIRECT_IN || \
-			cmd->argv[i] == (char *)REDIRECT_APPEND)
+			cmd->argv[i] == (char *)REDIRECT_APPEND || \
+			cmd->argv[i] == (char *)HEREDOC)
 		{
 			count++;
 			if (cmd->argv[i + 1])
@@ -104,6 +123,12 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 					if (cmd->redir_stream.out != -1)
 						close(cmd->redir_stream.out);
 					cmd->redir_stream.out = redir_append(cmd->argv[i + 1]);
+				}
+				else if (cmd->argv[i] == (char *)HEREDOC)
+				{
+					if (cmd->redir_stream.in != -1)
+						close(cmd->redir_stream.in);
+					cmd->redir_stream.in = redir_heredoc(cmd->argv[i + 1]);
 				}
 			}
 		}
@@ -129,11 +154,17 @@ int	trim_redir(char ***argv, int count_redir)
 	while ((*argv)[++i])
 	{
 		if ((*argv)[i] > (char *)10LL)
+		{
 			new_argv[++j] = (*argv)[i];
+		}
 		else
 		{
 			if ((*argv)[i + 1])				//TODO: test cases
+			{
 				i += 1;
+				if ((*argv)[i - 1] == (char *)HEREDOC && (*argv)[i + 1])
+					i += 1;
+			}
 		}
 	}
 

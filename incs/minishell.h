@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 17:58:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/27 16:10:00 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 # define NON_NUMERIC -4444444444LL
 # define PROMPT "\e[1;46mminishell\e[0m "
+# define TMP_HD_FILE "/tmp/minishell_heredoc_file"
 
 # define CHILD 0
 # define BUILTIN -1
