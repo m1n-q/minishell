@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/29 00:37:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/29 00:43:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	main()
 
 		/* get builtin exit code */
 		else if (ext.pid == BUILTIN && ext.code)
-			// puterr(ext.code);
 			g_exit_code = ext.code;
 
 		/* get child process exit status */
@@ -113,17 +112,3 @@ int	main()
 	close(stdout_copied);
 
 }
-
-	// TTY	org_setting;
-	// TTY	my_setting;
-	// if (isatty(STDIN_FILENO))
-	// {
-	// 	tcgetattr(STDIN_FILENO, &org_setting);
-	// 	tcgetattr(STDIN_FILENO, &my_setting);
-
-	// 	// my_setting.c_lflag &= ~ECHOCTL;
-	// 	tcsetattr(STDIN_FILENO, TCSANOW, &my_setting);
-	// }
-
-	/* restore */
-	// tcsetattr(STDIN_FILENO, TCSANOW, &org_setting);

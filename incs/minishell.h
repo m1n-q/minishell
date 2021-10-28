@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/29 00:37:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/29 00:43:12 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # include "myerror.h"
 # include "struct.h"
 
-# define NON_NUMERIC -4444444444LL
-# define NULL_BYTE -5555555555LL
 # define PROMPT "\e[1;46mminishell\e[0m "
 # define TMP_HD_FILE "/tmp/minishell_heredoc_file"
 
