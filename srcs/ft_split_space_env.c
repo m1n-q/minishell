@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/26 12:04:57 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:43:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	join_non_env(char *s, char **ret)
 
 	i = 0;
 	while (s[i] && s[i] != '$' && s[i] != '"')
-  {
 		i++;
 	tmp = malloc(sizeof(char) * (i + 1));
 	ft_strlcpy(tmp, s, i + 1);
