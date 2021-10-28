@@ -6,19 +6,105 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 21:35:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/29 00:21:33 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_including_empty(void)
+char	*sh_double_quote(char *string)
 {
-	int			i;
+	int		i;
+	char	*ret;
+
+	if (!string)
+		return (NULL);
+
+	ret = (char *)ft_calloc(ft_strlen(string) + 3, sizeof(char));
+	if (!ret)
+		return (NULL);
+	ret[0] = '"';
+	i = -1;
+	while (string[++i])
+		ret[i + 1] = string[i];
+	ret[i + 1] = '"';
+	return (ret);
+}
+
+char	**make_tmp_environ(void)
+{
+	char	**tmp_environ;
+	int		i;
+
+	tmp_environ = (char **)ft_calloc(get_argc(environ) + 1, sizeof(char *));
+	if (!tmp_environ)
+		return (NULL);
 
 	i = -1;
 	while (environ[++i])
-		printf("%s\n", environ[i]);				/* Only 'NAME'='VAL' */
+		tmp_environ[i] = ft_strdup(environ[i]);
+	return (tmp_environ);
+}
+
+void	quick_sort(char	**arr, int start, int end)
+{
+	int		p;
+	int		l;
+	int		r;
+	char	*tmp;
+
+	if (end - start + 1 <= 1)
+		return ;
+	p = end;
+	l = start;
+	r = end - 1;
+	while (l < r)
+	{
+		while (l < end && ft_strncmp(arr[l], arr[p], ft_strlen(arr[p])) < 0)
+			l++;
+		while (r > 0 && ft_strncmp(arr[r], arr[p], ft_strlen(arr[p])) > 0)
+			r--;
+		if (l < r)
+		{
+			tmp = arr[l];
+			arr[l] = arr[r];
+			arr[r] = tmp;
+		}
+	}
+	tmp = arr[l];
+	arr[l] = arr[p];
+	arr[p] = tmp;
+	quick_sort(arr, 0, l - 1);
+	quick_sort(arr, l + 1, end);
+}
+
+int	print_including_empty(void)
+{
+	int		i;
+	char	c;
+	char	*x;
+	t_var	var;
+	char	**tmp_environ;
+
+	c = 'x';
+	tmp_environ = make_tmp_environ();
+	quick_sort(tmp_environ, 0, get_argc(tmp_environ) - 1);
+
+	i = -1;
+	while (tmp_environ[++i])
+	{
+		printf ("declare -%c ", c);
+		var = unbind_var(tmp_environ[i], NULL);
+		x = sh_double_quote(var.value);
+		if (var.value)
+			printf("%s=%s\n", var.name, x);
+		else
+			printf("%s\n", var.name);
+	}
+	i = -1;
+	while (tmp_environ[++i])
+		free(tmp_environ[i]);
+	free(tmp_environ);
 	return (0);
 }
 
