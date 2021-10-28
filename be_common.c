@@ -3,6 +3,13 @@
 /*           common error              */
 /***************************************/
 
+/*
+case default:
+  builtin_usage ();
+  return (EX_USAGE);
+*/
+
+
 void
 builtin_usage ()
 {
@@ -10,7 +17,7 @@ builtin_usage ()
     fprintf (stderr, "%s: usage: ", this_command_name);
   fprintf (stderr, "%s\n", current_builtin->short_doc);
   fflush (stderr);
-}
+}''
 
 /* Return if LIST is NULL else barf and jump to top_level.  Used by some
    builtins that do not accept arguments. */

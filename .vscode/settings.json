@@ -7,7 +7,9 @@
 		"algorithm": "c",
 		"bitset": "c",
 		"chrono": "c",
-		"unordered_map": "c"
+		"unordered_map": "c",
+		"cdefs.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "Enabled"
+
 }

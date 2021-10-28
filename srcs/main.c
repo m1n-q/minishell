@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 15:12:11 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/29 00:37:54 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,14 @@ int	main()
 			if (ext.pid == CHILD)					/* only if execve failed */
 				exit(ext.code);
 		}
+
 		if (ext.pid == PARENT_EXIT)
-			exit(ext.code);
+		{
+			if (ext.code == -1)						/* too many arguments */
+				g_exit_code = 1;
+			else
+				exit(ext.code);
+		}
 
 		/* get builtin exit code */
 		else if (ext.pid == BUILTIN && ext.code)
