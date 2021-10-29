@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 18:27:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/29 17:53:16 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			print_including_empty(void);
 char		**ft_split_space(char *s);
 
 /* ft_split_space_cpy */
-char		*cpy_str(char *s, char *ret);
+char		*cpy_str(char *s, char **ret, int *i);
 
 /* ft_split_space_env */
 char		*case_env(char *s);
