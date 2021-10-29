@@ -6,13 +6,14 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/28 16:43:21 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/29 18:01:52 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
 
 extern unsigned char	g_exit_code;
+
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)
 {
@@ -27,6 +28,7 @@ int	join_exit_code(char **ret)
 		*ret = ft_strjoin(*ret, ft_itoa(g_exit_code));
 	return (2);
 }
+
 /* join the value of the environment variables */
 int	join_env_var(char *s, char **ret)
 {
@@ -90,12 +92,6 @@ char	*case_env(char *s)
 			s += join_env_var(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
 			s += join_exit_code(&ret);
-/*		if (*s && *(s + 1) && *s == '$' && !ft_isspace(*(s + 1)))
-			s += join_env_var(s + 1, &ret);*/
-/*		if (!*s || ft_isspace(*s))
-			break ;*/
-/*		else
-			s += join_rest(s, &ret);*/
 	}
 	return (ret);
 }

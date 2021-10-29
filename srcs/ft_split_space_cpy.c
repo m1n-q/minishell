@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/26 12:06:00 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/10/29 18:00:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 int	has_dollar_sign(char *s)
 {
-	while (*s)
+	if (*s == '"')
+	{
+		while (*++s != '"')
+		{
+			if (*s == '$')
+				return (1);
+		}
+	}
+	while (*s && !ft_isspace(*s))
 	{
 		if (*s == '$')
 			return (1);
@@ -53,9 +61,9 @@ char	*cpy_with_q(char *s, char *ret)
 	}
 	while (*s && !ft_isspace(*s))
 	{
-		c = *s++;
-		if (has_dollar_sign(s) && c == '"')
+		if (has_dollar_sign(s) && *s == '"')
 			return (case_env(s));
+		c = *s++;
 		while (*s && *s != c)
 			ret[i++] = *s++;
 		if (*++s && !ft_isspace(*s))
@@ -96,10 +104,16 @@ char	*cpy_wo_q(char *s, char *ret)
 }
 
 /* copy a string from (s) to (ret) */
-char	*cpy_str(char *s, char *ret)
+char	*cpy_str(char *s, char **ret, int *i)
 {
+	int	len;
+
+	len = cnt_str_len(s);
+	ret[*i] = malloc_str(s, ret, *i, len);
 	if (is_q(*s))
-		return (cpy_with_q(s, ret));
+		ret[*i] = cpy_with_q(s, ret[*i]);
 	else
-		return (cpy_wo_q(s, ret));
+		ret[*i] = cpy_wo_q(s, ret[*i]);
+	(*i)++;
+	return (ret[*i]);
 }
