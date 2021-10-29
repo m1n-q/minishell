@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 20:06:50 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 19:49:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/27 14:48:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,21 @@ typedef struct s_exit
 {
 	int	pid;
 	int	status;
+	int	code;
 }				t_exit;
 
 typedef struct s_envent
 {
 	char	*name;
+	char	*value;
 	char	*string;		//FIXIT: query is better?
 	int		index;
 }				t_envent;
+
+typedef struct s_var
+{
+	char	*name;
+	char	*value;
+}				t_var;
 
 #endif

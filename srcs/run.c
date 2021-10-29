@@ -6,20 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 18:19:39 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/27 19:01:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	1. If the command contains no slashes
-		1-1. shell function
-		1-2. corresponding built-in command
-		1-3. searches $PATH for an executable
-
-	2. If the command contains slashes, that named file is executed.
-*/
 
 t_exit	run(t_cmd cmd)
 {
@@ -28,13 +19,14 @@ t_exit	run(t_cmd cmd)
 	if (is_equal(cmd.path, "built-in"))		//FIXME: "built-in" can be input
 	{
 		if (is_equal("exit", cmd.argv[0]))
-			return ((t_exit){PARENT_EXIT, __exit(cmd.argv)});
+			return ((t_exit){PARENT_EXIT, 0, __exit(cmd.argv)});
 		else
-			return ((t_exit){BUILTIN, run_builtin(cmd.argv)});
+			return ((t_exit){BUILTIN, 0, run_builtin(cmd.argv)});
 	}
 
 	ext.pid = fork();
 	ext.status = 0;
+	ext.code = 0;
 	if (ext.pid < 0)
 		printf("fork failed\n");
 
@@ -43,8 +35,13 @@ t_exit	run(t_cmd cmd)
 		signal(SIGQUIT, SIG_DFL);
 		connect_stream(cmd.pipe_stream);
 		connect_stream(cmd.redir_stream);
-		if (execve(cmd.path, cmd.argv, environ) == -1)			/* if has slash and execve fail -> No such file or directory */
-			ext.status = errno;				//FIXIT: clarify name & usage: status / exitcode
+		if (cmd.path == NULL)
+		{
+			internal_error(cmd.argv[0], "command not found");
+			ext.code = EX_NOTFOUND;
+		}
+		else if (execve(cmd.path, cmd.argv, environ) == -1)
+			ext.code = check_error(cmd.argv[0]);
 	}
 
 	else if (ext.pid > 0)
@@ -57,4 +54,38 @@ t_exit	run(t_cmd cmd)
 	return (ext);
 }
 
-// return ((t_exit){BUILTIN, ENOCMD});				/* Command not found */
+/*
+	BUILTIN
+		pass;
+
+
+	if (has slash) {
+		if (is_exist) {
+			if (is_dir) {
+				is a directory (126 EX_NOEXEC)
+			}
+			else if (is_text or sth) {
+				Permission denied (return errno => EACCES)
+			}
+			else {
+
+			}
+
+		}
+
+		else {
+			No such file or directory (127)
+		}
+	}
+	else {
+		if (cmd.path == NULL)  ~ not in $PATH {
+			command not found (127)
+		}
+		else {
+			if (!success)
+				errno from execve
+		}
+	}
+
+
+*/

@@ -19,15 +19,26 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/error.c \
-		$(SRC_DIR)/builtin.c \
 		$(SRC_DIR)/redirection.c \
 		$(SRC_DIR)/environ.c \
 		$(SRC_DIR)/pipe.c \
 		$(SRC_DIR)/stream.c \
 		$(SRC_DIR)/path.c \
 		$(SRC_DIR)/cmd.c \
-		$(SRC_DIR)/signal.c
-
+		$(SRC_DIR)/signal.c \
+		$(SRC_DIR)/variable.c \
+		$(SRC_DIR)/builtin/islegal.c \
+		$(SRC_DIR)/builtin/builtin.c \
+		$(SRC_DIR)/builtin/builtin_error.c \
+		$(SRC_DIR)/builtin/builtin_common.c \
+		$(SRC_DIR)/builtin/cd.c \
+		$(SRC_DIR)/builtin/pwd.c \
+		$(SRC_DIR)/builtin/env.c \
+		$(SRC_DIR)/builtin/echo.c \
+		$(SRC_DIR)/builtin/exit.c \
+		$(SRC_DIR)/builtin/unset.c \
+		$(SRC_DIR)/builtin/export.c \
+		$(SRC_DIR)/builtin/option.c
 
 all : $(NAME)
 

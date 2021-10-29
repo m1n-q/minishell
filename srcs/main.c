@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/25 18:28:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/29 00:43:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,38 @@ int	main()
 		{
 			ext = run(cmd_table[i]);
 			if (ext.pid == CHILD)					/* only if execve failed */
-				return (ext.status);				//FIXIT: clarify name & usage: status / exitcode
+				exit(ext.code);
 		}
+
 		if (ext.pid == PARENT_EXIT)
-			return (ext.status);
-		else if (ext.pid == BUILTIN && ext.status)
-			puterr(ext.status);
+		{
+			if (ext.code == -1)						/* too many arguments */
+				g_exit_code = 1;
+			else
+				exit(ext.code);
+		}
+
+		/* get builtin exit code */
+		else if (ext.pid == BUILTIN && ext.code)
+			g_exit_code = ext.code;
+
+		/* get child process exit status */
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
-			puterr(WEXITSTATUS(ext.status));		/* child process exit status (not built-in func) */
+			g_exit_code = WEXITSTATUS(ext.status);
+
+		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
-			write(stdout_copied, "\n", 2);
+		{
+			write(stdout_copied, "\n", 1);
+			if (WTERMSIG(ext.status) == SIGINT)
+				g_exit_code = EX_SIGINT;
+			else if (WTERMSIG(ext.status) == SIGQUIT)
+				g_exit_code = EX_SIGQUIT;
+		}
+
+		/* if none of above, it means cmd succeeds*/
+		else
+			g_exit_code = 0;					//NOTE: if execve succeed, cannot reach g_exit_code or sth
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
 		add_history(input);
@@ -90,17 +112,3 @@ int	main()
 	close(stdout_copied);
 
 }
-
-	// TTY	org_setting;
-	// TTY	my_setting;
-	// if (isatty(STDIN_FILENO))
-	// {
-	// 	tcgetattr(STDIN_FILENO, &org_setting);
-	// 	tcgetattr(STDIN_FILENO, &my_setting);
-
-	// 	// my_setting.c_lflag &= ~ECHOCTL;
-	// 	tcsetattr(STDIN_FILENO, TCSANOW, &my_setting);
-	// }
-
-	/* restore */
-	// tcsetattr(STDIN_FILENO, TCSANOW, &org_setting);

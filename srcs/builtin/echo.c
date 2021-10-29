@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 15:18:58 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/10/26 21:41:21 by mishin            #+#    #+#             */
+/*   Updated: 2021/10/28 21:04:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
+int	__echo(char **argv)
 {
+	int	nflag;
 	int	i;
-	int	count_redir;
 
-	i = -1;
-	while (++i < len_cmd_table)
+	nflag = 0;
+	i = 0;
+	if (argv[1])
 	{
-		check_redir(&cmd_table[i], &count_redir);
-		trim_redir(&(cmd_table[i].argv), count_redir);
-		set_path(&cmd_table[i]);
-		if (i < len_cmd_table - 1)		// except last cmd
+		if (isoption(argv[1], TIL_SEC))
 		{
-			make_pipe(&cmd_table[i]);
-			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
+			if (argv[1][1] == 'n')
+			{
+				nflag++;
+				i++;
+			}
+		}
+		while (argv[++i])
+		{
+			printf("%s", argv[i]);
+			if (argv[i + 1] != NULL)
+				printf(" ");
 		}
 	}
-
+	if (!nflag)
+		printf("\n");
 	return (0);
 }
