@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 19:48:41 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/30 15:22:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char *find_path(char *arg)
 	struct dirent	*dirent;
 
 	paths = get_paths();
+	if (!paths)
+		return (NULL);
 	path = NULL;
 	i = -1;
 	while (paths[++i])
