@@ -8,14 +8,13 @@ INC_DIR = incs
 SRC_DIR = srcs
 OBJS =  ${SRCS:.c=.o}
 SRCS =  $(SRC_DIR)/main.c \
-		$(SRC_DIR)/ft_split_space.c \
-		$(SRC_DIR)/ft_split_space_pipe_redir.c \
-		$(SRC_DIR)/ft_split_space_env.c \
-		$(SRC_DIR)/ft_split_space_utils.c \
-		$(SRC_DIR)/ft_split_space_cpy.c \
-		$(SRC_DIR)/ft_split_space_str.c \
-		$(SRC_DIR)/ft_split_space_strs.c \
-		$(SRC_DIR)/parse.c \
+		$(SRC_DIR)/parse/parse.c \
+		$(SRC_DIR)/parse/pipe_redir.c \
+		$(SRC_DIR)/parse/env.c \
+		$(SRC_DIR)/parse/utils.c \
+		$(SRC_DIR)/parse/copy.c \
+		$(SRC_DIR)/parse/str.c \
+		$(SRC_DIR)/parse/strs.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/error.c \

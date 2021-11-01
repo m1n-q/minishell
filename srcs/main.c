@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/29 00:43:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 15:59:14 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main()
 		if (!input[0] || skip_space(input))
 			continue ;
 
-		argv = get_argv(input);
+		argv = parse(input);
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
 
