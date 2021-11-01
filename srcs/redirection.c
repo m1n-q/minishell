@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/28 16:27:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 15:18:34 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	redir_heredoc(char *eof)
 		ft_putendl_fd(line, fd);
 	}
 	close(fd);
-	fd = open(TMP_HD_FILE, O_RDONLY); 
+	fd = open(TMP_HD_FILE, O_RDONLY);
 	return (fd);
 }
 
@@ -162,8 +162,6 @@ int	trim_redir(char ***argv, int count_redir)
 			if ((*argv)[i + 1])				//TODO: test cases
 			{
 				i += 1;
-				if ((*argv)[i - 1] == (char *)HEREDOC && (*argv)[i + 1])
-					i += 1;
 			}
 		}
 	}
