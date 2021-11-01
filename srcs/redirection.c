@@ -84,7 +84,7 @@ int	redir_heredoc(char *eof)
 		ft_putendl_fd(line, fd);
 	}
 	close(fd);
-	fd = open(TMP_HD_FILE, O_RDONLY); 
+	fd = open(TMP_HD_FILE, O_RDONLY);
 	return (fd);
 }
 
@@ -163,8 +163,6 @@ int	trim_redir(char ***argv, int count_redir)
 			if ((*argv)[i + 1])				//TODO: test cases
 			{
 				i += 1;
-				if ((*argv)[i - 1] == (char *)HEREDOC && (*argv)[i + 1])
-					i += 1;
 			}
 		}
 	}

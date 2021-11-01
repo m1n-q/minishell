@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:50:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 18:59:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/28 21:02:39 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,19 @@ char	*get_quoted_str(char *s)
 	return (quoted_str);
 }
 
-int	builtin_error(char *command, char *arg, char *message)
+int	builtin_error(char *command, char *arg, char *message, int optflag)
 {
-  	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, "minishell: ", 11);
 	write(STDERR_FILENO, command, ft_strlen(command));
 	write(STDERR_FILENO, ": ", 2);
-	if (arg && *arg)
+	if (arg && *arg && !optflag)
 	{
 		write(STDERR_FILENO, arg, ft_strlen(arg));
+		write(STDERR_FILENO, ": ", 2);
+	}
+	if (arg && *arg && optflag)
+	{
+		write(STDERR_FILENO, arg, 2);
 		write(STDERR_FILENO, ": ", 2);
 	}
 	write(STDERR_FILENO, message, ft_strlen(message));
@@ -59,7 +64,7 @@ int	builtin_error(char *command, char *arg, char *message)
 
 void	sh_invalidopt(char *command, char *opt)
 {
-	builtin_error(command, opt, "invalid option");
+	builtin_error(command, opt, "invalid option", 1);
 }
 
 void	sh_invalidid (char *command, char *s)
@@ -69,11 +74,20 @@ void	sh_invalidid (char *command, char *s)
 	qs = get_quoted_str(s);
 	if (!qs)
 		return ;
-	builtin_error(command, qs, "not a valid identifier");
+	builtin_error(command, qs, "not a valid identifier", 0);
 	free(qs);
 }
 
 void	sh_neednumarg (char *command, char *s)
 {
-	builtin_error (command, s, "numeric argument required");
+	builtin_error (command, s, "numeric argument required", 0);
+}
+
+void	builtin_usage (char *command, char *usage)
+{
+	write(STDERR_FILENO, command, ft_strlen(command));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, "usage: ", 7);
+	write(STDERR_FILENO, usage, ft_strlen(usage));
+	write(STDERR_FILENO, "\n", 1);
 }
