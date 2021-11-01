@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 16:04:56 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 19:17:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define REDIRECT_IN 5LL
 # define REDIRECT_OUT 6LL
 # define REDIRECT_APPEND 7LL
+# define NOCMD 8LL
 
 # define TIL_SEC 0
 # define TIL_END 1

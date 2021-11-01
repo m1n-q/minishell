@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 18:17:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 19:21:07 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_exit	run(t_cmd cmd)
 	t_exit		ext;
 
 	/* builtin without pipe (no fork) */
-	if (is_equal(cmd.path, "built-in") && cmd.pipe_stream.in == -1 && cmd.pipe_stream.out == -1)		//FIXME: "built-in" can be input
+	if (cmd.path != (char *)NOCMD && is_equal(cmd.path, "built-in") && \
+		cmd.pipe_stream.in == -1 && cmd.pipe_stream.out == -1)					//FIXME: "built-in" can be input
 	{
 		connect_stream(cmd.redir_stream);
 		if (is_equal("exit", cmd.argv[0]))
@@ -53,6 +54,8 @@ t_exit	run(t_cmd cmd)
 			internal_error(cmd.argv[0], "command not found");
 			ext.code = EX_NOTFOUND;
 		}
+		else if (cmd.path == (char *)NOCMD)
+			ext.code = 0;
 		else if (is_equal(cmd.path, "built-in"))
 		{
 			if (is_equal("exit", cmd.argv[0]))
