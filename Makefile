@@ -15,6 +15,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/copy.c \
 		$(SRC_DIR)/parse/str.c \
 		$(SRC_DIR)/parse/strs.c \
+		$(SRC_DIR)/parse/cont_pipe.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/error.c \
