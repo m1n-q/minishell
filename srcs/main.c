@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 15:59:14 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 18:17:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main()
 
 		if (ext.pid == PARENT_EXIT)
 		{
-			if (ext.code == -1)						/* too many arguments */
+			if (ext.code == -1)						/* too many arguments => do not exit*/
 				g_exit_code = 1;
 			else
 				exit(ext.code);
