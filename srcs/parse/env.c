@@ -6,13 +6,13 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 16:01:09 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 20:59:06 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-extern unsigned char	g_exit_code;
+extern int	g_exit_code;
 
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)

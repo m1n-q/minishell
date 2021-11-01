@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 19:17:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 21:12:11 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			puterr(int error);
 int			check_error(char *command);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
+char		**syntax_error(char **error, int exit_code);
 
 /* run */
 t_exit		run(t_cmd cmd);
@@ -86,6 +87,7 @@ int			add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 
+/* ************************ parse ************************ */
 /* parse */
 char		**parse(char *s);
 
@@ -114,6 +116,10 @@ int			is_q(char c);
 int			is_pipe_rin_rout(char c);
 int			is_empty_q(char *s);
 int			has_q(char *s);
+
+/* cont_pipe */
+char	**cont_pipe(char **argv);
+/* ************************ parse ************************ */
 
 /* redirection */
 int			redir_in(char *arg);

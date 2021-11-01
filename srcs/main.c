@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 18:17:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 20:19:39 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	main()
 			continue ;
 
 		argv = parse(input);
+		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || argv == (char **)REDIR_ERR)
+			continue ;
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
 
