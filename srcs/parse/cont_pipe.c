@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 21:15:28 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 22:00:42 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ char	**cont_pipe(char **argv)
 	ret = malloc(sizeof(char *) * (len + 2));
 	if (!ret)
 		return (0);
+	line = readline("> ");
+	if (!line)
+		return (syntax_error((char **)UNEXPECTED_EOF, EX_USAGE));
 	while (argv[++i])
 		ret[i] = argv[i];
-	line = readline("> ");
 	ret[i++] = line;
 	ret[i] = 0;
 	free(argv);
