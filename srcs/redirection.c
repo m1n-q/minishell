@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 15:45:38 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 16:44:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	redir_heredoc(char *eof)
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+			ft_putendl_fd("\n", fd);
 		add_history(line);
 		if (is_equal(line, eof))
 			break ;
