@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 18:17:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 19:49:11 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ int	main()
 		while (++i < len_cmd_table)
 		{
 			ext = run(cmd_table[i]);
-			if (ext.pid == CHILD)					/* only if execve failed */
+			if (ext.pid == CHILD)					/* execve failed or forked built-in */
 				exit(ext.code);
 		}
 
 		if (ext.pid == PARENT_EXIT)
 		{
-			if (ext.code == -1)						/* too many arguments => do not exit*/
-				g_exit_code = 1;
+			if (ext.code == E2MANY)					/* too many arguments => do not exit */
+				g_exit_code = EXECUTION_FAILURE;
 			else
 				exit(ext.code);
 		}
