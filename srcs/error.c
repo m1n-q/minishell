@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 21:02:28 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 21:58:52 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ char	**syntax_error(char **error, int exit_code)
 		else
 			write(STDERR_FILENO, "`newline'\n", 10);
 	}
+	else if (error == (char **)UNEXPECTED_EOF)
+		write(STDERR_FILENO, "syntax error: unexpected end of file\n", 37);
 	return (error);
 }
 
