@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space.c                                   :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/29 17:53:25 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 16:00:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
 
 /* if the numbers of each of the quotes are odd (mismatch) return 0,
  * otherwise return 1 */
@@ -85,7 +85,7 @@ char	*rm_empty_q(char *s)
 	return (ret);
 }
 
-char	**ft_split_space(char *s)
+char	**parse(char *s)
 {
 	int		i;
 	int		str_len;

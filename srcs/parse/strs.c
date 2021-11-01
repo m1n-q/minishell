@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space_strs.c                              :+:      :+:    :+:   */
+/*   strs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 23:58:17 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/26 10:28:14 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 16:01:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
 
 /* skip q marks when counting how many strings there are */
 int	skip_q(char *s)

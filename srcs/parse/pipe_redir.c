@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space_pipe_redir.c                        :+:      :+:    :+:   */
+/*   pipe_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/21 22:15:20 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/23 00:47:07 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:01:15 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 16:01:16 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
 
 /* check if a string contains a pipe or redirection
  * maybe we can use a function from libft */
