@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space.c                                   :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/22 00:17:31 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 16:00:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
 
 /* if the numbers of each of the quotes are odd (mismatch) return 0,
  * otherwise return 1 */
@@ -41,6 +41,7 @@ int	quotes_match(char *s)
 	return (1);
 }
 
+/* count empty sets of quotes */
 int	cnt_empty_q(char *s)
 {
 	int		ret;
@@ -48,7 +49,7 @@ int	cnt_empty_q(char *s)
 	ret = 0;
 	while (*s)
 	{
-		if (is_empty_q(s))
+		if (is_empty_q(s) && *(s + 2) && !ft_isspace(*(s + 2)))
 		{
 			ret++;
 			s += 2;
@@ -59,7 +60,7 @@ int	cnt_empty_q(char *s)
 	return (ret);
 }
 
-/* remove all empty q's in the beginning */
+/* remove all empty sets of quotes */
 char	*rm_empty_q(char *s)
 {
 	int		i;
@@ -73,7 +74,7 @@ char	*rm_empty_q(char *s)
 		return (0);
 	while (*s)
 	{
-		if (is_empty_q(s))
+		if (is_empty_q(s) && *(s + 2) && !ft_isspace(*(s + 2)))
 			s += 2;
 		else
 			ret[i++] = *s++;
@@ -84,7 +85,7 @@ char	*rm_empty_q(char *s)
 	return (ret);
 }
 
-char	**ft_split_space(char *s)
+char	**parse(char *s)
 {
 	int		i;
 	int		str_len;
@@ -102,10 +103,8 @@ char	**ft_split_space(char *s)
 		if (!ft_isspace(*s))
 		{
 			str_len = cnt_str_len(s);
-			ret[i] = malloc_str(s, ret, i, str_len);
-			ret[i] = cpy_str(s, ret[i]);
+			ret[i] = cpy_str(s, ret, &i);
 			s += str_len - 1;
-			i++;
 		}
 		s++;
 	}

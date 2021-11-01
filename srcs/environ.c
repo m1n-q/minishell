@@ -6,12 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/15 21:14:36 by mishin           ###   ########.fr       */
+/*   Updated: 2021/10/27 18:55:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	**environ_to_heap(void)
 {
@@ -51,56 +50,69 @@ char	*get_env_including_empty(char *arg)
 		tmp = ft_strjoin(arg, "=");
 		env_string = ft_strjoin(tmp, env_val);
 		free(tmp);
-		return (env_string);
+		i = -1;
+		while (environ[++i])
+		{
+			if (is_equal(environ[i], env_string))
+			{
+				free(env_string);
+				return (environ[i]);
+			}
+		}
 	}
 	i = -1;						// searching env without value
 	while (environ[++i])
-		if (ft_strlen(environ[i]) == ft_strlen(arg) && \
-			!ft_strncmp(environ[i], arg, ft_strlen(arg)))
-				return (arg);
+		if (is_equal(environ[i], arg))
+				return (environ[i]);
 	return (NULL);
 }
 
 //NOTE: env.string will be filled if env.name already exists
-t_envent	get_envent(char *arg)
+t_envent	find_envent(char *name)
 {
-	char		*pos;
 	t_envent	env;
+	int			assign_pos;
 	int			i;
 
 	env.index = -1;
 	env.string = NULL;
-	pos = ft_strchr(arg, '=');
-	if (pos)							/* export 'arg=val' */
-	{
-		env.name = ft_substr(arg, 0, (size_t)(pos - arg));		//FIXIT: free
-		env.string = get_env_including_empty(env.name);
-	}
-	else								/* export 'arg' */
-	{
-		env.name = arg;
-		env.string = get_env_including_empty(arg);
-	}
+	env.value = NULL;
+
+	env.name = ft_strdup(name);
+	env.string = get_env_including_empty(env.name);
 	if (env.string)
 	{
 		i = -1;
 		while (environ[++i] && env.index == -1)
-			if (ft_strlen(environ[i]) == ft_strlen(env.string) && \
-				!ft_strncmp(environ[i], env.string, ft_strlen(env.string)))
+			if (is_equal(environ[i], env.string))
 				env.index = i;
+		assign_pos = get_assign_pos(env.string);
+		if (assign_pos)
+			env.value = ft_strdup(env.string + assign_pos + 1);
 	}
 	return (env);
 }
 
-int	append_envent(char *arg)		//FIXIT: naming: do not use "envent"
+int	add_envent(char *name, char *value)
 {
 	int		env_len;
 	char	**new_environ;
+	char	*env_string;
+	char	*tmp;
 
+	env_string = NULL;
 	env_len = get_argc(environ);
 	new_environ = (char **)ft_calloc(env_len + 2, sizeof(char *));
 	ft_memmove(new_environ, environ, sizeof(char *) * env_len);
-	new_environ[env_len] = ft_strdup(arg);
+	if (value)
+	{
+		tmp = ft_strjoin(name, "=");
+		env_string = ft_strjoin(tmp, value);
+		free(tmp);
+	}
+	else
+		env_string = ft_strdup(name);
+	new_environ[env_len] = env_string;
 	free(environ);
 	environ = new_environ;
 	return (0);
@@ -123,60 +135,6 @@ int	remove_envent(t_envent env)
 		ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 		free(environ);
 		environ = new_environ;
-	}
-	return (0);
-}
-
-int	check_arg(char *arg)
-{
-	char		*pos;
-	t_envent	env;
-
-	env = get_envent(arg);
-	pos = ft_strchr(arg, '=');
-	if (env.string)
-	{
-		if (pos)		/* if exists && str=='name=value' : modify existing entry */
-		{
-			remove_envent(env);
-			append_envent(arg);
-		}
-		else			/* if exists && str=='name' : ignore */
-			return (0);
-	}
-	else
-	{
-		if (pos)		/* if new && str=='name=value' : append new entry */
-			append_envent(arg);
-		else			/* if new && str=='name' : append new entry */
-			append_envent(arg);
-	}
-	//NOTE:: export print just 'arg', env(getenv) cannot know
-	return (0);
-}
-
-int	print_including_empty(void)
-{
-	int			i;
-
-	i = -1;
-	while (environ[++i])
-		printf("%s\n", environ[i]);				/* Only 'NAME'='VAL' */
-	return (0);
-}
-
-int	__unset(char **argv)
-{
-	t_envent	env;
-	int			i;
-
-	if (!argv || !*argv)
-		return (-1);
-	i = 0;
-	while (argv[++i])
-	{
-		env = get_envent(argv[i]);
-		remove_envent(env);
 	}
 	return (0);
 }

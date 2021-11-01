@@ -1,32 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space_cpy.c                               :+:      :+:    :+:   */
+/*   copy.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/15 00:03:07 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 23:52:17 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 16:01:02 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
+
+int	has_dollar_sign(char *s)
+{
+	if (is_equal(s, "$")
+		|| (*s == '"' && *(s + 1) == '$' && *(s + 2) == '"'))
+		return (0);
+	if (*s == '"')
+	{
+		while (*++s != '"')
+		{
+			if (*s == '$')
+				return (1);
+		}
+	}
+	while (*s && !ft_isspace(*s))
+	{
+		if (*s == '$')
+			return (1);
+		s++;
+	}
+	return (0);
+}
 
 /* typecast pipes and redirections */
 char	*case_pipe_redir(char *s)
 {
-	size_t	len;
-
-	len = ft_strlen(s);
-	if (len == 1 && *s == '|')
+	if (is_equal(s, "|"))
 		return ((char *)PIPE);
-	if (len == 1 && *s == '<')
+	if (is_equal(s, "<"))
 		return ((char *)REDIRECT_IN);
-	if (len == 1 && *s == '>')
+	if (is_equal(s, ">"))
 		return ((char *)REDIRECT_OUT);
-	if (len == 2 && !ft_strncmp(s, "<<", len))
+	if (is_equal(s, "<<"))
 		return ((char *)HEREDOC);
-	if (len == 2 && !ft_strncmp(s, ">>", len))
+	if (is_equal(s, ">>"))
 		return ((char *)REDIRECT_APPEND);
 	return (s);
 }
@@ -38,11 +57,16 @@ char	*cpy_with_q(char *s, char *ret)
 	int		i;
 
 	i = 0;
+	if (is_empty_q(s))
+	{
+		ret[0] = 0;
+		return (ret);
+	}
 	while (*s && !ft_isspace(*s))
 	{
-		c = *s++;
-		if (c == '"' && *s == '$')
+		if (has_dollar_sign(s) && *s == '"')
 			return (case_env(s));
+		c = *s++;
 		while (*s && *s != c)
 			ret[i++] = *s++;
 		if (*++s && !ft_isspace(*s))
@@ -62,7 +86,7 @@ char	*cpy_wo_q(char *s, char *ret)
 	int		i;
 
 	i = 0;
-	if (*s == '$')
+	if (has_dollar_sign(s))
 		return (case_env(s));
 	ret[i++] = *s++;
 	while (*s && !ft_isspace(*s))
@@ -83,10 +107,16 @@ char	*cpy_wo_q(char *s, char *ret)
 }
 
 /* copy a string from (s) to (ret) */
-char	*cpy_str(char *s, char *ret)
+char	*cpy_str(char *s, char **ret, int *i)
 {
+	int	len;
+
+	len = cnt_str_len(s);
+	ret[*i] = malloc_str(s, ret, *i, len);
 	if (is_q(*s))
-		return (cpy_with_q(s, ret));
+		ret[*i] = cpy_with_q(s, ret[*i]);
 	else
-		return (cpy_wo_q(s, ret));
+		ret[*i] = cpy_wo_q(s, ret[*i]);
+	(*i)++;
+	return (ret[*i]);
 }

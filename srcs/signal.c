@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 17:48:25 by mishin           ###   ########.fr       */
+/*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
+/*   Updated: 2021/10/25 18:18:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+void	sig_handler_interactive(int signum)
 {
-	size_t	ret;
+	if (signum == SIGINT)
+		return ;
+}
 
-	if (s == NULL)
-		return (0);
-	ret = 0;
-	while (*s++)
-		ret++;
-	return (ret);
+int	sigint_event_hook(void)
+{
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);		// replace rl_line_buffer(line gathered so far) to ""
+	rl_redisplay();				// redisplay prompt?
+	return (0);
 }

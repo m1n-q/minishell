@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   option.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 17:48:25 by mishin           ###   ########.fr       */
+/*   Created: 2021/10/28 19:24:18 by mishin            #+#    #+#             */
+/*   Updated: 2021/10/28 20:02:38 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	isoption(char *s, int optlen)
 {
-	size_t	ret;
-
-	if (s == NULL)
+	if (optlen == TIL_SEC)
+		return (s[0] == '-' && s[1] && s[1] != '-' && !s[2]);
+	else if (optlen == TIL_END)
+		return (s[0] == '-' && s[1]);
+	else
 		return (0);
-	ret = 0;
-	while (*s++)
-		ret++;
-	return (ret);
 }
+

@@ -1,25 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 17:48:25 by mishin           ###   ########.fr       */
+/*   Created: 2021/10/26 14:50:11 by mishin            #+#    #+#             */
+/*   Updated: 2021/10/26 14:50:24 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	ret;
-
-	if (s == NULL)
-		return (0);
-	ret = 0;
-	while (*s++)
-		ret++;
-	return (ret);
-}

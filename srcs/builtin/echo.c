@@ -1,25 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/20 17:48:25 by mishin           ###   ########.fr       */
+/*   Created: 2021/10/26 21:41:21 by mishin            #+#    #+#             */
+/*   Updated: 2021/10/28 21:04:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	__echo(char **argv)
 {
-	size_t	ret;
+	int	nflag;
+	int	i;
 
-	if (s == NULL)
-		return (0);
-	ret = 0;
-	while (*s++)
-		ret++;
-	return (ret);
+	nflag = 0;
+	i = 0;
+	if (argv[1])
+	{
+		if (isoption(argv[1], TIL_SEC))
+		{
+			if (argv[1][1] == 'n')
+			{
+				nflag++;
+				i++;
+			}
+		}
+		while (argv[++i])
+		{
+			printf("%s", argv[i]);
+			if (argv[i + 1] != NULL)
+				printf(" ");
+		}
+	}
+	if (!nflag)
+		printf("\n");
+	return (0);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space_str.c                               :+:      :+:    :+:   */
+/*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/15 00:04:21 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/21 23:50:23 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 16:01:25 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
 
 /* count length of a string that is enclosed by q marks */
 int	case_q(char *s)
@@ -19,6 +19,8 @@ int	case_q(char *s)
 	char	c;
 
 	ret = 2;
+	if (is_empty_q(s))
+		return (ret);
 	if (is_q(*s))
 	{
 		c = *s++;
