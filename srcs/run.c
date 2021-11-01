@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 19:21:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 19:46:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ t_exit	run(t_cmd cmd)
 			{
 				ext.status = 0;
 				ext.code = __exit(cmd.argv);
-				if (ext.code == -1)
-					ext.code = 1;
+				if (ext.code == E2MANY)
+					ext.code = EXECUTION_FAILURE;
 			}
 			else
 			{

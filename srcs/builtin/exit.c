@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 21:05:25 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 19:46:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	__exit(char **argv)
 	if (argc > 2)
 	{
 		builtin_error(argv[0], NULL, "too many arguments", 0);
-		return (-1);
+		return (E2MANY);
 	}
 	exit_code = retval & 255;
 	return (exit_code);
