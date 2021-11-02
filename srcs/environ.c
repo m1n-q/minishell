@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 18:55:37 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:00:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	**environ_to_heap(void)
 	new_environ = (char **)ft_calloc(env_len + 1, sizeof(char *));
 	if (!new_environ)
 		return (NULL);
-
 	i = -1;
 	while (environ[++i])
 	{
@@ -59,11 +58,12 @@ char	*get_env_including_empty(char *arg)
 				return (environ[i]);
 			}
 		}
+		free(env_string);
 	}
-	i = -1;						// searching env without value
+	i = -1;
 	while (environ[++i])
 		if (is_equal(environ[i], arg))
-				return (environ[i]);
+			return (environ[i]);
 	return (NULL);
 }
 
@@ -77,7 +77,6 @@ t_envent	find_envent(char *name)
 	env.index = -1;
 	env.string = NULL;
 	env.value = NULL;
-
 	env.name = ft_strdup(name);
 	env.string = get_env_including_empty(env.name);
 	if (env.string)
@@ -126,11 +125,9 @@ int	remove_envent(t_envent env)
 	if (env.string)
 	{
 		env_len = get_argc(environ);
-		/* remove environ[index] */
 		free(environ[env.index]);
-		/* move left */
-		ft_memmove(environ + env.index, environ + env.index + 1, sizeof(char *) * (env_len - env.index));
-		/* resize */
+		ft_memmove(environ + env.index, environ + env.index + 1, \
+				sizeof(char *) * (env_len - env.index));
 		new_environ = ft_calloc(env_len, sizeof(char *));
 		ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 		free(environ);

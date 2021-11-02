@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 18:11:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:22:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ int			destroy_stream(t_io_table stream);
 int			restore_stream(int std_copied, int std_org);
 
 /* path */
-char		**get_paths(void);
 int			set_path(t_cmd *cmd);
 
 /* cmd */
