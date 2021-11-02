@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 19:53:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:54:14 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	cd: usage: cd [dir]
 */
 
-int	bindpwd(char *oldpwd)
+static int	bindpwd(char *oldpwd)
 {
 	char	*tmp;
 	char	*otmp;
@@ -30,12 +30,8 @@ int	bindpwd(char *oldpwd)
 	return (EXECUTION_SUCCESS);
 }
 
-//NOTE: CDPATH
-int	__cd(char **argv)
+static int	check_option(char **argv)
 {
-	char	*dirname;
-	char	*cwd;
-
 	if (argv[1])
 	{
 		if (isoption(argv[1], TIL_END))
@@ -43,34 +39,51 @@ int	__cd(char **argv)
 			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
 			return (EXECUTION_FAILURE);
 		}
+		return (0);
 	}
+	return (0);
+}
 
-	cwd = getcwd(NULL, 0);
+static int	check_arg(char **argv, char **dirname)
+{
 	if (argv[1] == NULL)
 	{
-		dirname = getenv("HOME");
-		if (!dirname)
+		*dirname = getenv("HOME");
+		if (!*dirname)
 		{
 			builtin_error(argv[0], NULL, "HOME not set", 0);
 			return (EXECUTION_FAILURE);
 		}
+		return (0);
 	}
 	else if (is_equal(argv[1], "-"))
 	{
-		dirname = getenv("OLDPWD");
-		if (!dirname)
+		*dirname = getenv("OLDPWD");
+		if (!*dirname)
 		{
 			builtin_error(argv[0], NULL, "OLDPWD not set", 0);
 			return (EXECUTION_FAILURE);
 		}
-		printf("%s\n", dirname);
+		printf("%s\n", *dirname);
+		return (0);
 	}
 	else
-		dirname = argv[1];
+		*dirname = argv[1];
+	return (0);
+}
 
+int	__cd(char **argv)
+{
+	char	*dirname;
+	char	*cwd;
+
+	if (check_option(argv) == EXECUTION_FAILURE)
+		return (EXECUTION_FAILURE);
+	if (check_arg(argv, &dirname) == EXECUTION_FAILURE)
+		return (EXECUTION_FAILURE);
+	cwd = getcwd(NULL, 0);
 	if (chdir(dirname) == 0)
 		return (bindpwd(cwd));
-
 	builtin_error(argv[0], dirname, strerror(errno), 0);
 	return (EXECUTION_FAILURE);
 }
