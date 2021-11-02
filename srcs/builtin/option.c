@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:24:18 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 20:02:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:03:05 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ int	isoption(char *s, int optlen)
 	else
 		return (0);
 }
-

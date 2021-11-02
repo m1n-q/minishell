@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 18:49:52 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/27 18:45:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:02:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ int	legal_number(char *string, intmax_t *result)
 	value = ft_strtoimax(string, &ep);
 	if (errno)
 		return (0); /* errno is set on overflow or underflow */
-
 	/* Skip any trailing whitespace, since strtoimax does not. */
 	while (whitespace(*ep))
 		ep++;
-
 	/* If *string is not '\0' but *ep is '\0' on return, the entire string
   ​     is valid. */
 	if (string && *string && *ep == '\0')

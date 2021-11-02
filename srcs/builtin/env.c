@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:55 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 21:14:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:58:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	__env(char **argv)
 	while (environ[++i])
 	{
 		if (getenv(find_envent(environ[i]).name))
-			printf("%s\n", environ[i]);					/* Only 'name' that has '=value' */
+			printf("%s\n", environ[i]);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/29 00:21:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:02:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*sh_double_quote(char *string)
 
 	if (!string)
 		return (NULL);
-
 	ret = (char *)ft_calloc(ft_strlen(string) + 3, sizeof(char));
 	if (!ret)
 		return (NULL);
@@ -39,7 +38,6 @@ char	**make_tmp_environ(void)
 	tmp_environ = (char **)ft_calloc(get_argc(environ) + 1, sizeof(char *));
 	if (!tmp_environ)
 		return (NULL);
-
 	i = -1;
 	while (environ[++i])
 		tmp_environ[i] = ft_strdup(environ[i]);
@@ -89,7 +87,6 @@ int	print_including_empty(void)
 	c = 'x';
 	tmp_environ = make_tmp_environ();
 	quick_sort(tmp_environ, 0, get_argc(tmp_environ) - 1);
-
 	i = -1;
 	while (tmp_environ[++i])
 	{
@@ -162,23 +159,7 @@ int	assign_or_just_add(char *arg, int append)
 			return (EXECUTION_SUCCESS);			/* if exists && ~assign : ignore */
 	}
 	else
-	{
-		if (assign)								/* if new && assign : append new entry */
-		{
-			if (append)
-			{
-				add_envent(newvar.name, newvar.value);
-			}
-			else
-			{
-				add_envent(newvar.name, newvar.value);
-			}
-		}
-		else									/* if new && ~assign : append new entry w/o '='  */
-		{
-			add_envent(newvar.name, newvar.value);
-		}
-	}
+		add_envent(newvar.name, newvar.value);
 	return (EXECUTION_SUCCESS);
 }
 
@@ -216,7 +197,6 @@ int	__export(char **argv)
 	argc = get_argc(argv);
 	if (argc == 1)
 		return (print_including_empty());			/* print including just 'name' */
-
 	if (argv[1])
 	{
 		if (isoption(argv[1], TIL_END))
@@ -225,7 +205,6 @@ int	__export(char **argv)
 			return (EXECUTION_FAILURE);
 		}
 	}
-
 	i = 0;
 	while (argv[++i])
 	{

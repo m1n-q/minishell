@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 19:46:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:58:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	__exit(char **argv)
 	exit_code = 0;
 	if (argv[1])
 	{
-		if (legal_number(argv[1], &retval) == 0)			/* exit: string: numeric argument required */
+		if (legal_number(argv[1], &retval) == 0)
 		{
 			sh_neednumarg(argv[0], argv[1]);
 			return (255);

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 19:53:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:03:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	__pwd(char **argv)
 {
 	char	*cwd;
 	char	*error_str;
-
 
 	if (argv[1])
 	{
@@ -32,9 +31,8 @@ int	__pwd(char **argv)
 		error_str = ft_strjoin\
 		("pwd: error retrieving current directory: \
 		getcwd: cannot access parent directories: ", \
-		strerror(errno));			//TODO: error for join
+		strerror(errno));					//TODO: error for join
 		ft_putstr_fd(error_str, STDERR_FILENO);
-
 		free(error_str);
 		return (EXECUTION_FAILURE);
 	}
