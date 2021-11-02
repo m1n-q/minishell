@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 21:58:52 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:28:03 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 extern int	g_exit_code;
 
@@ -53,7 +53,7 @@ void	file_error(char *command)
 	write(STDERR_FILENO, "\n", 1);
 }
 
-int		read_sample(char *file, char *buf)
+int	read_sample(char *file, char *buf)
 {
 	int	fd;
 	int	len;
@@ -69,10 +69,10 @@ int		read_sample(char *file, char *buf)
 	return (len);
 }
 
-int		check_binary_file(char *sample, int sample_len)
+int	check_binary_file(char *sample, int sample_len)
 {
-	register int i;
-	unsigned char c;
+	register int	i;
+	unsigned char	c;
 
 	i = -1;
 	while (++i < sample_len)
@@ -80,43 +80,41 @@ int		check_binary_file(char *sample, int sample_len)
 		c = sample[i];
 		if (c == '\n')
 			return (0);
-
 		if (c == '\0')
 			return (1);
 	}
-
 	return (0);
 }
 
 int	check_error(char *command)
 {
 	struct stat	finfo;
-	int	e;
-	int sample_len;
-	char sample[80];
+	int			e;
+	int			sample_len;
+	char		sample[80];
 
 	e = errno; /* error from execve() */
 	if (e != ENOEXEC)
 	{
 		if ((stat(command, &finfo) == 0) && (S_ISDIR(finfo.st_mode)))
 			internal_error(command, "is a directory");
-
 		else
 		{
 			errno = e;
 			file_error(command);
 		}
-
-		return ((e == ENOENT) ? EX_NOTFOUND : EX_NOEXEC);
+		if (e == ENOENT)
+			return (EX_NOTFOUND);
+		else
+			return (EX_NOEXEC);
 	}
-
 	sample_len = read_sample(command, sample);
 	if (sample_len == 0)
-    	return (0);
+		return (0);
 	else if (sample_len < 0)
 	{
 		file_error(command);
-    	return (EX_NOEXEC);
+		return (EX_NOEXEC);
 	}
 	else
 	{
@@ -200,4 +198,3 @@ char	**syntax_error(char **error, int exit_code)
     //  [ETXTBSY]          The new process file is a pure procedure (shared
     //                     text) file that is currently open for writing or
     //                     reading by some process.
-

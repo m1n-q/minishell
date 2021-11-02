@@ -6,13 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 19:19:11 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:38:28 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
-static int has_slash(char *arg)
+static int	has_slash(char *arg)
 {
 	if (ft_strchr(arg, '/'))
 		return (1);
@@ -29,7 +29,7 @@ char	**get_paths(void)
 	return (paths);
 }
 
-char *find_path(char *arg)
+char	*find_path(char *arg)
 {
 	int				i;
 	DIR				*dirp;
@@ -67,11 +67,10 @@ int	set_path(t_cmd *cmd)
 		cmd->path = cmd->argv[0];
 	else
 	{
-		if (is_builtin(cmd->argv[0]))				//NOTE:it includes __exit case
-			cmd->path = "built-in";					//FIXME: "built-in" can be input
+		if (is_builtin(cmd->argv[0])) //NOTE:it includes __exit case
+			cmd->path = "built-in"; //FIXME: "built-in" can be input
 		else
-			cmd->path = find_path(cmd->argv[0]);	//NOTE:it includes ENOCMD case
+			cmd->path = find_path(cmd->argv[0]); //NOTE:it includes ENOCMD case
 	}
-
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:55:36 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 19:08:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:42:37 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 int	connect_stream(t_io_table stream)
 {
@@ -27,7 +27,7 @@ int	connect_stream(t_io_table stream)
 	return (0);
 }
 
-int destroy_stream(t_io_table stream)
+int	destroy_stream(t_io_table stream)
 {
 	if (stream.out != -1)
 		close(stream.out);
@@ -56,4 +56,3 @@ int	restore_stream(int std_copied, int std_org)
 	...	1 = new3;
 	... return (new1);
 */
-

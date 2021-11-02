@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 19:25:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:55:34 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 int	putchar(int c)
 {
@@ -19,10 +19,10 @@ int	putchar(int c)
 	return (c);
 }
 
-int atonum(const char *str, int *len, long long *retval)
+int	atonum(const char *str, int *len, long long *retval)
 {
-	long long ret;
-	int sign;
+	long long	ret;
+	int			sign;
 
 	ret = 0;
 	sign = 1;
@@ -41,7 +41,7 @@ int atonum(const char *str, int *len, long long *retval)
 		else
 		{
 			(*len)--;
-			break;
+			break ;
 		}
 		str++;
 	}
@@ -87,57 +87,70 @@ int	skip_space(char *s)
 
 intmax_t	ft_strtoimax(const char *nptr, char **endptr)	//FIXME
 {
-	const char *s;
-	char c;
-	uintmax_t acc;
-	uintmax_t cutoff;
-	int	cutlim;
-	int neg;
-	int any;
+	const char	*s;
+	char		c;
+	uintmax_t	acc;
+	uintmax_t	cutoff;
+	int			cutlim;
+	int			neg;
+	int			any;
 
 	s = nptr;
-	do {
+	do
 		c = *s++;
-	} while (ft_isspace(c));
-	if (c == '-') {
+	while (ft_isspace(c))
+		;
+	if (c == '-')
+	{
 		neg = 1;
 		c = *s++;
-	} else {
+	}
+	else
+	{
 		neg = 0;
 		if (c == '+')
 			c = *s++;
 	}
 	acc = 0;
 	any = 0;
-
-
-	cutoff = neg ? (uintmax_t)-(INTMAX_MIN + INTMAX_MAX) + INTMAX_MAX
-	    : INTMAX_MAX;
+	cutoff = INTMAX_MAX;
+	if (neg)
+		cutoff = (uintmax_t) - (INTMAX_MIN + INTMAX_MAX) + INTMAX_MAX;
 	cutlim = cutoff % 10;
 	cutoff /= 10;
-	for ( ; ; c = *s++) {
+	for ( ; ; c = *s++)
+	{
 		if (c >= '0' && c <= '9')
 			c -= '0';
 		else
-			break;
+			break ;
 		if (c >= 10)
-			break;
+			break ;
 		if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
 			any = -1;
-		else {
+		else
+		{
 			any = 1;
 			acc *= 10;
 			acc += c;
 		}
 	}
-	if (any < 0) {
-		acc = neg ? INTMAX_MIN : INTMAX_MAX;
+	if (any < 0)
+	{
+		acc = INTMAX_MAX;
+		if (neg)
+			acc = INTMAX_MIN;
 		errno = ERANGE;
-	} else if (!any) {
+	}
+	else if (!any)
 		errno = EINVAL;
-	} else if (neg)
+	else if (neg)
 		acc = -acc;
 	if (endptr != NULL)
-		*endptr = (char *)(any ? s - 1 : nptr);
+	{
+		*endptr = (char *)nptr;
+		if (any)
+			*endptr = (char *)s - 1;
+	}
 	return (acc);
 }
