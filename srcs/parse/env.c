@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space_env.c                               :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 16:24:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/29 18:01:52 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 20:59:06 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
 
-extern unsigned char	g_exit_code;
+extern int	g_exit_code;
 
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/29 17:53:16 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/01 21:12:11 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define REDIRECT_IN 5LL
 # define REDIRECT_OUT 6LL
 # define REDIRECT_APPEND 7LL
+# define NOCMD 8LL
 
 # define TIL_SEC 0
 # define TIL_END 1
@@ -53,10 +54,7 @@ int			puterr(int error);
 int			check_error(char *command);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
-
-/* parse */
-char		**get_argv(char *input);
-t_cmd		parse(char *input);
+char		**syntax_error(char **error, int exit_code);
 
 /* run */
 t_exit		run(t_cmd cmd);
@@ -89,34 +87,39 @@ int			add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 
-/* ft_split_space */
-char		**ft_split_space(char *s);
+/* ************************ parse ************************ */
+/* parse */
+char		**parse(char *s);
 
-/* ft_split_space_cpy */
+/* copy */
 char		*cpy_str(char *s, char **ret, int *i);
 
-/* ft_split_space_env */
+/* env */
 char		*case_env(char *s);
 
-/* ft_split_space_pipe_redir */
+/* pipe_redir */
 void		cnt_pipe_redir(char *s, int *cnt);
 char		*split_pipe_redir(char *s);
 
-/* ft_split_space_str */
+/* str */
 int			cnt_str_len(char *s);
 char		*malloc_str(char *s, char **ret, int i, int len);
 
-/* ft_split_space_strs */
+/* strs */
 int			skip_q(char *s);
 char		**malloc_strs(char *s);
 void		free_strs(char **ret, int i);
 
-/* ft_split_space_utils */
+/* utils */
 int			ft_isspace(char c);
 int			is_q(char c);
 int			is_pipe_rin_rout(char c);
 int			is_empty_q(char *s);
 int			has_q(char *s);
+
+/* cont_pipe */
+char	**cont_pipe(char **argv);
+/* ************************ parse ************************ */
 
 /* redirection */
 int			redir_in(char *arg);

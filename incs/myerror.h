@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 21:02:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 21:56:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 # define EX_BADASSIGN		260	/* variable assignment error */
 # define EX_EXPFAIL			261	/* word expansion failed */
 
+# define Q_ERR				1LL
+# define REDIR_ERR			2LL
+# define PIPE_ERR			3LL
+# define UNEXPECTED_EOF		4LL
 
 # define ENV_USAGE			"env"
 #endif

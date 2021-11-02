@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_space.c                                   :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 20:05:55 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/10/29 17:53:25 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/01 21:08:26 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incs/minishell.h"
+#include "./../../incs/minishell.h"
+
+extern int	g_exit_code;
 
 /* if the numbers of each of the quotes are odd (mismatch) return 0,
  * otherwise return 1 */
@@ -26,18 +28,18 @@ int	quotes_match(char *s)
 		{
 			c = *s++;
 			cnt_q++;
-			while (*s)
-			{
-				if (*s == c)
-				{
-					cnt_q--;
-					break ;
-				}
+			while (*s && *s != c)
 				s++;
-			}
+			if (!*s)
+				break ;
+			if (*s++ == c)
+				cnt_q--;
 		}
-		s++;
+		else
+			s++;
 	}
+	if (cnt_q)
+		return (0);
 	return (1);
 }
 
@@ -92,7 +94,7 @@ char	**ft_split_space(char *s)
 	char	**ret;
 
 	if (!quotes_match(s))
-		return (0);
+		return ((char **)Q_ERR);
 	s = rm_empty_q(s);
 	s = split_pipe_redir(s);
 	ret = malloc_strs(s);
@@ -109,5 +111,26 @@ char	**ft_split_space(char *s)
 		s++;
 	}
 	ret[i] = 0;
+	return (ret);
+}
+
+char	**parse(char *s)
+{
+	int		i;
+	char	**ret;
+
+	ret = ft_split_space(s);
+	if (ret == (char **)Q_ERR)
+		return (syntax_error(ret, EXECUTION_FAILURE));
+	if (ret[0] == (char *)PIPE)
+		return (syntax_error((char **)PIPE_ERR, EX_USAGE));
+	i = 0;
+	while (ret[i + 1])
+		i++;
+	if (ret[i] == (char *)REDIRECT_IN || ret[i] == (char *)REDIRECT_OUT
+		|| ret[i] == (char *)REDIRECT_APPEND || ret[i] == (char *)HEREDOC)
+		return (syntax_error((char **)REDIR_ERR, EX_USAGE));
+	if (ret[i] == (char *)PIPE && i != 0)
+		ret = cont_pipe(ret);
 	return (ret);
 }

@@ -6,11 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/26 00:17:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/01 21:58:52 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 int	puterr(int error)
 {
@@ -125,6 +127,25 @@ int	check_error(char *command)
 		}
 	}
 	return (-1); /*NOTREACHED*/
+}
+
+char	**syntax_error(char **error, int exit_code)
+{
+	g_exit_code = exit_code;
+	write(STDERR_FILENO, "minishell: ", 11);
+	if (error == (char **)Q_ERR)
+		write(STDERR_FILENO, "quotes do not match\n", 20);
+	else if (error == (char **)PIPE_ERR || error == (char **)REDIR_ERR)
+	{
+		write(STDERR_FILENO, "syntax error near unexpected token ", 35);
+		if (error == (char **)PIPE_ERR)
+			write(STDERR_FILENO, "`|'\n", 4);
+		else
+			write(STDERR_FILENO, "`newline'\n", 10);
+	}
+	else if (error == (char **)UNEXPECTED_EOF)
+		write(STDERR_FILENO, "syntax error: unexpected end of file\n", 37);
+	return (error);
 }
 
 //  if (fd < 0)

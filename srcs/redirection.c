@@ -148,7 +148,7 @@ int	trim_redir(char ***argv, int count_redir)
 	int		j;
 
 	argc = get_argc(*argv);
-	new_argv = (char **)ft_calloc(argc - count_redir + 1, sizeof(char *));
+	new_argv = (char **)ft_calloc(argc - (count_redir * 2) + 1, sizeof(char *));
 	if (!new_argv)
 		return (-1);
 
