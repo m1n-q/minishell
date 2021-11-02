@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 22:40:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 23:12:11 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,20 @@ int				g_interactive;
 int	main(void)
 {
 	char	*input;
-	int		error;
 	t_exit	ext;
 	t_cmd	*cmd_table;
-	int		stdin_copied;
-	int		stdout_copied;
 	char	**argv;
 	int		i;
 	int		len_cmd_table;
 
-	stdin_copied = dup(STDIN_FILENO);
-	stdout_copied = dup(STDOUT_FILENO);
-	environ = environ_to_heap();					/* to modify || unset || extend and free prev */
-	error = init_terminal_data();
-	if (error)
-		return (puterr(error));
-
-	signal(SIGINT, sig_handler_interactive);
-	signal(SIGSTOP, sigstop_handler);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	extern int _rl_echo_control_chars;
-	_rl_echo_control_chars = 0;
-
-	shell_level();
-
+	init_shell();
 	while ((g_interactive = 1) && (input = readline(PROMPT)))
 	{
 		if (!input[0] || skip_space(input))
 			continue ;
 		argv = parse(input);
-		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR
-			|| argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF)
+		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || \
+			argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF)
 			continue ;
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
@@ -78,7 +58,7 @@ int	main(void)
 		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
 		{
-			write(stdout_copied, "\n", 1);
+			// write(stdout_copied, "\n", 1);		//FIXME
 			if (WTERMSIG(ext.status) == SIGINT)
 				g_exit_code = EX_SIGINT;
 			else if (WTERMSIG(ext.status) == SIGQUIT)
@@ -86,13 +66,11 @@ int	main(void)
 		}
 		/* if none of above, it means cmd succeeds*/
 		else
-			g_exit_code = 0;					//NOTE: if execve succeed, cannot reach g_exit_code or sth
-		restore_stream(stdin_copied, STDIN_FILENO);
-		restore_stream(stdout_copied, STDOUT_FILENO);
+			g_exit_code = 0;						//NOTE: if execve succeed, cannot reach g_exit_code or sth
+		static_stream(RESTORE);
 		unlink(TMP_HD_FILE);
 		add_history(input);
 		free(input);
 	}
-	close(stdin_copied);
-	close(stdout_copied);
+	static_stream(DESTROY);
 }

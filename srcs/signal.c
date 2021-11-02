@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:30:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 22:46:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,14 @@ void	sigcont_handler(int sig)
 		write(2, "exit\n", 5);
 		exit(0);
 	}
+}
+
+void	set_sighandlers(void)
+{
+	signal(SIGINT, sig_handler_interactive);
+	signal(SIGSTOP, sigstop_handler);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 22:40:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 23:10:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,17 @@
 
 # define TIL_SEC 0
 # define TIL_END 1
+
+# define DUPLCTE 0
+# define RESTORE 1
+# define DESTROY 2
 extern char	**environ;
 
 /* init */
 int			shell_level(void);
+int			static_stream(int mode);
+void		echoctl_off(void);
+int			init_shell(void);
 
 /* error */
 int			puterr(int error);
@@ -151,6 +158,7 @@ int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 void		sig_handler_interactive(int sig);
 void		sigstop_handler(int sig);
 void		sigcont_handler(int sig);
+void		set_sighandlers(void);
 
 /* islegal */
 int			legal_variable_starter(char c);
