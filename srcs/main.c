@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 18:11:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 18:14:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char			term_buffer[2048];
 char			*prompt = PROMPT;
-unsigned char	g_exit_code;
+int				g_exit_code;
 int				g_interactive;
 
 int	init_terminal_data(void)
@@ -69,7 +69,8 @@ int	main()
 			continue ;
 
 		argv = parse(input);
-		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || argv == (char **)REDIR_ERR)
+		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR
+			|| argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF)
 			continue ;
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
@@ -113,6 +114,7 @@ int	main()
 			g_exit_code = 0;					//NOTE: if execve succeed, cannot reach g_exit_code or sth
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
+		unlink(TMP_HD_FILE);
 		add_history(input);
 		free(input);
 	}
