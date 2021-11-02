@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 21:12:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 22:40:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ int	main(void)
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-
 	extern int _rl_echo_control_chars;
 	_rl_echo_control_chars = 0;
+
+	shell_level();
 
 	while ((g_interactive = 1) && (input = readline(PROMPT)))
 	{

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 21:12:13 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 22:40:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@
 # define TIL_SEC 0
 # define TIL_END 1
 extern char	**environ;
+
+/* init */
+int			shell_level(void);
 
 /* error */
 int			puterr(int error);

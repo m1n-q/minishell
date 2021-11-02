@@ -17,6 +17,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/strs.c \
 		$(SRC_DIR)/parse/cont_pipe.c \
 		$(SRC_DIR)/run.c \
+		$(SRC_DIR)/init.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/error.c \
 		$(SRC_DIR)/redirection.c \
