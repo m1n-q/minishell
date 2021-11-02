@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 22:01:43 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/02 15:56:03 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	main()
 			g_exit_code = 0;					//NOTE: if execve succeed, cannot reach g_exit_code or sth
 		restore_stream(stdin_copied, STDIN_FILENO);
 		restore_stream(stdout_copied, STDOUT_FILENO);
+		unlink(TMP_HD_FILE);
 		add_history(input);
 		free(input);
 	}
