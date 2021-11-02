@@ -6,15 +6,18 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 19:46:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 18:04:30 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern int	g_interactive;
+
 t_exit	run(t_cmd cmd)
 {
 	t_exit		ext;
+	g_interactive = 0;
 
 	/* builtin without pipe (no fork) */
 	if (cmd.path != (char *)NOCMD && is_equal(cmd.path, "built-in") && \

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 20:12:46 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 18:09:17 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char			term_buffer[2048];
 char			*prompt = PROMPT;
 unsigned char	g_exit_code;
+int				g_interactive;
 
 int	init_terminal_data(void)
 {
@@ -52,13 +53,18 @@ int	main()
 		return (puterr(error));
 
 	signal(SIGINT, sig_handler_interactive);
+	signal(SIGSTOP, sigstop_handler);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	rl_signal_event_hook = sigint_event_hook;
+
 	extern int _rl_echo_control_chars;
 	_rl_echo_control_chars = 0;
 
-	while ((input = readline(prompt)))
+	while ((g_interactive = 1) && (input = readline(prompt)))
 	{
+
 		if (!input[0] || skip_space(input))
 			continue ;
 

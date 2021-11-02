@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 19:17:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 14:50:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "libft.h"
@@ -141,7 +142,9 @@ int			set_path(t_cmd *cmd);
 int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 
 /* signal */
-void		sig_handler_interactive(int signum);
+void		sig_handler_interactive(int sig);
+void		sigstop_handler(int sig);
+void		sigcont_handler(int sig);
 int			sigint_event_hook(void);
 
 /* islegal */
