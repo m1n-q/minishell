@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:22:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:38:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ char		**syntax_error(char **error, int exit_code);
 t_exit		run(t_cmd cmd);
 
 /* utils */
-int			putchar(int c);
 int			get_argc(char **argv);
-int			atonum(const char *str, int *len, long long *retval);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
@@ -119,7 +117,7 @@ int			is_empty_q(char *s);
 int			has_q(char *s);
 
 /* cont_pipe */
-char	**cont_pipe(char **argv);
+char		**cont_pipe(char **argv);
 /* ************************ parse ************************ */
 
 /* redirection */
@@ -150,7 +148,6 @@ int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 void		sig_handler_interactive(int sig);
 void		sigstop_handler(int sig);
 void		sigcont_handler(int sig);
-int			sigint_event_hook(void);
 
 /* islegal */
 int			legal_variable_starter(char c);
@@ -165,13 +162,10 @@ int			get_assign_pos(const char *string);
 
 /* not categoried yet */
 int			builtin_error(char *command, char *arg, char *message, int optflag);
-char		*get_coloned_str(char *a, char *b);
 void		sh_neednumarg(char *command, char *s);
 void		sh_invalidid(char *command, char *s);
 void		sh_invalidopt(char *command, char *opt);
 int			isoption(char *s, int optlen);
 void		builtin_usage(char *command, char *usage);
-
-
 
 #endif

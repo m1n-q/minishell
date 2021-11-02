@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 18:04:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:29:50 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,46 +84,9 @@ t_exit	run(t_cmd cmd)
 		destroy_stream(cmd.redir_stream);
 		ext.pid = wait(&ext.status);		//FIXIT: have to be async
 	}
-
 	/* destroy stream for (exec failed / built-in) child process */
 	destroy_stream(cmd.pipe_stream);
 	destroy_stream(cmd.redir_stream);
 
 	return (ext);
 }
-
-/*
-	BUILTIN
-		pass;
-
-
-	if (has slash) {
-		if (is_exist) {
-			if (is_dir) {
-				is a directory (126 EX_NOEXEC)
-			}
-			else if (is_text or sth) {
-				Permission denied (return errno => EACCES)
-			}
-			else {
-
-			}
-
-		}
-
-		else {
-			No such file or directory (127)
-		}
-	}
-	else {
-		if (cmd.path == NULL)  ~ not in $PATH {
-			command not found (127)
-		}
-		else {
-			if (!success)
-				errno from execve
-		}
-	}
-
-
-*/

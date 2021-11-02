@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/22 19:23:23 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:25:08 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ static void	init_cmd(t_cmd *cmd)
 {
 	cmd->pipe[0] = 0;
 	cmd->pipe[1] = 1;
-
 	cmd->pipe_stream.in = -1;
 	cmd->pipe_stream.out = -1;
 	cmd->pipe_stream.err = -1;
-
 	cmd->redir_stream.in = -1;
 	cmd->redir_stream.out = -1;
 	cmd->redir_stream.err = -1;
@@ -54,14 +52,12 @@ t_cmd	*split_pipe(char **argv, int *size)
 	cmd_table = (t_cmd *)malloc(sizeof(t_cmd) * (num_pipe + 1));
 	if (!cmd_table)
 		return (NULL);
-
 	if (num_pipe == 0)
 	{
 		cmd_table[0].argv = argv;
 		init_cmd(cmd_table);
 		return (cmd_table);
 	}
-
 	pos = 0;
 	i_pipe = -1;
 	while (1)
@@ -78,8 +74,6 @@ t_cmd	*split_pipe(char **argv, int *size)
 			pos = i_pipe + 1;
 
 			init_cmd(cmd_table);
-
-
 			if (argv[i_pipe] == NULL)
 				break ;
 			argv[i_pipe] = NULL;	/* method 2 */
@@ -102,4 +96,3 @@ int	set_pipe_stream(t_cmd *cmd, t_cmd *next)
 	next->pipe_stream.in = cmd->pipe[0];
 	return (0);
 }
-

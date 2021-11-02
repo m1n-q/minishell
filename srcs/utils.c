@@ -6,48 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 19:25:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:33:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	putchar(int c)
-{
-	if (write(STDOUT_FILENO, &c, 1) == -1)
-		return (-1);
-	return (c);
-}
-
-int atonum(const char *str, int *len, long long *retval)
-{
-	long long ret;
-	int sign;
-
-	ret = 0;
-	sign = 1;
-	if (!str)
-		return (-1);
-	if ((*str == '-' || *str == '+') && ++(*len))
-		if (*str++ == '-')
-			sign *= -1;
-	if (!('0' <= *str && *str <= '9'))
-		return (-1);
-	while (*str)
-	{
-		(*len)++;
-		if ('0' <= *str && *str <= '9')
-			ret = (ret * 10) + (*str - '0');
-		else
-		{
-			(*len)--;
-			break;
-		}
-		str++;
-	}
-	*retval = (sign * ret);
-	return (0);
-}
 
 int	get_argc(char **argv)
 {

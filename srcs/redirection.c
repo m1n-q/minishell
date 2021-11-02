@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/02 18:22:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 20:26:24 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,55 +17,24 @@
 int	redir_in(char *arg)
 {
 	int	fd;
-	// int std_copied;
 
-	// std_copied = dup(STDIN_FILENO);
 	fd = open(arg, O_RDONLY);
-	// dup2(fd, STDIN_FILENO);
-	// close(fd);
-	// return (std_copied);
 	return (fd);
 }
 
 int	redir_out(char *arg)
 {
 	int	fd;
-	// int	std_copied;
-
-	/* if AMP && instream */
-	// redirect instream to . . .
-
-	/* if AMP && outstream */
-	// redirect to outstream, not to arg
-
-	/* else */
-	// std_copied = dup(STDOUT_FILENO);
 
 	fd = open(arg, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	// printf("fd %d opened\n", fd);
-	// dup2(fd, STDOUT_FILENO);
-	// close(fd);
-	// return (std_copied);
 	return (fd);
 }
 
 int	redir_append(char *arg)
 {
 	int	fd;
-	// int	std_copied;
 
-	/* if AMP && instream */
-	// redirect instream to . . .
-
-	/* if AMP && outstream */
-	// Not redirect to outstream, >>&1 : append to filename '1'
-
-	/* else */
-	// std_copied = dup(STDOUT_FILENO);
 	fd = open(arg, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	// dup2(fd, STDOUT_FILENO);
-	// close(fd);
-	// return (std_copied);
 	return (fd);
 }
 
@@ -112,15 +81,13 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 						close(cmd->redir_stream.out);
 					cmd->redir_stream.out = redir_out(cmd->argv[i + 1]);
 				}
-
 				else if (cmd->argv[i] == (char *)REDIRECT_IN)		//NOTE: what if i == 0 and redir_in
 				{
 					if (cmd->redir_stream.in != -1)
 						close(cmd->redir_stream.in);
 					cmd->redir_stream.in = redir_in(cmd->argv[i + 1]);
 				}
-
-				else if (cmd->argv[i] == (char *)REDIRECT_APPEND)		//NOTE: what if i == 0 and redir_in
+				else if (cmd->argv[i] == (char *)REDIRECT_APPEND)
 				{
 					if (cmd->redir_stream.out != -1)
 						close(cmd->redir_stream.out);
@@ -150,7 +117,6 @@ int	trim_redir(char ***argv, int count_redir)
 	new_argv = (char **)ft_calloc(argc - (count_redir * 2) + 1, sizeof(char *));
 	if (!new_argv)
 		return (-1);
-
 	i = -1;
 	j = -1;
 	while ((*argv)[++i])
