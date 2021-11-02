@@ -6,34 +6,16 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 18:14:25 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:12:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-char			term_buffer[2048];
-char			*prompt = PROMPT;
 int				g_exit_code;
 int				g_interactive;
 
-int	init_terminal_data(void)
-{
-	char	*termtype;
-	int		error;
-
-	termtype = getenv("TERM");
-	if (termtype == NULL)
-		return (ENOTERMENV);
-	error = tgetent(term_buffer, termtype); 	/* term_buffer is Nullable? */
-	if (error == 0)
-		return (ENOTERMENT);
-	if (error < 0)
-		return (ENOTERMINFO);
-	return (0);
-}
-
-int	main()
+int	main(void)
 {
 	char	*input;
 	int		error;
@@ -62,19 +44,16 @@ int	main()
 	extern int _rl_echo_control_chars;
 	_rl_echo_control_chars = 0;
 
-	while ((g_interactive = 1) && (input = readline(prompt)))
+	while ((g_interactive = 1) && (input = readline(PROMPT)))
 	{
-
 		if (!input[0] || skip_space(input))
 			continue ;
-
 		argv = parse(input);
 		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR
 			|| argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF)
 			continue ;
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
-
 		i = -1;
 		while (++i < len_cmd_table)
 		{
@@ -82,7 +61,6 @@ int	main()
 			if (ext.pid == CHILD)					/* execve failed or forked built-in */
 				exit(ext.code);
 		}
-
 		if (ext.pid == PARENT_EXIT)
 		{
 			if (ext.code == E2MANY)					/* too many arguments => do not exit */
@@ -90,15 +68,12 @@ int	main()
 			else
 				exit(ext.code);
 		}
-
 		/* get builtin exit code */
 		else if (ext.pid == BUILTIN && ext.code)
 			g_exit_code = ext.code;
-
 		/* get child process exit status */
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 			g_exit_code = WEXITSTATUS(ext.status);
-
 		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
 		{
@@ -108,7 +83,6 @@ int	main()
 			else if (WTERMSIG(ext.status) == SIGQUIT)
 				g_exit_code = EX_SIGQUIT;
 		}
-
 		/* if none of above, it means cmd succeeds*/
 		else
 			g_exit_code = 0;					//NOTE: if execve succeed, cannot reach g_exit_code or sth
@@ -120,5 +94,4 @@ int	main()
 	}
 	close(stdin_copied);
 	close(stdout_copied);
-
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:38:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:12:13 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,9 @@ int			legal_number(char *string, intmax_t *result);
 t_var		unbind_var(char *arg, int *aflag);
 char		*bind_var(t_var var, int assign_pos, int *aflag);
 int			get_assign_pos(const char *string);
+
+/* term */
+int			init_terminal_data(void);
 
 /* not categoried yet */
 int			builtin_error(char *command, char *arg, char *message, int optflag);
