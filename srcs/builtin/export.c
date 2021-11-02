@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 21:02:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 21:06:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	print_including_empty(void)
 	return (0);
 }
 
-int check_name_part(char *arg, int assign_pos, int *aflag)
+int	check_name_part(char *arg, int assign_pos, int *aflag)
 {
 	t_var	var;
 	int		error;
