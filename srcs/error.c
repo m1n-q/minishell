@@ -6,13 +6,24 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:02:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:34:59 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_exit_code;
+
+int	get_or_set_exitcode(int mode, int val)
+{
+	static int	exitcode;
+
+	if (mode == GET)
+		return (exitcode);
+	else if (mode == SET)
+		exitcode = val;
+	return (exitcode);
+}
 
 int	puterr(int error)
 {

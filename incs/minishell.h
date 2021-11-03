@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:29:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:35:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			check_error(char *command);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
 char		**syntax_error(char **error, int exit_code);
+int			get_or_set_exitcode(int mode, int val);
 
 /* run */
 t_exit		run(t_cmd cmd);
