@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:25:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 21:01:46 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 static void	init_cmd(t_cmd *cmd)
 {
+	cmd->any_err = 0;
 	cmd->pipe[0] = 0;
 	cmd->pipe[1] = 1;
-	cmd->pipe_stream.in = -1;
-	cmd->pipe_stream.out = -1;
-	cmd->pipe_stream.err = -1;
-	cmd->redir_stream.in = -1;
-	cmd->redir_stream.out = -1;
-	cmd->redir_stream.err = -1;
+	cmd->pipe_stream.in = DEFAULT;
+	cmd->pipe_stream.out = DEFAULT;
+	cmd->pipe_stream.err = DEFAULT;
+	cmd->redir_stream.in = DEFAULT;
+	cmd->redir_stream.out = DEFAULT;
+	cmd->redir_stream.err = DEFAULT;
 }
 
 int	count_pipe(char	**argv)
@@ -38,49 +39,32 @@ int	count_pipe(char	**argv)
 }
 
 //TODO: test
-t_cmd	*split_pipe(char **argv, int *size)
+t_cmd	*split_pipe(char **argv, int len_cmd_table)
 {
 	t_cmd	*cmd_table;
-	int		num_pipe;
-	int		argc;
-	int		i_pipe;
-	int		pos;
+	int		end;
+	int		start;
 
-	argc = get_argc(argv);
-	num_pipe = count_pipe(argv);
-	*size = (num_pipe + 1);
-	cmd_table = (t_cmd *)malloc(sizeof(t_cmd) * (num_pipe + 1));
+	cmd_table = (t_cmd *)malloc(sizeof(t_cmd) * (len_cmd_table));
 	if (!cmd_table)
 		return (NULL);
-	if (num_pipe == 0)
-	{
-		cmd_table[0].argv = argv;
-		init_cmd(cmd_table);
-		return (cmd_table);
-	}
-	pos = 0;
-	i_pipe = -1;
+	start = 0;
+	end = -1;
 	while (1)
 	{
-		i_pipe++;
-		if (argv[i_pipe] == (char *)PIPE || argv[i_pipe] == NULL)
+		end++;
+		if (argv[end] == (char *)PIPE || argv[end] == NULL)
 		{
-			/* method 1 */
-			// (*cmd_table).argv = (char **)ft_calloc(i_pipe - pos + 1, sizeof(char *));
-			// ft_memcpy((*cmd_table).argv, &argv[pos], (i_pipe - pos) * sizeof(char *));
-
-			/* method 2 */
-			(*cmd_table).argv = argv + pos;
-			pos = i_pipe + 1;
-
+			(*cmd_table).argv = argv + start;
+			start = end + 1;
 			init_cmd(cmd_table);
-			if (argv[i_pipe] == NULL)
+			if (argv[end] == NULL)
 				break ;
-			argv[i_pipe] = NULL;	/* method 2 */
+			argv[end] = NULL;
 			cmd_table++;
 		}
 	}
-	cmd_table -= num_pipe;
+	cmd_table -= (len_cmd_table - 1);
 	return (cmd_table);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:35:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 22:20:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@
 # define DUPLCTE 0
 # define RESTORE 1
 # define DESTROY 2
+# define STDOUT 3
 
 # define GET 0
 # define SET 1
 # define ON 1
 # define OFF 0
 
+# define DEFAULT -2
 
 extern char	**environ;
 
@@ -65,14 +67,18 @@ extern char	**environ;
 int			shell_level(void);
 int			static_stream(int mode);
 void		echoctl_off(void);
+char		**environ_to_heap(void);
 int			init_shell(void);
 
-/* error */
+/* put error msg */
 int			puterr(int error);
-int			check_error(char *command);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
+int			builtin_error(char *command, char *arg, char *message, int optflag);
 char		**syntax_error(char **error, int exit_code);
+
+/* check error */
+int			check_error(char *command);
 int			get_or_set_exitcode(int mode, int val);
 
 /* run */
@@ -83,14 +89,16 @@ int			get_argc(char **argv);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
+char		*joinjoin(char *a, char *b, char *c);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
+void		quick_sort(char	**arr, int start, int end);
 
 /* built-in */
-int			__exit(char **argv);
 int			__cd(char **argv);
 int			__pwd(char **argv);
 int			__env(char **argv);
 int			__echo(char **argv);
+int			__exit(char **argv);
 int			__unset(char **argv);
 int			__export(char **argv);
 int			is_builtin(char *arg);
@@ -98,7 +106,7 @@ int			run_builtin(char **argv);
 int			export_internal(char *arg);
 
 /* environ */
-char		**environ_to_heap(void);
+char		**make_tmp_environ(void);
 char		*get_env_including_empty(char *arg);
 int			add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
@@ -146,18 +154,16 @@ char		**cont_pipe(char **argv);
 
 /* heredoc */
 int			is_heredoc(char	*s);
-int			heredoc(char *eof);
+int			heredoc(t_cmd *cmd, char *eof);
 
 /* redirection */
-int			redir_in(char *arg);
-int			redir_out(char *arg);
-int			redir_append(char *arg);
-int			check_redir(t_cmd *cmd, int *count_redir);
-int			trim_redir(char ***argv, int count_redir);
+void		redir_in(t_cmd *cmd, char *file);
+void		redir_out(t_cmd *cmd, char *file);
+void		redir_append(t_cmd *cmd, char *file);
 
 /* pipe */
 int			count_pipe(char	**argv);
-t_cmd		*split_pipe(char **argv, int *size);
+t_cmd		*split_pipe(char **argv, int len_cmd_table);
 int			make_pipe(t_cmd *cmd);
 int			set_pipe_stream(t_cmd *cmd, t_cmd *next);
 
@@ -194,11 +200,11 @@ int			get_assign_pos(const char *string);
 int			init_terminal_data(void);
 
 /* not categoried yet */
-int			builtin_error(char *command, char *arg, char *message, int optflag);
 void		sh_neednumarg(char *command, char *s);
 void		sh_invalidid(char *command, char *s);
 void		sh_invalidopt(char *command, char *opt);
-int			isoption(char *s, int optlen);
+char		*sh_double_quote(char *string);
 void		builtin_usage(char *command, char *usage);
+int			isoption(char *s, int optlen);
 
 #endif

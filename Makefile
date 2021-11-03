@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GNULIB_DIR = /usr/local/opt/readline/lib
 GNUINC_DIR = /usr/local/opt/readline/include
 LIBFT_DIR = Libft
+LIBFT = Libft/libft.a
 INC_DIR = incs
 SRC_DIR = srcs
 OBJS =  ${SRCS:.c=.o}
@@ -18,10 +19,13 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/str.c \
 		$(SRC_DIR)/parse/strs.c \
 		$(SRC_DIR)/parse/cont_pipe.c \
+		$(SRC_DIR)/utils/utils.c \
+		$(SRC_DIR)/utils/qsort.c \
+		$(SRC_DIR)/utils/ft_strtoimax.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/init.c \
-		$(SRC_DIR)/utils.c \
-		$(SRC_DIR)/error.c \
+		$(SRC_DIR)/puterror.c \
+		$(SRC_DIR)/chkerror.c \
 		$(SRC_DIR)/redirection.c \
 		$(SRC_DIR)/heredoc.c \
 		$(SRC_DIR)/environ.c \
@@ -34,7 +38,6 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/variable.c \
 		$(SRC_DIR)/builtin/islegal.c \
 		$(SRC_DIR)/builtin/builtin.c \
-		$(SRC_DIR)/builtin/builtin_error.c \
 		$(SRC_DIR)/builtin/builtin_common.c \
 		$(SRC_DIR)/builtin/cd.c \
 		$(SRC_DIR)/builtin/pwd.c \
@@ -47,7 +50,7 @@ SRCS =  $(SRC_DIR)/main.c \
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) lft
+$(NAME) : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) -ltermcap -lncurses \
 	-L $(GNULIB_DIR) -lreadline -lhistory \
 	-L $(LIBFT_DIR) -lft \
@@ -59,7 +62,7 @@ $(NAME) : $(OBJS) lft
 	-I $(INC_DIR)
 
 # libft compile
-lft :
+$(LIBFT) :
 	@$(MAKE) -C $(LIBFT_DIR) all
 
 clean :

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/01 21:56:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 23:08:59 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,12 @@
 # define PIPE_ERR			3LL
 # define UNEXPECTED_EOF		4LL
 
-# define ENV_USAGE			"env"
+# define CD_SHORTDOC			"cd [dir]"
+# define ENV_SHORTDOC			"env"
+# define PWD_SHORTDOC			"pwd"
+# define ECHO_SHORTDOC			"echo [-n] [arg ...]"
+# define EXIT_SHORTDOC			"exit [n]"
+# define UNSET_SHORTDOC			"unset [name ...]"
+# define EXPORT_SHORTDOC		"export [name[=value] ...]"
+
 #endif

@@ -6,12 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 18:49:52 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 21:02:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 20:01:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	legal_variable_starter(char c)
 {
@@ -28,31 +27,32 @@ int	legal_identifier(char *name)
 	register char	*s;
 	unsigned char	c;
 
-	if (!name || !(c = *name) || (legal_variable_starter(c) == 0))
+	if (!name || !(*name) || (legal_variable_starter(*name) == 0))
 		return (0);
-	for (s = name + 1; (c = *s) != 0; s++)
+	s = name + 1;
+	c = *s;
+	while (c)
 	{
 		if (legal_variable_char(c) == 0)
 			return (0);
+		c = *(++s);
 	}
 	return (1);
 }
 
 int	legal_number(char *string, intmax_t *result)
 {
-	intmax_t value;
-	char *ep;
+	intmax_t	value;
+	char		*ep;
+
 	if (result)
 		*result = 0;
 	errno = 0;
 	value = ft_strtoimax(string, &ep);
 	if (errno)
-		return (0); /* errno is set on overflow or underflow */
-	/* Skip any trailing whitespace, since strtoimax does not. */
+		return (0);
 	while (whitespace(*ep))
 		ep++;
-	/* If *string is not '\0' but *ep is '\0' on return, the entire string
-  ​     is valid. */
 	if (string && *string && *ep == '\0')
 	{
 		if (result)
@@ -61,4 +61,3 @@ int	legal_number(char *string, intmax_t *result)
 	}
 	return (0);
 }
-
