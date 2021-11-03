@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:18:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 23:23:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	check_option(char **argv)
 		if (isoption(argv[1], TIL_END))
 		{
 			sh_invalidopt(argv[0], argv[1]);
+			builtin_usage(argv[0], CD_SHORTDOC);
 			return (EXECUTION_FAILURE);
 		}
 		return (0);

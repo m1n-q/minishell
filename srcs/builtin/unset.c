@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:18:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 23:25:22 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,29 @@ int	__unset(char **argv)
 {
 	t_envent	env;
 	int			i;
+	int			any;
 
+	i = 0;
+	any = 0;
 	if (argv[1])
 	{
 		if (isoption(argv[1], TIL_END))
 		{
 			sh_invalidopt(argv[0], argv[1]);
-			return (EXECUTION_FAILURE);
+			builtin_usage(argv[0], UNSET_SHORTDOC);
+			return (EX_BADUSAGE);
 		}
 	}
-	i = 0;
 	while (argv[++i])
 	{
+		if (legal_identifier(argv[i]) == 0)
+		{
+			sh_invalidid(argv[0], argv[i]);
+			any = EXECUTION_FAILURE;
+			continue ;
+		}
 		env = find_envent(argv[i]);
 		remove_envent(env);
 	}
-	return (0);
+	return (any);
 }

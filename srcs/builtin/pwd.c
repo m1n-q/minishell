@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:18:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 23:23:32 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	__pwd(char **argv)
 		if (isoption(argv[1], TIL_END))
 		{
 			sh_invalidopt(argv[0], argv[1]);
+			builtin_usage(argv[0], PWD_SHORTDOC);
 			return (EXECUTION_FAILURE);
 		}
 	}
