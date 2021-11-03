@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:47:43 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 15:19:41 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	**syntax_error(char **error, int exit_code)
 	get_or_set_exitcode(SET, exit_code);
 	write(STDERR_FILENO, "minishell: ", 11);
 	if (error == (char **)Q_ERR)
-		write(STDERR_FILENO, "quotes do not match\n", 20);
+		write(STDERR_FILENO, "quotes unclosed\n", 16);
 	else if (error == (char **)PIPE_ERR || error == (char **)REDIR_ERR)
 	{
 		write(STDERR_FILENO, "syntax error near unexpected token ", 35);
