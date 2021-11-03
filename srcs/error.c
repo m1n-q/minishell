@@ -6,13 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:34:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:47:43 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern int	g_exit_code;
 
 int	get_or_set_exitcode(int mode, int val)
 {
@@ -137,7 +135,7 @@ int	check_error(char *command)
 
 char	**syntax_error(char **error, int exit_code)
 {
-	g_exit_code = exit_code;
+	get_or_set_exitcode(SET, exit_code);
 	write(STDERR_FILENO, "minishell: ", 11);
 	if (error == (char **)Q_ERR)
 		write(STDERR_FILENO, "quotes do not match\n", 20);

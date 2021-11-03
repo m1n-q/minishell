@@ -6,13 +6,11 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 20:59:06 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 14:46:17 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
-
-extern int	g_exit_code;
 
 /* check if a character is an available character for enviroment variable */
 int	is_env(char c)
@@ -23,9 +21,9 @@ int	is_env(char c)
 int	join_exit_code(char **ret)
 {
 	if (!*ret)
-		*ret = ft_itoa(g_exit_code);
+		*ret = ft_itoa(get_or_set_exitcode(GET, 0));
 	else if (*ret)
-		*ret = ft_strjoin(*ret, ft_itoa(g_exit_code));
+		*ret = ft_strjoin(*ret, ft_itoa(get_or_set_exitcode(GET, 0)));
 	return (2);
 }
 
