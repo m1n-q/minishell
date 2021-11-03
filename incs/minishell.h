@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 23:10:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/02 23:26:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define RESTORE 1
 # define DESTROY 2
 extern char	**environ;
+extern int	g_interactive;
 
 /* init */
 int			shell_level(void);
