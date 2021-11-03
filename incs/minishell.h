@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 20:57:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 21:46:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,15 +152,12 @@ char		**cont_pipe(char **argv);
 
 /* heredoc */
 int			is_heredoc(char	*s);
-int			heredoc(char *eof);
+int			heredoc(t_cmd *cmd, char *eof);
 
 /* redirection */
-int			redir_in(char *arg);
-int			redir_out(char *arg);
-int			redir_append(char *arg);
-int			count_redir(t_cmd *cmd);
-int			check_redir(t_cmd *cmd);
-int			trim_redir(char ***argv, int count_redir);
+void		redir_in(t_cmd *cmd, char *file);
+void		redir_out(t_cmd *cmd, char *file);
+void		redir_append(t_cmd *cmd, char *file);
 
 /* pipe */
 int			count_pipe(char	**argv);

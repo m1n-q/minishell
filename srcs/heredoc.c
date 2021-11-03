@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 14:48:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 21:42:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*trim_q(char *eof)
 	return (ret);
 }
 
-int	heredoc(char *eof)
+int	heredoc(t_cmd *cmd, char *eof)
 {
 	int		fd;
 	int		expand;
@@ -89,5 +89,8 @@ int	heredoc(char *eof)
 	}
 	close(fd);
 	fd = open(TMP_HD_FILE, O_RDONLY);
-	return (fd);
+	if (cmd->redir_stream.in != DEFAULT)
+		close(cmd->redir_stream.in);
+	cmd->redir_stream.in = fd;
+	return (0);
 }
