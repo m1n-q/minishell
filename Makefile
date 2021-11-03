@@ -116,7 +116,7 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c compile0
 
 # libft compile
 $(LIBFT) :
-	@echo "${FG_LMAGENTA}"
+	@echo "${FG_DGREY}"
 	@echo "Compiling Libft . . ."
 	@echo "${NO_COLOR}"
 	@$(MAKE) -C $(LIBFT_DIR) all
