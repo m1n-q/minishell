@@ -6,13 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 23:08:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 01:34:18 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MYERROR_H
 # define MYERROR_H
-
 
 # define EXECUTION_FAILURE	1
 # define EXECUTION_SUCCESS	0

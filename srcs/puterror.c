@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:30:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 01:42:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,21 @@ void	file_error(char *command)
 	write(STDERR_FILENO, "\n", 1);
 }
 
-char	**syntax_error(char **error, int exit_code)
+char	**syntax_error(char **error, char *token, int exit_code)
 {
 	get_or_set_exitcode(SET, exit_code);
 	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, "syntax error", 12);
 	if (error == (char **)Q_ERR)
-		write(STDERR_FILENO, "quotes do not match\n", 20);
+		write(STDERR_FILENO, ": quotes unclosed\n", 18);
+	else if (error == (char **)UNEXPECTED_EOF)
+		write(STDERR_FILENO, ": unexpected end of file\n", 25);
 	else if (error == (char **)PIPE_ERR || error == (char **)REDIR_ERR)
 	{
-		write(STDERR_FILENO, "syntax error near unexpected token ", 35);
-		if (error == (char **)PIPE_ERR)
-			write(STDERR_FILENO, "`|'\n", 4);
-		else
-			write(STDERR_FILENO, "`newline'\n", 10);
+		write(STDERR_FILENO, " near unexpected token ", 23);
+		write(STDERR_FILENO, token, ft_strlen(token));
+		write(STDERR_FILENO, "\n", 1);
 	}
-	else if (error == (char **)UNEXPECTED_EOF)
-		write(STDERR_FILENO, "syntax error: unexpected end of file\n", 37);
 	return (error);
 }
 

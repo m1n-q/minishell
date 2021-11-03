@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 12:31:49 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 02:29:59 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,68 @@ char	**ft_split_space(char *s)
 	return (ret);
 }
 
+int	is_pipe_err(char **ret, int i)
+{
+	if (ret[0] == (char *)PIPE)
+		return (1);
+	if (i == 1 && ret[i] == (char *)PIPE)
+	{
+		if (ret[0] == (char *)REDIRECT_OUT)
+			return (2);
+		else
+			return (1);
+	}
+	if (i > 1 && ret[0] != (char *)REDIRECT_OUT && ret[1] == (char *)PIPE)
+		return (1);
+	if (ret[i] == (char *)PIPE)
+		return (1);
+	return (0);
+}
+
+char	**redir_err(char **ret, int i)
+{
+	if (i == 0)
+		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE));
+	if (i > 0)
+	{
+		if ((ret[0] != (char *)PIPE && ret[1] == (char *)REDIRECT_IN)
+			|| (ret[0] == (char *)REDIRECT_OUT && \
+				ret[1] == (char *)PIPE && ret[2] == (char *)REDIRECT_IN))
+			return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE));
+		else if ((ret[0] != (char *)PIPE && ret[1] == (char *)REDIRECT_OUT)
+			|| (ret[0] == (char *)REDIRECT_OUT && \
+				ret[1] == (char *)PIPE && ret[2] == (char *)REDIRECT_OUT))
+			return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE));
+		else if ((ret[0] != (char *)PIPE && ret[1] == (char *)REDIRECT_APPEND)
+			|| (ret[0] == (char *)REDIRECT_OUT && \
+				ret[1] == (char *)PIPE && ret[2] == (char *)REDIRECT_APPEND))
+			return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE));
+		else if ((ret[0] != (char *)PIPE && ret[1] == (char *)HEREDOC)
+			|| (ret[0] == (char *)REDIRECT_OUT && \
+				ret[1] == (char *)PIPE && ret[2] == (char *)HEREDOC))
+			return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE));
+	}
+	return (ret);
+}
+
 char	**parse(char *s)
 {
 	int		i;
 	char	**ret;
 
+	i = 0;
 	ret = ft_split_space(s);
 	if (ret == (char **)Q_ERR)
-		return (syntax_error(ret, EXECUTION_FAILURE));
-	if (ret[0] == (char *)PIPE)
-		return (syntax_error((char **)PIPE_ERR, EX_USAGE));
-	i = 0;
+		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE));
 	while (ret[i + 1])
 		i++;
+	if (is_pipe_err(ret, i) == 1)
+		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE));
+	else if (is_pipe_err(ret, i) == 2)
+		return (syntax_error((char **)PIPE_ERR, "`newline'", EX_USAGE));
 	if (ret[i] == (char *)REDIRECT_IN || ret[i] == (char *)REDIRECT_OUT
 		|| ret[i] == (char *)REDIRECT_APPEND || ret[i] == (char *)HEREDOC)
-		return (syntax_error((char **)REDIR_ERR, EX_USAGE));
+		return (redir_err(ret, i));
 	if (ret[i] == (char *)PIPE && i != 0)
 		ret = cont_pipe(ret);
 	return (ret);
