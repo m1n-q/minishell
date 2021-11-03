@@ -6,13 +6,11 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 21:08:26 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 12:31:49 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
-
-extern int	g_exit_code;
 
 /* if the numbers of each of the quotes are odd (mismatch) return 0,
  * otherwise return 1 */
@@ -43,50 +41,6 @@ int	quotes_match(char *s)
 	return (1);
 }
 
-/* count empty sets of quotes */
-int	cnt_empty_q(char *s)
-{
-	int		ret;
-
-	ret = 0;
-	while (*s)
-	{
-		if (is_empty_q(s) && *(s + 2) && !ft_isspace(*(s + 2)))
-		{
-			ret++;
-			s += 2;
-		}
-		else
-			s++;
-	}
-	return (ret);
-}
-
-/* remove all empty sets of quotes */
-char	*rm_empty_q(char *s)
-{
-	int		i;
-	int		len;
-	char	*ret;
-
-	i = 0;
-	len = ft_strlen(s) - cnt_empty_q(s) * 2;
-	ret = malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		return (0);
-	while (*s)
-	{
-		if (is_empty_q(s) && *(s + 2) && !ft_isspace(*(s + 2)))
-			s += 2;
-		else
-			ret[i++] = *s++;
-		if (!*s)
-			break ;
-	}
-	ret[i] = 0;
-	return (ret);
-}
-
 char	**ft_split_space(char *s)
 {
 	int		i;
@@ -97,6 +51,7 @@ char	**ft_split_space(char *s)
 		return ((char **)Q_ERR);
 	s = rm_empty_q(s);
 	s = split_pipe_redir(s);
+	s = add_q_to_heredoc_del(s);
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;

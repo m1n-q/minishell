@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 23:10:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 12:25:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ int			remove_envent(t_envent env);
 /* parse */
 char		**parse(char *s);
 
+/* heredoc */
+char		*add_q_to_heredoc_del(char *s);
+
+/* empty_q.c */
+char		*rm_empty_q(char *s);
+
 /* copy */
 char		*cpy_str(char *s, char **ret, int *i);
 
@@ -129,6 +135,10 @@ int			has_q(char *s);
 /* cont_pipe */
 char		**cont_pipe(char **argv);
 /* ************************ parse ************************ */
+
+/* heredoc */
+int			is_heredoc(char	*s);
+int			heredoc(char *eof);
 
 /* redirection */
 int			redir_in(char *arg);

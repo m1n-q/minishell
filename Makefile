@@ -10,6 +10,8 @@ OBJS =  ${SRCS:.c=.o}
 SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/parse.c \
 		$(SRC_DIR)/parse/pipe_redir.c \
+		$(SRC_DIR)/parse/empty_q.c \
+		$(SRC_DIR)/parse/heredoc.c \
 		$(SRC_DIR)/parse/env.c \
 		$(SRC_DIR)/parse/utils.c \
 		$(SRC_DIR)/parse/copy.c \
@@ -21,6 +23,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/error.c \
 		$(SRC_DIR)/redirection.c \
+		$(SRC_DIR)/heredoc.c \
 		$(SRC_DIR)/environ.c \
 		$(SRC_DIR)/pipe.c \
 		$(SRC_DIR)/stream.c \
