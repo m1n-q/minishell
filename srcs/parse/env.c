@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 04:27:48 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 04:37:36 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	join_env_var(char *s, char **ret)
 		*ret = getenv(tmp);
 	else if (*ret)
 		*ret = ft_strjoin(*ret, getenv(tmp));
-	else if (*ret)
-		*ret = ft_strjoin(*ret, getenv(*ret));
 	if (!*ret)
 	{
 		*ret = malloc(sizeof(char) * 1);
@@ -71,6 +69,7 @@ int	join_env_var(char *s, char **ret)
 			return (0);
 		*ret[0] = 0;
 	}
+	free(tmp);
 	return (++i);
 }
 
@@ -88,6 +87,11 @@ int	join_non_env(char *s, char **ret)
 		*ret = ft_strjoin(*ret, tmp);
 	else
 		*ret = tmp;
+	if (s[i] == '$' && !s[i + 1])
+	{
+		*ret = ft_strjoin(*ret, "$");
+		i++;
+	}
 	return (i);
 }
 
