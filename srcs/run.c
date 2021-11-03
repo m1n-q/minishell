@@ -6,18 +6,15 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 11:25:52 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 13:44:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_interactive;
-
 t_exit	run(t_cmd cmd)
 {
 	t_exit		ext;
-	g_interactive = 0;
 
 	/* builtin without pipe (no fork) */
 	if (cmd.path != (char *)NOCMD && is_equal(cmd.path, "built-in") && \
@@ -82,7 +79,6 @@ t_exit	run(t_cmd cmd)
 		destroy_stream(cmd.pipe_stream);
 		destroy_stream(cmd.redir_stream);
 		ext.pid = wait(&ext.status);		//FIXIT: have to be async
-
 	}
 
 	return (ext);

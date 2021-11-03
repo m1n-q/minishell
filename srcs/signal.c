@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 23:26:35 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 13:44:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sig_handler_interactive(int sig)
 {
-	if (sig == SIGINT && g_interactive)
+	if (sig == SIGINT)
 	{
 		printf("\n");
 		rl_on_new_line();

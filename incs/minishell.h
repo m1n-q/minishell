@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 12:25:22 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 13:44:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@
 # define DUPLCTE 0
 # define RESTORE 1
 # define DESTROY 2
+
 extern char	**environ;
-extern int	g_interactive;
 
 /* init */
 int			shell_level(void);

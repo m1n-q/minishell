@@ -6,14 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 11:26:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 13:44:02 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
 int				g_exit_code;
-int				g_interactive;
 
 int	main(void)
 {
@@ -25,7 +24,7 @@ int	main(void)
 	int		len_cmd_table;
 
 	init_shell();
-	while ((g_interactive = 1) && (input = readline(PROMPT)))
+	while ((input = readline(PROMPT)))
 	{
 		if (!input[0] || skip_space(input))
 			continue ;
