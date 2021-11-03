@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GNULIB_DIR = /usr/local/opt/readline/lib
 GNUINC_DIR = /usr/local/opt/readline/include
 LIBFT_DIR = Libft
+LIBFT = Libft/libft.a
 INC_DIR = incs
 SRC_DIR = srcs
 OBJS =  ${SRCS:.c=.o}
@@ -49,7 +50,7 @@ SRCS =  $(SRC_DIR)/main.c \
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) lft
+$(NAME) : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) -ltermcap -lncurses \
 	-L $(GNULIB_DIR) -lreadline -lhistory \
 	-L $(LIBFT_DIR) -lft \
@@ -61,7 +62,7 @@ $(NAME) : $(OBJS) lft
 	-I $(INC_DIR)
 
 # libft compile
-lft :
+$(LIBFT) :
 	@$(MAKE) -C $(LIBFT_DIR) all
 
 clean :
