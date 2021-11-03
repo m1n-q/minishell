@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 11:21:41 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 14:46:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,25 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 			{
 				if (cmd->argv[i] == (char *)REDIRECT_OUT)
 				{
-					if (cmd->redir_stream.out != -1)
+					if (cmd->redir_stream.out != DEFAULT)
 						close(cmd->redir_stream.out);
 					cmd->redir_stream.out = redir_out(cmd->argv[i + 1]);
 				}
 				else if (cmd->argv[i] == (char *)REDIRECT_IN)		//NOTE: what if i == 0 and redir_in
 				{
-					if (cmd->redir_stream.in != -1)
+					if (cmd->redir_stream.in != DEFAULT)
 						close(cmd->redir_stream.in);
 					cmd->redir_stream.in = redir_in(cmd->argv[i + 1]);
 				}
 				else if (cmd->argv[i] == (char *)REDIRECT_APPEND)
 				{
-					if (cmd->redir_stream.out != -1)
+					if (cmd->redir_stream.out != DEFAULT)
 						close(cmd->redir_stream.out);
 					cmd->redir_stream.out = redir_append(cmd->argv[i + 1]);
 				}
 				else if (cmd->argv[i] == (char *)HEREDOC)
 				{
-					if (cmd->redir_stream.in != -1)
+					if (cmd->redir_stream.in != DEFAULT)
 						close(cmd->redir_stream.in);
 					cmd->redir_stream.in = heredoc(cmd->argv[i + 1]);
 				}

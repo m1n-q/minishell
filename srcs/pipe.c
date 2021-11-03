@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:25:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:46:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	init_cmd(t_cmd *cmd)
 {
 	cmd->pipe[0] = 0;
 	cmd->pipe[1] = 1;
-	cmd->pipe_stream.in = -1;
-	cmd->pipe_stream.out = -1;
-	cmd->pipe_stream.err = -1;
-	cmd->redir_stream.in = -1;
-	cmd->redir_stream.out = -1;
-	cmd->redir_stream.err = -1;
+	cmd->pipe_stream.in = DEFAULT;
+	cmd->pipe_stream.out = DEFAULT;
+	cmd->pipe_stream.err = DEFAULT;
+	cmd->redir_stream.in = DEFAULT;
+	cmd->redir_stream.out = DEFAULT;
+	cmd->redir_stream.err = DEFAULT;
 }
 
 int	count_pipe(char	**argv)

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:35:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:47:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define ON 1
 # define OFF 0
 
+# define DEFAULT -2
 
 extern char	**environ;
 
