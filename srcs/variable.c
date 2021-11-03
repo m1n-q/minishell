@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 18:47:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:34:05 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 19:57:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_var	unbind_var(char *arg, int *aflag)
 	}
 	newvar.name = arg;
 	if (assign_pos)
-		newvar.value = arg + assign_pos + 1;		/* value can be "\0" here */
+		newvar.value = arg + assign_pos + 1;
 	else
 		newvar.value = NULL;
 	return (newvar);
@@ -42,7 +42,7 @@ char	*bind_var(t_var var, int assign_pos, int *aflag)
 	{
 		var.name[assign_pos] = '=';
 		if (aflag && *aflag)
-        	var.name[assign_pos - 1] = '+';
+			var.name[assign_pos - 1] = '+';
 	}
 	return (var.name);
 }

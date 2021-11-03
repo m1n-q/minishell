@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:58:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 20:06:12 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	__exit(char **argv)
 
 	argc = get_argc(argv);
 	exit_code = 0;
+	retval = 0;
 	if (argv[1])
 	{
 		if (legal_number(argv[1], &retval) == 0)
