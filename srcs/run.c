@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 13:44:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:30:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_exit	run(t_cmd cmd)
 	t_exit		ext;
 
 	/* builtin without pipe (no fork) */
+	get_or_set_interactive(SET, OFF);
 	if (cmd.path != (char *)NOCMD && is_equal(cmd.path, "built-in") && \
 		cmd.pipe_stream.in == -1 && cmd.pipe_stream.out == -1)					//FIXME: "built-in" can be input
 	{

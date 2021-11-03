@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 13:44:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:29:39 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sig_handler_interactive(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT && get_or_set_interactive(GET, 0))
 	{
 		printf("\n");
 		rl_on_new_line();
@@ -48,4 +48,15 @@ void	set_sighandlers(void)
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+int	get_or_set_interactive(int mode, int val)
+{
+	static int	interactive;
+
+	if (mode == GET)
+		return (interactive);
+	else if (mode == SET)
+		interactive = val;
+	return (interactive);
 }

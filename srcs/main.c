@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 13:44:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:31:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(void)
 	init_shell();
 	while ((input = readline(PROMPT)))
 	{
+
 		if (!input[0] || skip_space(input))
 			continue ;
 		argv = parse(input);
@@ -70,6 +71,7 @@ int	main(void)
 		unlink(TMP_HD_FILE);
 		add_history(input);
 		free(input);
+		get_or_set_interactive(SET, ON);
 	}
 	static_stream(DESTROY);
 }

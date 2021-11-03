@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 13:44:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:29:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@
 # define DUPLCTE 0
 # define RESTORE 1
 # define DESTROY 2
+
+# define GET 0
+# define SET 1
+# define ON 1
+# define OFF 0
+
 
 extern char	**environ;
 
@@ -170,6 +176,7 @@ void		sig_handler_interactive(int sig);
 void		sigstop_handler(int sig);
 void		sigcont_handler(int sig);
 void		set_sighandlers(void);
+int			get_or_set_interactive(int mode, int val);
 
 /* islegal */
 int			legal_variable_starter(char c);
