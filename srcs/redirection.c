@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 11:29:16 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 11:21:41 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,6 @@ int	redir_append(char *arg)
 	int	fd;
 
 	fd = open(arg, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	return (fd);
-}
-
-int	redir_heredoc(char *eof)
-{
-	int		fd;
-	char	*line;
-
-	fd = open(TMP_HD_FILE, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-			break ;
-		if (is_equal(line, eof))
-			break ;
-		ft_putendl_fd(line, fd);
-	}
-	close(fd);
-	fd = open(TMP_HD_FILE, O_RDONLY);
 	return (fd);
 }
 
@@ -97,7 +77,7 @@ int	check_redir(t_cmd *cmd, int *count_redir)
 				{
 					if (cmd->redir_stream.in != -1)
 						close(cmd->redir_stream.in);
-					cmd->redir_stream.in = redir_heredoc(cmd->argv[i + 1]);
+					cmd->redir_stream.in = heredoc(cmd->argv[i + 1]);
 				}
 			}
 		}

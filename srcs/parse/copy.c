@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 16:01:02 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 13:01:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ char	*cpy_with_q(char *s, char *ret)
 
 	i = 0;
 	if (is_empty_q(s))
-	{
-		ret[0] = 0;
-		return (ret);
-	}
+		return ("");
 	while (*s && !ft_isspace(*s))
 	{
 		if (has_dollar_sign(s) && *s == '"')
