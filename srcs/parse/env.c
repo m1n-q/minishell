@@ -6,14 +6,13 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 03:09:58 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 04:37:36 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* check if a character is an available character for enviroment variable */
-
 int	join_exit_code(char **ret)
 {
 	if (!*ret)
@@ -53,6 +52,8 @@ int	join_env_var(char *s, char **ret)
 	i = 0;
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 		i++;
+	if (!i)
+		return (join_dollar_sign(s, ret));
 	tmp = malloc(sizeof(char) * (i + 1));
 	if (!tmp)
 		return (0);
@@ -86,25 +87,26 @@ int	join_non_env(char *s, char **ret)
 		*ret = ft_strjoin(*ret, tmp);
 	else
 		*ret = tmp;
+	if (s[i] == '$' && !s[i + 1])
+	{
+		*ret = ft_strjoin(*ret, "$");
+		i++;
+	}
 	return (i);
 }
 
 /* if the first letter is a dollar-sign or 
  * a double quotation mark followed by a dollar sign
  */
-char	*case_env(char *s)
+char	*case_env(char *s, char tok)
 {
 	char	*ret;
 
 	ret = 0;
-	while (*s)
+	while (*s && *s != tok)
 	{
-		if (*s == '"')
-			s++;
 		if (*s != '$')
 			s += join_non_env(s, &ret);
-		else if (*s == '$' && *(s + 1) == '$')
-			s += join_dollar_sign(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) != '?')
 			s += join_env_var(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')

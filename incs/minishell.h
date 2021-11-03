@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 01:16:32 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 04:16:29 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char		*rm_empty_q(char *s);
 char		*cpy_str(char *s, char **ret, int *i);
 
 /* env */
-char		*case_env(char *s);
+char		*case_env(char *s, char tok);
 
 /* pipe_redir */
 void		cnt_pipe_redir(char *s, int *cnt);
