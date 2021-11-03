@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:59:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 15:25:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(void)
 		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
 		{
-			// write(stdout_copied, "\n", 1);		//FIXME
+			write(static_stream(STDOUT), "\n", 1);
 			if (WTERMSIG(ext.status) == SIGINT)
 				g_exit_code = EX_SIGINT;
 			else if (WTERMSIG(ext.status) == SIGQUIT)

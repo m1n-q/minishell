@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 15:07:25 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 15:24:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define DUPLCTE 0
 # define RESTORE 1
 # define DESTROY 2
+# define STDOUT 3
 
 # define GET 0
 # define SET 1
