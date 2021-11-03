@@ -6,13 +6,11 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 13:00:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/03 14:48:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
-
-extern int	g_exit_code;
 
 /* check if eof is surrounded by quotes */
 int	check_eof(char *eof)
@@ -30,7 +28,7 @@ char	*expand_env(int fd, char *line)
 	if (line[0] == '$' && !line[1])
 		return (line);
 	else if (line[0] == '$' && line[1] == '?')
-		return (ft_itoa(g_exit_code));
+		return (ft_itoa(get_or_set_exitcode(GET, 0)));
 	else if (line[0] == '$' && line[1] && line[1] != '?')
 	{
 		env_var = getenv(&line[1]);
