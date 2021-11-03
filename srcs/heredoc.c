@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 21:42:16 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 03:58:11 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,41 @@ int	check_eof(char *eof)
 	return (1);
 }
 
+char	*write_until_env(int fd, char *line)
+{
+	int		i;
+	int		cnt;
+	char	*tmp;
+
+	i = 0;
+	cnt = 0;
+	while (line[i])
+	{
+		if (line[i] == '$' && line[i + 1] == '$')
+		{
+			write(fd, &line[i], 2);
+			i += 2;
+		}
+		else if (line[i] == '$' && line[i + 1] == '?')
+		{
+			tmp = ft_itoa(get_or_set_exitcode(GET, 0));
+			write(fd, tmp, ft_strlen(tmp));
+			i += 2;
+		}
+		else if (getenv(&line[i + 1]))
+			break ;
+		else
+			write(fd, &line[i++], 1);
+	}
+	return (&line[i]);
+}
+
 /* expand environment variables */
 char	*expand_env(int fd, char *line)
 {
 	char	*env_var;
 
+	line = write_until_env(fd, line);
 	if (line[0] == '$' && !line[1])
 		return (line);
 	else if (line[0] == '$' && line[1] == '?')
