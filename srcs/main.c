@@ -6,13 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 15:26:48 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 15:36:23 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-int				g_exit_code;
 int	main(void)
 {
 	char	*input;
@@ -64,7 +63,7 @@ int	main(void)
 		}
 		/* if none of above, it means cmd succeeds*/
 		else
-			g_exit_code = 0;						//NOTE: if execve succeed, cannot reach g_exit_code or sth
+			get_or_set_exitcode(SET, EXECUTION_SUCCESS);						//NOTE: if execve succeed, cannot reach exit_code
 		static_stream(RESTORE);
 		unlink(TMP_HD_FILE);
 		add_history(input);
