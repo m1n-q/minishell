@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 15:24:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:29:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,18 @@ extern char	**environ;
 int			shell_level(void);
 int			static_stream(int mode);
 void		echoctl_off(void);
+char		**environ_to_heap(void);
 int			init_shell(void);
 
-/* error */
+/* put error msg */
 int			puterr(int error);
-int			check_error(char *command);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
+int			builtin_error(char *command, char *arg, char *message, int optflag);
 char		**syntax_error(char **error, int exit_code);
+
+/* check error */
+int			check_error(char *command);
 int			get_or_set_exitcode(int mode, int val);
 
 /* run */
@@ -85,6 +89,7 @@ int			get_argc(char **argv);
 void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
+char		*joinjoin(char *a, char *b, char *c);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
 
 /* built-in */
@@ -100,7 +105,6 @@ int			run_builtin(char **argv);
 int			export_internal(char *arg);
 
 /* environ */
-char		**environ_to_heap(void);
 char		*get_env_including_empty(char *arg);
 int			add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
@@ -197,7 +201,6 @@ int			get_assign_pos(const char *string);
 int			init_terminal_data(void);
 
 /* not categoried yet */
-int			builtin_error(char *command, char *arg, char *message, int optflag);
 void		sh_neednumarg(char *command, char *s);
 void		sh_invalidid(char *command, char *s);
 void		sh_invalidopt(char *command, char *opt);

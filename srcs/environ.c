@@ -6,49 +6,22 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:00:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:23:34 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**environ_to_heap(void)
-{
-	int		i;
-	int		env_len;
-	char	**new_environ;
-
-	env_len = get_argc(environ);
-	new_environ = (char **)ft_calloc(env_len + 1, sizeof(char *));
-	if (!new_environ)
-		return (NULL);
-	i = -1;
-	while (environ[++i])
-	{
-		new_environ[i] = ft_strdup(environ[i]);
-		if (!new_environ[i])
-		{
-			free_till(i, new_environ);
-			free(new_environ);
-			return (NULL);
-		}
-	}
-	return (new_environ);
-}
 
 char	*get_env_including_empty(char *arg)
 {
 	int		i;
 	char	*env_val;
 	char	*env_string;
-	char	*tmp;
 
 	env_val = getenv(arg);
 	if (env_val)
 	{
-		tmp = ft_strjoin(arg, "=");
-		env_string = ft_strjoin(tmp, env_val);
-		free(tmp);
+		env_string = joinjoin(arg, "=", env_val);
 		i = -1;
 		while (environ[++i])
 		{

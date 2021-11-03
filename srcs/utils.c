@@ -6,12 +6,23 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:33:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:22:41 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*joinjoin(char *a, char *b, char *c)
+{
+	char	*tmp;
+	char	*ret;
+
+	tmp = ft_strjoin(a, b);
+	ret = ft_strjoin(tmp, c);
+	free(tmp);
+	return (ret);
+
+}
 int	get_argc(char **argv)
 {
 	int	len;

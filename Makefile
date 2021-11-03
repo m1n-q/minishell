@@ -21,7 +21,8 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/init.c \
 		$(SRC_DIR)/utils.c \
-		$(SRC_DIR)/error.c \
+		$(SRC_DIR)/puterror.c \
+		$(SRC_DIR)/chkerror.c \
 		$(SRC_DIR)/redirection.c \
 		$(SRC_DIR)/heredoc.c \
 		$(SRC_DIR)/environ.c \
@@ -34,7 +35,6 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/variable.c \
 		$(SRC_DIR)/builtin/islegal.c \
 		$(SRC_DIR)/builtin/builtin.c \
-		$(SRC_DIR)/builtin/builtin_error.c \
 		$(SRC_DIR)/builtin/builtin_common.c \
 		$(SRC_DIR)/builtin/cd.c \
 		$(SRC_DIR)/builtin/pwd.c \

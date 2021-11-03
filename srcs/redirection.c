@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 15:10:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:54:55 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,20 +132,13 @@ int	trim_redir(char ***argv, int count_redir)
 	while ((*argv)[++i])
 	{
 		if ((*argv)[i] > (char *)10LL)
-		{
 			new_argv[++j] = (*argv)[i];
-		}
 		else
 		{
 			if ((*argv)[i + 1])				//TODO: test cases
-			{
 				i += 1;
-			}
 		}
 	}
-
-	/* if pipe.method 2, free each cmd.argv*/
-	// free((*argv));
 	(*argv) = new_argv;
 	return (0);
 }

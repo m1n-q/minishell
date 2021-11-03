@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 21:04:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:18:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	__unset(char **argv)
 	{
 		if (isoption(argv[1], TIL_END))
 		{
-			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
+			sh_invalidopt(argv[0], argv[1]);
 			return (EXECUTION_FAILURE);
 		}
 	}

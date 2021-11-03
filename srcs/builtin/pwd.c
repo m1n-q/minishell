@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 11:19:22 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:18:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//TODO: error for join
 int	__pwd(char **argv)
 {
 	char	*cwd;
@@ -21,17 +22,17 @@ int	__pwd(char **argv)
 	{
 		if (isoption(argv[1], TIL_END))
 		{
-			sh_invalidopt(argv[0], argv[1]);	/* do not allow any option */
+			sh_invalidopt(argv[0], argv[1]);
 			return (EXECUTION_FAILURE);
 		}
 	}
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		error_str = ft_strjoin\
+		error_str = ft_strjoin \
 		("pwd: error retrieving current directory: \
 		getcwd: cannot access parent directories: ", \
-		strerror(errno));					//TODO: error for join
+		strerror(errno));
 		ft_putstr_fd(error_str, STDERR_FILENO);
 		free(error_str);
 		return (EXECUTION_FAILURE);

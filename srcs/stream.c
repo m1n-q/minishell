@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 18:55:36 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:46:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:51:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ int	destroy_stream(t_io_table stream)
 
 int	restore_stream(int std_copied, int std_org)
 {
-	dup2(std_copied, std_org);
+	if (!isatty(std_org))
+	{
+		close(std_org);
+		dup2(std_copied, std_org);
+	}
 	return (0);
 }
