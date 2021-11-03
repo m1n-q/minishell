@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:11:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 21:11:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:57:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* term_buffer is Nullable? */
 int	init_terminal_data(void)
 {
 	char	*termtype;
@@ -21,7 +22,7 @@ int	init_terminal_data(void)
 	termtype = getenv("TERM");
 	if (termtype == NULL)
 		return (ENOTERMENV);
-	error = tgetent(term_buffer, termtype); 	/* term_buffer is Nullable? */
+	error = tgetent(term_buffer, termtype);
 	if (error == 0)
 		return (ENOTERMENT);
 	if (error < 0)

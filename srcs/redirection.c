@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 17:54:55 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:56:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	count_redir(t_cmd *cmd)
 	}
 	return (count);
 }
+
 int	check_redir(t_cmd *cmd)
 {
 	int			i;

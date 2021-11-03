@@ -21,6 +21,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/init.c \
 		$(SRC_DIR)/utils.c \
+		$(SRC_DIR)/ft_strtoimax.c \
 		$(SRC_DIR)/puterror.c \
 		$(SRC_DIR)/chkerror.c \
 		$(SRC_DIR)/redirection.c \
