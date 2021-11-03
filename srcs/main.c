@@ -6,14 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 15:25:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 15:26:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
 int				g_exit_code;
-
 int	main(void)
 {
 	char	*input;
@@ -26,7 +25,6 @@ int	main(void)
 	init_shell();
 	while ((input = readline(PROMPT)))
 	{
-
 		if (!input[0] || skip_space(input))
 			continue ;
 		argv = parse(input);
@@ -35,7 +33,6 @@ int	main(void)
 			continue ;
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
-
 		i = -1;
 		while (++i < len_cmd_table)
 		{
@@ -52,18 +49,18 @@ int	main(void)
 		}
 		/* get builtin exit code */
 		else if (ext.pid == BUILTIN && ext.code)
-			g_exit_code = ext.code;
+			get_or_set_exitcode(SET, ext.code);
 		/* get child process exit status */
 		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
-			g_exit_code = WEXITSTATUS(ext.status);
+			get_or_set_exitcode(SET, WEXITSTATUS(ext.status));
 		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
 		{
 			write(static_stream(STDOUT), "\n", 1);
 			if (WTERMSIG(ext.status) == SIGINT)
-				g_exit_code = EX_SIGINT;
+				get_or_set_exitcode(SET, EX_SIGINT);
 			else if (WTERMSIG(ext.status) == SIGQUIT)
-				g_exit_code = EX_SIGQUIT;
+				get_or_set_exitcode(SET, EX_SIGQUIT);
 		}
 		/* if none of above, it means cmd succeeds*/
 		else
