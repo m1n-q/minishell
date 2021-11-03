@@ -6,25 +6,28 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:50:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:38:34 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 22:10:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_quoted_str(char *s)
+char	*sh_double_quote(char *string)
 {
-	char	*tmp;
-	char	*quoted_str;
+	int		i;
+	char	*ret;
 
-	tmp = ft_strjoin("`", s);
-	if (!tmp)
+	if (!string)
 		return (NULL);
-	quoted_str = ft_strjoin(tmp, "'");
-	free(tmp);
-	if (!quoted_str)
+	ret = (char *)ft_calloc(ft_strlen(string) + 3, sizeof(char));
+	if (!ret)
 		return (NULL);
-	return (quoted_str);
+	ret[0] = '"';
+	i = -1;
+	while (string[++i])
+		ret[i + 1] = string[i];
+	ret[i + 1] = '"';
+	return (ret);
 }
 
 void	sh_invalidopt(char *command, char *opt)
@@ -36,7 +39,7 @@ void	sh_invalidid(char *command, char *s)
 {
 	char	*qs;
 
-	qs = get_quoted_str(s);
+	qs = joinjoin("`", s, "'");
 	if (!qs)
 		return ;
 	builtin_error(command, qs, "not a valid identifier", 0);

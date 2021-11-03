@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 21:46:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 22:20:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,14 @@ int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
 char		*joinjoin(char *a, char *b, char *c);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
+void		quick_sort(char	**arr, int start, int end);
 
 /* built-in */
-int			__exit(char **argv);
 int			__cd(char **argv);
 int			__pwd(char **argv);
 int			__env(char **argv);
 int			__echo(char **argv);
+int			__exit(char **argv);
 int			__unset(char **argv);
 int			__export(char **argv);
 int			is_builtin(char *arg);
@@ -105,6 +106,7 @@ int			run_builtin(char **argv);
 int			export_internal(char *arg);
 
 /* environ */
+char		**make_tmp_environ(void);
 char		*get_env_including_empty(char *arg);
 int			add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
@@ -201,7 +203,8 @@ int			init_terminal_data(void);
 void		sh_neednumarg(char *command, char *s);
 void		sh_invalidid(char *command, char *s);
 void		sh_invalidopt(char *command, char *opt);
-int			isoption(char *s, int optlen);
+char		*sh_double_quote(char *string);
 void		builtin_usage(char *command, char *usage);
+int			isoption(char *s, int optlen);
 
 #endif

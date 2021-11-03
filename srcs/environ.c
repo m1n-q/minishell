@@ -6,11 +6,25 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:23:34 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 22:20:05 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**make_tmp_environ(void)
+{
+	char	**tmp_environ;
+	int		i;
+
+	tmp_environ = (char **)ft_calloc(get_argc(environ) + 1, sizeof(char *));
+	if (!tmp_environ)
+		return (NULL);
+	i = -1;
+	while (environ[++i])
+		tmp_environ[i] = ft_strdup(environ[i]);
+	return (tmp_environ);
+}
 
 char	*get_env_including_empty(char *arg)
 {

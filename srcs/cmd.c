@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 21:46:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 21:48:27 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	check_redir(t_cmd *cmd)
 	return (0);
 }
 
+//TODO: test cases for line 81
 static int	trim_redir(char ***argv, int count_redir)
 {
 	char	**new_argv;
@@ -77,7 +78,7 @@ static int	trim_redir(char ***argv, int count_redir)
 			new_argv[++j] = (*argv)[i];
 		else
 		{
-			if ((*argv)[i + 1]) //TODO: test cases
+			if ((*argv)[i + 1])
 				i += 1;
 		}
 	}
