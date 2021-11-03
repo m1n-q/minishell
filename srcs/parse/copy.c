@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 13:01:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 04:16:49 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*cpy_with_q(char *s, char *ret)
 	while (*s && !ft_isspace(*s))
 	{
 		if (has_dollar_sign(s) && *s == '"')
-			return (case_env(s));
+			return (case_env(s + 1, '"'));
 		c = *s++;
 		while (*s && *s != c)
 			ret[i++] = *s++;
@@ -84,7 +84,7 @@ char	*cpy_wo_q(char *s, char *ret)
 
 	i = 0;
 	if (has_dollar_sign(s))
-		return (case_env(s));
+		return (case_env(s, ' '));
 	ret[i++] = *s++;
 	while (*s && !ft_isspace(*s))
 	{
