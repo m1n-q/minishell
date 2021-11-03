@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:37:05 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:59:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(void)
 			continue ;
 		cmd_table = split_pipe(argv, &len_cmd_table);
 		check_cmd_table(cmd_table, len_cmd_table);
+
 		i = -1;
 		while (++i < len_cmd_table)
 		{

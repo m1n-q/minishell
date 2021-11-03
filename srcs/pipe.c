@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:46:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 15:12:41 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	init_cmd(t_cmd *cmd)
 {
+	cmd->any_err = 0;
 	cmd->pipe[0] = 0;
 	cmd->pipe[1] = 1;
 	cmd->pipe_stream.in = DEFAULT;
