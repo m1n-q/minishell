@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 22:20:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 01:16:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			puterr(int error);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
 int			builtin_error(char *command, char *arg, char *message, int optflag);
-char		**syntax_error(char **error, int exit_code);
+char		**syntax_error(char **error, char *token, int exit_code);
 
 /* check error */
 int			check_error(char *command);
