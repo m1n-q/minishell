@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 23:10:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 11:27:54 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,16 @@ int	static_stream(int mode)
 	}
 	else if (mode == RESTORE && stdin_copied && stdout_copied)
 	{
-		restore_stream(stdin_copied, STDIN_FILENO);
-		restore_stream(stdout_copied, STDOUT_FILENO);
+		if (!isatty(STDIN_FILENO))
+		{
+			close(STDIN_FILENO);
+			restore_stream(stdin_copied, STDIN_FILENO);
+		}
+		if (!isatty(STDOUT_FILENO))
+		{
+			close(STDOUT_FILENO);
+			restore_stream(stdout_copied, STDOUT_FILENO);
+		}
 	}
 	else if (mode == DESTROY && stdin_copied && stdout_copied)
 	{

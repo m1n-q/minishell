@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:29:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 11:25:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_exit	run(t_cmd cmd)
 			ext.status = 0;
 			ext.code = run_builtin(cmd.argv);
 		}
-		destroy_stream(cmd.redir_stream);
 		return (ext);
 	}
 
@@ -83,10 +82,8 @@ t_exit	run(t_cmd cmd)
 		destroy_stream(cmd.pipe_stream);
 		destroy_stream(cmd.redir_stream);
 		ext.pid = wait(&ext.status);		//FIXIT: have to be async
+
 	}
-	/* destroy stream for (exec failed / built-in) child process */
-	destroy_stream(cmd.pipe_stream);
-	destroy_stream(cmd.redir_stream);
 
 	return (ext);
 }

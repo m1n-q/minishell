@@ -53,6 +53,7 @@
 # define RESTORE 1
 # define DESTROY 2
 extern char	**environ;
+extern int	g_interactive;
 
 /* init */
 int			shell_level(void);
