@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:47:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 22:47:36 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static char	*find_path(char *arg)
 }
 
 //FIXME: "built-in" can be input
+/* NOCMD: only redir w/o command */
 int	set_path(t_cmd *cmd)
 {
 	if (cmd->argv[0] == NULL)
