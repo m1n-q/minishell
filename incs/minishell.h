@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:35:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 15:24:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@
 # define DUPLCTE 0
 # define RESTORE 1
 # define DESTROY 2
+# define STDOUT 3
 
 # define GET 0
 # define SET 1
 # define ON 1
 # define OFF 0
 
+# define DEFAULT -2
 
 extern char	**environ;
 
@@ -152,7 +154,8 @@ int			heredoc(char *eof);
 int			redir_in(char *arg);
 int			redir_out(char *arg);
 int			redir_append(char *arg);
-int			check_redir(t_cmd *cmd, int *count_redir);
+int			count_redir(t_cmd *cmd);
+int			check_redir(t_cmd *cmd);
 int			trim_redir(char ***argv, int count_redir);
 
 /* pipe */

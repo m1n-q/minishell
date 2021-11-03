@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:50:11 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:35:59 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 14:56:39 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 int	builtin_error(char *command, char *arg, char *message, int optflag)
 {
 	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, command, ft_strlen(command));
-	write(STDERR_FILENO, ": ", 2);
+	if (command && *command)
+	{
+		write(STDERR_FILENO, command, ft_strlen(command));
+		write(STDERR_FILENO, ": ", 2);
+	}
 	if (arg && *arg && !optflag)
 	{
 		write(STDERR_FILENO, arg, ft_strlen(arg));
