@@ -6,17 +6,13 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 14:46:17 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 03:09:58 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* check if a character is an available character for enviroment variable */
-int	is_env(char c)
-{
-	return (ft_isdigit(c) || ft_isalpha(c) || c == '_');
-}
 
 int	join_exit_code(char **ret)
 {
@@ -27,6 +23,27 @@ int	join_exit_code(char **ret)
 	return (2);
 }
 
+int	join_dollar_sign(char *s, char **ret)
+{
+	int		i;
+	int		cnt;
+	char	*tmp;
+
+	i = -1;
+	cnt = 0;
+	while (s[++i] == '$')
+		cnt++;
+	if (s[i] && !ft_isspace(s[i]) && s[i] != '"' && cnt > 2)
+		cnt--;
+	tmp = malloc(sizeof(char) * (cnt + 1));
+	i = -1;
+	while (++i < cnt)
+		tmp[i] = '$';
+	tmp[i] = 0;
+	*ret = ft_strjoin(*ret, tmp);
+	return (cnt);
+}
+
 /* join the value of the environment variables */
 int	join_env_var(char *s, char **ret)
 {
@@ -34,7 +51,7 @@ int	join_env_var(char *s, char **ret)
 	char	*tmp;
 
 	i = 0;
-	while (is_env(s[i + 1]))
+	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 		i++;
 	tmp = malloc(sizeof(char) * (i + 1));
 	if (!tmp)
@@ -86,6 +103,8 @@ char	*case_env(char *s)
 			s++;
 		if (*s != '$')
 			s += join_non_env(s, &ret);
+		else if (*s == '$' && *(s + 1) == '$')
+			s += join_dollar_sign(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) != '?')
 			s += join_env_var(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
