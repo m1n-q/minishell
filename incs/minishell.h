@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:29:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/03 20:57:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int			trim_redir(char ***argv, int count_redir);
 
 /* pipe */
 int			count_pipe(char	**argv);
-t_cmd		*split_pipe(char **argv, int *size);
+t_cmd		*split_pipe(char **argv, int len_cmd_table);
 int			make_pipe(t_cmd *cmd);
 int			set_pipe_stream(t_cmd *cmd, t_cmd *next);
 
