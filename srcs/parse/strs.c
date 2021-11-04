@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 16:01:32 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 20:46:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ char	**malloc_strs(char *s)
 	return (ret);
 }
 
-void	free_strs(char **ret, int i)
+void	free_strs(char **argv, int i)
 {
 	int	j;
 
 	j = -1;
 	while (++j < i)
-		free(ret[j]);
-	free(ret);
+		free(argv[j]);
+	free(argv);
 }

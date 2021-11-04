@@ -33,6 +33,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/str.c \
 		$(SRC_DIR)/parse/strs.c \
 		$(SRC_DIR)/parse/cont_pipe.c \
+		$(SRC_DIR)/parse/error.c \
 		$(SRC_DIR)/utils/utils.c \
 		$(SRC_DIR)/utils/qsort.c \
 		$(SRC_DIR)/utils/ft_strtoimax.c \

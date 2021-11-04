@@ -6,23 +6,23 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 04:37:36 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 20:44:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* check if a character is an available character for enviroment variable */
-int	join_exit_code(char **ret)
+int	join_exit_code(char **argv)
 {
-	if (!*ret)
-		*ret = ft_itoa(get_or_set_exitcode(GET, 0));
-	else if (*ret)
-		*ret = ft_strjoin(*ret, ft_itoa(get_or_set_exitcode(GET, 0)));
+	if (!*argv)
+		*argv = ft_itoa(get_or_set_exitcode(GET, 0));
+	else if (*argv)
+		*argv = ft_strjoin(*argv, ft_itoa(get_or_set_exitcode(GET, 0)));
 	return (2);
 }
 
-int	join_dollar_sign(char *s, char **ret)
+int	join_dollar_sign(char *s, char **argv)
 {
 	int		i;
 	int		cnt;
@@ -39,12 +39,12 @@ int	join_dollar_sign(char *s, char **ret)
 	while (++i < cnt)
 		tmp[i] = '$';
 	tmp[i] = 0;
-	*ret = ft_strjoin(*ret, tmp);
+	*argv = ft_strjoin(*argv, tmp);
 	return (cnt);
 }
 
 /* join the value of the environment variables */
-int	join_env_var(char *s, char **ret)
+int	join_env_var(char *s, char **argv)
 {
 	int		i;
 	char	*tmp;
@@ -53,27 +53,27 @@ int	join_env_var(char *s, char **ret)
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 		i++;
 	if (!i)
-		return (join_dollar_sign(s, ret));
+		return (join_dollar_sign(s, argv));
 	tmp = malloc(sizeof(char) * (i + 1));
 	if (!tmp)
 		return (0);
 	ft_strlcpy(tmp, &s[1], i + 1);
-	if (!*ret)
-		*ret = getenv(tmp);
-	else if (*ret)
-		*ret = ft_strjoin(*ret, getenv(tmp));
-	if (!*ret)
+	if (!*argv)
+		*argv = getenv(tmp);
+	else if (*argv)
+		*argv = ft_strjoin(*argv, getenv(tmp));
+	if (!*argv)
 	{
-		*ret = malloc(sizeof(char) * 1);
-		if (!*ret)
+		*argv = malloc(sizeof(char) * 1);
+		if (!*argv)
 			return (0);
-		*ret[0] = 0;
+		*argv[0] = 0;
 	}
 	free(tmp);
 	return (++i);
 }
 
-int	join_non_env(char *s, char **ret)
+int	join_non_env(char *s, char **argv)
 {
 	char	*tmp;
 	int		i;
@@ -83,13 +83,13 @@ int	join_non_env(char *s, char **ret)
 		i++;
 	tmp = malloc(sizeof(char) * (i + 1));
 	ft_strlcpy(tmp, s, i + 1);
-	if (*ret)
-		*ret = ft_strjoin(*ret, tmp);
+	if (*argv)
+		*argv = ft_strjoin(*argv, tmp);
 	else
-		*ret = tmp;
+		*argv = tmp;
 	if (s[i] == '$' && !s[i + 1])
 	{
-		*ret = ft_strjoin(*ret, "$");
+		*argv = ft_strjoin(*argv, "$");
 		i++;
 	}
 	return (i);

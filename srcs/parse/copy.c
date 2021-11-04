@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 04:16:49 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 20:43:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*case_pipe_redir(char *s)
 }
 
 /* copy a string that is enclosed by q marks from (s) to (ret) */
-char	*cpy_with_q(char *s, char *ret)
+char	*cpy_with_q(char *s, char *argv)
 {
 	char	c;
 	int		i;
@@ -65,19 +65,19 @@ char	*cpy_with_q(char *s, char *ret)
 			return (case_env(s + 1, '"'));
 		c = *s++;
 		while (*s && *s != c)
-			ret[i++] = *s++;
+			argv[i++] = *s++;
 		if (*++s && !ft_isspace(*s))
 		{
 			while (*s && !ft_isspace(*s) && !is_q(*s))
-				ret[i++] = *s++;
+				argv[i++] = *s++;
 		}
 	}
-	ret[i] = 0;
-	return (ret);
+	argv[i] = 0;
+	return (argv);
 }
 
 /* copy a string that is not enclosed by q marks from (s) to (ret) */
-char	*cpy_wo_q(char *s, char *ret)
+char	*cpy_wo_q(char *s, char *argv)
 {
 	char	c;
 	int		i;
@@ -85,35 +85,35 @@ char	*cpy_wo_q(char *s, char *ret)
 	i = 0;
 	if (has_dollar_sign(s))
 		return (case_env(s, ' '));
-	ret[i++] = *s++;
+	argv[i++] = *s++;
 	while (*s && !ft_isspace(*s))
 	{
 		if (is_q(*s))
 		{
 			c = *s++;
 			while (*s && *s != c)
-				ret[i++] = *s++;
+				argv[i++] = *s++;
 			s++;
 		}
 		else
-			ret[i++] = *s++;
+			argv[i++] = *s++;
 	}
-	ret[i] = 0;
-	ret = case_pipe_redir(ret);
-	return (ret);
+	argv[i] = 0;
+	argv = case_pipe_redir(argv);
+	return (argv);
 }
 
 /* copy a string from (s) to (ret) */
-char	*cpy_str(char *s, char **ret, int *i)
+char	*cpy_str(char *s, char **argv, int *i)
 {
 	int	len;
 
 	len = cnt_str_len(s);
-	ret[*i] = malloc_str(s, ret, *i, len);
+	argv[*i] = malloc_str(s, argv, *i, len);
 	if (is_q(*s))
-		ret[*i] = cpy_with_q(s, ret[*i]);
+		argv[*i] = cpy_with_q(s, argv[*i]);
 	else
-		ret[*i] = cpy_wo_q(s, ret[*i]);
+		argv[*i] = cpy_wo_q(s, argv[*i]);
 	(*i)++;
-	return (ret[*i]);
+	return (argv[*i]);
 }

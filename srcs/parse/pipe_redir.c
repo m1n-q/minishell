@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:15 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/01 16:01:16 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 20:45:43 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ void	cnt_pipe_redir(char *s, int *cnt)
 
 /* insert space before and after the pipes and redirections
  * if they are not separated by space within a string */
-void	cpy_pipe_redir(char *s, char *ret, int *i, int *j)
+void	cpy_pipe_redir(char *s, char *argv, int *i, int *j)
 {
 	if (*j > 0 && s[(*j) - 1] != s[*j] && !ft_isspace(s[(*j) - 1]))
-		ret[(*i)++] = ' ';
-	ret[(*i)++] = s[(*j)++];
+		argv[(*i)++] = ' ';
+	argv[(*i)++] = s[(*j)++];
 	if (*j > 0 && s[*j] && s[*j] == s[(*j) - 1])
-		ret[(*i)++] = s[(*j)++];
+		argv[(*i)++] = s[(*j)++];
 	if (!ft_isspace(s[*j]))
-		ret[(*i)++] = ' ';
+		argv[(*i)++] = ' ';
 }
 
 /* insert spaces between the pipes and redirections in the original string */
-void	cpy_with_space(char *s, int len, char *ret, int i)
+void	cpy_with_space(char *s, int len, char *argv, int i)
 {
 	int		j;
 	char	c;
@@ -79,17 +79,17 @@ void	cpy_with_space(char *s, int len, char *ret, int i)
 		if (is_q(s[j]))
 		{
 			c = s[j];
-			ret[i++] = s[j++];
+			argv[i++] = s[j++];
 			while (s[j] && s[j] != c)
-				ret[i++] = s[j++];
-			ret[i++] = s[j++];
+				argv[i++] = s[j++];
+			argv[i++] = s[j++];
 		}
 		else if (is_pipe_rin_rout(s[j]))
-			cpy_pipe_redir(s, ret, &i, &j);
+			cpy_pipe_redir(s, argv, &i, &j);
 		else
-			ret[i++] = s[j++];
+			argv[i++] = s[j++];
 	}
-	ret[len] = 0;
+	argv[len] = 0;
 }
 
 char	*split_pipe_redir(char *s)

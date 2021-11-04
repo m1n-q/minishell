@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 13:04:59 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 20:45:08 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,23 @@ int	cnt_heredoc(char *s)
 }
 
 /* add quotes in front of and at the end of heredoc delimiter */
-void	add_q(int *i, int *j, char *ret, char *s)
+void	add_q(int *i, int *j, char *argv, char *s)
 {
 	char	c;
 
 	if (s[*j] == '\'')
-		ret[(*i)++] = '"';
+		argv[(*i)++] = '"';
 	else if (s[*j] == '"')
-		ret[(*i)++] = '\'';
+		argv[(*i)++] = '\'';
 	c = s[(*j)++];
-	ret[(*i)++] = c;
+	argv[(*i)++] = c;
 	while (s[*j] != c)
-		ret[(*i)++] = s[(*j)++];
-	ret[(*i)++] = s[(*j)++];
+		argv[(*i)++] = s[(*j)++];
+	argv[(*i)++] = s[(*j)++];
 	if (s[*j - 1] == '\'')
-		ret[(*i)++] = '"';
+		argv[(*i)++] = '"';
 	else if (s[*j - 1] == '"')
-		ret[(*i)++] = '\'';
+		argv[(*i)++] = '\'';
 }
 
 /* new string with heredoc delimiters surrounded by quotes */
