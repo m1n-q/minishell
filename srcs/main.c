@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 16:19:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 16:59:22 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	main(void)
 	init_shell();
 	while ((input = readline(PROMPT)))
 	{
+
+		/**********************************************************************/
+		/*                               parsing                              */
+		/**********************************************************************/
+
 		if (!input[0] || skip_space(input))
 			continue ;
 		argv = parse(input);
@@ -31,10 +36,19 @@ int	main(void)
 			argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF)
 			continue ;
 
+		/**********************************************************************/
+		/*                           preprocessing                            */
+		/**********************************************************************/
+
 		len_cmd_table = count_pipe(argv) + 1;
 		cmd_table = split_pipe(argv, len_cmd_table);
 		if (check_cmd_table(cmd_table, len_cmd_table) == HEREDOC_INTR)
 			continue ;
+
+		/**********************************************************************/
+		/*                              execute                               */
+		/**********************************************************************/
+
 		i = -1;
 		while (++i < len_cmd_table)
 		{
@@ -42,6 +56,11 @@ int	main(void)
 			if (ext.pid == CHILD)					/* execve failed or forked built-in */
 				exit(ext.code);
 		}
+
+		/**********************************************************************/
+		/*                              result                                */
+		/**********************************************************************/
+
 		if (ext.pid == PARENT_EXIT)
 		{
 			if (ext.code == E2MANY)					/* too many arguments => do not exit */
@@ -67,6 +86,11 @@ int	main(void)
 		/* if none of above, it means cmd succeeds*/
 		else
 			get_or_set_exitcode(SET, EXECUTION_SUCCESS);						//NOTE: if execve succeed, cannot reach exit_code
+
+
+		/**********************************************************************/
+		/*                              restore                               */
+		/**********************************************************************/
 		static_stream(RESTORE);
 		unlink(TMP_HD_FILE);
 		add_history(input);
