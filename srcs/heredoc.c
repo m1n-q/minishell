@@ -6,19 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 16:25:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 16:51:41 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
-
-/* check if eof is surrounded by quotes */
-int	check_eof(char *eof)
-{
-	if (is_q(eof[0]) && eof[ft_strlen(eof) - 1] == eof[0])
-		return (0);
-	return (1);
-}
 
 char	*write_until_env(int fd, char *line)
 {
@@ -73,53 +65,58 @@ char	*expand_env(int fd, char *line)
 	return (line);
 }
 
-/* trim quotes in eof delimiter */
-char	*trim_q(char *eof)
+/* check for expand and trim quotes in delimiter */
+int	check_delimiter(char **delim)
 {
 	int		i;
 	int		len;
 	char	*ret;
+	char	*s;
 
-	if (check_eof(eof))
-		return (eof);
+	s = *delim;
+	if (!(is_q(s[0]) && s[ft_strlen(s) - 1] == s[0]))
+		return (1);
 	i = 0;
-	len = ft_strlen(eof) - 2;
+	len = ft_strlen(s) - 2;
 	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
 		return (0);
 	while (len--)
 	{
-		if (is_q(*eof))
-			eof++;
-		ret[i++] = *eof++;
+		if (is_q(*s))
+			s++;
+		ret[i++] = *s++;
 	}
 	ret[i] = 0;
-	return (ret);
+	free(*delim);
+	*delim = ret;
+	return (0);
 }
 
-int	heredoc(t_cmd *cmd, char *eof)
+int	heredoc_interrupt(int fd)
+{
+	close(fd);
+	get_or_set_interactive(SET, ON);
+	get_or_set_exitcode(SET, EXECUTION_FAILURE);
+	rl_done = 0;
+	return (HEREDOC_INTR);
+}
+
+int	heredoc(t_cmd *cmd, char *delim)
 {
 	int		fd;
 	int		expand;
 	char	*line;
 
 	get_or_set_interactive(SET, ON_HD);
-	expand = check_eof(eof);
-	eof = trim_q(eof);
+	expand = check_delimiter(&delim);
 	fd = open(TMP_HD_FILE, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (1)
 	{
 		line = readline("> ");
 		if (line && *line == EOF)
-		{
-			get_or_set_interactive(SET, ON);
-			get_or_set_exitcode(SET, EXECUTION_FAILURE);
-			rl_done = 0;
-			return (HEREDOC_INTR);
-		}
-		if (!line)
-			break ;
-		if (is_equal(line, eof))
+			return (heredoc_interrupt(fd));
+		if (!line || is_equal(line, delim))
 			break ;
 		if (expand)
 			line = expand_env(fd, line);
