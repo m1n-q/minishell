@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 01:34:18 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 16:19:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,6 @@
 # define UNSET_SHORTDOC			"unset [name ...]"
 # define EXPORT_SHORTDOC		"export [name[=value] ...]"
 
+# define HEREDOC_INTR		-42
+# define FDERR				-1
 #endif

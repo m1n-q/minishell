@@ -6,23 +6,34 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 14:29:39 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 16:21:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* eof(-1) print <?> */
 void	sig_handler_interactive(int sig)
 {
-	if (sig == SIGINT && get_or_set_interactive(GET, 0))
+	char	eof;
+
+	if (sig == SIGINT && get_or_set_interactive(GET, 0) == ON)
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else
-		return ;
+	else if (get_or_set_interactive(GET, 0) == 2)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		eof = -1;
+		ioctl(STDIN_FILENO, TIOCSTI, &eof);
+		rl_done = 1;
+	}
+	return ;
 }
 
 void	sigstop_handler(int sig)

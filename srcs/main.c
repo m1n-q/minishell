@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 01:18:05 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/04 16:19:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(void)
 
 		len_cmd_table = count_pipe(argv) + 1;
 		cmd_table = split_pipe(argv, len_cmd_table);
-		check_cmd_table(cmd_table, len_cmd_table);
+		if (check_cmd_table(cmd_table, len_cmd_table) == HEREDOC_INTR)
+			continue ;
 		i = -1;
 		while (++i < len_cmd_table)
 		{
