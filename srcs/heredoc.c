@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 16:22:11 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 16:25:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	heredoc(t_cmd *cmd, char *eof)
 	int		expand;
 	char	*line;
 
-	get_or_set_interactive(SET, 2);
+	get_or_set_interactive(SET, ON_HD);
 	expand = check_eof(eof);
 	eof = trim_q(eof);
 	fd = open(TMP_HD_FILE, O_RDWR | O_CREAT | O_TRUNC, 0644);

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 16:21:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/04 16:25:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sig_handler_interactive(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (get_or_set_interactive(GET, 0) == 2)
+	else if (get_or_set_interactive(GET, 0) == ON_HD)
 	{
 		printf("\n");
 		rl_on_new_line();

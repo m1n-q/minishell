@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 04:16:29 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/04 16:25:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define SET 1
 # define ON 1
 # define OFF 0
+# define ON_HD 2
 
 # define DEFAULT -2
 
