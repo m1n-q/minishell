@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 16:51:41 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 21:10:08 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,39 +93,53 @@ int	check_delimiter(char **delim)
 	return (0);
 }
 
-int	heredoc_interrupt(int fd)
+int	heredoc_read(char **delim)
 {
-	close(fd);
-	get_or_set_interactive(SET, ON);
-	get_or_set_exitcode(SET, EXECUTION_FAILURE);
-	rl_done = 0;
-	return (HEREDOC_INTR);
-}
+	int			fd;
+	int			expand;
+	char		*line;
 
-int	heredoc(t_cmd *cmd, char *delim)
-{
-	int		fd;
-	int		expand;
-	char	*line;
-
-	get_or_set_interactive(SET, ON_HD);
-	expand = check_delimiter(&delim);
+	signal(SIGINT, SIG_DFL);
+	expand = check_delimiter(delim);
 	fd = open(TMP_HD_FILE, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (1)
 	{
 		line = readline("> ");
-		if (line && *line == EOF)
-			return (heredoc_interrupt(fd));
-		if (!line || is_equal(line, delim))
+		if (!line || is_equal(line, *delim))
 			break ;
 		if (expand)
 			line = expand_env(fd, line);
 		ft_putendl_fd(line, fd);
 	}
 	close(fd);
-	fd = open(TMP_HD_FILE, O_RDONLY);
-	if (cmd->redir_stream.in != DEFAULT)
-		close(cmd->redir_stream.in);
-	cmd->redir_stream.in = fd;
-	return (0);
+	exit(0);
+}
+
+int	heredoc(t_cmd *cmd, char *delim)
+{
+	int			fd;
+	t_exit		ext;
+
+	get_or_set_interactive(SET, OFF);
+	ext.pid = fork();
+	if (ext.pid == CHILD)
+		heredoc_read(&delim);
+	else if (ext.pid > 0)
+	{
+		ext.pid = wait(&ext.status);
+		if (WIFSIGNALED(ext.status) && WTERMSIG(ext.status) == SIGINT)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			get_or_set_interactive(SET, ON);
+			get_or_set_exitcode(SET, EXECUTION_FAILURE);
+			return (HEREDOC_INTR);
+		}
+		fd = open(TMP_HD_FILE, O_RDONLY);
+		if (cmd->redir_stream.in != DEFAULT)
+			close(cmd->redir_stream.in);
+		cmd->redir_stream.in = fd;
+		return (EXECUTION_SUCCESS);
+	}
+	get_or_set_exitcode(SET, EXECUTION_FAILURE);
+	return (FORKERR);
 }

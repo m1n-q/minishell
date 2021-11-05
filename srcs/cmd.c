@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 16:19:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 21:05:34 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,25 @@ static int	count_redir(t_cmd *cmd)
 	return (count);
 }
 
+static int	is_redir(char *arg)
+{
+	if (arg == (char *)REDIRECT_OUT || \
+		arg == (char *)REDIRECT_IN || \
+		arg == (char *)REDIRECT_APPEND || \
+		arg == (char *)HEREDOC)
+		return (1);
+	return (0);
+}
+
 static int	check_redir(t_cmd *cmd)
 {
-	int			i;
+	int	i;
+	int	e;
 
 	i = -1;
 	while (cmd->argv[++i])
 	{
-		if ((cmd->argv[i] == (char *)REDIRECT_OUT || \
-			cmd->argv[i] == (char *)REDIRECT_IN || \
-			cmd->argv[i] == (char *)REDIRECT_APPEND || \
-			cmd->argv[i] == (char *)HEREDOC) && \
-			cmd->argv[i + 1])
+		if (is_redir(cmd->argv[i]) && cmd->argv[i + 1])
 		{
 			if (cmd->argv[i] == (char *)REDIRECT_OUT)
 				redir_out(cmd, cmd->argv[i + 1]);
@@ -50,8 +57,11 @@ static int	check_redir(t_cmd *cmd)
 			else if (cmd->argv[i] == (char *)REDIRECT_APPEND)
 				redir_append(cmd, cmd->argv[i + 1]);
 			else if (cmd->argv[i] == (char *)HEREDOC)
-				if (heredoc(cmd, cmd->argv[i + 1]) == HEREDOC_INTR)
-					return (HEREDOC_INTR);
+			{
+				e = heredoc(cmd, cmd->argv[i + 1]);
+				if (e)
+					return (e);
+			}
 			if (cmd->redir_stream.in == FDERR || cmd->redir_stream.out == FDERR)
 				return (FDERR);
 		}
@@ -101,6 +111,8 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 				cmd_table[i].any_err = 1;
 			else if (e == HEREDOC_INTR)
 				return (HEREDOC_INTR);
+			else if (e == FORKERR)
+				return (FORKERR);
 		}
 		trim_redir(&(cmd_table[i].argv), count_redir(&cmd_table[i]));
 		set_path(&cmd_table[i]);
