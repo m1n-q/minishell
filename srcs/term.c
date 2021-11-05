@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:11:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:57:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 21:59:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,28 @@ int	init_terminal_data(void)
 	if (error < 0)
 		return (ENOTERMINFO);
 	return (0);
+}
+
+void	settty(int mode, unsigned long flag)
+{
+	static TTY	save;
+	static TTY	t;
+
+	if (mode == SAVE)
+	{
+		tcgetattr(STDIN_FILENO, &save);
+		tcgetattr(STDIN_FILENO, &t);
+	}
+	if (flag && mode == OFF)
+	{
+		t.c_lflag &= ~flag;
+		tcsetattr(STDIN_FILENO, TCSANOW, &t);
+	}
+	else if (flag && mode == ON)
+	{
+		t.c_lflag |= flag;
+		tcsetattr(STDIN_FILENO, TCSANOW, &t);
+	}
+	else if (mode == RESTORE)
+		tcsetattr(STDIN_FILENO, TCSANOW, &save);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/05 21:11:46 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 22:28:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 
 # define GET 0
 # define SET 1
+# define SAVE 5
 # define ON 1
 # define OFF 0
 
@@ -66,9 +67,12 @@ extern char	**environ;
 /* init */
 int			shell_level(void);
 int			static_stream(int mode);
-void		echoctl_off(void);
 char		**environ_to_heap(void);
 int			init_shell(void);
+
+/* term */
+void		settty(int mode, unsigned long flag);
+int			init_terminal_data(void);
 
 /* put error msg */
 int			puterr(int error);
@@ -79,7 +83,6 @@ char		**syntax_error(char **error, char *token, int exit_code);
 
 /* check error */
 int			check_error(char *command);
-int			get_or_set_exitcode(int mode, int val);
 
 /* run */
 t_exit		run(t_cmd cmd);
@@ -187,8 +190,8 @@ int			check_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 void		sig_handler_interactive(int sig);
 void		sigstop_handler(int sig);
 void		sigcont_handler(int sig);
+void		sig_jobcontrol(int mode);
 void		set_sighandlers(void);
-int			get_or_set_interactive(int mode, int val);
 
 /* islegal */
 int			legal_variable_starter(char c);
@@ -201,8 +204,9 @@ t_var		unbind_var(char *arg, int *aflag);
 char		*bind_var(t_var var, int assign_pos, int *aflag);
 int			get_assign_pos(const char *string);
 
-/* term */
-int			init_terminal_data(void);
+/* getter */
+int			get_or_set_exitcode(int mode, int val);
+int			get_or_set_interactive(int mode, int val);
 
 /* not categoried yet */
 void		sh_neednumarg(char *command, char *s);

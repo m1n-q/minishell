@@ -6,22 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:27:03 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:47:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 22:27:08 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	get_or_set_exitcode(int mode, int val)
-{
-	static int	exitcode;
-
-	if (mode == GET)
-		return (exitcode);
-	else if (mode == SET)
-		exitcode = val;
-	return (exitcode);
-}
 
 int	read_sample(char *file, char *buf)
 {

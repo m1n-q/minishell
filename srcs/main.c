@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/05 21:27:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 22:29:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,14 @@ int	main(void)
 		/* get child process exit (by signal) status */
 		else if (WIFSIGNALED(ext.status))
 		{
-			write(static_stream(STDOUT), "\n", 1);
 			if (WTERMSIG(ext.status) == SIGINT)
 				get_or_set_exitcode(SET, EX_SIGINT);
 			else if (WTERMSIG(ext.status) == SIGQUIT)
+			{
+				write(STDERR_FILENO, "Quit: 3", 7);
 				get_or_set_exitcode(SET, EX_SIGQUIT);
+			}
+			write(static_stream(STDOUT), "\n", 1);
 		}
 		/* if none of above, it means cmd succeeds*/
 		else
@@ -95,9 +98,12 @@ int	main(void)
 		unlink(TMP_HD_FILE);
 		add_history(input);
 		free(input);
+		sig_jobcontrol(OFF);
+		settty(OFF, ECHOCTL);
 		get_or_set_interactive(SET, ON);
 	}
 	static_stream(DESTROY);
+	settty(RESTORE, 0);
 	write(STDERR_FILENO, "exit\n", 5);
 	exit(get_or_set_exitcode(GET, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:51:21 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 22:01:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ int	static_stream(int mode)
 	return (0);
 }
 
-void	echoctl_off(void)
-{
-	extern int	_rl_echo_control_chars;
-
-	_rl_echo_control_chars = 0;
-}
-
 char	**environ_to_heap(void)
 {
 	int		i;
@@ -103,7 +96,8 @@ int	init_shell(void)
 	set_sighandlers();
 	shell_level();
 	static_stream(DUPLCTE);
-	echoctl_off();
+	settty(SAVE, 0);
+	settty(OFF, ECHOCTL);
 	get_or_set_interactive(SET, ON);
 	return (0);
 }

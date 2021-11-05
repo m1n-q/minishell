@@ -11,6 +11,7 @@ OBJS =  ${SRCS:.c=.o}
 SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/run.c \
 		$(SRC_DIR)/init.c \
+		$(SRC_DIR)/getter.c \
 		$(SRC_DIR)/puterror.c \
 		$(SRC_DIR)/chkerror.c \
 		$(SRC_DIR)/redirection.c \

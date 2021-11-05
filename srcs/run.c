@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 23:00:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 22:38:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_exit	c(t_cmd cmd)
 	ext.pid = CHILD;
 	ext.status = 0;
 	signal(SIGQUIT, SIG_DFL);
+	sig_jobcontrol(ON);
 	connect_stream(cmd.pipe_stream);
 	connect_stream(cmd.redir_stream);
 	if (cmd.path == NULL)
@@ -90,6 +91,7 @@ t_exit	run(t_cmd cmd)
 	t_exit		ext;
 
 	get_or_set_interactive(SET, OFF);
+	settty(ON, ECHOCTL);
 	if (cmd.any_err)
 		return ((t_exit){-1, 0, EXECUTION_FAILURE});
 	if (cmd.path != (char *)NOCMD && is_equal(cmd.path, "built-in") && \
