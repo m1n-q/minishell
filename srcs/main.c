@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/05 21:12:21 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/05 21:27:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,6 @@ int	main(void)
 		get_or_set_interactive(SET, ON);
 	}
 	static_stream(DESTROY);
+	write(STDERR_FILENO, "exit\n", 5);
+	exit(get_or_set_exitcode(GET, 0));
 }
