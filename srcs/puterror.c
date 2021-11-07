@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/04 01:42:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/07 22:59:52 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,20 @@ void	file_error(char *command)
 char	**syntax_error(char **error, char *token, int exit_code)
 {
 	get_or_set_exitcode(SET, exit_code);
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, "syntax error", 12);
+	ft_putstr_fd("minishell: syntax error", STDERR_FILENO);
 	if (error == (char **)Q_ERR)
-		write(STDERR_FILENO, ": quotes unclosed\n", 18);
+		ft_putendl_fd(": quote unclosed", STDERR_FILENO);
 	else if (error == (char **)UNEXPECTED_EOF)
-		write(STDERR_FILENO, ": unexpected end of file\n", 25);
+		ft_putendl_fd(": unexpected end of file", STDERR_FILENO);
 	else if (error == (char **)PIPE_ERR || error == (char **)REDIR_ERR)
 	{
-		write(STDERR_FILENO, " near unexpected token ", 23);
-		write(STDERR_FILENO, token, ft_strlen(token));
-		write(STDERR_FILENO, "\n", 1);
+		ft_putstr_fd(" near unexpected token ", STDERR_FILENO);
+		ft_putendl_fd(token, STDERR_FILENO);
+	}
+	else if (error == (char **)INVALID_REDIR)
+	{
+		ft_putstr_fd(": invalid token: ", STDERR_FILENO);
+		ft_putendl_fd(token, STDERR_FILENO);
 	}
 	return (error);
 }
