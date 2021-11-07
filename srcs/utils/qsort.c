@@ -6,13 +6,26 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 21:54:32 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 22:06:13 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/07 19:52:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	swap(char **a, char **b)
+static int	cmp(char *a, char *b)
+{
+	int	la;
+	int	lb;
+
+	la = ft_strlen(a);
+	lb = ft_strlen(b);
+	if (la >= lb)
+		return (ft_strncmp(a, b, la));
+	else
+		return (ft_strncmp(a, b, lb));
+}
+
+static void	swap(char **a, char **b)
 {
 	char	*tmp;
 
@@ -21,28 +34,31 @@ void	swap(char **a, char **b)
 	*b = tmp;
 }
 
-//FIXME
 void	quick_sort(char	**arr, int start, int end)
 {
-	int		p;
 	int		l;
 	int		r;
 
 	if (end - start + 1 <= 1)
 		return ;
-	p = end;
+	if (end - start + 1 == 2)
+	{
+		if (cmp(arr[start], arr[end]) > 0)
+			swap(&arr[start], &arr[end]);
+		return ;
+	}
 	l = start;
 	r = end - 1;
 	while (l < r)
 	{
-		while (l < end && ft_strncmp(arr[l], arr[p], ft_strlen(arr[p])) < 0)
+		while (l < end && cmp(arr[l], arr[end]) < 0)
 			l++;
-		while (r > start && ft_strncmp(arr[r], arr[p], ft_strlen(arr[p])) > 0)
+		while (r > start && cmp(arr[r], arr[end]) > 0)
 			r--;
 		if (l < r)
 			swap(&arr[l], &arr[r]);
 	}
-	swap(&arr[l], &arr[p]);
-	quick_sort(arr, 0, l - 1);
+	swap(&arr[l], &arr[end]);
+	quick_sort(arr, start, l - 1);
 	quick_sort(arr, l + 1, end);
 }
