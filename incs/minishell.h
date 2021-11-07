@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 20:24:56 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/07 20:56:00 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int			remove_envent(t_envent env);
 
 /* ************************ parse ************************ */
 /* parse */
+char		**ft_split_space(char *s);
 char		**parse(char *s);
 
 /* error */
