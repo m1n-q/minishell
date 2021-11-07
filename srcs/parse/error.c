@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:52:33 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/07 21:48:59 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	is_pipe_err(char **argv, int i)
 		else if (argv[0] < (char *)REDIRECT_OUT)
 			return (1);
 	}
-	if (i > 1 && argv[0] != (char *)REDIRECT_OUT && argv[1] == (char *)PIPE)
+	if (i > 1 && argv[0] != (char *)REDIRECT_OUT
+		&& argv[0] <= (char *)REDIRECT_APPEND && argv[1] == (char *)PIPE)
 		return (1);
 	if (argv[i] == (char *)PIPE && argv[i - 1] <= (char *)REDIRECT_OUT)
 		return (1);

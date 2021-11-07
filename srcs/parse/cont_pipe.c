@@ -6,11 +6,50 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:39:02 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/07 21:49:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
+
+char	**join_argvs(char **argv, char **tmp)
+{
+	int		i;
+	int		j;
+	char	**ret;
+
+	ret = malloc(sizeof(char *) * (get_argc(argv) + get_argc(tmp) + 1));
+	i = -1;
+	while (argv[++i])
+	{
+		if (argv[i] > (char *)7LL)
+			ret[i] = ft_strdup(argv[i]);
+		else
+			ret[i] = argv[i];
+	}
+	j = -1;
+	while (tmp[++j])
+	{
+		if (tmp[j] > (char *)7LL)
+			ret[i++] = ft_strdup(tmp[j]);
+		else
+			ret[i++] = tmp[j];
+	}
+	ret[i] = 0;
+	return (ret);
+}
+
+char	**copy_after_pipe(char **argv, char *s)
+{
+	char	**ret;
+	char	**tmp;
+
+	tmp = parse(s);
+	if (tmp <= (char **)4LL)
+		return (tmp);
+	ret = join_argvs(argv, tmp);
+	return (ret);
+}
 
 char	**cont_pipe(char **argv)
 {
@@ -21,16 +60,16 @@ char	**cont_pipe(char **argv)
 
 	i = -1;
 	len = get_argc(argv);
-	ret = malloc(sizeof(char *) * (len + 2));
-	if (!ret)
-		return (0);
-	line = readline("> ");
-	if (!line)
-		return (syntax_error((char **)UNEXPECTED_EOF, 0, EX_USAGE));
-	while (argv[++i])
-		ret[i] = argv[i];
-	ret[i++] = line;
-	ret[i] = 0;
-	free(argv);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			return (syntax_error((char **)UNEXPECTED_EOF, 0, EX_USAGE));
+		if (!line[0])
+			continue ;
+		if (line)
+			break ;
+	}
+	ret = copy_after_pipe(argv, line);
 	return (ret);
 }
