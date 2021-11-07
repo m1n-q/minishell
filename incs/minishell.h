@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 20:56:00 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/07 22:44:16 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ char		**parse(char *s);
 /* error */
 int			is_pipe_err(char **argv, int i);
 int			is_double_pipe_err(char **argv);
-char		**redir_err(char **argv, int i);
+int			is_redir_err(char **argv, int i);
+char		**return_redir_err(int err_num);
 
 /* heredoc */
 char		*add_q_to_heredoc_del(char *s);

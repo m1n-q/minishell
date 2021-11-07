@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/07 21:48:59 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/07 22:59:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,65 @@ int	is_double_pipe_err(char **argv)
 	return (0);
 }
 
-char	**redir_err(char **argv, int i)
+int	is_invalid_redir(char **argv)
 {
-	if (i == 0)
-		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE));
-	if (i > 0)
+	int	i;
+
+	i = -1;
+	while (argv[++i])
 	{
-		if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_IN)
-			|| (argv[0] == (char *)REDIRECT_OUT && \
-				argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_IN))
-			return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE));
-		else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_OUT)
-			|| (argv[0] == (char *)REDIRECT_OUT && \
-				argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_OUT))
-			return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE));
-		else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_APPEND)
-			|| (argv[0] == (char *)REDIRECT_OUT && \
-				argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_APPEND))
-			return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE));
-		else if ((argv[0] != (char *)PIPE && argv[1] == (char *)HEREDOC)
-			|| (argv[0] == (char *)REDIRECT_OUT && \
-				argv[1] == (char *)PIPE && argv[2] == (char *)HEREDOC))
-			return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE));
+		if (argv[i] == (char *)REDIRECT_IN
+			&& argv[i + 1] == (char *)REDIRECT_OUT)
+			return (1);
+		if (argv[i] == (char *)REDIRECT_OUT
+			&& argv[i + 1] == (char *)REDIRECT_IN)
+			return (2);
 	}
-	return (argv);
+	return (0);
+}
+
+int	is_redir_err(char **argv, int i)
+{
+	if (is_invalid_redir(argv) == 1)
+		return (1);
+	else if (is_invalid_redir(argv) == 2)
+		return (2);
+	else if (argv[i] >= (char *)4LL && argv[i] <= (char *)7LL)
+		return (3);
+	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_IN)
+		|| (argv[0] == (char *)REDIRECT_OUT && \
+			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_IN))
+		return (4);
+	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_OUT)
+		|| (argv[0] == (char *)REDIRECT_OUT && \
+			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_OUT))
+		return (5);
+	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_APPEND)
+		|| (argv[0] == (char *)REDIRECT_OUT && \
+			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_APPEND))
+		return (6);
+	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)HEREDOC)
+		|| (argv[0] == (char *)REDIRECT_OUT && \
+			argv[1] == (char *)PIPE && argv[2] == (char *)HEREDOC))
+		return (7);
+	return (0);
+}
+
+char	**return_redir_err(int err_num)
+{
+	if (err_num == 1)
+		return (syntax_error((char **)INVALID_REDIR, "`<>'", EX_USAGE));
+	if (err_num == 2)
+		return (syntax_error((char **)INVALID_REDIR, "`><'", EX_USAGE));
+	if (err_num == 3)
+		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE));
+	if (err_num == 4)
+		return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE));
+	if (err_num == 5)
+		return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE));
+	if (err_num == 6)
+		return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE));
+	if (err_num == 7)
+		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE));
+	return (0);
 }

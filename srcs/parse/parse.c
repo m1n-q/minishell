@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/07 21:42:27 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/07 22:44:08 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,21 @@ char	**ft_split_space(char *s)
 
 char	**parse(char *s)
 {
-	int		i;
 	char	**ret;
+	int		i;
 
-	i = 0;
 	ret = ft_split_space(s);
+	i = get_argc(ret) - 1;
 	if (ret == (char **)Q_ERR)
 		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE));
 	if (is_double_pipe_err(ret))
 		return (syntax_error((char **)PIPE_ERR, "`||'", EX_USAGE));
-	while (ret[i + 1])
-		i++;
 	if (is_pipe_err(ret, i) == 1)
 		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE));
 	else if (is_pipe_err(ret, i) == 2)
 		return (syntax_error((char **)PIPE_ERR, "`newline'", EX_USAGE));
-	if (ret[i] > (char *)PIPE && ret[i] <= (char *)REDIRECT_APPEND)
-		return (redir_err(ret, i));
+	if (is_redir_err(ret, i))
+		return (return_redir_err(is_redir_err(ret, i)));
 	if (ret[i] == (char *)PIPE && i != 0)
 		ret = cont_pipe(ret);
 	return (ret);
