@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/05 22:29:25 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/07 20:25:18 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,89 +18,19 @@ int	main(void)
 	t_exit	ext;
 	t_cmd	*cmd_table;
 	char	**argv;
-	int		i;
 	int		len_cmd_table;
 
 	init_shell();
 	while ((input = readline(PROMPT)))
 	{
-
-		/**********************************************************************/
-		/*                               parsing                              */
-		/**********************************************************************/
-
-		if (!input[0] || skip_space(input))
+		if (check_and_parse(input, &argv) < 0)
 			continue ;
-		argv = parse(input);
-		if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || \
-			argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF)
-			continue ;
-
-		/**********************************************************************/
-		/*                           preprocessing                            */
-		/**********************************************************************/
-
 		len_cmd_table = count_pipe(argv) + 1;
-		cmd_table = split_pipe(argv, len_cmd_table);
-		if (check_cmd_table(cmd_table, len_cmd_table) < 0)
+		if (get_cmd_table(&cmd_table, argv, len_cmd_table) < 0)
 			continue ;
-
-		/**********************************************************************/
-		/*                              execute                               */
-		/**********************************************************************/
-
-		i = -1;
-		while (++i < len_cmd_table)
-		{
-			ext = run(cmd_table[i]);
-			if (ext.pid == CHILD)					/* execve failed or forked built-in */
-				exit(ext.code);
-		}
-
-		/**********************************************************************/
-		/*                              result                                */
-		/**********************************************************************/
-
-		if (ext.pid == PARENT_EXIT)
-		{
-			if (ext.code == E2MANY)					/* too many arguments => do not exit */
-				get_or_set_exitcode(SET, EXECUTION_FAILURE);
-			else
-				exit(ext.code);
-		}
-		/* get builtin exit code */
-		else if (ext.pid == BUILTIN && ext.code)
-			get_or_set_exitcode(SET, ext.code);
-		/* get child process exit status */
-		else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
-			get_or_set_exitcode(SET, WEXITSTATUS(ext.status));
-		/* get child process exit (by signal) status */
-		else if (WIFSIGNALED(ext.status))
-		{
-			if (WTERMSIG(ext.status) == SIGINT)
-				get_or_set_exitcode(SET, EX_SIGINT);
-			else if (WTERMSIG(ext.status) == SIGQUIT)
-			{
-				write(STDERR_FILENO, "Quit: 3", 7);
-				get_or_set_exitcode(SET, EX_SIGQUIT);
-			}
-			write(static_stream(STDOUT), "\n", 1);
-		}
-		/* if none of above, it means cmd succeeds*/
-		else
-			get_or_set_exitcode(SET, EXECUTION_SUCCESS);						//NOTE: if execve succeed, cannot reach exit_code
-
-
-		/**********************************************************************/
-		/*                              restore                               */
-		/**********************************************************************/
-		static_stream(RESTORE);
-		unlink(TMP_HD_FILE);
-		add_history(input);
-		free(input);
-		sig_jobcontrol(OFF);
-		settty(OFF, ECHOCTL);
-		get_or_set_interactive(SET, ON);
+		ext = run_table(cmd_table, len_cmd_table);
+		check_exit(ext);
+		restore_context(input);
 	}
 	static_stream(DESTROY);
 	settty(RESTORE, 0);

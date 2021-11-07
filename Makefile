@@ -24,6 +24,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/term.c \
 		$(SRC_DIR)/signal.c \
 		$(SRC_DIR)/variable.c \
+		$(SRC_DIR)/loop.c \
 		$(SRC_DIR)/parse/parse.c \
 		$(SRC_DIR)/parse/pipe_redir.c \
 		$(SRC_DIR)/parse/empty_q.c \
