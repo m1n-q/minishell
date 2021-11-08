@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 15:17:02 by mishin            #+#    #+#             */
-/*   Updated: 2021/05/18 21:38:03 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/08 15:11:04 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct		s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

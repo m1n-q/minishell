@@ -6,13 +6,16 @@
 /*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:29:46 by mishin            #+#    #+#             */
-/*   Updated: 2021/05/11 16:29:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 15:28:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_tolower(int c)
+int	ft_tolower(int c)
 {
-	return (('A' <= c && c <= 'Z') ? c + 32 : c);
+	if ('A' <= c && c <= 'Z')
+		return (c + 32);
+	else
+		return (c);
 }

@@ -6,13 +6,13 @@
 /*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/05/11 16:30:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 15:13:37 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	const unsigned char	*s1_tmp;
 	const unsigned char	*s2_tmp;
