@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/07 22:59:19 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 19:03:18 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,19 @@ int	is_redir_err(char **argv, int i)
 		return (2);
 	else if (argv[i] >= (char *)4LL && argv[i] <= (char *)7LL)
 		return (3);
-	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_IN)
+	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)REDIRECT_IN)
 		|| (argv[0] == (char *)REDIRECT_OUT && \
 			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_IN))
 		return (4);
-	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_OUT)
+	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)REDIRECT_OUT)
 		|| (argv[0] == (char *)REDIRECT_OUT && \
 			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_OUT))
 		return (5);
-	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)REDIRECT_APPEND)
+	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)REDIRECT_APPEND)
 		|| (argv[0] == (char *)REDIRECT_OUT && \
 			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_APPEND))
 		return (6);
-	else if ((argv[0] != (char *)PIPE && argv[1] == (char *)HEREDOC)
+	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)HEREDOC)
 		|| (argv[0] == (char *)REDIRECT_OUT && \
 			argv[1] == (char *)PIPE && argv[2] == (char *)HEREDOC))
 		return (7);
