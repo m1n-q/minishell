@@ -6,13 +6,13 @@
 /*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/05/11 16:28:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 15:13:55 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		isinset(char c, const char *set)
+static int	isinset(char c, const char *set)
 {
 	while (*set)
 		if (c == *set++)
@@ -39,7 +39,7 @@ static size_t	trimlen(const char *str, const char *set)
 	return (len - to_be_trimmed);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	len;
 	size_t	i;

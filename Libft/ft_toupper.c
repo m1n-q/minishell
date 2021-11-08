@@ -6,13 +6,16 @@
 /*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:29:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/05/11 16:30:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 15:12:14 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_toupper(int c)
+int	ft_toupper(int c)
 {
-	return (('a' <= c && c <= 'z') ? c - 32 : c);
+	if ('a' <= c && c <= 'z')
+		return (c - 32);
+	else
+		return (c);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 22:44:16 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 15:08:13 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@
 
 extern char	**environ;
 
-
 /* main loop */
-int		check_and_parse(char *input, char ***ptr_argv);
-int		get_cmd_table(t_cmd **ptr_cmd_table, char **argv, int len_cmd_table);
-t_exit	run_table(t_cmd *cmd_table, int len_cmd_table);
-void	check_exit(t_exit ext);
-void	restore_context(char *input);
+int			check_and_parse(char *input, char ***ptr_argv);
+int			get_cmd_table(t_cmd **ptr_cmd_table, char **argv,
+				int len_cmd_table);
+t_exit		run_table(t_cmd *cmd_table, int len_cmd_table);
+void		check_exit(t_exit ext);
+void		restore_context(char *input);
 
 /* init */
 int			shell_level(void);

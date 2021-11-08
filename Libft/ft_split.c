@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/05/11 16:28:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 15:33:38 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ static size_t	count_word(const char *str, char c, size_t *arr_idx)
 	return (ret);
 }
 
-static void		free_all(char **ret, size_t arr_idx)
+char	**free_and_return(char **ret, size_t arr_idx)
 {
 	while (--arr_idx >= 0)
 		free(ret[arr_idx]);
 	free(ret);
+	return (NULL);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**ret;
 	size_t	count;
@@ -51,19 +52,19 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = count_word(s, c, &arr_idx);
-	if (!(ret = (char **)ft_calloc(count + 1, sizeof(char *))))
+	ret = (char **)ft_calloc(count + 1, sizeof(char *));
+	if (!ret)
 		return (NULL);
-	while (!(i = 0) && arr_idx < count && *s)
+	i = 0;
+	while (!i && arr_idx < count && *s)
 	{
 		while (*s == c)
 			s++;
 		while (s[i] != c && s[i])
 			i++;
-		if (!(ret[arr_idx] = (char *)ft_calloc(i + 1, sizeof(char))))
-		{
-			free_all(ret, arr_idx);
-			return (NULL);
-		}
+		ret[arr_idx] = (char *)ft_calloc(i + 1, sizeof(char));
+		if (!ret[arr_idx])
+			return (free_and_return(ret, arr_idx));
 		ft_strlcpy(ret[arr_idx++], s, i + 1);
 		s += i;
 	}
