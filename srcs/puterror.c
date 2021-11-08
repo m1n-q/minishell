@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 22:59:52 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 18:55:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 int	puterr(int error)
 {
@@ -29,26 +29,24 @@ int	puterr(int error)
 	}
 	else
 		ft_putstr_fd(strerror(error), STDERR_FILENO);
-	write(STDERR_FILENO, "\n", 1);
+	ft_putendl_fd("", STDERR_FILENO);
 	return (error);
 }
 
 void	internal_error(char *command, char *err_string)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, command, ft_strlen(command));
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, err_string, ft_strlen(err_string));
-	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(err_string, STDERR_FILENO);
 }
 
 void	file_error(char *command)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, command, ft_strlen(command));
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
-	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 char	**syntax_error(char **error, char *token, int exit_code)
@@ -74,24 +72,23 @@ char	**syntax_error(char **error, char *token, int exit_code)
 
 int	builtin_error(char *command, char *arg, char *message, int optflag)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (command && *command)
 	{
-		write(STDERR_FILENO, command, ft_strlen(command));
-		write(STDERR_FILENO, ": ", 2);
+		ft_putstr_fd(command, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (arg && *arg && !optflag)
 	{
-		write(STDERR_FILENO, arg, ft_strlen(arg));
-		write(STDERR_FILENO, ": ", 2);
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (arg && *arg && optflag)
 	{
 		write(STDERR_FILENO, arg, 2);
-		write(STDERR_FILENO, ": ", 2);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	write(STDERR_FILENO, message, ft_strlen(message));
-	write(STDERR_FILENO, "\n", 1);
+	ft_putendl_fd(message, STDERR_FILENO);
 	return (0);
 }
 

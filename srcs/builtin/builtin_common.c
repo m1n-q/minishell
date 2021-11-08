@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:50:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 22:10:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 18:58:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../../incs/minishell.h"
 
 char	*sh_double_quote(char *string)
 {
@@ -53,9 +53,8 @@ void	sh_neednumarg(char *command, char *s)
 
 void	builtin_usage(char *command, char *usage)
 {
-	write(STDERR_FILENO, command, ft_strlen(command));
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, "usage: ", 7);
-	write(STDERR_FILENO, usage, ft_strlen(usage));
-	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd("usage: ", STDERR_FILENO);
+	ft_putendl_fd(usage, STDERR_FILENO);
 }
