@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/05 22:38:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 19:49:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_exit	c(t_cmd cmd)
 	return (ext);
 }
 
-//FIXIT: have to be async
 t_exit	run(t_cmd cmd)
 {
 	t_exit		ext;
@@ -106,7 +105,6 @@ t_exit	run(t_cmd cmd)
 	{
 		destroy_stream(cmd.pipe_stream);
 		destroy_stream(cmd.redir_stream);
-		ext.pid = wait(&ext.status);
 	}
 	else if (ext.pid == CHILD)
 		ext = c(cmd);

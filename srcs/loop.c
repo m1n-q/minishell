@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 18:51:32 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 19:59:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ int	get_cmd_table(t_cmd **ptr_cmd_table, char **argv, int len_cmd_table)
 	return (0);
 }
 
+/* line 83: execve failed | forked built-in */
 t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 {
 	int		i;
 	t_exit	ext;
+	t_exit	last;
 
 	i = -1;
 	while (++i < len_cmd_table)
@@ -80,8 +82,17 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 		ext = run(cmd_table[i]);
 		if (ext.pid == CHILD)
 			exit(ext.code);
+		if (i == len_cmd_table - 1)
+			last = ext;
 	}
-	return (ext);
+	ext.pid = waitpid(-1, &ext.status, 0);
+	while (ext.pid > 0)
+	{
+		if (ext.pid == last.pid)
+			last.status = ext.status;
+		ext.pid = waitpid(-1, &ext.status, 0);
+	}
+	return (last);
 }
 
 void	restore_context(char *input)
