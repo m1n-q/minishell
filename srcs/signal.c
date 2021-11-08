@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/05 22:36:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 18:57:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 /* eof(-1) print <?> */
 void	sig_handler_interactive(int sig)
@@ -36,7 +36,7 @@ void	sigcont_handler(int sig)
 {
 	if (sig == SIGCONT)
 	{
-		write(2, "exit\n", 5);
+		ft_putendl_fd("exit", 2);
 		exit(get_or_set_exitcode(GET, 0));
 	}
 }

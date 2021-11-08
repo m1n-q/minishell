@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/05 21:10:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 18:56:56 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*write_until_env(int fd, char *line)
 		else if (line[i] == '$' && line[i + 1] == '?')
 		{
 			tmp = ft_itoa(get_or_set_exitcode(GET, 0));
-			write(fd, tmp, ft_strlen(tmp));
+			ft_putstr_fd(tmp, fd);
 			i += 2;
 		}
 		else if (getenv(&line[i + 1]))
@@ -56,7 +56,7 @@ char	*expand_env(int fd, char *line)
 		env_var = getenv(&line[1]);
 		if (!env_var)
 		{
-			write(fd, "\n", 1);
+			ft_putendl_fd("", fd);
 			return (0);
 		}
 		line = malloc(sizeof(char) * (ft_strlen(env_var) + 1));
@@ -129,7 +129,7 @@ int	heredoc(t_cmd *cmd, char *delim)
 		ext.pid = wait(&ext.status);
 		if (WIFSIGNALED(ext.status) && WTERMSIG(ext.status) == SIGINT)
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			ft_putendl_fd("", STDOUT_FILENO);
 			get_or_set_interactive(SET, ON);
 			get_or_set_exitcode(SET, EXECUTION_FAILURE);
 			return (HEREDOC_INTR);

@@ -6,42 +6,38 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 22:57:06 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 18:51:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 void	check_exit(t_exit ext)
 {
 	if (ext.pid == PARENT_EXIT)
 	{
-		if (ext.code == E2MANY) /* too many arguments => do not exit */
+		if (ext.code == E2MANY)
 			get_or_set_exitcode(SET, EXECUTION_FAILURE);
 		else
 			exit(ext.code);
 	}
-	/* get builtin exit code */
 	else if (ext.pid == BUILTIN && ext.code)
 		get_or_set_exitcode(SET, ext.code);
-	/* get child process exit status */
 	else if (WIFEXITED(ext.status) && WEXITSTATUS(ext.status))
 		get_or_set_exitcode(SET, WEXITSTATUS(ext.status));
-	/* get child process exit (by signal) status */
 	else if (WIFSIGNALED(ext.status))
 	{
 		if (WTERMSIG(ext.status) == SIGINT)
 			get_or_set_exitcode(SET, EX_SIGINT);
 		else if (WTERMSIG(ext.status) == SIGQUIT)
 		{
-			write(STDERR_FILENO, "Quit: 3", 7);
+			ft_putstr_fd("Quit: 3", STDERR_FILENO);
 			get_or_set_exitcode(SET, EX_SIGQUIT);
 		}
-		write(static_stream(STDOUT), "\n", 1);
+		ft_putendl_fd("", static_stream(STDOUT));
 	}
-	/* if none of above, it means cmd succeeds*/
 	else
-		get_or_set_exitcode(SET, EXECUTION_SUCCESS); // NOTE: if execve succeed, cannot reach exit_code
+		get_or_set_exitcode(SET, EXECUTION_SUCCESS);
 }
 
 int	check_and_parse(char *input, char ***ptr_argv)
@@ -82,7 +78,7 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 	while (++i < len_cmd_table)
 	{
 		ext = run(cmd_table[i]);
-		if (ext.pid == CHILD) /* execve failed or forked built-in */
+		if (ext.pid == CHILD)
 			exit(ext.code);
 	}
 	return (ext);

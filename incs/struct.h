@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 20:06:50 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 19:50:27 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 18:49:44 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_envent
 {
 	char	*name;
 	char	*value;
-	char	*string;		//FIXIT: query is better?
+	char	*string;
 	int		index;
 }				t_envent;
 

@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 20:25:18 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 18:55:49 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../incs/minishell.h"
 
 int	main(void)
 {
@@ -21,8 +21,11 @@ int	main(void)
 	int		len_cmd_table;
 
 	init_shell();
-	while ((input = readline(PROMPT)))
+	while (1)
 	{
+		input = readline(PROMPT);
+		if (!input)
+			break ;
 		if (check_and_parse(input, &argv) < 0)
 			continue ;
 		len_cmd_table = count_pipe(argv) + 1;
@@ -34,6 +37,6 @@ int	main(void)
 	}
 	static_stream(DESTROY);
 	settty(RESTORE, 0);
-	write(STDERR_FILENO, "exit\n", 5);
+	ft_putendl_fd("exit", STDERR_FILENO);
 	exit(get_or_set_exitcode(GET, 0));
 }
