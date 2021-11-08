@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:28:09 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 15:33:38 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 18:36:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ char	**ft_split(char const *s, char c)
 	ret = (char **)ft_calloc(count + 1, sizeof(char *));
 	if (!ret)
 		return (NULL);
-	i = 0;
-	while (!i && arr_idx < count && *s)
+	while (arr_idx < count && *s)
 	{
+		i = 0;
 		while (*s == c)
 			s++;
 		while (s[i] != c && s[i])
