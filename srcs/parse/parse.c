@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/07 22:44:08 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/08 22:14:56 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ char	**ft_split_space(char *s)
 
 	if (!quotes_match(s))
 		return ((char **)Q_ERR);
-	s = rm_empty_q(s);
-	s = split_pipe_redir(s);
-	s = add_q_to_heredoc_del(s);
+	s = rm_empty_q(s);						/* leaks */
+	s = split_pipe_redir(s);				/* leaks */
+	s = add_q_to_heredoc_del(s); 			/* leaks */
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;
@@ -60,7 +60,7 @@ char	**ft_split_space(char *s)
 		if (!ft_isspace(*s))
 		{
 			str_len = cnt_str_len(s);
-			ret[i] = cpy_str(s, ret, &i);
+			ret[i] = cpy_str(s, ret, &i);	/* leaks */
 			s += str_len - 1;
 		}
 		s++;

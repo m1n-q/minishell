@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 19:59:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 22:06:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	get_cmd_table(t_cmd **ptr_cmd_table, char **argv, int len_cmd_table)
 	if (e)
 		return (e);
 	*ptr_cmd_table = cmd_table;
+	free(argv);
 	return (0);
 }
 
@@ -95,12 +96,26 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 	return (last);
 }
 
-void	restore_context(char *input)
+void	restore_context(char *input, t_cmd *cmd_table, int len_cmd_table)
 {
+	int	i;
+	int	j;
+
 	static_stream(RESTORE);
 	unlink(TMP_HD_FILE);
-	free(input);
 	sig_jobcontrol(OFF);
 	settty(OFF, ECHOCTL);
 	get_or_set_interactive(SET, ON);
+	free(input);
+	i = -1;
+	while (++i < len_cmd_table)
+	{
+		j = -1;
+		while (cmd_table[i].argv[++j])
+			free(cmd_table[i].argv[j]);
+		free(cmd_table[i].argv);
+		if (cmd_table[i].path != (char *)NOCMD)
+			free(cmd_table[i].path);
+	}
+	free(cmd_table);
 }

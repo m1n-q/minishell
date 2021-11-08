@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 22:47:36 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/08 20:43:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static char	*find_path(char *arg)
 		if (path)
 			break ;
 	}
+	free_till(get_argc(paths), paths);
 	free(paths);
 	return (path);
 }
@@ -85,11 +86,11 @@ int	set_path(t_cmd *cmd)
 	if (cmd->argv[0] == NULL)
 		cmd->path = (char *)NOCMD;
 	else if (has_slash(cmd->argv[0]))
-		cmd->path = cmd->argv[0];
+		cmd->path = ft_strdup(cmd->argv[0]);
 	else
 	{
 		if (is_builtin(cmd->argv[0]))
-			cmd->path = "built-in";
+			cmd->path = ft_strdup("built-in");
 		else
 			cmd->path = find_path(cmd->argv[0]);
 	}
