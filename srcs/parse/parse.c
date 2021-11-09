@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 13:51:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 14:09:41 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char	**ft_split_space(char *s)
 
 	if (!quotes_match(s))
 		return ((char **)Q_ERR);
-	s = rm_empty_q(s);						/* leaks */
-	s = split_pipe_redir(s);				/* leaks */
-	s = add_q_to_heredoc_del(s); 			/* leaks */
+	s = rm_empty_q(s);
+	s = split_pipe_redir(s);
+	s = add_q_to_heredoc_del(s);
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;
@@ -62,7 +62,7 @@ char	**ft_split_space(char *s)
 		if (!ft_isspace(*s))
 		{
 			str_len = cnt_str_len(s);
-			ret[i] = cpy_str(s, ret, &i);	/* leaks */
+			ret[i] = cpy_str(s, ret, &i);
 			s += str_len - 1;
 		}
 		s++;
