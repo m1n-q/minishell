@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:55 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 23:24:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:01:14 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 int	__env(char **argv)
 {
 	int			i;
+	t_envent	entry;
 
 	if (argv[1])
 	{
@@ -45,8 +46,10 @@ int	__env(char **argv)
 	i = -1;
 	while (environ[++i])
 	{
-		if (getenv(find_envent(environ[i]).name))
+		entry = find_envent(environ[i]);
+		if (getenv(entry.name))
 			printf("%s\n", environ[i]);
+		free_envent(entry);
 	}
 	return (0);
 }

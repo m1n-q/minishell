@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:44:21 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 17:44:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:00:45 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ void	free_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 			free(cmd_table[i].path);
 	}
 	free(cmd_table);
+}
+
+void	free_envent(t_envent entry)
+{
+	free(entry.name);
+	free(entry.value);
 }

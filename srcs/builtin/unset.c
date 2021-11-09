@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 23:30:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:01:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 */
 int	__unset(char **argv)
 {
-	t_envent	env;
+	t_envent	entry;
 	int			i;
 	int			any;
 
@@ -43,8 +43,9 @@ int	__unset(char **argv)
 			any = EXECUTION_FAILURE;
 			continue ;
 		}
-		env = find_envent(argv[i]);
-		remove_envent(env);
+		entry = find_envent(argv[i]);
+		remove_envent(entry);
+		free_envent(entry);
 	}
 	return (any);
 }

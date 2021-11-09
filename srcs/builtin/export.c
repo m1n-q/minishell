@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:18:41 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:01:46 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int	assign_or_just_add(char *arg, int append)
 	}
 	else
 		add_envent(newvar.name, newvar.value);
-	free(entry.name);
-	free(entry.value);
+	free_envent(entry);
 	return (EXECUTION_SUCCESS);
 }
 
