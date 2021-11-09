@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 14:50:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:05:17 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*get_env_including_empty(char *arg)
 	return (NULL);
 }
 
-//NOTE: env.string will be filled if env.name already exists
+//NOTE: env.string == environ[i]
 t_envent	find_envent(char *name)
 {
 	t_envent	env;
