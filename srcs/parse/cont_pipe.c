@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cont_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/07 21:49:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 16:00:05 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ char	**copy_after_pipe(char **argv, char *s)
 	if (tmp <= (char **)4LL)
 		return (tmp);
 	ret = join_argvs(argv, tmp);
+	free_till(get_argc(argv), argv);
+	free(argv);
+	free_till(get_argc(tmp), tmp);
+	free(tmp);
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:44:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 15:45:16 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	main(void)
 		ext = run_table(cmd_table, len_cmd_table);
 		check_exit(ext);
 		reset_shell(cmd_table, len_cmd_table);
+		system("leaks minishell -quiet");
 	}
 	before_exit();
-	// system("leaks minishell -quiet");
 	exit(get_or_set_exitcode(GET, 0));
 }

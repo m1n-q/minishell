@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 22:01:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 16:08:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ static int	trim_redir(char ***argv, int count_redir)
 		else
 		{
 			if ((*argv)[i + 1])
+			{
 				i += 1;
+				free((*argv)[i]);
+			}
 		}
 	}
 	(*argv) = new_argv;

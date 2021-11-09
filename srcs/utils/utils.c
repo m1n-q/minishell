@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 17:59:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 16:02:34 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	free_till(int index, char **arr)
 
 	i = -1;
 	while (++i < index)
-		free(arr[i]);
+	{
+		if (arr[i] > (char *)10LL)
+			free(arr[i]);
+	}
 }
 
 int	is_equal(char *s1, char *s2)
