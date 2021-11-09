@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:44:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:19:28 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,14 @@ int			is_redir_err(char **argv, int i);
 char		**return_redir_err(int err_num);
 
 /* heredoc */
-char		*add_q_to_heredoc_del(char *s);
+char		*cpy_delimiter(char *s);
+char		*adjust_delimiter(char *s);
 
 /* empty_q.c */
 char		*rm_empty_q(char *s);
 
 /* copy */
-char		*cpy_str(char *s, char **argv, int *i);
+char		*cpy_str(char *s, char **argv, int i);
 
 /* env */
 char		*case_env(char *s, char tok);
@@ -152,7 +153,7 @@ char		*split_pipe_redir(char *s);
 
 /* str */
 int			cnt_str_len(char *s);
-char		*malloc_str(char *s, char **argv, int i, int len);
+char		*malloc_str(char **argv, int i, int len);
 
 /* strs */
 int			skip_q(char *s);

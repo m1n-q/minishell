@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 14:01:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:42:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ char	*case_pipe_redir(char *s)
 }
 
 /* copy a string that is enclosed by q marks from (s) to (ret) */
-char	*cpy_with_q(char *s, char *argv)
+char	*cpy_with_q(char *s, char *argv, char **argvs, int j)
 {
 	char	c;
 	int		i;
 
 	i = 0;
-	if (is_empty_q(s))
-		return ("");
+	if (argvs[j - 1] == (char *)HEREDOC)
+		return (cpy_delimiter(s));
 	while (*s && !ft_isspace(*s))
 	{
 		if (has_dollar_sign(s) && *s == '"')
@@ -110,16 +110,15 @@ char	*cpy_wo_q(char *s, char *argv)
 }
 
 /* copy a string from (s) to (ret) */
-char	*cpy_str(char *s, char **argv, int *i)
+char	*cpy_str(char *s, char **argv, int i)
 {
 	int	len;
 
 	len = cnt_str_len(s);
-	argv[*i] = malloc_str(s, argv, *i, len);
+	argv[i] = malloc_str(argv, i, len);
 	if (is_q(*s))
-		argv[*i] = cpy_with_q(s, argv[*i]);
+		argv[i] = cpy_with_q(s, argv[i], argv, i);
 	else
-		argv[*i] = cpy_wo_q(s, argv[*i]);
-	(*i)++;
-	return (argv[*i]);
+		argv[i] = cpy_wo_q(s, argv[i]);
+	return (argv[i]);
 }

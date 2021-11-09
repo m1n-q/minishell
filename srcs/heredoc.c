@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/08 18:56:56 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:54:51 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,13 @@ char	*expand_env(int fd, char *line)
 /* check for expand and trim quotes in delimiter */
 int	check_delimiter(char **delim)
 {
-	int		i;
-	int		len;
 	char	*ret;
 	char	*s;
 
 	s = *delim;
-	if (!(is_q(s[0]) && s[ft_strlen(s) - 1] == s[0]))
+	if (!is_q(s[0]) && !is_q(s[ft_strlen(s) - 1]))
 		return (1);
-	i = 0;
-	len = ft_strlen(s) - 2;
-	ret = malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		return (0);
-	while (len--)
-	{
-		if (is_q(*s))
-			s++;
-		ret[i++] = *s++;
-	}
-	ret[i] = 0;
+	ret = adjust_delimiter(s);
 	free(*delim);
 	*delim = ret;
 	return (0);

@@ -6,74 +6,80 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 13:49:23 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:55:17 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-/* count heredocs */
-int	cnt_heredoc(char *s)
-{
-	int	ret;
-
-	ret = 0;
-	while (*s)
-	{
-		if (!ft_strncmp(s, "<<", 2))
-		{
-			ret++;
-			s += 2;
-		}
-		else
-			s++;
-	}
-	return (ret);
-}
-
-/* add quotes in front of and at the end of heredoc delimiter */
-void	add_q(int *i, int *j, char *argv, char *s)
-{
-	char	c;
-
-	if (s[*j] == '\'')
-		argv[(*i)++] = '"';
-	else if (s[*j] == '"')
-		argv[(*i)++] = '\'';
-	c = s[(*j)++];
-	argv[(*i)++] = c;
-	while (s[*j] != c)
-		argv[(*i)++] = s[(*j)++];
-	argv[(*i)++] = s[(*j)++];
-	if (s[*j - 1] == '\'')
-		argv[(*i)++] = '"';
-	else if (s[*j - 1] == '"')
-		argv[(*i)++] = '\'';
-}
-
-/* new string with heredoc delimiters surrounded by quotes */
-char	*add_q_to_heredoc_del(char *s)
+char	*cpy_delimiter(char *s)
 {
 	int		i;
 	int		j;
-	int		len;
 	char	*ret;
 
 	i = 0;
 	j = 0;
-	len = ft_strlen(s) + (cnt_heredoc(s) * 2);
-	ret = malloc(sizeof(char) * (len + 1));
+	while (s[i] && !ft_isspace(s[i]))
+		i++;
+	ret = malloc(sizeof(char) * (i + 1));
 	if (!ret)
 		return (0);
-	while (s[j])
+	i = 0;
+	while (s[i] && !ft_isspace(s[i]))
+		ret[j++] = s[i++];
+	ret[j] = 0;
+	return (ret);
+}
+
+int	cnt_delimiter_len(char *s)
+{
+	char	c;
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (s[i] && !ft_isspace(s[i]))
 	{
-		if (j >= 3 && is_q(s[j]) && s[j - 1] == ' '
-			&& s[j - 2] == '<' && s[j - 3] == '<')
-			add_q(&i, &j, ret, s);
-		else
-			ret[i++] = s[j++];
+		if (s[i] && is_q(s[i]))
+		{
+			if (s[i + 1] && !is_q(s[i + 1]))
+				ret += 2;
+			c = s[i];
+			while (s[++i] != c)
+				ret++;
+		}
+		else if (s[i] && !is_q(s[i]))
+			ret++;
+		i++;
 	}
-	ret[i] = 0;
-	free(s);
+	return (ret);
+}
+
+char	*adjust_delimiter(char *s)
+{
+	char	*ret;
+	int		i;
+	int		j;
+	char	c;
+
+	ret = malloc(sizeof(char) * (cnt_delimiter_len(s) + 1));
+	if (!ret)
+		return (0);
+	i = 0;
+	j = 0;
+	while (s[i] && !ft_isspace(s[i]))
+	{
+		if (is_q(s[i]))
+		{
+			c = s[i];
+			while (s[++i] != c)
+				ret[j++] = s[i];
+		}
+		else
+			ret[j++] = s[i];
+		i++;
+	}
 	return (ret);
 }
