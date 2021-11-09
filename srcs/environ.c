@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 22:20:05 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 14:50:50 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,13 @@ int	add_envent(char *name, char *value)
 	int		env_len;
 	char	**new_environ;
 	char	*env_string;
-	char	*tmp;
 
 	env_string = NULL;
 	env_len = get_argc(environ);
 	new_environ = (char **)ft_calloc(env_len + 2, sizeof(char *));
 	ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 	if (value)
-	{
-		tmp = ft_strjoin(name, "=");
-		env_string = ft_strjoin(tmp, value);
-		free(tmp);
-	}
+		env_string = joinjoin(name, "=", value);
 	else
 		env_string = ft_strdup(name);
 	new_environ[env_len] = env_string;
