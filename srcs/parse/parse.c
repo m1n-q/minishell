@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 14:18:34 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 14:34:28 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ int	quotes_match(char *s)
 	return (1);
 }
 
+char	*adjust_input(char *s)
+{
+	s = rm_empty_q(s);
+	s = split_pipe_redir(s);
+	s = add_q_to_heredoc_del(s);
+	return (s);
+}
+
 char	**ft_split_space(char *s)
 {
 	int		i;
@@ -50,9 +58,7 @@ char	**ft_split_space(char *s)
 
 	if (!quotes_match(s))
 		return ((char **)Q_ERR);
-	s = rm_empty_q(s);
-	s = split_pipe_redir(s);
-	s = add_q_to_heredoc_del(s);
+	s = adjust_input(s);
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;
