@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:15:12 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 19:51:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**cont_pipe(char **argv)
 	{
 		line = readline("> ");
 		if (!line)
-			return (syntax_error((char **)UNEXPECTED_EOF, 0, EX_USAGE));
+			return (syntax_error((char **)UNEXPECTED_EOF, 0, EX_USAGE, argv));
 		if (!line[0])
 			continue ;
 		if (line)
