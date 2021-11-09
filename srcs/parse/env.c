@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:04:20 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 21:38:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	join_env_var(char *s, char **argv)
 {
 	int		i;
 	char	*tmp;
+	char	*env;
 
 	i = 0;
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
@@ -58,17 +59,16 @@ int	join_env_var(char *s, char **argv)
 	if (!tmp)
 		return (0);
 	ft_strlcpy(tmp, &s[1], i + 1);
-	if (!*argv)
-		*argv = getenv(tmp);
-	else if (*argv)
-		*argv = ft_strjoin(*argv, getenv(tmp));
-	if (!*argv)
+	env = getenv(tmp);
+	if (env)
 	{
-		*argv = (char *)ft_calloc(1, sizeof(char));
 		if (!*argv)
-			return (0);
-		*argv[0] = 0;
+			*argv = ft_strdup(env);
+		else if (*argv)
+			*argv = ft_strjoin(*argv, env);
 	}
+	else
+		*argv = ft_strjoin(*argv, NULL);
 	free(tmp);
 	return (++i);
 }
@@ -95,7 +95,7 @@ int	join_non_env(char *s, char **argv)
 	return (i);
 }
 
-/* if the first letter is a dollar-sign or 
+/* if the first letter is a dollar-sign or
  * a double quotation mark followed by a dollar sign
  */
 char	*case_env(char *s, char tok)
