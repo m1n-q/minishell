@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 21:01:46 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:39:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void	init_cmd(t_cmd *cmd)
 	cmd->redir_stream.in = DEFAULT;
 	cmd->redir_stream.out = DEFAULT;
 	cmd->redir_stream.err = DEFAULT;
+	cmd->path = NULL;
+	cmd->argv = NULL;
 }
 
 int	count_pipe(char	**argv)
@@ -36,6 +38,26 @@ int	count_pipe(char	**argv)
 		if (argv[i] == (char *)PIPE)
 			count++;
 	return (count);
+}
+
+static int	copy_args(char ***dst_ptr, char **src, int start, int end)
+{
+	int		i;
+	char	**ret;
+
+	ret = (char **)ft_calloc(end - start + 1, sizeof(char *));
+	if (!ret)
+		return (-1);
+	i = -1;
+	while (++i < end - start)
+	{
+		if (src[start + i] < (char *)10LL)
+			ret[i] = src[start + i];
+		else
+			ret[i] = ft_strdup(src[start + i]);
+	}
+	*dst_ptr = ret;
+	return (0);
 }
 
 //TODO: test
@@ -55,12 +77,11 @@ t_cmd	*split_pipe(char **argv, int len_cmd_table)
 		end++;
 		if (argv[end] == (char *)PIPE || argv[end] == NULL)
 		{
-			(*cmd_table).argv = argv + start;
-			start = end + 1;
 			init_cmd(cmd_table);
+			copy_args(&(*cmd_table).argv, argv, start, end);
+			start = end + 1;
 			if (argv[end] == NULL)
 				break ;
-			argv[end] = NULL;
 			cmd_table++;
 		}
 	}
@@ -68,14 +89,9 @@ t_cmd	*split_pipe(char **argv, int len_cmd_table)
 	return (cmd_table);
 }
 
-int	make_pipe(t_cmd *cmd)
-{
-	pipe(cmd->pipe);
-	return (0);
-}
-
 int	set_pipe_stream(t_cmd *cmd, t_cmd *next)
 {
+	pipe(cmd->pipe);
 	cmd->pipe_stream.out = cmd->pipe[1];
 	next->pipe_stream.in = cmd->pipe[0];
 	return (0);

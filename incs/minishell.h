@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:44:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:45:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,13 @@ t_exit		run(t_cmd cmd);
 
 /* utils */
 int			get_argc(char **argv);
-void		free_till(int index, char **arr);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
 char		*joinjoin(char *a, char *b, char *c);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
 void		quick_sort(char	**arr, int start, int end);
+void		free_till(int index, char **arr);
+void		free_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 
 /* built-in */
 int			__cd(char **argv);

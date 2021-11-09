@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/09 17:44:21 by mishin            #+#    #+#             */
+/*   Updated: 2021/11/09 17:44:54 by mishin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	free_till(int index, char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (++i < index)
+	{
+		if (arr[i] > (char *)10LL)
+			free(arr[i]);
+	}
+}
+
+void	free_cmd_table(t_cmd *cmd_table, int len_cmd_table)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < len_cmd_table)
+	{
+		j = -1;
+		while (cmd_table[i].argv[++j])
+		{
+			if (cmd_table[i].argv[j] > (char *)10LL)
+				free(cmd_table[i].argv[j]);
+		}
+		free(cmd_table[i].argv);
+		if (cmd_table[i].path != (char *)NOCMD)
+			free(cmd_table[i].path);
+	}
+	free(cmd_table);
+}

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 16:02:34 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:44:45 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,6 @@ int	get_argc(char **argv)
 	while (argv[len])
 		len++;
 	return (len);
-}
-
-void	free_till(int index, char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (++i < index)
-	{
-		if (arr[i] > (char *)10LL)
-			free(arr[i]);
-	}
 }
 
 int	is_equal(char *s1, char *s2)
