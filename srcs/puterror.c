@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 18:55:22 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 19:47:12 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	file_error(char *command)
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
-char	**syntax_error(char **error, char *token, int exit_code)
+char	**syntax_error(char **error, char *token, int exit_code, char **argv)
 {
+	int	i;
+
 	get_or_set_exitcode(SET, exit_code);
 	ft_putstr_fd("minishell: syntax error", STDERR_FILENO);
 	if (error == (char **)Q_ERR)
@@ -67,6 +69,11 @@ char	**syntax_error(char **error, char *token, int exit_code)
 		ft_putstr_fd(": invalid token: ", STDERR_FILENO);
 		ft_putendl_fd(token, STDERR_FILENO);
 	}
+	i = -1;
+	while (argv[++i])
+		if (argv[i] > (char *)7LL)
+			free(argv[i]);
+	free(argv);
 	return (error);
 }
 

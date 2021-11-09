@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/08 19:03:18 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 19:46:03 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,21 @@ int	is_redir_err(char **argv, int i)
 	return (0);
 }
 
-char	**return_redir_err(int err_num)
+char	**return_redir_err(int err_num, char **argv)
 {
 	if (err_num == 1)
-		return (syntax_error((char **)INVALID_REDIR, "`<>'", EX_USAGE));
+		return (syntax_error((char **)INVALID_REDIR, "`<>'", EX_USAGE, argv));
 	if (err_num == 2)
-		return (syntax_error((char **)INVALID_REDIR, "`><'", EX_USAGE));
+		return (syntax_error((char **)INVALID_REDIR, "`><'", EX_USAGE, argv));
 	if (err_num == 3)
-		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE));
+		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE, argv));
 	if (err_num == 4)
-		return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE));
+		return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE, argv));
 	if (err_num == 5)
-		return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE));
+		return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE, argv));
 	if (err_num == 6)
-		return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE));
+		return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE, argv));
 	if (err_num == 7)
-		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE));
+		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE, argv));
 	return (0);
 }
