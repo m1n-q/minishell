@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:43:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 14:01:32 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,23 @@ int	has_dollar_sign(char *s)
 /* typecast pipes and redirections */
 char	*case_pipe_redir(char *s)
 {
+	char	*ret;
+
 	if (is_equal(s, "|"))
-		return ((char *)PIPE);
-	if (is_equal(s, "<"))
-		return ((char *)REDIRECT_IN);
-	if (is_equal(s, ">"))
-		return ((char *)REDIRECT_OUT);
-	if (is_equal(s, "<<"))
-		return ((char *)HEREDOC);
-	if (is_equal(s, ">>"))
-		return ((char *)REDIRECT_APPEND);
-	return (s);
+		ret = (char *)PIPE;
+	else if (is_equal(s, "<"))
+		ret = (char *)REDIRECT_IN;
+	else if (is_equal(s, ">"))
+		ret = (char *)REDIRECT_OUT;
+	else if (is_equal(s, "<<"))
+		ret = (char *)HEREDOC;
+	else if (is_equal(s, ">>"))
+		ret = (char *)REDIRECT_APPEND;
+	else
+		ret = s;
+	if (ret != s)
+		free(s);
+	return (ret);
 }
 
 /* copy a string that is enclosed by q marks from (s) to (ret) */
