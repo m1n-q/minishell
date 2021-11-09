@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 17:44:45 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 19:06:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,15 @@ int	skip_space(char *s)
 	if (!*s)
 		return (1);
 	return (0);
+}
+
+char	*join_or_dup(char *nullable, char *dupable)
+{
+	char	*ret;
+
+	if (nullable != NULL)
+		ret = ft_strjoin(nullable, dupable);
+	else
+		ret = ft_strdup(dupable);
+	return (ret);
 }

@@ -16,7 +16,8 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/chkerror.c \
 		$(SRC_DIR)/redirection.c \
 		$(SRC_DIR)/heredoc.c \
-		$(SRC_DIR)/environ.c \
+		$(SRC_DIR)/environ/environ.c \
+		$(SRC_DIR)/environ/env_entry.c \
 		$(SRC_DIR)/pipe.c \
 		$(SRC_DIR)/stream.c \
 		$(SRC_DIR)/path.c \

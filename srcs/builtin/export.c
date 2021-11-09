@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:06:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 19:03:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	assign_or_just_add(char *arg, int append)
 	t_envent	entry;
 	t_var		newvar;
 	int			assign;
-	char		*tmpval;
+	char		*assign_val;
 
 	assign = get_assign_pos(arg);
 	newvar = unbind_var(arg, NULL);
@@ -75,19 +75,12 @@ int	assign_or_just_add(char *arg, int append)
 	{
 		if (assign && append)
 		{
-			if (entry.value)
-				tmpval = ft_strjoin(entry.value, newvar.value);
-			else
-				tmpval = ft_strdup(newvar.value);
-			remove_envent(entry);
-			add_envent(entry.name, tmpval);
-			free(tmpval);
+			assign_val = join_or_dup(entry.value, newvar.value);
+			adjust_envent(entry, assign_val);
+			free(assign_val);
 		}
 		else if (assign)
-		{
-			remove_envent(entry);
-			add_envent(newvar.name, newvar.value);
-		}
+			adjust_envent(entry, newvar.value);
 	}
 	else
 		add_envent(newvar.name, newvar.value);

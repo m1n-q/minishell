@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:15:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 19:03:29 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int			get_argc(char **argv);
 int			is_equal(char *s1, char *s2);
 int			skip_space(char *s);
 char		*joinjoin(char *a, char *b, char *c);
+char		*join_or_dup(char *nullable, char *dupable);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
 void		quick_sort(char	**arr, int start, int end);
 void		free_till(int index, char **arr);
@@ -124,6 +125,7 @@ char		*get_env_including_empty(char *arg);
 int			add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
+void		adjust_envent(t_envent entry, char *value);
 
 /* ************************ parse ************************ */
 /* parse */
