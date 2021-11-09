@@ -70,7 +70,7 @@ int			get_cmd_table(t_cmd **ptr_cmd_table, char **argv,
 				int len_cmd_table);
 t_exit		run_table(t_cmd *cmd_table, int len_cmd_table);
 void		check_exit(t_exit ext);
-void		restore_context(char *input, t_cmd *cmd_table, int len_cmd_table);
+void		reset_shell(t_cmd *cmd_table, int len_cmd_table);
 
 /* init */
 int			shell_level(void);
@@ -226,5 +226,6 @@ void		sh_invalidopt(char *command, char *opt);
 char		*sh_double_quote(char *string);
 void		builtin_usage(char *command, char *usage);
 int			isoption(char *s, int optlen);
+void		before_exit(void);
 
 #endif

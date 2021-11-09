@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 13:49:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 15:44:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,16 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 	return (last);
 }
 
-void	restore_context(char *input, t_cmd *cmd_table, int len_cmd_table)
+void	reset_shell(t_cmd *cmd_table, int len_cmd_table)
 {
 	int	i;
 	int	j;
 
-	(void)input;
 	static_stream(RESTORE);
 	unlink(TMP_HD_FILE);
 	sig_jobcontrol(OFF);
 	settty(OFF, ECHOCTL);
 	get_or_set_interactive(SET, ON);
-	// free(input);
 	i = -1;
 	while (++i < len_cmd_table)
 	{
