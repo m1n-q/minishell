@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:39:46 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 15:44:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 	return (last);
 }
 
-void	restore_context(t_cmd *cmd_table, int len_cmd_table)
+void	reset_shell(t_cmd *cmd_table, int len_cmd_table)
 {
 	int	i;
 	int	j;
