@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 17:42:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:15:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*cpy_wo_q(char *s, char *argv)
 /* copy a string from (s) to (ret) */
 char	*cpy_str(char *s, char **argv, int i)
 {
-	int	len;
+	int		len;
 
 	len = cnt_str_len(s);
 	argv[i] = malloc_str(argv, i, len);

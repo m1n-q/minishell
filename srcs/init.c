@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:28:24 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:04:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ int	shell_level(void)
 		level = ft_atoi(shlvl.value);
 		newval = ft_itoa(level + 1);
 		add_envent(shlvl.name, newval);
-		free(shlvl.value);
 		free(newval);
 	}
-	free(shlvl.name);
+	free_envent(shlvl);
 	return (0);
 }
 

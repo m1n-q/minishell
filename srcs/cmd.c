@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 22:01:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 17:42:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static int	check_redir(t_cmd *cmd)
 	return (0);
 }
 
-//TODO: test cases for line 81
 static int	trim_redir(char ***argv, int count_redir)
 {
 	char	**new_argv;
@@ -87,12 +86,13 @@ static int	trim_redir(char ***argv, int count_redir)
 	{
 		if ((*argv)[i] > (char *)10LL)
 			new_argv[++j] = (*argv)[i];
-		else
+		else if ((*argv)[i + 1])
 		{
-			if ((*argv)[i + 1])
-				i += 1;
+			i += 1;
+			free((*argv)[i]);
 		}
 	}
+	free(*argv);
 	(*argv) = new_argv;
 	return (0);
 }
@@ -109,18 +109,13 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 		{
 			if (e == FDERR)
 				cmd_table[i].any_err = 1;
-			else if (e == HEREDOC_INTR)
-				return (HEREDOC_INTR);
-			else if (e == FORKERR)
-				return (FORKERR);
+			else if (e == HEREDOC_INTR || e == FORKERR)
+				return (e);
 		}
 		trim_redir(&(cmd_table[i].argv), count_redir(&cmd_table[i]));
 		set_path(&cmd_table[i]);
 		if (i < len_cmd_table - 1)
-		{
-			make_pipe(&cmd_table[i]);
 			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
-		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:18:41 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:06:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,7 @@ int	check_name_part(char *arg, int assign_pos, int *aflag)
 	return (error);
 }
 
-/*
-	free(env.name);
-	free(env.value);
-	env.string == environ[i]: no need to free
-*/
+/* entry.string == environ[i]: no need to free */
 /* entry.string != NULL: entry exists in environ */
 int	assign_or_just_add(char *arg, int append)
 {
@@ -95,8 +91,7 @@ int	assign_or_just_add(char *arg, int append)
 	}
 	else
 		add_envent(newvar.name, newvar.value);
-	free(entry.name);
-	free(entry.value);
+	free_envent(entry);
 	return (EXECUTION_SUCCESS);
 }
 
