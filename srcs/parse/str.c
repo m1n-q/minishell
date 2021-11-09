@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:46:16 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:41:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	case_q(char *s)
 	char	c;
 
 	ret = 2;
-	if (is_empty_q(s))
-		return (ret);
 	if (is_q(*s))
 	{
 		c = *s++;
@@ -67,11 +65,8 @@ int	cnt_str_len(char *s)
 }
 
 /* malloc a string */
-char	*malloc_str(char *s, char **argv, int i, int len)
+char	*malloc_str(char **argv, int i, int len)
 {
-	char	*tmp;
-
-	tmp = s;
 	argv[i] = malloc(sizeof(char) * (len + 1));
 	if (!argv[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:46:32 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:05:52 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char	**malloc_strs(char *s)
 	char	**ret;
 
 	num_of_strs = cnt_strs(s);
+	if (!num_of_strs)
+		num_of_strs++;
 	ret = malloc(sizeof(char *) * (num_of_strs + 1));
 	if (!ret)
 		return (0);
