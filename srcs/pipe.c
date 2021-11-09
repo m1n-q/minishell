@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 21:01:46 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:01:23 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_cmd	*split_pipe(char **argv, int len_cmd_table)
 	int		end;
 	int		start;
 
-	cmd_table = (t_cmd *)malloc(sizeof(t_cmd) * (len_cmd_table));
+	cmd_table = (t_cmd *)ft_calloc(len_cmd_table, sizeof(t_cmd));
 	if (!cmd_table)
 		return (NULL);
 	start = 0;

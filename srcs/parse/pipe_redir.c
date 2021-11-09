@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:15 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 13:49:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:07:26 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*split_pipe_redir(char *s)
 	len += (int)ft_strlen(s);
 	if (!len)
 		return (s);
-	ret = malloc(sizeof(char) * len + 1);
+	ret = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!ret)
 		return (0);
 	cpy_with_space(s, len, ret, i);

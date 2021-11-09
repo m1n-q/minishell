@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 17:41:22 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:02:04 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	cnt_str_len(char *s)
 /* malloc a string */
 char	*malloc_str(char **argv, int i, int len)
 {
-	argv[i] = malloc(sizeof(char) * (len + 1));
+	argv[i] = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!argv[i])
 	{
 		free_strs(argv, i);
