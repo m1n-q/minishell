@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 17:44:08 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:08:15 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*rm_empty_q(char *s)
 	tofree = s;
 	i = 0;
 	len = ft_strlen(s) - cnt_empty_q(s) * 2;
-	ret = malloc(sizeof(char) * (len + 1));
+	ret = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!ret)
 		return (0);
 	while (*s)

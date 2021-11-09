@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:44:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:04:20 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	join_dollar_sign(char *s, char **argv)
 		cnt++;
 	if (s[i] && !ft_isspace(s[i]) && s[i] != '"' && cnt > 2)
 		cnt--;
-	tmp = malloc(sizeof(char) * (cnt + 1));
+	tmp = (char *)ft_calloc(cnt + 1, sizeof(char));
 	i = -1;
 	while (++i < cnt)
 		tmp[i] = '$';
@@ -54,7 +54,7 @@ int	join_env_var(char *s, char **argv)
 		i++;
 	if (!i)
 		return (join_dollar_sign(s, argv));
-	tmp = malloc(sizeof(char) * (i + 1));
+	tmp = (char *)ft_calloc(i + 1, sizeof(char));
 	if (!tmp)
 		return (0);
 	ft_strlcpy(tmp, &s[1], i + 1);
@@ -64,7 +64,7 @@ int	join_env_var(char *s, char **argv)
 		*argv = ft_strjoin(*argv, getenv(tmp));
 	if (!*argv)
 	{
-		*argv = malloc(sizeof(char) * 1);
+		*argv = (char *)ft_calloc(1, sizeof(char));
 		if (!*argv)
 			return (0);
 		*argv[0] = 0;
@@ -81,7 +81,7 @@ int	join_non_env(char *s, char **argv)
 	i = 0;
 	while (s[i] && s[i] != '$' && s[i] != '"')
 		i++;
-	tmp = malloc(sizeof(char) * (i + 1));
+	tmp = (char *)ft_calloc(i + 1, sizeof(char));
 	ft_strlcpy(tmp, s, i + 1);
 	if (*argv)
 		*argv = ft_strjoin(*argv, tmp);

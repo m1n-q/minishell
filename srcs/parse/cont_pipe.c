@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/07 21:49:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:06:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ char	**join_argvs(char **argv, char **tmp)
 {
 	int		i;
 	int		j;
+	int		argc;
 	char	**ret;
 
-	ret = malloc(sizeof(char *) * (get_argc(argv) + get_argc(tmp) + 1));
+	argc = get_argc(argv) + get_argc(tmp);
+	ret = (char **)ft_calloc(argc + 1, sizeof(char *));
 	i = -1;
 	while (argv[++i])
 	{

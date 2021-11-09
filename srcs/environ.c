@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 14:50:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 18:09:15 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	remove_envent(t_envent env)
 		free(environ[env.index]);
 		ft_memmove(environ + env.index, environ + env.index + 1, \
 				sizeof(char *) * (env_len - env.index));
-		new_environ = ft_calloc(env_len, sizeof(char *));
+		new_environ = (char **)ft_calloc(env_len, sizeof(char *));
 		ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 		free(environ);
 		environ = new_environ;
