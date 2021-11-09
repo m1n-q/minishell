@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/08 22:14:56 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 13:51:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**ft_split_space(char *s)
 	int		i;
 	int		str_len;
 	char	**ret;
+	char	*tofree;
 
 	if (!quotes_match(s))
 		return ((char **)Q_ERR);
@@ -55,6 +56,7 @@ char	**ft_split_space(char *s)
 	ret = malloc_strs(s);
 	i = 0;
 	str_len = 0;
+	tofree = s;
 	while (*s)
 	{
 		if (!ft_isspace(*s))
@@ -66,6 +68,7 @@ char	**ft_split_space(char *s)
 		s++;
 	}
 	ret[i] = 0;
+	free(tofree);
 	return (ret);
 }
 

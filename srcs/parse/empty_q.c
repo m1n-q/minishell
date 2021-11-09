@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   empty_q.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 11:49:07 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 13:34:35 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char	*rm_empty_q(char *s)
 	int		i;
 	int		len;
 	char	*ret;
+	char	*tofree;
 
+	tofree = s;
 	i = 0;
 	len = ft_strlen(s) - cnt_empty_q(s) * 2;
 	ret = malloc(sizeof(char) * (len + 1));
@@ -53,5 +55,6 @@ char	*rm_empty_q(char *s)
 			break ;
 	}
 	ret[i] = 0;
+	free(tofree);
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:15 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/04 20:45:43 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 13:49:32 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ char	*split_pipe_redir(char *s)
 	if (!ret)
 		return (0);
 	cpy_with_space(s, len, ret, i);
+	free(s);
 	return (ret);
 }
