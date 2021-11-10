@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:57:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:43:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ char		**return_redir_err(int err_num, char **argv);
 /* heredoc */
 char		*cpy_delimiter(char *s, char *arg);
 char		*adjust_delimiter(char *s);
+int			check_delimiter(char **delim);
 
 /* empty_q.c */
 char		*rm_empty_q(char *s);

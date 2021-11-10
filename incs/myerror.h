@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/07 22:54:34 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:35:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,5 @@
 # define HEREDOC_INTR		-42
 # define FDERR				-1
 # define FORKERR			-24
+# define MALLOCERR			-22
 #endif

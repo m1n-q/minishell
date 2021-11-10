@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:20:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 17:37:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 		{
 			if (e == FDERR)
 				cmd_table[i].any_err = 1;
-			else if (e == HEREDOC_INTR || e == FORKERR)
+			else if (e == HEREDOC_INTR || e == FORKERR || e == MALLOCERR)
 				return (e);
 		}
 		trim_redir(&(cmd_table[i].argv), count_redir(&cmd_table[i]));

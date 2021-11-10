@@ -6,12 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 13:54:44 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:42:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
-//LEAK
+
 char	*write_until_env(int fd, char *line)
 {
 	int		i;
@@ -65,20 +65,6 @@ char	*expand_env(int fd, char *line)
 }
 
 /* check for expand and trim quotes in delimiter */
-int	check_delimiter(char **delim)
-{
-	char	*ret;
-	char	*s;
-
-	s = *delim;
-	if (!is_q(s[0]) && !is_q(s[ft_strlen(s) - 1]))
-		return (1);
-	ret = adjust_delimiter(s);
-	free(*delim);
-	*delim = ret;
-	return (0);
-}
-
 int	heredoc_read(char **delim)
 {
 	int			fd;
@@ -101,9 +87,28 @@ int	heredoc_read(char **delim)
 	exit(0);
 }
 
+int	heredoc_status(int ext_status)
+{
+	if (WIFEXITED(ext_status) && WEXITSTATUS(ext_status) == -1)
+	{
+		ft_putendl_fd("error while reading heredoc", STDERR_FILENO);
+		get_or_set_exitcode(SET, EXECUTION_FAILURE);
+		return (MALLOCERR);
+	}
+	if (WIFSIGNALED(ext_status) && WTERMSIG(ext_status) == SIGINT)
+	{
+		ft_putendl_fd("", STDOUT_FILENO);
+		get_or_set_interactive(SET, ON);
+		get_or_set_exitcode(SET, EXECUTION_FAILURE);
+		return (HEREDOC_INTR);
+	}
+	return (0);
+}
+
 int	heredoc(t_cmd *cmd, char *delim)
 {
 	int			fd;
+	int			e;
 	t_exit		ext;
 
 	get_or_set_interactive(SET, OFF);
@@ -113,19 +118,16 @@ int	heredoc(t_cmd *cmd, char *delim)
 	else if (ext.pid > 0)
 	{
 		ext.pid = wait(&ext.status);
-		if (WIFSIGNALED(ext.status) && WTERMSIG(ext.status) == SIGINT)
-		{
-			ft_putendl_fd("", STDOUT_FILENO);
-			get_or_set_interactive(SET, ON);
-			get_or_set_exitcode(SET, EXECUTION_FAILURE);
-			return (HEREDOC_INTR);
-		}
+		e = heredoc_status(ext.status);
+		if (e)
+			return (e);
 		fd = open(TMP_HD_FILE, O_RDONLY);
 		if (cmd->redir_stream.in != DEFAULT)
 			close(cmd->redir_stream.in);
 		cmd->redir_stream.in = fd;
 		return (EXECUTION_SUCCESS);
 	}
+	ft_putendl_fd("error while reading heredoc", STDERR_FILENO);
 	get_or_set_exitcode(SET, EXECUTION_FAILURE);
 	return (FORKERR);
 }
