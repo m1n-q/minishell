@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 19:49:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:35:32 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_exit	builtin_nofork(t_cmd cmd)
 	connect_stream(cmd.redir_stream);
 	if (is_equal("exit", cmd.argv[0]))
 	{
-		ft_putendl_fd("exit", STDERR_FILENO);
 		ext.pid = PARENT_EXIT;
 		ext.status = 0;
 		ext.code = __exit(cmd.argv);

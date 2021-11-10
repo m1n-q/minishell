@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 13:30:52 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:36:27 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	sigcont_handler(int sig)
 {
 	if (sig == SIGCONT)
 	{
-		ft_putendl_fd("exit", 2);
+		reset_shell();
+		before_exit();
 		exit(get_or_set_exitcode(GET, 0));
 	}
 }
