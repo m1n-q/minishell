@@ -6,23 +6,23 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 11:38:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:00:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* check if a character is an available character for enviroment variable */
-int	join_exit_code(char **argv)
+int	join_exit_code(char **p_arg)
 {
-	if (!*argv)
-		*argv = ft_itoa(get_or_set_exitcode(GET, 0));
-	else if (*argv)
-		*argv = ft_strjoin(*argv, ft_itoa(get_or_set_exitcode(GET, 0)));		//POSSIBLE_LEAK
+	if (!*p_arg)
+		*p_arg = ft_itoa(get_or_set_exitcode(GET, 0));
+	else if (*p_arg)
+		*p_arg = join_and_free(*p_arg, ft_itoa(get_or_set_exitcode(GET, 0)), 2);
 	return (2);
 }
 
-int	join_dollar_sign(char *s, char **argv)
+int	join_dollar_sign(char *s, char **p_arg)
 {
 	int		i;
 	int		cnt;
@@ -39,41 +39,38 @@ int	join_dollar_sign(char *s, char **argv)
 	while (++i < cnt)
 		tmp[i] = '$';
 	tmp[i] = 0;
-	*argv = join_and_free(*argv, tmp, 3);					//POSSIBLE_LEAK
+	*p_arg = join_and_free(*p_arg, tmp, 3);
 	return (cnt);
 }
 
 /* join the value of the environment variables */
-int	join_env_var(char *s, char **argv)
+int	join_env_var(char *s, char **p_arg)
 {
 	int		i;
-	char	*tmp;
 	char	*env;
 
 	i = 0;
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 		i++;
 	if (!i)
-		return (join_dollar_sign(s, argv));
-	tmp = (char *)ft_calloc(i + 1, sizeof(char));
-	if (!tmp)
-		return (0);
-	ft_strlcpy(tmp, &s[1], i + 1);
-	env = getenv(tmp);
+		return (join_dollar_sign(s, p_arg));
+	env = getenv(s + 1);
 	if (env)
 	{
-		if (!*argv)
-			*argv = ft_strdup(env);						//POSSIBLE_LEAK
-		else if (*argv)
-			*argv = join_and_free(*argv, env, 1);		//POSSIBLE_LEAK
+		if (!*p_arg)
+		{
+			free(*p_arg);
+			*p_arg = ft_strdup(env);
+		}
+		else if (*p_arg)
+			*p_arg = join_and_free(*p_arg, env, 1);
 	}
 	else
-		*argv = ft_strjoin(*argv, NULL);
-	free(tmp);
+		*p_arg = ft_strjoin(*p_arg, NULL);
 	return (++i);
 }
 
-int	join_non_env(char *s, char **argv)
+int	join_non_env(char *s, char **p_arg)
 {
 	char	*tmp;
 	int		i;
@@ -81,15 +78,15 @@ int	join_non_env(char *s, char **argv)
 	i = 0;
 	while (s[i] && s[i] != '$' && s[i] != '"')
 		i++;
-	tmp = (char *)ft_calloc(i + 1, sizeof(char));		//LEAK
+	tmp = (char *)ft_calloc(i + 1, sizeof(char));
 	ft_strlcpy(tmp, s, i + 1);
-	if (*argv)
-		*argv = ft_strjoin(*argv, tmp);					//POSSIBLE_LEAK
+	if (*p_arg)
+		*p_arg = join_and_free(*p_arg, tmp, 3);
 	else
-		*argv = tmp;
+		*p_arg = dup_and_free(tmp);
 	if (s[i] == '$' && !s[i + 1])
 	{
-		*argv = ft_strjoin(*argv, "$");					//POSSIBLE_LEAK
+		*p_arg = join_and_free(*p_arg, "$", 1);
 		i++;
 	}
 	return (i);

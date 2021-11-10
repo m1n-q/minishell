@@ -6,12 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:08:44 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:12:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
-
+//LEAK
 char	*write_until_env(int fd, char *line)
 {
 	int		i;

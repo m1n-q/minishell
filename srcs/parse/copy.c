@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 10:22:30 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:05:34 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,36 +57,39 @@ char	*case_pipe_redir(char *s)
 }
 
 /* copy a string that is enclosed by q marks from (s) to (ret) */
-char	*cpy_with_q(char *s, char *argv, char **argvs, int j)
+char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 {
 	char	c;
 	int		i;
 
 	i = 0;
-	if (argvs[j - 1] == (char *)HEREDOC)
+	if (argv[j - 1] == (char *)HEREDOC)
+	{
+		free(arg);
 		return (cpy_delimiter(s));
+	}
 	while (*s && !ft_isspace(*s))
 	{
 		if (has_dollar_sign(s) && *s == '"')
 		{
-			free(argv);
+			free(arg);
 			return (case_env(s + 1, '"'));
 		}
 		c = *s++;
 		while (*s && *s != c)
-			argv[i++] = *s++;
+			arg[i++] = *s++;
 		if (*++s && !ft_isspace(*s))
 		{
 			while (*s && !ft_isspace(*s) && !is_q(*s))
-				argv[i++] = *s++;
+				arg[i++] = *s++;
 		}
 	}
-	argv[i] = 0;
-	return (argv);
+	arg[i] = 0;
+	return (arg);
 }
 
 /* copy a string that is not enclosed by q marks from (s) to (ret) */
-char	*cpy_wo_q(char *s, char *argv)
+char	*cpy_wo_q(char *s, char *arg)
 {
 	char	c;
 	int		i;
@@ -94,25 +97,25 @@ char	*cpy_wo_q(char *s, char *argv)
 	i = 0;
 	if (has_dollar_sign(s))
 	{
-		free(argv);
+		free(arg);
 		return (case_env(s, ' '));
 	}
-	argv[i++] = *s++;
+	arg[i++] = *s++;
 	while (*s && !ft_isspace(*s))
 	{
 		if (is_q(*s))
 		{
 			c = *s++;
 			while (*s && *s != c)
-				argv[i++] = *s++;
+				arg[i++] = *s++;
 			s++;
 		}
 		else
-			argv[i++] = *s++;
+			arg[i++] = *s++;
 	}
-	argv[i] = 0;
-	argv = case_pipe_redir(argv);
-	return (argv);
+	arg[i] = 0;
+	arg = case_pipe_redir(arg);
+	return (arg);
 }
 
 /* copy a string from (s) to (ret) */
