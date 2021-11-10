@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 19:03:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/09 19:46:23 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			puterr(int error);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
 int			builtin_error(char *command, char *arg, char *message, int optflag);
-char		**syntax_error(char **error, char *token, int exit_code);
+char		**syntax_error(char **error, char *token, int exit_code, char **argv);
 
 /* check error */
 int			check_error(char *command);
@@ -136,7 +136,7 @@ char		**parse(char *s);
 int			is_pipe_err(char **argv, int i);
 int			is_double_pipe_err(char **argv);
 int			is_redir_err(char **argv, int i);
-char		**return_redir_err(int err_num);
+char		**return_redir_err(int err_num, char **argv);
 
 /* heredoc */
 char		*cpy_delimiter(char *s);

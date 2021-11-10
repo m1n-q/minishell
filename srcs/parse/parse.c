@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 17:56:12 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/09 19:46:12 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ char	**parse(char *s)
 
 	ret = ft_split_space(s);
 	if (ret == (char **)Q_ERR)
-		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE));
+		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE, ret));
 	i = get_argc(ret) - 1;
 	if (is_double_pipe_err(ret))
-		return (syntax_error((char **)PIPE_ERR, "`||'", EX_USAGE));
+		return (syntax_error((char **)PIPE_ERR, "`||'", EX_USAGE, ret));
 	if (is_pipe_err(ret, i) == 1)
-		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE));
+		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE, ret));
 	else if (is_pipe_err(ret, i) == 2)
-		return (syntax_error((char **)PIPE_ERR, "`newline'", EX_USAGE));
+		return (syntax_error((char **)PIPE_ERR, "`newline'", EX_USAGE, ret));
 	if (is_redir_err(ret, i))
-		return (return_redir_err(is_redir_err(ret, i)));
+		return (return_redir_err(is_redir_err(ret, i), ret));
 	if (ret[i] == (char *)PIPE && i != 0)
 		ret = cont_pipe(ret);
 	return (ret);
