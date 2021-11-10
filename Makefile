@@ -31,6 +31,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/empty_q.c \
 		$(SRC_DIR)/parse/heredoc.c \
 		$(SRC_DIR)/parse/env.c \
+		$(SRC_DIR)/parse/join_env.c \
 		$(SRC_DIR)/parse/utils.c \
 		$(SRC_DIR)/parse/copy.c \
 		$(SRC_DIR)/parse/str.c \

@@ -18,7 +18,7 @@ int	check_pipe_redir(char *s)
 {
 	while (*s)
 	{
-		if (is_pipe_rin_rout(*s))
+		if (is_pipe_redir(*s))
 			return (1);
 		s++;
 	}
@@ -35,14 +35,14 @@ void	cnt_pipe_redir(char *s, int *cnt)
 	{
 		if (is_q(s[i]))
 			i += skip_q(&s[i]);
-		if (is_pipe_rin_rout(s[i]) && s[i] != s[i + 1])
+		if (is_pipe_redir(s[i]) && s[i] != s[i + 1])
 		{
 			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
 				(*cnt)++;
 			if (s[i + 1] && !ft_isspace(s[i + 1]))
 				(*cnt)++;
 		}
-		else if (is_pipe_rin_rout(s[i]) && s[i] == s[i + 1])
+		else if (is_pipe_redir(s[i]) && s[i] == s[i + 1])
 		{
 			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])
 				(*cnt)++;
@@ -84,7 +84,7 @@ void	cpy_with_space(char *s, int len, char *argv, int i)
 				argv[i++] = s[j++];
 			argv[i++] = s[j++];
 		}
-		else if (is_pipe_rin_rout(s[j]))
+		else if (is_pipe_redir(s[j]))
 			cpy_pipe_redir(s, argv, &i, &j);
 		else
 			argv[i++] = s[j++];

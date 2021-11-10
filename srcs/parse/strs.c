@@ -19,52 +19,57 @@ int	skip_q(char *s)
 	char	c;
 
 	i = 0;
-	c = s[i++];
-	while (s[i] != c)
+	while (is_q(s[i]))
+	{
+		c = s[i++];
+		while (s[i] != c)
+			i++;
 		i++;
-	i++;
+	}
+	while (s[i] && !ft_isspace(s[i]))
+		i++;
 	return (i);
 }
 
 /* count how many strings there are */
-int	cnt_strs(char *s)
+void	cnt_strs(char *s, int *ret)
 {
 	int	i;
-	int	ret;
 
 	i = 0;
-	ret = 0;
-	while (*s)
+	*ret = 0;
+	while (s[i])
 	{
-		if (*s && !ft_isspace(*s))
+		if (!is_q(s[i]) && !ft_isspace(s[i]))
 		{
-			ret++;
-			if (is_q(*s) && (*s == s[0] || (*s && ft_isspace(*(s - 1)))))
-				s += skip_q(s);
-			while (*s && !ft_isspace(*s))
+			(*ret)++;
+			while (s[i] && !ft_isspace(s[i]))
 			{
-				if (is_q(*s))
-					s += skip_q(s);
-				else
-					s++;
+				if (is_q(s[i]))
+					i += skip_q(&s[i]);
+				i++;
 			}
 		}
-		while (ft_isspace(*s))
-			s++;
+		if (is_q(s[i]))
+		{
+			(*ret)++;
+			i += skip_q(&s[i]);
+		}
+		while (ft_isspace(s[i]))
+			i++;
 	}
-	return (ret);
 }
 
-/* malloc strings */
+/* memory allocations of strings */
 char	**malloc_strs(char *s)
 {
 	int		num_of_strs;
 	char	**ret;
 
-	num_of_strs = cnt_strs(s);
-	if (!num_of_strs)
-		num_of_strs++;
-	ret = (char **)calloc_(num_of_strs + 1, sizeof(char *));
+	cnt_strs(s, &num_of_strs);
+	ret = (char **)ft_calloc(num_of_strs + 1, sizeof(char *));
+	if (!ret)
+		return (0);
 	return (ret);
 }
 

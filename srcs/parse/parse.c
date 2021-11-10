@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 19:46:12 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:27:08 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*adjust_input(char *s)
 char	**ft_split_space(char *s)
 {
 	int		i;
-	int		str_len;
 	char	**ret;
 	char	*tofree;
 
@@ -60,7 +59,6 @@ char	**ft_split_space(char *s)
 	s = adjust_input(s);
 	ret = malloc_strs(s);
 	i = 0;
-	str_len = 0;
 	tofree = s;
 	while (*s)
 	{

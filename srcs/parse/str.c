@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 16:23:39 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:59:53 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,8 @@
 int	case_q(char *s)
 {
 	int		ret;
-	char	c;
 
-	ret = 2;
-	if (is_q(*s))
-	{
-		c = *s++;
-		while (*s && *s++ != c)
-			ret++;
-		while (*s && !ft_isspace(*s++))
-			ret++;
-	}
+	ret = skip_q(s);
 	return (ret);
 }
 
@@ -64,7 +55,7 @@ int	cnt_str_len(char *s)
 		return (case_default(s));
 }
 
-/* malloc a string */
+/* memory allocation of a string */
 char	*malloc_str(char **argv, int i, int len)
 {
 	argv[i] = (char *)calloc_(len + 1, sizeof(char));

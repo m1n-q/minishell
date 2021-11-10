@@ -12,7 +12,7 @@
 
 #include "./../../incs/minishell.h"
 
-char	*cpy_delimiter(char *s)
+char	*cpy_delimiter(char *s, char *arg)
 {
 	int		i;
 	int		j;
@@ -20,6 +20,7 @@ char	*cpy_delimiter(char *s)
 
 	i = 0;
 	j = 0;
+	free(arg);
 	while (s[i] && !ft_isspace(s[i]))
 		i++;
 	ret = (char *)calloc_(i + 1, sizeof(char));		//LEAK

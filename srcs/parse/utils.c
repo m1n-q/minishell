@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:50 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 19:06:45 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 17:00:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_q(char c)
 	return (c == '"' || c == '\'');
 }
 
-int	is_pipe_rin_rout(char c)
+int	is_pipe_redir(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }
@@ -35,14 +35,11 @@ int	is_empty_q(char *s)
 	return (0);
 }
 
-/* check if there is a q mark in the string */
-int	has_q(char *s)
+char	*calloc_n_lcpy(char *s, size_t dstsize)
 {
-	while (*s)
-	{
-		if (is_q(*s))
-			return (1);
-		s++;
-	}
-	return (0);
+	char	*ret;
+
+	ret = (char *)ft_calloc(dstsize, sizeof(char));
+	ft_strlcpy(ret, s, dstsize);
+	return (ret);
 }
