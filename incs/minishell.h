@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 13:43:30 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:57:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int			is_redir_err(char **argv, int i);
 char		**return_redir_err(int err_num, char **argv);
 
 /* heredoc */
-char		*cpy_delimiter(char *s);
+char		*cpy_delimiter(char *s, char *arg);
 char		*adjust_delimiter(char *s);
 
 /* empty_q.c */
@@ -151,7 +151,13 @@ char		*rm_empty_q(char *s);
 char		*cpy_str(char *s, char **argv, int i);
 
 /* env */
-char		*case_env(char *s, char tok);
+char		*case_env(char *s, char *arg);
+
+/* join_env */
+int			join_non_env(char *s, char **p_arg);
+int			join_env_var(char *s, char **p_arg);
+int			join_exit_code(char **p_arg);
+
 
 /* pipe_redir */
 void		cnt_pipe_redir(char *s, int *cnt);
@@ -169,7 +175,7 @@ void		free_strs(char **argv, int i);
 /* utils */
 int			ft_isspace(char c);
 int			is_q(char c);
-int			is_pipe_rin_rout(char c);
+int			is_pipe_redir(char c);
 int			is_empty_q(char *s);
 char		*calloc_n_lcpy(char *s, size_t dstsize);
 

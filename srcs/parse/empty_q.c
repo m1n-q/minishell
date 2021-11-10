@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:08:15 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:26:38 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	cnt_empty_q(char *s)
 		if (is_q(*s))
 		{
 			c = *s++;
-			while (*s != c)
-				s++;
-			s++;
-			if (*s && !ft_isspace(*s))
+			if (c == *s++ && *s && !ft_isspace(*s))
 				ret++;
 		}
 		s++;

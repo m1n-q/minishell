@@ -3,111 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 13:53:06 by kyumlee          ###   ########.fr       */
+/*   Created: 2021/11/10 16:33:01 by kyumlee           #+#    #+#             */
+/*   Updated: 2021/11/10 16:57:23 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-/* get the exit code */
-int	join_exit_code(char **p_arg)
-{
-	if (!*p_arg)
-		*p_arg = ft_itoa(get_or_set_exitcode(GET, 0)); //LEAK
-	else if (*p_arg)
-		*p_arg = join_and_free(*p_arg, ft_itoa(get_or_set_exitcode(GET, 0)), 2);
-	return (2);
-}
-
-/* if a dollar sign is followed by dollar signs */
-int	join_dollar_sign(char *s, char **p_arg)
+int	expand(char *s, char **p_arg)
 {
 	int		i;
-	int		cnt;
-	char	*tmp;
-
-	i = -1;
-	cnt = 0;
-	while (s[++i] == '$')
-		cnt++;
-	if (s[i] && !ft_isspace(s[i]) && s[i] != '"' && cnt > 2)
-		cnt--;
-	tmp = (char *)ft_calloc(cnt + 1, sizeof(char));
-	i = -1;
-	while (++i < cnt)
-		tmp[i] = '$';
-	tmp[i] = 0;
-	*p_arg = join_and_free(*p_arg, tmp, 3);
-	return (cnt);
-}
-
-/* join the value of the environment variables */
-int	join_env_var(char *s, char **p_arg)
-{
-	int		i;
-	char	*env;
-	char	*tmp;
+	char	c;
 
 	i = 0;
-	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
-		i++;
-	if (!i)
-		return (join_dollar_sign(s, p_arg));
-	tmp = calloc_n_lcpy(s + 1, i + 1);
-	env = getenv(tmp);
-	free(tmp);
-	if (env)
+	c = s[i++];
+	while (s[i] != c)
 	{
-		if (!*p_arg)
-		{
-			free(*p_arg);
-			*p_arg = ft_strdup(env);
-		}
-		else if (*p_arg)
-			*p_arg = join_and_free(*p_arg, env, 1);
+		if (s[i] != '$')
+			i += join_non_env(&s[i], p_arg);
+		if (s[i] == '$' && s[i + 1] && s[i + 1] != '?')
+			i += join_env_var(&s[i], p_arg);
+		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
+			i += join_exit_code(p_arg);
 	}
-	else
-		*p_arg = ft_strjoin(*p_arg, NULL);
 	return (++i);
 }
 
-int	join_non_env(char *s, char **p_arg)
+int	not_expand(char *s, char **p_arg)
 {
-	char	*tmp;
 	int		i;
+	char	c;
+	char	*tmp;
 
 	i = 0;
-	while (s[i] && s[i] != '$' && s[i] != '"')
+	c = *s++;
+	while (s[i] != c)
 		i++;
 	tmp = calloc_n_lcpy(s, i + 1);
 	if (*p_arg)
 		*p_arg = join_and_free(*p_arg, tmp, 3);
 	else
-		*p_arg = dup_and_free(tmp);
-	if (s[i] == '$' && !s[i + 1])
-	{
-		*p_arg = join_and_free(*p_arg, "$", 1);
-		i++;
-	}
-	return (i);
+		*p_arg = tmp;
+	i++;
+	return (++i);
 }
 
 /* if the first letter is a dollar-sign or
- * a double quotation mark followed by a dollar sign
- */
-char	*case_env(char *s, char tok)
+ * a double quotation mark followed by a dollar sign */
+char	*case_env(char *s, char *arg)
 {
 	char	*ret;
 
 	ret = 0;
-	while (*s && *s != tok)
+	free(arg);
+	while (*s && !ft_isspace(*s))
 	{
+		if (*s == '"')
+			s += expand(s, &ret);
+		if (*s == '\'')
+			s += not_expand(s, &ret);
 		if (*s != '$')
 			s += join_non_env(s, &ret);
-		else if (*s == '$' && *(s + 1) && *(s + 1) != '?')
+		if (*s == '$' && *(s + 1) && *(s + 1) != '?')
 			s += join_env_var(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
 			s += join_exit_code(&ret);

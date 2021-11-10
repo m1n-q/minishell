@@ -6,13 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 10:45:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:59:48 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-char	*cpy_delimiter(char *s)
+char	*cpy_delimiter(char *s, char *arg)
 {
 	int		i;
 	int		j;
@@ -20,6 +20,7 @@ char	*cpy_delimiter(char *s)
 
 	i = 0;
 	j = 0;
+	free(arg);
 	while (s[i] && !ft_isspace(s[i]))
 		i++;
 	ret = (char *)ft_calloc(i + 1, sizeof(char));		//LEAK

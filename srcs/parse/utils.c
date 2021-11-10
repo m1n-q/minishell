@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:50 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 13:49:04 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:00:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_q(char c)
 	return (c == '"' || c == '\'');
 }
 
-int	is_pipe_rin_rout(char c)
+int	is_pipe_redir(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }
@@ -40,8 +40,6 @@ char	*calloc_n_lcpy(char *s, size_t dstsize)
 	char	*ret;
 
 	ret = (char *)ft_calloc(dstsize, sizeof(char));
-	if (!ret)
-		exit (1);
 	ft_strlcpy(ret, s, dstsize);
 	return (ret);
 }
