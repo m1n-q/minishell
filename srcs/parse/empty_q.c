@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:08:15 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:22:39 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ char	*rm_empty_q(char *s)
 	tofree = s;
 	i = 0;
 	len = ft_strlen(s) - cnt_empty_q(s) * 2;
-	ret = (char *)ft_calloc(len + 1, sizeof(char));
-	if (!ret)
-		return (0);
+	ret = (char *)calloc_(len + 1, sizeof(char));
 	while (*s)
 	{
 		if (*s == '<' && *(s + 1) == '<')

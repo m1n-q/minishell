@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:00:35 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:26:14 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	shell_level(void)
 	{
 		remove_envent(shlvl);
 		level = ft_atoi(shlvl.value);
-		newval = ft_itoa(level + 1);
+		newval = itoa_(level + 1);
 		add_envent(shlvl.name, newval);
 		free(newval);
 	}
@@ -67,9 +67,7 @@ char	**environ_to_heap(void)
 	char	**new_environ;
 
 	env_len = get_argc(environ);
-	new_environ = (char **)ft_calloc(env_len + 1, sizeof(char *));
-	if (!new_environ)
-		return (NULL);
+	new_environ = (char **)calloc_(env_len + 1, sizeof(char *));
 	i = -1;
 	while (environ[++i])
 	{

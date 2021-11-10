@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 15:16:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:26:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*write_until_env(int fd, char *line)
 		}
 		else if (line[i] == '$' && line[i + 1] == '?')
 		{
-			tmp = ft_itoa(get_or_set_exitcode(GET, 0));
+			tmp = itoa_(get_or_set_exitcode(GET, 0));
 			ft_putstr_fd(tmp, fd);
 			i += 2;
 		}
@@ -50,7 +50,7 @@ char	*expand_env(int fd, char *line)
 	if (line[0] == '$' && !line[1])
 		return (line);
 	else if (line[0] == '$' && line[1] == '?')
-		return (ft_itoa(get_or_set_exitcode(GET, 0)));
+		return (itoa_(get_or_set_exitcode(GET, 0)));
 	else if (line[0] == '$' && line[1] && line[1] != '?')
 	{
 		env_var = getenv(&line[1]);
@@ -59,7 +59,7 @@ char	*expand_env(int fd, char *line)
 			ft_putendl_fd("", fd);
 			return (0);
 		}
-		line = (char *)ft_calloc(ft_strlen(env_var) + 1, sizeof(char));
+		line = (char *)calloc_(ft_strlen(env_var) + 1, sizeof(char));
 		ft_strlcpy(line, env_var, ft_strlen(env_var) + 1);
 	}
 	return (line);

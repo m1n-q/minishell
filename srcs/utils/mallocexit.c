@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 16:10:27 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:12:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:25:23 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ char	*strjoin_(const char *s1, const char *s2)
 
 	ret = ft_strjoin(s1, s2);
 	if (!ret)
-		exit (-1);
+		exit(-1);
+	return (ret);
+}
+
+char	*itoa_(int nbr)
+{
+	char	*ret;
+
+	ret = ft_itoa(nbr);
+	if (!ret)
+		exit(-1);
 	return (ret);
 }

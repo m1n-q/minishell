@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:01:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:21:35 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ static int	copy_args(char ***dst_ptr, char **src, int start, int end)
 	int		i;
 	char	**ret;
 
-	ret = (char **)ft_calloc(end - start + 1, sizeof(char *));
-	if (!ret)
-		return (-1);
+	ret = (char **)calloc_(end - start + 1, sizeof(char *));
 	i = -1;
 	while (++i < end - start)
 	{
@@ -67,9 +65,7 @@ t_cmd	*split_pipe(char **argv, int len_cmd_table)
 	int		end;
 	int		start;
 
-	cmd_table = (t_cmd *)ft_calloc(len_cmd_table, sizeof(t_cmd));
-	if (!cmd_table)
-		return (NULL);
+	cmd_table = (t_cmd *)calloc_(len_cmd_table, sizeof(t_cmd));
 	start = 0;
 	end = -1;
 	while (1)

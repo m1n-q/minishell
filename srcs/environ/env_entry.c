@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:47:17 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:01:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:22:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	add_envent(char *name, char *value)
 
 	env_string = NULL;
 	env_len = get_argc(environ);
-	new_environ = (char **)ft_calloc(env_len + 2, sizeof(char *));
+	new_environ = (char **)calloc_(env_len + 2, sizeof(char *));
 	ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 	if (value)
 		env_string = joinjoin(name, "=", value);
@@ -68,7 +68,7 @@ int	remove_envent(t_envent env)
 		free(environ[env.index]);
 		ft_memmove(environ + env.index, environ + env.index + 1, \
 				sizeof(char *) * (env_len - env.index));
-		new_environ = (char **)ft_calloc(env_len, sizeof(char *));
+		new_environ = (char **)calloc_(env_len, sizeof(char *));
 		ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 		free(environ);
 		environ = new_environ;

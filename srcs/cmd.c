@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 17:42:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:20:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ static int	trim_redir(char ***argv, int count_redir)
 	int		j;
 
 	argc = get_argc(*argv);
-	new_argv = (char **)ft_calloc(argc - (count_redir * 2) + 1, sizeof(char *));
-	if (!new_argv)
-		return (-1);
+	new_argv = (char **)calloc_(argc - (count_redir * 2) + 1, sizeof(char *));
 	i = -1;
 	j = -1;
 	while ((*argv)[++i])

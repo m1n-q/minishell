@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 11:00:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:22:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**join_argvs(char **argv, char **tmp)
 	char	**ret;
 
 	argc = get_argc(argv) + get_argc(tmp);
-	ret = (char **)ft_calloc(argc + 1, sizeof(char *));
+	ret = (char **)calloc_(argc + 1, sizeof(char *));
 	i = -1;
 	while (argv[++i])
 	{

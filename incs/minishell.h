@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:14:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:25:35 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void		free_envent(t_envent entry);
 void		*calloc_(size_t count, size_t size);
 char		*strdup_(char *s);
 char		*strjoin_(const char *s1, const char *s2);
+char		*itoa_(int nbr);
 
 /* built-in */
 int			__cd(char **argv);
