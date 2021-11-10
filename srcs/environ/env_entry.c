@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:47:17 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 19:03:17 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:22:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_envent	find_envent(char *name)
 	env.index = -1;
 	env.string = NULL;
 	env.value = NULL;
-	env.name = ft_strdup(name);
+	env.name = strdup_(name);
 	env.string = get_env_including_empty(env.name);
 	if (env.string)
 	{
@@ -32,7 +32,7 @@ t_envent	find_envent(char *name)
 				env.index = i;
 		assign_pos = get_assign_pos(env.string);
 		if (assign_pos)
-			env.value = ft_strdup(env.string + assign_pos + 1);
+			env.value = strdup_(env.string + assign_pos + 1);
 	}
 	return (env);
 }
@@ -45,12 +45,12 @@ int	add_envent(char *name, char *value)
 
 	env_string = NULL;
 	env_len = get_argc(environ);
-	new_environ = (char **)ft_calloc(env_len + 2, sizeof(char *));
+	new_environ = (char **)calloc_(env_len + 2, sizeof(char *));
 	ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 	if (value)
 		env_string = joinjoin(name, "=", value);
 	else
-		env_string = ft_strdup(name);
+		env_string = strdup_(name);
 	new_environ[env_len] = env_string;
 	free(environ);
 	environ = new_environ;
@@ -68,7 +68,7 @@ int	remove_envent(t_envent env)
 		free(environ[env.index]);
 		ft_memmove(environ + env.index, environ + env.index + 1, \
 				sizeof(char *) * (env_len - env.index));
-		new_environ = (char **)ft_calloc(env_len, sizeof(char *));
+		new_environ = (char **)calloc_(env_len, sizeof(char *));
 		ft_memmove(new_environ, environ, sizeof(char *) * env_len);
 		free(environ);
 		environ = new_environ;

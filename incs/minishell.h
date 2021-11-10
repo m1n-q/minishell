@@ -70,7 +70,7 @@ int			get_cmd_table(t_cmd **ptr_cmd_table, char **argv,
 				int len_cmd_table);
 t_exit		run_table(t_cmd *cmd_table, int len_cmd_table);
 void		check_exit(t_exit ext);
-void		reset_shell(t_cmd *cmd_table, int len_cmd_table);
+void		reset_shell(void);
 
 /* init */
 int			shell_level(void);
@@ -98,6 +98,7 @@ t_exit		run(t_cmd cmd);
 /* utils */
 int			get_argc(char **argv);
 int			is_equal(char *s1, char *s2);
+void		exit_(int exitcode);
 int			skip_space(char *s);
 char		*joinjoin(char *a, char *b, char *c);
 char		*join_or_dup(char *nullable, char *dupable);
@@ -108,6 +109,11 @@ void		quick_sort(char	**arr, int start, int end);
 void		free_till(int index, char **arr);
 void		free_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 void		free_envent(t_envent entry);
+
+void		*calloc_(size_t count, size_t size);
+char		*strdup_(char *s);
+char		*strjoin_(const char *s1, const char *s2);
+char		*itoa_(int nbr);
 
 /* built-in */
 int			__cd(char **argv);

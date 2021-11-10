@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 11:08:12 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:44:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_exit(t_exit ext)
 		if (ext.code == E2MANY)
 			get_or_set_exitcode(SET, EXECUTION_FAILURE);
 		else
-			exit(ext.code);
+			exit_(ext.code);
 	}
 	else if (ext.pid == BUILTIN && ext.code)
 		get_or_set_exitcode(SET, ext.code);
@@ -45,7 +45,10 @@ int	check_and_parse(char *input, char ***ptr_argv)
 	char	**argv;
 
 	if (!input[0] || skip_space(input))
+	{
+		free(input);
 		return (-1);
+	}
 	add_history(input);
 	argv = parse(input);
 	if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || \
@@ -74,7 +77,7 @@ int	get_cmd_table(t_cmd **ptr_cmd_table, char **argv, int len_cmd_table)
 	return (0);
 }
 
-/* line 83: execve failed | forked built-in */
+/* line 96: execve failed | forked built-in */
 t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 {
 	int		i;
@@ -100,12 +103,11 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 	return (last);
 }
 
-void	reset_shell(t_cmd *cmd_table, int len_cmd_table)
+void	reset_shell(void)
 {
 	static_stream(RESTORE);
 	unlink(TMP_HD_FILE);
 	sig_jobcontrol(OFF);
 	settty(OFF, ECHOCTL);
 	get_or_set_interactive(SET, ON);
-	free_cmd_table(cmd_table, len_cmd_table);
 }

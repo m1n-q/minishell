@@ -29,7 +29,7 @@ char	*write_until_env(int fd, char *line)
 		}
 		else if (line[i] == '$' && line[i + 1] == '?')
 		{
-			tmp = ft_itoa(get_or_set_exitcode(GET, 0));
+			tmp = itoa_(get_or_set_exitcode(GET, 0));
 			ft_putstr_fd(tmp, fd);
 			i += 2;
 		}
@@ -50,7 +50,7 @@ char	*expand_env(int fd, char *line)
 	if (line[0] == '$' && !line[1])
 		return (line);
 	else if (line[0] == '$' && line[1] == '?')
-		return (ft_itoa(get_or_set_exitcode(GET, 0)));
+		return (itoa_(get_or_set_exitcode(GET, 0)));
 	else if (line[0] == '$' && line[1] && line[1] != '?')
 	{
 		env_var = getenv(&line[1]);

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 20:43:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:00:54 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	**get_paths(void)
 static char	*search(char *pathdir, char *arg)
 {
 	char			*path;
-	char			*tmp;
 	DIR				*dirp;
 	struct dirent	*dirent;
 
@@ -45,9 +44,7 @@ static char	*search(char *pathdir, char *arg)
 		{
 			if (is_equal(dirent->d_name, arg))
 			{
-				tmp = ft_strjoin(pathdir, "/");
-				path = ft_strjoin(tmp, arg);
-				free(tmp);
+				path = joinjoin(pathdir, "/", arg);
 				break ;
 			}
 			dirent = readdir(dirp);
@@ -86,11 +83,11 @@ int	set_path(t_cmd *cmd)
 	if (cmd->argv[0] == NULL)
 		cmd->path = (char *)NOCMD;
 	else if (has_slash(cmd->argv[0]))
-		cmd->path = ft_strdup(cmd->argv[0]);
+		cmd->path = strdup_(cmd->argv[0]);
 	else
 	{
 		if (is_builtin(cmd->argv[0]))
-			cmd->path = ft_strdup("built-in");
+			cmd->path = strdup_("built-in");
 		else
 			cmd->path = find_path(cmd->argv[0]);
 	}

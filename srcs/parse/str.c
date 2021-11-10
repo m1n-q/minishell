@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
 /*   Updated: 2021/11/10 16:59:53 by kyumlee          ###   ########.fr       */
@@ -58,7 +58,7 @@ int	cnt_str_len(char *s)
 /* memory allocation of a string */
 char	*malloc_str(char **argv, int i, int len)
 {
-	argv[i] = (char *)ft_calloc(len + 1, sizeof(char));
+	argv[i] = (char *)calloc_(len + 1, sizeof(char));
 	if (!argv[i])
 	{
 		free_strs(argv, i);

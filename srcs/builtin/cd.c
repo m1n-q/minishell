@@ -6,23 +6,23 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 23:23:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:54:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	cd: usage: cd [dir]
-*/
-
 static int	bindpwd(char *oldpwd)
 {
 	char	*tmp;
 	char	*otmp;
+	char	*pwd;
 
-	otmp = ft_strjoin("OLDPWD=", oldpwd);
-	tmp = ft_strjoin("PWD=", getcwd(NULL, 0));
+	pwd = getcwd(NULL, 0);
+	otmp = strjoin_("OLDPWD=", oldpwd);
+	tmp = strjoin_("PWD=", pwd);
+	free(pwd);
+	free(oldpwd);
 	export_internal(tmp);
 	export_internal(otmp);
 	free(tmp);
@@ -85,6 +85,7 @@ int	__cd(char **argv)
 	cwd = getcwd(NULL, 0);
 	if (chdir(dirname) == 0)
 		return (bindpwd(cwd));
+	free(cwd);
 	builtin_error(argv[0], dirname, strerror(errno), 0);
 	return (EXECUTION_FAILURE);
 }

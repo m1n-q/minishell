@@ -61,9 +61,7 @@ char	*rm_empty_q(char *s)
 	tofree = s;
 	i = 0;
 	len = ft_strlen(s) - cnt_empty_q(s) * 2;
-	ret = (char *)ft_calloc(len + 1, sizeof(char));
-	if (!ret)
-		return (0);
+	ret = (char *)calloc_(len + 1, sizeof(char));
 	while (*s)
 	{
 		if (*s == '<' && *(s + 1) == '<')

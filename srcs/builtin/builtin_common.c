@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:50:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 18:58:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:21:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ char	*sh_double_quote(char *string)
 
 	if (!string)
 		return (NULL);
-	ret = (char *)ft_calloc(ft_strlen(string) + 3, sizeof(char));
-	if (!ret)
-		return (NULL);
+	ret = (char *)calloc_(ft_strlen(string) + 3, sizeof(char));
 	ret[0] = '"';
 	i = -1;
 	while (string[++i])

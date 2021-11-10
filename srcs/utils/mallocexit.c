@@ -1,47 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   mallocexit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:58:30 by mishin           ###   ########.fr       */
+/*   Created: 2021/11/10 16:10:27 by mishin            #+#    #+#             */
+/*   Updated: 2021/11/10 16:31:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_argc(char **argv)
+void	*calloc_(size_t count, size_t size)
 {
-	int	len;
+	void	*ret;
 
-	len = 0;
-	while (argv[len])
-		len++;
-	return (len);
+	ret = ft_calloc(count, size);
+	if (!ret)
+		exit(-1);
+	return (ret);
 }
 
-int	skip_space(char *s)
+char	*strdup_(char *s)
 {
-	while (ft_isspace(*s))
-		s++;
-	if (!*s)
-		return (1);
-	return (0);
+	char	*ret;
+
+	ret = ft_strdup(s);
+	if (!ret)
+		exit(-1);
+	return (ret);
 }
 
-int	is_equal(char *s1, char *s2)
+char	*strjoin_(const char *s1, const char *s2)
 {
-	if (ft_strlen(s1) == ft_strlen(s2) && \
-		!ft_strncmp(s1, s2, ft_strlen(s1)))
-		return (1);
-	return (0);
+	char	*ret;
+
+	ret = ft_strjoin(s1, s2);
+	if (!ret)
+		exit(-1);
+	return (ret);
 }
 
-void	exit_(int exitcode)
+char	*itoa_(int nbr)
 {
-	reset_shell();
-	before_exit();
-	exit(exitcode);
+	char	*ret;
+
+	ret = ft_itoa(nbr);
+	if (!ret)
+		exit(-1);
+	return (ret);
 }

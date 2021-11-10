@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 15:38:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:57:03 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	before_exit(void)
 	static_stream(DESTROY);
 	settty(RESTORE, 0);
 	ft_putendl_fd("exit", STDERR_FILENO);
+	free_till(get_argc(environ), environ);
 	free(environ);
 }
 

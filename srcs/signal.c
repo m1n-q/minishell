@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/08 18:57:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 15:45:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sig_handler_interactive(int sig)
 {
 	if (sig == SIGINT && get_or_set_interactive(GET, 0) == ON)
 	{
-		printf("\n");
+		ft_putendl_fd("", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -35,10 +35,7 @@ void	sigstop_handler(int sig)
 void	sigcont_handler(int sig)
 {
 	if (sig == SIGCONT)
-	{
-		ft_putendl_fd("exit", 2);
-		exit(get_or_set_exitcode(GET, 0));
-	}
+		exit_(get_or_set_exitcode(GET, 0));
 }
 
 void	sig_jobcontrol(int mode)
