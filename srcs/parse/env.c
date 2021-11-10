@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 16:57:23 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 20:28:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ char	*case_env(char *s, char *arg)
 	{
 		if (*s == '"')
 			s += expand(s, &ret);
-		if (*s == '\'')
+		else if (*s == '\'')
 			s += not_expand(s, &ret);
-		if (*s != '$')
+		else if (*s != '$')
 			s += join_non_env(s, &ret);
 		if (*s == '$' && *(s + 1) && *(s + 1) != '?')
 			s += join_env_var(s, &ret);

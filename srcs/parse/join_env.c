@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 17:16:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 20:31:45 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	join_dollar_sign(char *s, char **p_arg)
 
 	i = -1;
 	cnt = 0;
-	while (s[++i] == '$')
+	while (s[++i] && !ft_isdigit(s[i]) && !ft_isalpha(s[i]) && s[i] != '_')
 		cnt++;
 	if (cnt % 2 && cnt > 0)
 		cnt--;
@@ -76,7 +76,7 @@ int	join_non_env(char *s, char **p_arg)
 	int		i;
 
 	i = 0;
-	while (s[i] && s[i] != '$' && s[i] != '"')
+	while (s[i] && s[i] != '$' && !is_q(s[i]))
 		i++;
 	tmp = calloc_n_lcpy(s, i + 1);
 	if (*p_arg)
