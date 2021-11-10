@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:02:04 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:49:42 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	cnt_str_len(char *s)
 		return (case_default(s));
 }
 
-/* malloc a string */
+/* memory allocation of a string */
 char	*malloc_str(char **argv, int i, int len)
 {
 	argv[i] = (char *)ft_calloc(len + 1, sizeof(char));

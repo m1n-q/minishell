@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 13:12:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:54:44 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ char	*expand_env(int fd, char *line)
 			ft_putendl_fd("", fd);
 			return (0);
 		}
-		line = (char *)ft_calloc(ft_strlen(env_var) + 1, sizeof(char));
-		ft_strlcpy(line, env_var, ft_strlen(env_var) + 1);
+		line = calloc_n_lcpy(env_var, ft_strlen(env_var) + 1);
 	}
 	return (line);
 }

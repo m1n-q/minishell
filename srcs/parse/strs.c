@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 18:07:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:50:28 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ int	cnt_strs(char *s)
 	return (ret);
 }
 
-/* malloc strings */
+/* memory allocations of strings */
 char	**malloc_strs(char *s)
 {
 	int		num_of_strs;
 	char	**ret;
 
 	num_of_strs = cnt_strs(s);
-	if (!num_of_strs)
-		num_of_strs++;
 	ret = (char **)ft_calloc(num_of_strs + 1, sizeof(char *));
 	if (!ret)
 		return (0);

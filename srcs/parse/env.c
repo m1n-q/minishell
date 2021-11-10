@@ -6,22 +6,23 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 13:00:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:53:06 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-/* check if a character is an available character for enviroment variable */
+/* get the exit code */
 int	join_exit_code(char **p_arg)
 {
 	if (!*p_arg)
-		*p_arg = ft_itoa(get_or_set_exitcode(GET, 0));
+		*p_arg = ft_itoa(get_or_set_exitcode(GET, 0)); //LEAK
 	else if (*p_arg)
 		*p_arg = join_and_free(*p_arg, ft_itoa(get_or_set_exitcode(GET, 0)), 2);
 	return (2);
 }
 
+/* if a dollar sign is followed by dollar signs */
 int	join_dollar_sign(char *s, char **p_arg)
 {
 	int		i;
@@ -48,13 +49,16 @@ int	join_env_var(char *s, char **p_arg)
 {
 	int		i;
 	char	*env;
+	char	*tmp;
 
 	i = 0;
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 		i++;
 	if (!i)
 		return (join_dollar_sign(s, p_arg));
-	env = getenv(s + 1);
+	tmp = calloc_n_lcpy(s + 1, i + 1);
+	env = getenv(tmp);
+	free(tmp);
 	if (env)
 	{
 		if (!*p_arg)
@@ -78,8 +82,7 @@ int	join_non_env(char *s, char **p_arg)
 	i = 0;
 	while (s[i] && s[i] != '$' && s[i] != '"')
 		i++;
-	tmp = (char *)ft_calloc(i + 1, sizeof(char));
-	ft_strlcpy(tmp, s, i + 1);
+	tmp = calloc_n_lcpy(s, i + 1);
 	if (*p_arg)
 		*p_arg = join_and_free(*p_arg, tmp, 3);
 	else

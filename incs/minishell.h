@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 11:41:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:43:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int			ft_isspace(char c);
 int			is_q(char c);
 int			is_pipe_rin_rout(char c);
 int			is_empty_q(char *s);
-int			has_q(char *s);
+char		*calloc_n_lcpy(char *s, size_t dstsize);
 
 /* cont_pipe */
 char		**cont_pipe(char **argv);
