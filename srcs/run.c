@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:35:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 17:22:38 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_exit	run(t_cmd cmd)
 	ext.status = 0;
 	ext.code = 0;
 	if (ext.pid < 0)
-		printf("fork failed\n");
+		ft_putendl_fd("fork failed\n", STDERR_FILENO);
 	else if (ext.pid > 0)
 	{
 		destroy_stream(cmd.pipe_stream);
