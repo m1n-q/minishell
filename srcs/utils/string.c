@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:24:02 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 11:28:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 11:40:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@ int	is_equal(char *s1, char *s2)
 {
 	if (ft_strlen(s1) == ft_strlen(s2) && \
 		!ft_strncmp(s1, s2, ft_strlen(s1)))
-		return (1);
-	return (0);
-}
-
-int	skip_space(char *s)
-{
-	while (ft_isspace(*s))
-		s++;
-	if (!*s)
 		return (1);
 	return (0);
 }
@@ -67,5 +58,14 @@ char	*join_and_free(char *s1, char *s2, int tofree)
 		free(s1);
 		free(s2);
 	}
+	return (ret);
+}
+
+char	*dup_and_free(char *s)
+{
+	char	*ret;
+
+	ret = ft_strdup(s);
+	free(s);
 	return (ret);
 }

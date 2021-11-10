@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 11:24:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 11:40:17 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,13 @@ int	get_argc(char **argv)
 	while (argv[len])
 		len++;
 	return (len);
+}
+
+int	skip_space(char *s)
+{
+	while (ft_isspace(*s))
+		s++;
+	if (!*s)
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 11:33:27 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 11:38:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	join_dollar_sign(char *s, char **argv)
 	while (++i < cnt)
 		tmp[i] = '$';
 	tmp[i] = 0;
-	*argv = ft_strjoin(*argv, tmp);					//POSSIBLE_LEAK
+	*argv = join_and_free(*argv, tmp, 3);					//POSSIBLE_LEAK
 	return (cnt);
 }
 
