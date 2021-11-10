@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:55:05 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:34:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ static int	bindpwd(char *oldpwd)
 	char	*tmp;
 	char	*otmp;
 
-	otmp = ft_strjoin("OLDPWD=", oldpwd);
-	tmp = ft_strjoin("PWD=", getcwd(NULL, 0));
-	if (!otmp || !tmp)
-		exit(-1);
+	otmp = strjoin_("OLDPWD=", oldpwd);
+	tmp = strjoin_("PWD=", getcwd(NULL, 0));
 	export_internal(tmp);
 	export_internal(otmp);
 	free(tmp);
