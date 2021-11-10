@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:00:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:14:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,15 @@ char		*joinjoin(char *a, char *b, char *c);
 char		*join_or_dup(char *nullable, char *dupable);
 char		*join_and_free(char *s1, char *s2, int tofree);
 char		*dup_and_free(char *s);
-char		*strdup_(char *s);
 intmax_t	ft_strtoimax(const char *nptr, char **endptr);
 void		quick_sort(char	**arr, int start, int end);
 void		free_till(int index, char **arr);
 void		free_cmd_table(t_cmd *cmd_table, int len_cmd_table);
 void		free_envent(t_envent entry);
+
+void		*calloc_(size_t count, size_t size);
+char		*strdup_(char *s);
+char		*strjoin_(const char *s1, const char *s2);
 
 /* built-in */
 int			__cd(char **argv);
