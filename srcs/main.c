@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 10:48:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:24:21 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ int	main(void)
 		system("leaks minishell -quiet");
 	}
 	before_exit();
+	printf("HERE\n");
+	system("leaks minishell -quiet");
 	exit(get_or_set_exitcode(GET, 0));
 }

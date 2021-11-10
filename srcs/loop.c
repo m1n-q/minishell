@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 11:08:12 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:25:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	check_and_parse(char *input, char ***ptr_argv)
 	char	**argv;
 
 	if (!input[0] || skip_space(input))
+	{
+		free(input);
 		return (-1);
+	}
 	add_history(input);
 	argv = parse(input);
 	if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || \
