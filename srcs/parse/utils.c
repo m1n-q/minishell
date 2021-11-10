@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:50 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 17:00:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:17:07 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*calloc_n_lcpy(char *s, size_t dstsize)
 {
 	char	*ret;
 
-	ret = (char *)ft_calloc(dstsize, sizeof(char));
+	ret = (char *)calloc_(dstsize, sizeof(char));
 	ft_strlcpy(ret, s, dstsize);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 16:23:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 17:16:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ char	**malloc_strs(char *s)
 	char	**ret;
 
 	cnt_strs(s, &num_of_strs);
-	ret = (char **)ft_calloc(num_of_strs + 1, sizeof(char *));
-	if (!ret)
-		return (0);
+	ret = (char **)calloc_(num_of_strs + 1, sizeof(char *));
 	return (ret);
 }
 

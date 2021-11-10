@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 16:54:05 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:16:32 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 int	join_exit_code(char **p_arg)
 {
 	if (!*p_arg)
-		*p_arg = ft_itoa(get_or_set_exitcode(GET, 0)); //LEAK
+		*p_arg = itoa_(get_or_set_exitcode(GET, 0)); //LEAK
 	else if (*p_arg)
-		*p_arg = join_and_free(*p_arg, ft_itoa(get_or_set_exitcode(GET, 0)), 2);
+		*p_arg = join_and_free(*p_arg, itoa_(get_or_set_exitcode(GET, 0)), 2);
 	return (2);
 }
 
@@ -60,13 +60,13 @@ int	join_env_var(char *s, char **p_arg)
 		if (!*p_arg)
 		{
 			free(*p_arg);
-			*p_arg = ft_strdup(env);
+			*p_arg = strdup_(env);
 		}
 		else if (*p_arg)
 			*p_arg = join_and_free(*p_arg, env, 1);
 	}
 	else
-		*p_arg = ft_strjoin(*p_arg, NULL);
+		*p_arg = strjoin_(*p_arg, NULL);
 	return (++i);
 }
 
