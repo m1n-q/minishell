@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 22:01:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:36:27 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:45:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ void	sigstop_handler(int sig)
 void	sigcont_handler(int sig)
 {
 	if (sig == SIGCONT)
-	{
-		reset_shell();
-		before_exit();
-		exit(get_or_set_exitcode(GET, 0));
-	}
+		exit_(get_or_set_exitcode(GET, 0));
 }
 
 void	sig_jobcontrol(int mode)

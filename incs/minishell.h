@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:28:03 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:44:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_exit		run(t_cmd cmd);
 /* utils */
 int			get_argc(char **argv);
 int			is_equal(char *s1, char *s2);
+void		exit_(int exitcode);
 int			skip_space(char *s);
 char		*joinjoin(char *a, char *b, char *c);
 char		*join_or_dup(char *nullable, char *dupable);

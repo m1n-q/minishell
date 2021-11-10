@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:37:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:44:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,7 @@ void	check_exit(t_exit ext)
 		if (ext.code == E2MANY)
 			get_or_set_exitcode(SET, EXECUTION_FAILURE);
 		else
-		{
-			reset_shell();
-			before_exit();
-			exit(ext.code);
-		}
+			exit_(ext.code);
 	}
 	else if (ext.pid == BUILTIN && ext.code)
 		get_or_set_exitcode(SET, ext.code);

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:24:02 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 11:48:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:48:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ char	*join_and_free(char *s1, char *s2, int tofree)
 {
 	char	*ret;
 
-	if(!s1)
+	if (!s1)
 		ret = ft_strdup(s2);
-	else if(!s2)
+	else if (!s2)
 		ret = ft_strdup(s1);
 	else
 		ret = ft_strjoin(s1, s2);
