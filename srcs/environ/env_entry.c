@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:47:17 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 19:03:17 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:01:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_envent	find_envent(char *name)
 	env.index = -1;
 	env.string = NULL;
 	env.value = NULL;
-	env.name = ft_strdup(name);
+	env.name = strdup_(name);
 	env.string = get_env_including_empty(env.name);
 	if (env.string)
 	{
@@ -32,7 +32,7 @@ t_envent	find_envent(char *name)
 				env.index = i;
 		assign_pos = get_assign_pos(env.string);
 		if (assign_pos)
-			env.value = ft_strdup(env.string + assign_pos + 1);
+			env.value = strdup_(env.string + assign_pos + 1);
 	}
 	return (env);
 }
@@ -50,7 +50,7 @@ int	add_envent(char *name, char *value)
 	if (value)
 		env_string = joinjoin(name, "=", value);
 	else
-		env_string = ft_strdup(name);
+		env_string = strdup_(name);
 	new_environ[env_len] = env_string;
 	free(environ);
 	environ = new_environ;

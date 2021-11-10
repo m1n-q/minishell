@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 15:48:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:01:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	copy_args(char ***dst_ptr, char **src, int start, int end)
 		if (src[start + i] < (char *)10LL)
 			ret[i] = src[start + i];
 		else
-			ret[i] = ft_strdup(src[start + i]);
+			ret[i] = strdup_(src[start + i]);
 	}
 	*dst_ptr = ret;
 	return (0);

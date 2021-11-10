@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:04:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:00:35 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**environ_to_heap(void)
 	i = -1;
 	while (environ[++i])
 	{
-		new_environ[i] = ft_strdup(environ[i]);
+		new_environ[i] = strdup_(environ[i]);
 		if (!new_environ[i])
 		{
 			free_till(i, new_environ);

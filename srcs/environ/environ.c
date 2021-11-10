@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:27:08 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:48:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:01:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**make_tmp_environ(void)
 		return (NULL);
 	i = -1;
 	while (environ[++i])
-		tmp_environ[i] = ft_strdup(environ[i]);
+		tmp_environ[i] = strdup_(environ[i]);
 	return (tmp_environ);
 }
 

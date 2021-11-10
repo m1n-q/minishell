@@ -6,15 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/03 23:23:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:55:05 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	cd: usage: cd [dir]
-*/
 
 static int	bindpwd(char *oldpwd)
 {
@@ -23,6 +19,8 @@ static int	bindpwd(char *oldpwd)
 
 	otmp = ft_strjoin("OLDPWD=", oldpwd);
 	tmp = ft_strjoin("PWD=", getcwd(NULL, 0));
+	if (!otmp || !tmp)
+		exit(-1);
 	export_internal(tmp);
 	export_internal(otmp);
 	free(tmp);
