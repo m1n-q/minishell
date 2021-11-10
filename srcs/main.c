@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 20:56:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 10:48:08 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	main(void)
 	char	*input;
 	t_exit	ext;
 	t_cmd	*cmd_table;
-	char	**argv;
 	int		len_cmd_table;
+	char	**argv;
 
 	init_shell();
 	while (1)

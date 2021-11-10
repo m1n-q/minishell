@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:15:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 10:54:22 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_cmd	*split_pipe(char **argv, int len_cmd_table)
 	int		end;
 	int		start;
 
-	cmd_table = (t_cmd *)ft_calloc(len_cmd_table, sizeof(t_cmd));
+	cmd_table = (t_cmd *)ft_calloc(len_cmd_table, sizeof(t_cmd));		//LEAK : $$USER
 	if (!cmd_table)
 		return (NULL);
 	start = 0;

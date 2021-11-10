@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/09 21:38:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 10:59:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	join_exit_code(char **argv)
 	if (!*argv)
 		*argv = ft_itoa(get_or_set_exitcode(GET, 0));
 	else if (*argv)
-		*argv = ft_strjoin(*argv, ft_itoa(get_or_set_exitcode(GET, 0)));
+		*argv = ft_strjoin(*argv, ft_itoa(get_or_set_exitcode(GET, 0)));		//POSSIBLE_LEAK
 	return (2);
 }
 
@@ -39,7 +39,7 @@ int	join_dollar_sign(char *s, char **argv)
 	while (++i < cnt)
 		tmp[i] = '$';
 	tmp[i] = 0;
-	*argv = ft_strjoin(*argv, tmp);
+	*argv = ft_strjoin(*argv, tmp);					//POSSIBLE_LEAK
 	return (cnt);
 }
 
@@ -63,12 +63,12 @@ int	join_env_var(char *s, char **argv)
 	if (env)
 	{
 		if (!*argv)
-			*argv = ft_strdup(env);
+			*argv = ft_strdup(env);					//POSSIBLE_LEAK
 		else if (*argv)
-			*argv = ft_strjoin(*argv, env);
+			*argv = ft_strjoin(*argv, env);			//POSSIBLE_LEAK
 	}
 	else
-		*argv = ft_strjoin(*argv, NULL);
+		*argv = ft_strjoin(*argv, NULL);			//POSSIBLE_LEAK
 	free(tmp);
 	return (++i);
 }
@@ -81,15 +81,15 @@ int	join_non_env(char *s, char **argv)
 	i = 0;
 	while (s[i] && s[i] != '$' && s[i] != '"')
 		i++;
-	tmp = (char *)ft_calloc(i + 1, sizeof(char));
+	tmp = (char *)ft_calloc(i + 1, sizeof(char));		//LEAK
 	ft_strlcpy(tmp, s, i + 1);
 	if (*argv)
-		*argv = ft_strjoin(*argv, tmp);
+		*argv = ft_strjoin(*argv, tmp);					//POSSIBLE_LEAK
 	else
 		*argv = tmp;
 	if (s[i] == '$' && !s[i + 1])
 	{
-		*argv = ft_strjoin(*argv, "$");
+		*argv = ft_strjoin(*argv, "$");					//POSSIBLE_LEAK
 		i++;
 	}
 	return (i);
