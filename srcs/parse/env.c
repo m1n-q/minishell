@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 10:59:53 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 11:33:27 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ int	join_env_var(char *s, char **argv)
 	if (env)
 	{
 		if (!*argv)
-			*argv = ft_strdup(env);					//POSSIBLE_LEAK
+			*argv = ft_strdup(env);						//POSSIBLE_LEAK
 		else if (*argv)
-			*argv = ft_strjoin(*argv, env);			//POSSIBLE_LEAK
+			*argv = join_and_free(*argv, env, 1);		//POSSIBLE_LEAK
 	}
 	else
-		*argv = ft_strjoin(*argv, NULL);			//POSSIBLE_LEAK
+		*argv = ft_strjoin(*argv, NULL);
 	free(tmp);
 	return (++i);
 }

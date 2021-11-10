@@ -41,6 +41,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/utils/qsort.c \
 		$(SRC_DIR)/utils/ft_strtoimax.c \
 		$(SRC_DIR)/utils/free.c \
+		$(SRC_DIR)/utils/string.c \
 		$(SRC_DIR)/builtin/islegal.c \
 		$(SRC_DIR)/builtin/builtin.c \
 		$(SRC_DIR)/builtin/builtin_common.c \
