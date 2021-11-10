@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 16:10:27 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:25:23 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/10 16:31:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	*calloc_(size_t count, size_t size)
 	if (!ret)
 		exit(-1);
 	return (ret);
-
 }
 
 char	*strdup_(char *s)
