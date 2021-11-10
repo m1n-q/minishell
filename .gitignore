@@ -3,3 +3,5 @@ be_common.c
 *.o
 .vscode
 *.png
+libft.a
+minishell
