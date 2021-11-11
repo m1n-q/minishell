@@ -157,14 +157,19 @@ int			check_delimiter(char **delim);
 char		*rm_empty_q(char *s);
 
 /* copy */
-char		*cpy_str(char *s, char **argv, int i);
+char		**cpy_str(char *s, char **argv, int *i);
+
+/* copy_utils */
+int			env_has_space(char c, char *s);
+char		**split_and_join_till(char *arg, char **argv, int *i);
 
 /* env */
 char		*case_env(char *s, char *arg);
 
 /* join_env */
+char		*trim_space_in_env(char *s, char c);
 int			join_non_env(char *s, char **p_arg);
-int			join_env_var(char *s, char **p_arg);
+int			join_env_var(char *s, char **p_arg, char c);
 int			join_exit_code(char **p_arg);
 
 
@@ -189,6 +194,7 @@ int			is_empty_q(char *s);
 char		*calloc_n_lcpy(char *s, size_t dstsize);
 
 /* cont_pipe */
+char		**join_argvs(char **argv, char **tmp);
 char		**cont_pipe(char **argv);
 /* ************************ parse ************************ */
 

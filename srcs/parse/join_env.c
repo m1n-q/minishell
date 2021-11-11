@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 20:31:45 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/11 18:56:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	join_dollar_sign(char *s, char **p_arg)
 }
 
 /* join the value of the environment variables */
-int	join_env_var(char *s, char **p_arg)
+int	join_env_var(char *s, char **p_arg, char c)
 {
 	int		i;
 	char	*env;
@@ -57,6 +57,7 @@ int	join_env_var(char *s, char **p_arg)
 	free(tmp);
 	if (env)
 	{
+		env = trim_space_in_env(env, c);
 		if (!*p_arg)
 		{
 			free(*p_arg);
@@ -65,8 +66,6 @@ int	join_env_var(char *s, char **p_arg)
 		else if (*p_arg)
 			*p_arg = join_and_free(*p_arg, env, 1);
 	}
-	else
-		*p_arg = strjoin_(*p_arg, NULL);
 	return (++i);
 }
 
@@ -83,10 +82,10 @@ int	join_non_env(char *s, char **p_arg)
 		*p_arg = join_and_free(*p_arg, tmp, 3);
 	else
 		*p_arg = dup_and_free(tmp);
-	if (s[i] == '$' && !s[i + 1])
+/*	if (s[i] == '$' && !s[i + 1])
 	{
 		*p_arg = join_and_free(*p_arg, "$", 1);
 		i++;
-	}
+	}*/
 	return (i);
 }
