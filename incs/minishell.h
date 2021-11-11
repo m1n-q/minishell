@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 18:30:39 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/11 18:59:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ void		reset_shell(void);
 /* init */
 int			shell_level(void);
 int			static_stream(int mode);
-char		**environ_to_heap(void);
+void		environ_to_heap(void);
 int			init_shell(void);
+void		lc(void);
 
 /* term */
 void		settty(int mode, unsigned long flag);
@@ -114,6 +115,7 @@ void		*calloc_(size_t count, size_t size);
 char		*strdup_(char *s);
 char		*strjoin_(const char *s1, const char *s2);
 char		*itoa_(int nbr);
+char		*strlower_(char *str);
 
 /* built-in */
 int			__cd(char **argv);
@@ -130,7 +132,7 @@ int			export_internal(char *arg);
 /* environ */
 char		**make_tmp_environ(void);
 char		*get_env_including_empty(char *arg);
-int			add_envent(char *name, char *value);
+char		*add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 void		adjust_envent(t_envent entry, char *value);

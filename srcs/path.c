@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:00:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/11 19:00:50 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,26 @@ static char	*find_path(char *arg)
 	int				i;
 	char			*path;
 	char			**paths;
+	char			*arg_l;
 
 	paths = get_paths();
 	if (!paths)
 		return (NULL);
+	arg_l = strlower_(arg);
 	path = NULL;
 	i = -1;
 	while (paths[++i])
 	{
-		path = search(paths[i], arg);
+		path = search(paths[i], arg_l);
 		if (path)
 			break ;
 	}
 	free_till(get_argc(paths), paths);
 	free(paths);
+	free(arg_l);
 	return (path);
 }
 
-//FIXME: "built-in" can be input
 /* NOCMD: only redir w/o command */
 int	set_path(t_cmd *cmd)
 {
