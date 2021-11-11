@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 17:22:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/11 18:11:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_exit	builtin_fork(t_cmd cmd)
 }
 
 /*
-	• command not found
-	• only redir w/o command
+	• cmd.path == NULL: command not found
+	• cmd.path == NOCMD: only redir w/o command
 	• built-in in forked process
 	• execve
-	• execve fail
+	• if execve fail
 */
 t_exit	c(t_cmd cmd)
 {
@@ -80,7 +80,7 @@ t_exit	c(t_cmd cmd)
 	else if (is_equal(cmd.path, "built-in"))
 		ext = builtin_fork(cmd);
 	else if (execve(cmd.path, cmd.argv, environ) == -1)
-		ext.code = check_error(cmd.argv[0]);
+		ext.code = check_error(cmd.argv[0]);			//TODO: test cases
 	return (ext);
 }
 

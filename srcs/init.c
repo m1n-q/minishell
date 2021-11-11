@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:26:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/11 17:29:18 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	static_stream(int mode)
 	return (0);
 }
 
-char	**environ_to_heap(void)
+void	environ_to_heap(void)
 {
 	int		i;
 	int		env_len;
@@ -70,31 +70,48 @@ char	**environ_to_heap(void)
 	new_environ = (char **)calloc_(env_len + 1, sizeof(char *));
 	i = -1;
 	while (environ[++i])
-	{
 		new_environ[i] = strdup_(environ[i]);
-		if (!new_environ[i])
-		{
-			free_till(i, new_environ);
-			free(new_environ);
-			return (NULL);
-		}
+	environ = new_environ;
+}
+
+/* add dummy variable $LINES, $COLUMNS to prevent realloc environ by readline */
+void	lc(void)
+{
+	static int	init;
+	static char	*lp;
+	static char	*cp;
+
+	if (init == 0)
+	{
+		lp = add_envent("LINES", "0");
+		cp = add_envent("COLUMNS", "0");
+		init = -1;
 	}
-	return (new_environ);
+	else if (init == -1)
+	{
+		free(lp);
+		free(cp);
+		init = -2;
+	}
+	else
+		return ;
 }
 
 int	init_shell(void)
 {
 	int	error;
 
-	environ = environ_to_heap();
 	error = init_terminal_data();
 	if (error)
 		return (puterr(error));
-	set_sighandlers();
+	environ_to_heap();
 	shell_level();
+	lc();
+	set_sighandlers();
 	static_stream(DUPLCTE);
 	settty(SAVE, 0);
 	settty(OFF, ECHOCTL);
 	get_or_set_interactive(SET, ON);
 	return (0);
 }
+

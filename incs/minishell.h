@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 17:43:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/11 17:29:55 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ void		reset_shell(void);
 /* init */
 int			shell_level(void);
 int			static_stream(int mode);
-char		**environ_to_heap(void);
+void		environ_to_heap(void);
 int			init_shell(void);
+void		lc(void);
 
 /* term */
 void		settty(int mode, unsigned long flag);
@@ -130,7 +131,7 @@ int			export_internal(char *arg);
 /* environ */
 char		**make_tmp_environ(void);
 char		*get_env_including_empty(char *arg);
-int			add_envent(char *name, char *value);
+char		*add_envent(char *name, char *value);
 t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 void		adjust_envent(t_envent entry, char *value);

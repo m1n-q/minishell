@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:47:17 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:22:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/11 17:29:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_envent	find_envent(char *name)
 	return (env);
 }
 
-int	add_envent(char *name, char *value)
+char	*add_envent(char *name, char *value)
 {
 	int		env_len;
 	char	**new_environ;
@@ -54,7 +54,7 @@ int	add_envent(char *name, char *value)
 	new_environ[env_len] = env_string;
 	free(environ);
 	environ = new_environ;
-	return (0);
+	return (env_string);
 }
 
 int	remove_envent(t_envent env)
