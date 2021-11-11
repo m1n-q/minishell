@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_utils.c                                       :+:      :+:    :+:   */
+/*   env_with_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/11 18:03:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 01:19:44 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@ char	**split_and_join_till(char *arg, char **argv, int *i)
 	int		tmp_i;
 
 	tmp = ft_split(arg, ' ');
-	ret = calloc_(get_argc(tmp) + get_argc(argv), sizeof(char **));
+	ret = calloc_(get_argc(tmp) + *i + 1, sizeof(char **));
 	j = -1;
-	while (++j < *i - 1)
-		ret[j] = ft_strdup(argv[j]);
+	while (++j < *i)
+	{
+		if (argv[j] <= (char *)7LL)
+			ret[j] = argv[j];
+		else if (argv[j] > (char *)7LL)
+			ret[j] = ft_strdup(argv[j]);
+	}
 	tmp_i = -1;
 	while (++tmp_i < get_argc(tmp))
 		ret[j++] = ft_strdup(tmp[tmp_i]);
