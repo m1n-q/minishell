@@ -6,11 +6,68 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 20:28:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/11 19:04:06 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
+
+int	count_space_in_env(char *s, char c)
+{
+	int	i;
+	int	ret;
+
+	i = 0;
+	ret = 0;
+	if (c == '"')
+		return (ret);
+	while (ft_isspace(s[i++]))
+		ret++;
+	while (s[i])
+	{
+		if (ft_isspace(s[i]))
+		{
+			while (ft_isspace(s[i]))
+			{
+				ret++;
+				i++;
+			}
+			if (s[i])
+				ret--;
+		}
+		i++;
+	}
+	return (ret);
+}
+
+char	*trim_space_in_env(char *s, char c)
+{
+	int		i;
+	int		cnt;
+	char	*ret;
+
+	i = 0;
+	cnt = count_space_in_env(s, c);
+	if (!cnt)
+		return (s);
+	ret = calloc_(ft_strlen(s) - cnt + 1, sizeof(char));
+	while (ft_isspace(*s))
+		s++;
+	while (*s)
+	{
+		if (!ft_isspace(*s))
+			ret[i++] = *s++;
+		else
+		{
+			while (ft_isspace(*s))
+				s++;
+			if (*s)
+				ret[i++] = ' ';
+		}
+	}
+	ret[i] = 0;
+	return (ret);
+}
 
 int	expand(char *s, char **p_arg)
 {
@@ -24,7 +81,7 @@ int	expand(char *s, char **p_arg)
 		if (s[i] != '$')
 			i += join_non_env(&s[i], p_arg);
 		if (s[i] == '$' && s[i + 1] && s[i + 1] != '?')
-			i += join_env_var(&s[i], p_arg);
+			i += join_env_var(&s[i], p_arg, s[i - 1]);
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 			i += join_exit_code(p_arg);
 	}
@@ -66,10 +123,15 @@ char	*case_env(char *s, char *arg)
 			s += not_expand(s, &ret);
 		else if (*s != '$')
 			s += join_non_env(s, &ret);
-		if (*s == '$' && *(s + 1) && *(s + 1) != '?')
-			s += join_env_var(s, &ret);
+		else if (*s == '$' && *(s + 1) && *(s + 1) != '?')
+			s += join_env_var(s, &ret, *(s - 1));
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
 			s += join_exit_code(&ret);
+		else if (*s == '$' && !*(s + 1))
+		{
+			ret = join_and_free(ret, "$", 1);
+			s++;
+		}
 	}
 	return (ret);
 }

@@ -34,6 +34,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/join_env.c \
 		$(SRC_DIR)/parse/utils.c \
 		$(SRC_DIR)/parse/copy.c \
+		$(SRC_DIR)/parse/copy_utils.c \
 		$(SRC_DIR)/parse/str.c \
 		$(SRC_DIR)/parse/strs.c \
 		$(SRC_DIR)/parse/cont_pipe.c \
