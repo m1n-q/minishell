@@ -6,13 +6,51 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 19:07:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 20:25:43 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-int	is_pipe_err(char **argv, int i)
+int	find_token_error(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		while (argv[i] > (char *)7LL)
+			i++;
+		if (argv[i] >= (char *)4LL && argv[i] <= (char *)7LL)
+			i++;
+		if (!argv[i] || (argv[i] && (argv[i] == (char *)PIPE || \
+			(argv[i] >= (char *)4LL && argv[i] <= (char *)7LL))))
+			return (i);
+	}
+	return (-1);
+}
+
+char	**token_error(char **argv)
+{
+	int	i;
+
+	i = find_token_error(argv);
+	if (argv[i] == (char *)PIPE)
+		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE, argv));
+	else if (argv[i] == (char *)HEREDOC)
+		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE, argv));
+	else if (argv[i] == (char *)REDIRECT_IN)
+		return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE, argv));
+	else if (argv[i] == (char *)REDIRECT_OUT)
+		return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE, argv));
+	else if (argv[i] == (char *)REDIRECT_APPEND)
+		return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE, argv));
+	else if (!argv[i])
+		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE, argv));
+	return (0);
+}
+
+/*int	is_pipe_err(char **argv, int i)
 {
 	if (argv[0] == (char *)PIPE)
 		return (1);
@@ -107,4 +145,4 @@ char	**return_redir_err(int err_num, char **argv)
 	if (err_num == 7)
 		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE, argv));
 	return (0);
-}
+}*/
