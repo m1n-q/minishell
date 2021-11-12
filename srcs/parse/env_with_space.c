@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 01:19:44 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 18:34:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ char	**split_and_join_till(char *arg, char **argv, int *i)
 	*i = j;
 	free_till(get_argc(argv), argv);
 	free(argv);
+	free_till(get_argc(tmp), tmp);
+	free(tmp);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 16:51:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 18:50:58 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,36 @@ char	**ambig_redir_err(char *tmp)
 	ft_putstr_fd("minishell: $", STDERR_FILENO);
 	ft_putstr_fd(tmp, STDERR_FILENO);
 	ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
-//	free_till(get_argc(argv) - 1, argv);
-//	free(argv);
 	return ((char **)AMBIG_REDIR);
 }
 
 void	join_env_var(char *env, char **p_arg, char c)
 {
-	env = trim_space_in_env(env, c);
+	char	*new;
+
+	new = trim_space_in_env(env, c);
 	if (!*p_arg)
 	{
 		free(*p_arg);
-		*p_arg = strdup_(env);
+		*p_arg = strdup_(new);
 	}
 	else if (*p_arg)
-		*p_arg = join_and_free(*p_arg, env, 1);
+		*p_arg = join_and_free(*p_arg, new, 1);
+	if (!is_equal(new, env))
+		free(new);
 }
 
 /* join the value of the environment variables */
 int	join_env(char *s, char **p_arg, char ***argv, int j)
 {
 	int		i;
+	int		alloc_check;
 	char	*env;
 	char	*tmp;
 	char	c;
 
 	i = 0;
+	alloc_check = 0;
 	c = *s++;
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 		i++;
