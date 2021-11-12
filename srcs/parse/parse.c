@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 17:30:39 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/12 17:36:47 by shin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,11 @@ char	**ft_split_space(char *s)
 		{
 			ret = cpy_str(s, ret, &i);
 			if (ret == (char **)AMBIG_REDIR)
-				return (ret);
+				break ;	
 			s += cnt_str_len(s) - 1;
 		}
 		s++;
 	}
-	ret[i] = 0;
 	free(tofree);
 	return (ret);
 }
