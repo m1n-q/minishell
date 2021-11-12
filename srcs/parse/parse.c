@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/11 18:31:18 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 16:34:34 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	**ft_split_space(char *s)
 		if (!ft_isspace(*s))
 		{
 			ret = cpy_str(s, ret, &i);
+			if (ret == (char **)AMBIG_REDIR)
+				return (ret);
 			s += cnt_str_len(s) - 1;
 		}
 		s++;
@@ -76,6 +78,8 @@ char	**parse(char *s)
 	ret = ft_split_space(s);
 	if (ret == (char **)Q_ERR)
 		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE, ret));
+	if (ret == (char **)AMBIG_REDIR)
+		return (ret);
 	i = get_argc(ret) - 1;
 	if (is_double_pipe_err(ret))
 		return (syntax_error((char **)PIPE_ERR, "`||'", EX_USAGE, ret));

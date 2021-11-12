@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/11 18:31:29 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 16:30:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 	while (*s && !ft_isspace(*s))
 	{
 		if (has_dollar_sign(s) && is_q(*s))
-			return (case_env(s, arg));
+			return (case_env(s, arg, argv, j - 1));
 		c = *s++;
 		while (*s && *s != c)
 			arg[i++] = *s++;
@@ -83,14 +83,14 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 }
 
 /* copy a string that is not enclosed by q marks from (s) to (ret) */
-char	*cpy_wo_q(char *s, char *arg)
+char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 {
 	char	c;
 	int		i;
 
 	i = 0;
-	if (has_dollar_sign(s))
-		return (case_env(s, arg));
+	if (has_dollar_sign(s) && argv[j - 1] != (char *)HEREDOC)
+		return (case_env(s, arg, argv, j - 1));
 	arg[i++] = *s++;
 	while (*s && !ft_isspace(*s))
 	{
@@ -119,7 +119,9 @@ char	**cpy_str(char *s, char **argv, int *i)
 	if (is_q(*s))
 		argv[*i] = cpy_with_q(s, argv[*i], argv, *i);
 	else
-		argv[*i] = cpy_wo_q(s, argv[*i]);
+		argv[*i] = cpy_wo_q(s, argv[*i], argv, *i);
+	if (argv[*i] == (char *)AMBIG_REDIR)
+		return ((char **)AMBIG_REDIR);
 	if (argv[*i] && env_has_space(s[0], argv[*i])
 		&& (*i == 0 || argv[*i - 1] == (char *)PIPE))
 		return (split_and_join_till(argv[*i], argv, i));

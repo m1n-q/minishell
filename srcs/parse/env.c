@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/11 19:04:06 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 16:47:12 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*trim_space_in_env(char *s, char c)
 	return (ret);
 }
 
-int	expand(char *s, char **p_arg)
+int	expand(char *s, char **p_arg, char **argv, int j)
 {
 	int		i;
 	char	c;
@@ -81,7 +81,7 @@ int	expand(char *s, char **p_arg)
 		if (s[i] != '$')
 			i += join_non_env(&s[i], p_arg);
 		if (s[i] == '$' && s[i + 1] && s[i + 1] != '?')
-			i += join_env_var(&s[i], p_arg, s[i - 1]);
+			i += join_env(&s[i - 1], p_arg, &argv, j);
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 			i += join_exit_code(p_arg);
 	}
@@ -109,7 +109,7 @@ int	not_expand(char *s, char **p_arg)
 
 /* if the first letter is a dollar-sign or
  * a double quotation mark followed by a dollar sign */
-char	*case_env(char *s, char *arg)
+char	*case_env(char *s, char *arg, char **argv, int i)
 {
 	char	*ret;
 
@@ -118,13 +118,13 @@ char	*case_env(char *s, char *arg)
 	while (*s && !ft_isspace(*s))
 	{
 		if (*s == '"')
-			s += expand(s, &ret);
+			s += expand(s, &ret, argv, i);
 		else if (*s == '\'')
 			s += not_expand(s, &ret);
 		else if (*s != '$')
 			s += join_non_env(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) != '?')
-			s += join_env_var(s, &ret, *(s - 1));
+			s += join_env(s - 1, &ret, &argv, i);
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
 			s += join_exit_code(&ret);
 		else if (*s == '$' && !*(s + 1))
@@ -132,6 +132,8 @@ char	*case_env(char *s, char *arg)
 			ret = join_and_free(ret, "$", 1);
 			s++;
 		}
+		if (argv == (char **)AMBIG_REDIR)
+			return ((char *)AMBIG_REDIR);
 	}
 	return (ret);
 }
