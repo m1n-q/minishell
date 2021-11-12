@@ -5,3 +5,4 @@ be_common.c
 *.png
 libft.a
 minishell
+*.swp

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 20:16:42 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 16:58:13 by shin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**syntax_error(char **error, char *token, int exit_code, char **argv)
 	}
 	if (argv == (char **)Q_ERR)
 		return (error);
-	free_till(get_argc(argv) - 1, argv);
+	free_till(get_argc(argv), argv);
 	free(argv);
 	return (error);
 }
