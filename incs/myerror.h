@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 17:35:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/12 16:18:51 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define PIPE_ERR			3LL
 # define UNEXPECTED_EOF		4LL
 # define INVALID_REDIR		5LL
+# define AMBIG_REDIR		9LL
 
 # define CD_SHORTDOC			"cd [dir]"
 # define ENV_SHORTDOC			"env"

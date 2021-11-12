@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 18:59:52 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/12 16:43:36 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,12 +164,12 @@ int			env_has_space(char c, char *s);
 char		**split_and_join_till(char *arg, char **argv, int *i);
 
 /* env */
-char		*case_env(char *s, char *arg);
+char		*case_env(char *s, char *arg, char **argv, int i);
 
 /* join_env */
 char		*trim_space_in_env(char *s, char c);
 int			join_non_env(char *s, char **p_arg);
-int			join_env_var(char *s, char **p_arg, char c);
+int			join_env(char *s, char **p_arg, char ***argv, int i);
 int			join_exit_code(char **p_arg);
 
 
