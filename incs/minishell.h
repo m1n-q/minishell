@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/12 16:43:36 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/12 19:50:47 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,12 @@ char		**ft_split_space(char *s);
 char		**parse(char *s);
 
 /* error */
-int			is_pipe_err(char **argv, int i);
+/*int			is_pipe_err(char **argv, int i);
 int			is_double_pipe_err(char **argv);
 int			is_redir_err(char **argv, int i);
-char		**return_redir_err(int err_num, char **argv);
+char		**return_redir_err(int err_num, char **argv);*/
+int			find_token_error(char **argv);
+char		**token_error(char **argv);
 
 /* heredoc */
 char		*cpy_delimiter(char *s, char *arg);
