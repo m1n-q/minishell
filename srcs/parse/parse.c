@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/13 17:38:47 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/13 17:56:07 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**ft_split_space(char *s)
 		{
 			ret = cpy_str(s, ret, &i);
 			if (ret == (char **)AMBIG_REDIR)
-				break ;	
+				break ;
 			s += cnt_str_len(s) - 1;
 		}
 		s++;
@@ -82,6 +82,13 @@ char	**parse(char *s)
 	if (ret == (char **)AMBIG_REDIR)
 		return (ret);
 	last = get_argc(ret) - 1;
+	if (find_token_error(ret) != -1)
+		return (token_error(ret));
+	if (ret[last] == (char *)PIPE && last != 0)
+		ret = cont_pipe(ret);
+	return (ret);
+}
+
 /*	if (is_double_pipe_err(ret))
 		return (syntax_error((char **)PIPE_ERR, "`||'", EX_USAGE, ret));
 	if (is_pipe_err(ret, last) == 1)
@@ -90,9 +97,3 @@ char	**parse(char *s)
 		return (syntax_error((char **)PIPE_ERR, "`newline'", EX_USAGE, ret));
 	if (is_redir_err(ret, last))
 		return (return_redir_err(is_redir_err(ret, last), ret));*/
-	if (find_token_error(ret) != -1)
-		return (token_error(ret));
-	if (ret[last] == (char *)PIPE && last != 0)
-		ret = cont_pipe(ret);
-	return (ret);
-}

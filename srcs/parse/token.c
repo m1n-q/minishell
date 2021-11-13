@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mishin <mishin@student.42.kr>              +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 15:45:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/13 17:02:42 by mishin           ###   ########.kr       */
+/*   Updated: 2021/11/13 17:55:01 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ char	*toktos(char *tok)
 	if (tok == (char *)PIPE)
 		return (joinjoin("`", "|", "'"));
 	if (tok == (char *)HEREDOC)
-		return (joinjoin("`", "<<", "'"));	
+		return (joinjoin("`", "<<", "'"));
 	if (tok == (char *)REDIRECT_IN)
-		return (joinjoin("`", "<", "'"));	
+		return (joinjoin("`", "<", "'"));
 	if (tok == (char *)REDIRECT_OUT)
-		return (joinjoin("`", ">", "'"));	
+		return (joinjoin("`", ">", "'"));
 	if (tok == (char *)REDIRECT_APPEND)
 		return (joinjoin("`", ">>", "'"));
 	return (NULL);
@@ -54,4 +54,3 @@ int	is_pipe_token(char *s)
 		return (1);
 	return (0);
 }
-

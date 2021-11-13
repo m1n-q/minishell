@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/13 17:50:06 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/13 17:55:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ int	find_token_error(char **argv)
 			return (i + 1);
 		if (is_pipe_token(argv[i]))
 		{
-
 			if (is_token(argv[i + 1]) || \
 				(i > 0 && is_token(argv[i - 1]) && argv[i + 1] == NULL) || \
 				(i == 0 && argv[i + 1] == NULL))
-			return (i);
+				return (i);
 		}
 		i++;
 	}
