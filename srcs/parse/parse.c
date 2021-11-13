@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 20:20:48 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/13 17:38:47 by shin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**parse(char *s)
 
 	ret = ft_split_space(s);
 	if (ret == (char **)Q_ERR)
-		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE, ret));
+		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE));
 	if (ret == (char **)AMBIG_REDIR)
 		return (ret);
 	last = get_argc(ret) - 1;

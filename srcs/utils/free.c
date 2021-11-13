@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:44:21 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:00:45 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/13 17:34:01 by shin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_till(int index, char **arr)
 	i = -1;
 	while (++i < index)
 	{
-		if (arr[i] > (char *)10LL)
+		if (is_token(arr[i]) == 0)
 			free(arr[i]);
 	}
 }

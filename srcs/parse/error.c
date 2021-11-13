@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 20:25:43 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/13 17:50:06 by shin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,48 @@ int	find_token_error(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		while (argv[i] > (char *)7LL)
+		while (argv[i] && is_token(argv[i]) == 0)
 			i++;
-		if (argv[i] >= (char *)4LL && argv[i] <= (char *)7LL)
-			i++;
-		if (!argv[i] || (argv[i] && (argv[i] == (char *)PIPE || \
-			(argv[i] >= (char *)4LL && argv[i] <= (char *)7LL))))
+		if (argv[i] == NULL)
+			return (-1);
+		if (is_redir_token(argv[i]) && argv[i + 1] == NULL)
+			return (i + 1);
+		if (is_pipe_token(argv[i]))
+		{
+
+			if (is_token(argv[i + 1]) || \
+				(i > 0 && is_token(argv[i - 1]) && argv[i + 1] == NULL) || \
+				(i == 0 && argv[i + 1] == NULL))
 			return (i);
+		}
+		i++;
 	}
 	return (-1);
 }
 
 char	**token_error(char **argv)
 {
-	int	i;
+	int		i;
+	char	*tok;
+	char	**e;
 
 	i = find_token_error(argv);
-	if (argv[i] == (char *)PIPE)
-		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE, argv));
-	else if (argv[i] == (char *)HEREDOC)
-		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE, argv));
-	else if (argv[i] == (char *)REDIRECT_IN)
-		return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE, argv));
-	else if (argv[i] == (char *)REDIRECT_OUT)
-		return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE, argv));
-	else if (argv[i] == (char *)REDIRECT_APPEND)
-		return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE, argv));
-	else if (!argv[i])
-		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE, argv));
-	return (0);
+	e = 0;
+	if (i == -1)
+		return (0);
+	tok = toktos(argv[i]);
+	if (is_pipe_token(argv[i]))
+		e = (char **)PIPE_ERR;
+	else if (is_redir_token(argv[i]) || argv[i] == NULL)
+		e = (char **)REDIR_ERR;
+	if (e)
+	{
+		syntax_error((char **)REDIR_ERR, tok, EX_USAGE);
+		free_till(get_argc(argv), argv);
+		free(argv);
+	}
+	free(tok);
+	return (e);
 }
 
 /*int	is_pipe_err(char **argv, int i)
