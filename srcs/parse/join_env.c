@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 14:25:11 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 21:43:11 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	join_env_var(char *env, char **p_arg, char c)
 	}
 	else if (*p_arg)
 		*p_arg = join_and_free(*p_arg, new, 1);
+	if (!is_equal(new, env))
+		free(new);
 }
 
 /* join the value of the environment variables */
