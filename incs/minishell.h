@@ -88,7 +88,7 @@ int			puterr(int error);
 void		file_error(char *command);
 void		internal_error(char *command, char *err_string);
 int			builtin_error(char *command, char *arg, char *message, int optflag);
-char		**syntax_error(char **error, char *token, int exit_code, char **argv);
+char		**syntax_error(char **error, char *token, int exit_code);
 
 /* check error */
 int			check_error(char *command);
@@ -137,16 +137,24 @@ t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 void		adjust_envent(t_envent entry, char *value);
 
+/* token */
+int			is_token(char *s);
+int			is_redir_token(char *s);
+int			is_pipe_token(char *s);
+char		*toktos(char *tok);
+
 /* ************************ parse ************************ */
 /* parse */
 char		**ft_split_space(char *s);
 char		**parse(char *s);
 
 /* error */
-int			is_pipe_err(char **argv, int i);
+/*int			is_pipe_err(char **argv, int i);
 int			is_double_pipe_err(char **argv);
 int			is_redir_err(char **argv, int i);
-char		**return_redir_err(int err_num, char **argv);
+char		**return_redir_err(int err_num, char **argv);*/
+int			find_token_error(char **argv);
+char		**token_error(char **argv);
 
 /* heredoc */
 char		*cpy_delimiter(char *s, char *arg);

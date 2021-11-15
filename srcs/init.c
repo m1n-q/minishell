@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 17:29:18 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/13 17:54:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,3 @@ int	init_shell(void)
 	get_or_set_interactive(SET, ON);
 	return (0);
 }
-
