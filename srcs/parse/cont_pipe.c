@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/13 17:30:08 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/15 14:37:13 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**join_argvs(char **argv, char **tmp)
 	while (argv[++i])
 	{
 		if (argv[i] > (char *)7LL)
-			ret[i] = strdup_(argv[i]);		//POSSIBLE_LEAK
+			ret[i] = strdup_(argv[i]);
 		else
 			ret[i] = argv[i];
 	}
@@ -33,7 +33,7 @@ char	**join_argvs(char **argv, char **tmp)
 	while (tmp[++j])
 	{
 		if (tmp[j] > (char *)7LL)
-			ret[i++] = strdup_(tmp[j]);		//POSSIBLE_LEAK
+			ret[i++] = strdup_(tmp[j]);
 		else
 			ret[i++] = tmp[j];
 	}

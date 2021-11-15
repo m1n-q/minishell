@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 10:11:39 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 14:27:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,100 +62,3 @@ char	**token_error(char **argv)
 	free(tok);
 	return (e);
 }
-
-/*int	is_pipe_err(char **argv, int i)
-{
-	if (argv[0] == (char *)PIPE)
-		return (1);
-	if (i == 1 && argv[i] == (char *)PIPE)
-	{
-		if (argv[0] == (char *)REDIRECT_OUT)
-			return (2);
-		else if (argv[0] < (char *)REDIRECT_OUT)
-			return (1);
-	}
-	if (i > 1 && argv[0] != (char *)REDIRECT_OUT
-		&& argv[0] <= (char *)REDIRECT_APPEND && argv[1] == (char *)PIPE)
-		return (1);
-	if (argv[i] == (char *)PIPE && argv[i - 1] <= (char *)REDIRECT_APPEND)
-		return (1);
-	return (0);
-}
-
-int	is_double_pipe_err(char **argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		if (argv[i] > (char *)REDIRECT_APPEND)
-			if (is_equal(argv[i], "||"))
-				return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	is_invalid_redir(char **argv)
-{
-	int	i;
-
-	i = -1;
-	while (argv[++i])
-	{
-		if (argv[i] == (char *)REDIRECT_IN
-			&& argv[i + 1] == (char *)REDIRECT_OUT)
-			return (1);
-		if (argv[i] == (char *)REDIRECT_OUT
-			&& argv[i + 1] == (char *)REDIRECT_IN)
-			return (2);
-	}
-	return (0);
-}
-
-int	is_redir_err(char **argv, int i)
-{
-	if (is_invalid_redir(argv) == 1)
-		return (1);
-	else if (is_invalid_redir(argv) == 2)
-		return (2);
-	else if (argv[i] >= (char *)4LL && argv[i] <= (char *)7LL)
-		return (3);
-	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)REDIRECT_IN)
-		|| (argv[0] == (char *)REDIRECT_OUT && \
-			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_IN))
-		return (4);
-	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)REDIRECT_OUT)
-		|| (argv[0] == (char *)REDIRECT_OUT && \
-			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_OUT))
-		return (5);
-	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)REDIRECT_APPEND)
-		|| (argv[0] == (char *)REDIRECT_OUT && \
-			argv[1] == (char *)PIPE && argv[2] == (char *)REDIRECT_APPEND))
-		return (6);
-	else if ((argv[0] != (char *)PIPE && argv[i] == (char *)HEREDOC)
-		|| (argv[0] == (char *)REDIRECT_OUT && \
-			argv[1] == (char *)PIPE && argv[2] == (char *)HEREDOC))
-		return (7);
-	return (0);
-}
-
-char	**return_redir_err(int err_num, char **argv)
-{
-	if (err_num == 1)
-		return (syntax_error((char **)INVALID_REDIR, "`<>'", EX_USAGE, argv));
-	if (err_num == 2)
-		return (syntax_error((char **)INVALID_REDIR, "`><'", EX_USAGE, argv));
-	if (err_num == 3)
-		return (syntax_error((char **)REDIR_ERR, "`newline'", EX_USAGE, argv));
-	if (err_num == 4)
-		return (syntax_error((char **)REDIR_ERR, "`<'", EX_USAGE, argv));
-	if (err_num == 5)
-		return (syntax_error((char **)REDIR_ERR, "`>'", EX_USAGE, argv));
-	if (err_num == 6)
-		return (syntax_error((char **)REDIR_ERR, "`>>'", EX_USAGE, argv));
-	if (err_num == 7)
-		return (syntax_error((char **)REDIR_ERR, "`<<'", EX_USAGE, argv));
-	return (0);
-}*/

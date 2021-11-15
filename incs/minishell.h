@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/15 11:12:01 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 14:34:25 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,52 +148,12 @@ char		*toktos(char *tok);
 char		**ft_split_space(char *s);
 char		**parse(char *s);
 
-/* error */
-/*int			is_pipe_err(char **argv, int i);
-int			is_double_pipe_err(char **argv);
-int			is_redir_err(char **argv, int i);
-char		**return_redir_err(int err_num, char **argv);*/
-int			find_token_error(char **argv);
-char		**token_error(char **argv);
-
-/* heredoc */
-char		*cpy_delimiter(char *s, char *arg);
-char		*adjust_delimiter(char *s);
-int			check_delimiter(char **delim);
-char		*getenv_length(char *s, int *i, int check);
-
-/* empty_q.c */
-char		*rm_empty_q(char *s);
-
-/* copy */
-char		**cpy_str(char *s, char **argv, int *i);
-
-/* copy_utils */
-int			env_has_space(char c, char *s);
-char		**split_and_join_till(char *arg, char **argv, int *i);
-
-/* env */
-char		*case_env(char *s, char *arg, char **argv, int i);
-
-/* join_env */
-char		*trim_space_in_env(char *s, char c);
-int			join_non_env(char *s, char **p_arg);
-int			join_env(char *s, char **p_arg, char ***argv, int i);
-int			join_exit_code(char **p_arg);
-
-
 /* pipe_redir */
 void		cnt_pipe_redir(char *s, int *cnt);
 char		*split_pipe_redir(char *s);
 
-/* str */
-int			cnt_str_len(char *s);
-char		*malloc_str(char **argv, int i, int len);
-
-/* strs */
-int			skip_q(char *s);
-char		**malloc_strs(char *s);
-void		free_strs(char **argv, int i);
+/* empty_q */
+char		*rm_empty_q(char *s);
 
 /* utils */
 int			ft_isspace(char c);
@@ -201,6 +161,44 @@ int			is_q(char c);
 int			is_pipe_redir(char c);
 int			is_empty_q(char *s);
 char		*calloc_n_lcpy(char *s, size_t dstsize);
+
+/* strs */
+int			skip_q(char *s);
+char		**malloc_strs(char *s);
+void		free_strs(char **argv, int i);
+
+/* str */
+int			cnt_str_len(char *s);
+char		*malloc_str(char **argv, int i, int len);
+
+/* copy */
+char		**cpy_str(char *s, char **argv, int *i);
+
+/* heredoc */
+char		*cpy_delimiter(char *s, char *arg);
+char		*adjust_delimiter(char *s);
+int			check_delimiter(char **delim);
+char		*getenv_length(char *s, int *i, int check);
+
+/* env */
+char		*trim_space_in_env(char *s, char c);
+char		*case_env(char *s, char *arg, char **argv, int i);
+
+/* join_env */
+int			join_exit_code(char **p_arg);
+int			join_dollar_at_end(char **p_arg);
+int			join_env(char *s, char **p_arg, char ***argv, int i);
+
+/* join_non_env */
+int			join_non_env(char *s, char **p_arg);
+
+/* env_with_space */
+int			env_has_space(char *s, char c);
+char		**split_and_join_till(char *arg, char **argv, int *i);
+
+/* error */
+int			find_token_error(char **argv);
+char		**token_error(char **argv);
 
 /* cont_pipe */
 char		**join_argvs(char **argv, char **tmp);

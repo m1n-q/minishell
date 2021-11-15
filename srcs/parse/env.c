@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 16:47:12 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 14:22:01 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	expand(char *s, char **p_arg, char **argv, int j)
 
 	i = 0;
 	c = s[i++];
-	while (s[i] != c)
+	while (s[i] && s[i] != c)
 	{
 		if (s[i] != '$')
 			i += join_non_env(&s[i], p_arg);
@@ -84,6 +84,8 @@ int	expand(char *s, char **p_arg, char **argv, int j)
 			i += join_env(&s[i - 1], p_arg, &argv, j);
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 			i += join_exit_code(p_arg);
+		else if (s[i] == '$' && !s[i + 1])
+			i += join_dollar_at_end(p_arg);
 	}
 	return (++i);
 }
@@ -102,7 +104,7 @@ int	not_expand(char *s, char **p_arg)
 	if (*p_arg)
 		*p_arg = join_and_free(*p_arg, tmp, 3);
 	else
-		*p_arg = tmp;
+		*p_arg = dup_and_free(tmp);
 	i++;
 	return (++i);
 }
@@ -128,10 +130,7 @@ char	*case_env(char *s, char *arg, char **argv, int i)
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
 			s += join_exit_code(&ret);
 		else if (*s == '$' && !*(s + 1))
-		{
-			ret = join_and_free(ret, "$", 1);
-			s++;
-		}
+			s += join_dollar_at_end(&ret);
 		if (argv == (char **)AMBIG_REDIR)
 			return ((char *)AMBIG_REDIR);
 	}
