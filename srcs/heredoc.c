@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 11:15:42 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 11:21:28 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*write_until_env(int fd, char *line)
 			ft_putstr_fd(tmp, fd);
 			i += 2;
 		}
-		else if (getenv_length(&line[i + 1], &i, 0))
+		else if (line[i] == '$' && line[i + 1])
 			break ;
 		else
 			write(fd, &line[i++], 1);
@@ -65,11 +65,9 @@ char	*expand_env(int fd, char *line)
 	{
 		env_var = getenv_length(&line[i], &i, 1);
 		if (!env_var)
-		{
-			ft_putendl_fd("", fd);
-			return (0);
-		}
-		ft_putstr_fd(env_var, fd);
+			ft_putstr_fd("", fd);
+		else
+			ft_putstr_fd(env_var, fd);
 	}
 	return (&line[i]);
 }
