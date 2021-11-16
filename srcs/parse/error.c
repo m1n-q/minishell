@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 14:27:21 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/16 17:57:02 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	find_token_error(char **argv)
 		if (is_pipe_token(argv[i]))
 		{
 			if (is_token(argv[i + 1]) || \
-				(i > 0 && is_token(argv[i - 1]) && argv[i + 1] == NULL) || \
+				(i > 0 && is_token(argv[i - 1])) || \
 				(i == 0 && argv[i + 1] == NULL))
 				return (i);
 		}
