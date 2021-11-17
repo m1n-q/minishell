@@ -6,23 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 11:21:28 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:22:57 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incs/minishell.h"
-
-char	*get_env_name(char *s)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	while (!is_q(s[i]) && !ft_isspace(s[i]))
-		i++;
-	tmp = calloc_n_lcpy(s, i + 1);
-	return (tmp);
-}
 
 char	*write_until_env(int fd, char *line)
 {
