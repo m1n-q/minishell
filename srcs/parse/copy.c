@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/16 18:18:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 16:02:52 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 	int		i;
 
 	i = 0;
-	if (argv[j - 1] == (char *)HEREDOC)
+	if (j > 0 && argv[j - 1] == (char *)HEREDOC)
 		return (cpy_delimiter(s, arg));
 	while (*s && !ft_isspace(*s))
 	{
@@ -89,7 +89,8 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 	int		i;
 
 	i = 0;
-	if (has_dollar_sign(s) && argv[j - 1] != (char *)HEREDOC)
+	if (has_dollar_sign(s) && (j == 0
+		|| (j > 0 && argv[j - 1] != (char *)HEREDOC)))
 		return (case_env(s, arg, argv, j - 1));
 	arg[i++] = *s++;
 	while (*s && !ft_isspace(*s))
