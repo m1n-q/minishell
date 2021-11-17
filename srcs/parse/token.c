@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 15:45:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 18:39:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:24:03 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ int	is_redir_token(char *s)
 int	is_pipe_token(char *s)
 {
 	if (s && s == PIPE)
+		return (1);
+	return (0);
+}
+
+int	is_empty_token(char *s)
+{
+	if (s && s == EMPTY_VAR)
 		return (1);
 	return (0);
 }

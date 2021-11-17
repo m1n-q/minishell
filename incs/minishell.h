@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 18:37:57 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:26:29 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # define BUILTIN -1
 # define PARENT_EXIT -2
 
-# define EMPTY_VAR (char *)10LL
 # define ENV (char *)2LL
 # define PIPE (char *)3LL
 # define HEREDOC (char *)4LL
@@ -45,6 +44,7 @@
 # define REDIRECT_OUT (char *)6LL
 # define REDIRECT_APPEND (char *)7LL
 # define NOCMD (char *)8LL
+# define EMPTY_VAR (char *)10LL
 
 # define TIL_SEC 0
 # define TIL_END 1
@@ -141,6 +141,7 @@ void		adjust_envent(t_envent entry, char *value);
 int			is_token(char *s);
 int			is_redir_token(char *s);
 int			is_pipe_token(char *s);
+int			is_empty_token(char *s);
 char		*toktos(char *tok);
 
 /* ************************ parse ************************ */

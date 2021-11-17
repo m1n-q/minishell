@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 18:49:23 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:27:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	trim_redir(char ***argv, int count_redir)
 	j = -1;
 	while ((*argv)[++i])
 	{
-		if ((*argv)[i] > (char *)9LL)
+		if (is_token((*argv)[i]) == 0)
 			new_argv[++j] = (*argv)[i];
 		else if ((*argv)[i + 1])
 		{
