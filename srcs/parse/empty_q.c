@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 16:09:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:11:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ int	cnt_empty_q(char *s)
 		if (is_q(s[i]))
 		{
 			c = s[i++];
+			if (!s[i])
+				break ;
 			if (c == s[i++] && s[i] && !ft_isspace(s[i]))
 				ret++;
+			if (!s[i])
+				break ;
 		}
 		i++;
 	}

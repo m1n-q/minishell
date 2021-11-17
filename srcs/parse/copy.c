@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 16:02:52 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:22:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 
 	i = 0;
 	if (has_dollar_sign(s) && (j == 0
-		|| (j > 0 && argv[j - 1] != (char *)HEREDOC)))
+			|| (j > 0 && argv[j - 1] != (char *)HEREDOC)))
 		return (case_env(s, arg, argv, j - 1));
 	arg[i++] = *s++;
 	while (*s && !ft_isspace(*s))

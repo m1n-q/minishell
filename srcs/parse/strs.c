@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 17:16:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 16:21:11 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	cnt_strs(char *s, int *ret)
 	int	i;
 
 	i = 0;
-	*ret = 0;
 	while (s[i])
 	{
 		if (!is_q(s[i]) && !ft_isspace(s[i]))
@@ -46,7 +45,7 @@ void	cnt_strs(char *s, int *ret)
 			while (s[i] && !ft_isspace(s[i]))
 			{
 				if (is_q(s[i]))
-					i += skip_q(&s[i]);
+					i += skip_q(&s[i]) - 1;
 				i++;
 			}
 		}
@@ -66,6 +65,7 @@ char	**malloc_strs(char *s)
 	int		num_of_strs;
 	char	**ret;
 
+	num_of_strs = 0;
 	cnt_strs(s, &num_of_strs);
 	ret = (char **)calloc_(num_of_strs + 1, sizeof(char *));
 	return (ret);
