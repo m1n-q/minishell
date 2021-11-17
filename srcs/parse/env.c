@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 20:20:48 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 20:53:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	count_space_in_env(char *s, char c)
 	ret = 0;
 	if (c == '"')
 		return (ret);
-	while (ft_isspace(s[i++]))
+	while (s[i] && ft_isspace(s[i++]))
 		ret++;
 	while (s[i])
 	{

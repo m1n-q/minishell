@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 20:16:58 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 20:48:54 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	join_env_var(char *env, char **p_arg, char c)
 	if (!*p_arg)
 	{
 		free(*p_arg);
-		*p_arg = strdup_(new);
+		if (*new)
+			*p_arg = strdup_(new);
+		else
+			*p_arg = EMPTY_VAR;
 	}
 	else if (*p_arg)
 	{
