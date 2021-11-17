@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 18:42:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 22:05:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int	has_dollar_sign(char *s)
 {
-	if (is_equal(s, "$")
-		|| (*s == '"' && *(s + 1) == '$' && *(s + 2) == '"'))
-		return (0);
-	if (*s == '"')
-	{
-		while (*++s != '"')
-		{
-			if (*s == '$')
-				return (1);
-		}
-	}
-	while (*s && !ft_isspace(*s))
-	{
-		if (*s == '$')
+	int		i;
+	char	c;
+
+	i = -1;
+	while (s[++i] && !is_q(s[i]) && !ft_isspace(s[i]))
+		if (s[i] == '$')
 			return (1);
-		s++;
+	if (ft_isspace(s[i]))
+		return (0);
+	if (is_q(s[i]))
+	{
+		c = s[i];
+		while (s[++i] != c)
+			if (s[i] == '$')
+				return (1);
+		i++;
 	}
 	return (0);
 }
