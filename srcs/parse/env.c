@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 17:01:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 17:08:13 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	expand(char *s, char **p_arg, char *prev_arg)
 		if (s[i] != '$')
 			i += join_non_env(&s[i], p_arg);
 		if (s[i] == '$' && s[i + 1] && s[i + 1] != '?')
-			i += join_env(&s[i], p_arg, prev_arg, '"');
+			i += join_env(&s[i], p_arg, prev_arg, c);
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 			i += join_exit_code(p_arg);
 		else if (s[i] == '$' && !s[i + 1])
