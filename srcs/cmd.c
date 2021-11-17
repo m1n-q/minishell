@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 19:27:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 20:44:56 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ static int	trim_redir(char ***argv, int count_redir)
 int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 {
 	int	i;
+	int	j;
 	int	e;
 
 	i = -1;
@@ -114,6 +115,11 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 		set_path(&cmd_table[i]);
 		if (i < len_cmd_table - 1)
 			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
+		cmd_table[i].argc = get_argc(cmd_table[i].argv);
+		j = -1;
+		while (++j < cmd_table[i].argc)
+			if (cmd_table[i].argv[j] == EMPTY_VAR)
+				cmd_table[i].argv[j] = NULL;
 	}
 	return (0);
 }
