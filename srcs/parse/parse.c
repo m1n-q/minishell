@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 16:56:03 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:42:29 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**ft_split_space(char *s)
 	char	*tofree;
 
 	if (!quotes_match(s))
-		return ((char **)Q_ERR);
+		return (Q_ERR);
 	s = split_pipe_redir(s);
 	s = rm_empty_q(s);
 	ret = malloc_strs(s);
@@ -61,7 +61,7 @@ char	**ft_split_space(char *s)
 		if (!ft_isspace(*s))
 		{
 			ret = cpy_str(s, ret, &i);
-			if (ret == (char **)AMBIG_REDIR)
+			if (ret == AMBIG_REDIR)
 				break ;
 			s += cnt_str_len(s) - 1;
 		}
@@ -77,23 +77,23 @@ char	**parse(char *s)
 	int		last;
 
 	ret = ft_split_space(s);
-	if (ret == (char **)Q_ERR)
-		return (syntax_error((char **)Q_ERR, 0, EXECUTION_FAILURE));
-	if (ret == (char **)AMBIG_REDIR)
+	if (ret == Q_ERR)
+		return (syntax_error(Q_ERR, 0, EXECUTION_FAILURE));
+	if (ret == AMBIG_REDIR)
 		return (ret);
 	last = get_argc(ret) - 1;
 	if (find_token_error(ret) != -1)
 		return (token_error(ret));
-	if (last > 0 && ret[last] == (char *)PIPE)
+	if (last > 0 && ret[last] == PIPE)
 		ret = cont_pipe(ret);
 	return (ret);
 }
 
 /*	if (is_double_pipe_err(ret))
-		return (syntax_error((char **)PIPE_ERR, "`||'", EX_USAGE, ret));
+		return (syntax_error(PIPE_ERR, "`||'", EX_USAGE, ret));
 	if (is_pipe_err(ret, last) == 1)
-		return (syntax_error((char **)PIPE_ERR, "`|'", EX_USAGE, ret));
+		return (syntax_error(PIPE_ERR, "`|'", EX_USAGE, ret));
 	else if (is_pipe_err(ret, last) == 2)
-		return (syntax_error((char **)PIPE_ERR, "`newline'", EX_USAGE, ret));
+		return (syntax_error(PIPE_ERR, "`newline'", EX_USAGE, ret));
 	if (is_redir_err(ret, last))
 		return (return_redir_err(is_redir_err(ret, last), ret));*/

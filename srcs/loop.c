@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/12 16:33:56 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:42:29 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	check_and_parse(char *input, char ***ptr_argv)
 	}
 	add_history(input);
 	argv = parse(input);
-	if (argv == (char **)Q_ERR || argv == (char **)PIPE_ERR || \
-		argv == (char **)REDIR_ERR || argv == (char **)UNEXPECTED_EOF || \
-		argv == (char **)INVALID_REDIR || argv == (char **)AMBIG_REDIR)
+	if (argv == Q_ERR || argv == PIPE_ERR || \
+		argv == REDIR_ERR || argv == UNEXPECTED_EOF || \
+		argv == INVALID_REDIR || argv == AMBIG_REDIR)
 		return (-1);
 	*ptr_argv = argv;
 	return (0);

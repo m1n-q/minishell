@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 16:50:56 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:37:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@
 # define BUILTIN -1
 # define PARENT_EXIT -2
 
-# define AMP 1LL
-# define ENV 2LL
-# define PIPE 3LL
-# define HEREDOC 4LL
-# define REDIRECT_IN 5LL
-# define REDIRECT_OUT 6LL
-# define REDIRECT_APPEND 7LL
-# define NOCMD 8LL
+# define EMPTY_VAR (char *)10LL
+# define ENV (char *)2LL
+# define PIPE (char *)3LL
+# define HEREDOC (char *)4LL
+# define REDIRECT_IN (char *)5LL
+# define REDIRECT_OUT (char *)6LL
+# define REDIRECT_APPEND (char *)7LL
+# define NOCMD (char *)8LL
 
 # define TIL_SEC 0
 # define TIL_END 1

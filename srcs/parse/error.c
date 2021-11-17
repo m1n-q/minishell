@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 18:07:58 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 19:03:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ char	**token_error(char **argv)
 		return (0);
 	tok = toktos(argv[i]);
 	if (is_pipe_token(argv[i]))
-		e = (char **)PIPE_ERR;
+		e = PIPE_ERR;
 	else if (is_redir_token(argv[i]) || argv[i] == NULL)
-		e = (char **)REDIR_ERR;
+		e = REDIR_ERR;
 	if (e)
 	{
-		syntax_error((char **)REDIR_ERR, tok, EX_USAGE);
+		syntax_error(REDIR_ERR, tok, EX_USAGE);
 		free_till(get_argc(argv), argv);
 		free(argv);
 	}

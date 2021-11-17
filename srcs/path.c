@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 19:00:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 18:51:19 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ static char	*find_path(char *arg)
 	return (path);
 }
 
-/* NOCMD: only redir w/o command */
+/* NOCMD: EMPTY_VAR || only redir w/o command */
 int	set_path(t_cmd *cmd)
 {
-	if (cmd->argv[0] == NULL)
-		cmd->path = (char *)NOCMD;
+	if (cmd->argv[0] == EMPTY_VAR || cmd->argv[0] == NULL)
+		cmd->path = NOCMD;
 	else if (has_slash(cmd->argv[0]))
 		cmd->path = strdup_(cmd->argv[0]);
 	else

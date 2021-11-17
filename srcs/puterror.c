@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/13 17:20:56 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/17 18:42:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ char	**syntax_error(char **error, char *token, int exit_code)
 {
 	get_or_set_exitcode(SET, exit_code);
 	ft_putstr_fd("minishell: syntax error", STDERR_FILENO);
-	if (error == (char **)Q_ERR)
+	if (error == Q_ERR)
 	{
 		ft_putendl_fd(": quote unclosed", STDERR_FILENO);
 		return (error);
 	}
-	else if (error == (char **)UNEXPECTED_EOF)
+	else if (error == UNEXPECTED_EOF)
 		ft_putendl_fd(": unexpected end of file", STDERR_FILENO);
-	else if (error == (char **)PIPE_ERR || error == (char **)REDIR_ERR)
+	else if (error == PIPE_ERR || error == REDIR_ERR)
 	{
 		ft_putstr_fd(" near unexpected token ", STDERR_FILENO);
 		ft_putendl_fd(token, STDERR_FILENO);
 	}
-	else if (error == (char **)INVALID_REDIR)
+	else if (error == INVALID_REDIR)
 	{
 		ft_putstr_fd(": invalid token: ", STDERR_FILENO);
 		ft_putendl_fd(token, STDERR_FILENO);

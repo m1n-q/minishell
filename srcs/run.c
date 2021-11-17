@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 18:11:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 18:39:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_exit	c(t_cmd cmd)
 		internal_error(cmd.argv[0], "command not found");
 		ext.code = EX_NOTFOUND;
 	}
-	else if (cmd.path == (char *)NOCMD)
+	else if (cmd.path == NOCMD)
 		ext.code = 0;
 	else if (is_equal(cmd.path, "built-in"))
 		ext = builtin_fork(cmd);
@@ -92,7 +92,7 @@ t_exit	run(t_cmd cmd)
 	settty(ON, ECHOCTL);
 	if (cmd.any_err)
 		return ((t_exit){-1, 0, EXECUTION_FAILURE});
-	if (cmd.path != (char *)NOCMD && is_equal(cmd.path, "built-in") && \
+	if (cmd.path != NOCMD && is_equal(cmd.path, "built-in") && \
 		cmd.pipe_stream.in == DEFAULT && cmd.pipe_stream.out == DEFAULT)
 		return (builtin_nofork(cmd));
 	ext.pid = fork();

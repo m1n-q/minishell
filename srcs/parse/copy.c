@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 17:07:22 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:42:29 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ char	*case_pipe_redir(char *s)
 	char	*ret;
 
 	if (is_equal(s, "|"))
-		ret = (char *)PIPE;
+		ret = PIPE;
 	else if (is_equal(s, "<"))
-		ret = (char *)REDIRECT_IN;
+		ret = REDIRECT_IN;
 	else if (is_equal(s, ">"))
-		ret = (char *)REDIRECT_OUT;
+		ret = REDIRECT_OUT;
 	else if (is_equal(s, "<<"))
-		ret = (char *)HEREDOC;
+		ret = HEREDOC;
 	else if (is_equal(s, ">>"))
-		ret = (char *)REDIRECT_APPEND;
+		ret = REDIRECT_APPEND;
 	else
 		ret = s;
 	if (ret != s)
@@ -63,7 +63,7 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 	int		i;
 
 	i = 0;
-	if (j > 0 && argv[j - 1] == (char *)HEREDOC)
+	if (j > 0 && argv[j - 1] == HEREDOC)
 		return (cpy_delimiter(s, arg));
 	while (*s && !ft_isspace(*s))
 	{
@@ -90,7 +90,7 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 
 	i = 0;
 	if (has_dollar_sign(s) && (j == 0
-			|| (j > 0 && argv[j - 1] != (char *)HEREDOC)))
+			|| (j > 0 && argv[j - 1] != HEREDOC)))
 		return (case_env(s, arg, argv, j));
 	arg[i++] = *s++;
 	while (*s && !ft_isspace(*s))
@@ -125,10 +125,10 @@ char	**cpy_str(char *s, char **argv, int *i)
 	{
 		free_till(*i, argv);
 		free(argv);
-		return ((char **)AMBIG_REDIR);
+		return (AMBIG_REDIR);
 	}
 	if (argv[*i] && env_has_space(argv[*i], s[0])
-		&& (*i == 0 || argv[*i - 1] == (char *)PIPE))
+		&& (*i == 0 || argv[*i - 1] == PIPE))
 		return (split_and_join_till(argv[*i], argv, i));
 	(*i)++;
 	return (argv);

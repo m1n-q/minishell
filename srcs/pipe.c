@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:21:35 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 18:39:03 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_pipe(char	**argv)
 	i = -1;
 	count = 0;
 	while (argv[++i])
-		if (argv[i] == (char *)PIPE)
+		if (argv[i] == PIPE)
 			count++;
 	return (count);
 }
@@ -49,7 +49,7 @@ static int	copy_args(char ***dst_ptr, char **src, int start, int end)
 	i = -1;
 	while (++i < end - start)
 	{
-		if (src[start + i] < (char *)10LL)
+		if (src[start + i] < (char *)12LL)
 			ret[i] = src[start + i];
 		else
 			ret[i] = strdup_(src[start + i]);
@@ -71,7 +71,7 @@ t_cmd	*split_pipe(char **argv, int len_cmd_table)
 	while (1)
 	{
 		end++;
-		if (argv[end] == (char *)PIPE || argv[end] == NULL)
+		if (argv[end] == PIPE || argv[end] == NULL)
 		{
 			init_cmd(cmd_table);
 			copy_args(&(*cmd_table).argv, argv, start, end);

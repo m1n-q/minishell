@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 17:37:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 18:49:23 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	count_redir(t_cmd *cmd)
 	i = -1;
 	while (cmd->argv[++i])
 	{
-		if (cmd->argv[i] == (char *)REDIRECT_OUT || \
-			cmd->argv[i] == (char *)REDIRECT_IN || \
-			cmd->argv[i] == (char *)REDIRECT_APPEND || \
-			cmd->argv[i] == (char *)HEREDOC)
+		if (cmd->argv[i] == REDIRECT_OUT || \
+			cmd->argv[i] == REDIRECT_IN || \
+			cmd->argv[i] == REDIRECT_APPEND || \
+			cmd->argv[i] == HEREDOC)
 			count++;
 	}
 	return (count);
@@ -32,10 +32,10 @@ static int	count_redir(t_cmd *cmd)
 
 static int	is_redir(char *arg)
 {
-	if (arg == (char *)REDIRECT_OUT || \
-		arg == (char *)REDIRECT_IN || \
-		arg == (char *)REDIRECT_APPEND || \
-		arg == (char *)HEREDOC)
+	if (arg == REDIRECT_OUT || \
+		arg == REDIRECT_IN || \
+		arg == REDIRECT_APPEND || \
+		arg == HEREDOC)
 		return (1);
 	return (0);
 }
@@ -50,13 +50,13 @@ static int	check_redir(t_cmd *cmd)
 	{
 		if (is_redir(cmd->argv[i]) && cmd->argv[i + 1])
 		{
-			if (cmd->argv[i] == (char *)REDIRECT_OUT)
+			if (cmd->argv[i] == REDIRECT_OUT)
 				redir_out(cmd, cmd->argv[i + 1]);
-			else if (cmd->argv[i] == (char *)REDIRECT_IN)
+			else if (cmd->argv[i] == REDIRECT_IN)
 				redir_in(cmd, cmd->argv[i + 1]);
-			else if (cmd->argv[i] == (char *)REDIRECT_APPEND)
+			else if (cmd->argv[i] == REDIRECT_APPEND)
 				redir_append(cmd, cmd->argv[i + 1]);
-			else if (cmd->argv[i] == (char *)HEREDOC)
+			else if (cmd->argv[i] == HEREDOC)
 			{
 				e = heredoc(cmd, cmd->argv[i + 1]);
 				if (e)
@@ -82,7 +82,7 @@ static int	trim_redir(char ***argv, int count_redir)
 	j = -1;
 	while ((*argv)[++i])
 	{
-		if ((*argv)[i] > (char *)10LL)
+		if ((*argv)[i] > (char *)9LL)
 			new_argv[++j] = (*argv)[i];
 		else if ((*argv)[i + 1])
 		{

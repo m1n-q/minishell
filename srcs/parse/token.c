@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 15:45:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/13 17:55:01 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 18:39:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ char	*toktos(char *tok)
 {
 	if (tok == NULL)
 		return (joinjoin("`", "newline", "'"));
-	if (tok == (char *)PIPE)
+	if (tok == PIPE)
 		return (joinjoin("`", "|", "'"));
-	if (tok == (char *)HEREDOC)
+	if (tok == HEREDOC)
 		return (joinjoin("`", "<<", "'"));
-	if (tok == (char *)REDIRECT_IN)
+	if (tok == REDIRECT_IN)
 		return (joinjoin("`", "<", "'"));
-	if (tok == (char *)REDIRECT_OUT)
+	if (tok == REDIRECT_OUT)
 		return (joinjoin("`", ">", "'"));
-	if (tok == (char *)REDIRECT_APPEND)
+	if (tok == REDIRECT_APPEND)
 		return (joinjoin("`", ">>", "'"));
 	return (NULL);
 }
@@ -40,17 +40,17 @@ int	is_token(char *s)
 
 int	is_redir_token(char *s)
 {
-	if (s && (s == (char *)HEREDOC || \
-			s == (char *)REDIRECT_IN || \
-			s == (char *)REDIRECT_OUT || \
-			s == (char *)REDIRECT_APPEND))
+	if (s && (s == HEREDOC || \
+			s == REDIRECT_IN || \
+			s == REDIRECT_OUT || \
+			s == REDIRECT_APPEND))
 		return (1);
 	return (0);
 }
 
 int	is_pipe_token(char *s)
 {
-	if (s && s == (char *)PIPE)
+	if (s && s == PIPE)
 		return (1);
 	return (0);
 }

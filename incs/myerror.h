@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:14:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/12 16:18:51 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:41:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@
 # define EX_BADASSIGN		260	/* variable assignment error */
 # define EX_EXPFAIL			261	/* word expansion failed */
 
-# define Q_ERR				1LL
-# define REDIR_ERR			2LL
-# define PIPE_ERR			3LL
-# define UNEXPECTED_EOF		4LL
-# define INVALID_REDIR		5LL
-# define AMBIG_REDIR		9LL
+# define Q_ERR				(char **)1LL
+# define REDIR_ERR			(char **)2LL
+# define PIPE_ERR			(char **)3LL
+# define UNEXPECTED_EOF		(char **)4LL
+# define INVALID_REDIR		(char **)5LL
+# define AMBIG_REDIR		(char **)9LL
 
 # define CD_SHORTDOC			"cd [dir]"
 # define ENV_SHORTDOC			"env"

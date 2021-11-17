@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_with_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 14:28:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:33:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	env_has_space(char *s, char c)
 {
 	int	i;
 
+	if (s == EMPTY_VAR)
+		return (0);
 	i = -1;
 	if (c != '$')
 		return (0);

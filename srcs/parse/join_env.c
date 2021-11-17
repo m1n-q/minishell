@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 17:10:11 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:38:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ void	join_env_var(char *env, char **p_arg, char c)
 {
 	char	*new;
 
+	if (env == EMPTY_VAR)
+	{
+		if (!*p_arg)
+			*p_arg = env;
+		return ;
+	}
 	new = trim_space_in_env(env, c);
 	if (!*p_arg)
 	{
@@ -86,9 +92,13 @@ int	join_env(char *s, char **p_arg, char *prev_arg, char c)
 	env = getenv(tmp);
 	if (env)
 		join_env_var(env, p_arg, c);
-	else if (!env && \
-		prev_arg >= (char *)5LL && prev_arg <= (char *)7LL)
-		*p_arg = ambig_redir_err(tmp);
+	else if (!env)
+	{
+		if (is_redir_token(prev_arg))
+			*p_arg = ambig_redir_err(tmp);
+		else
+			join_env_var(EMPTY_VAR, p_arg, c);
+	}
 	free(tmp);
 	return (++i);
 }

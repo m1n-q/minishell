@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:44:21 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/13 17:34:01 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/17 18:39:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_till(int index, char **arr)
 	i = -1;
 	while (++i < index)
 	{
-		if (is_token(arr[i]) == 0)
+		if (arr[i] != EMPTY_VAR && is_token(arr[i]) == 0)
 			free(arr[i]);
 	}
 }
@@ -39,7 +39,7 @@ void	free_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 				free(cmd_table[i].argv[j]);
 		}
 		free(cmd_table[i].argv);
-		if (cmd_table[i].path != (char *)NOCMD)
+		if (cmd_table[i].path != NOCMD)
 			free(cmd_table[i].path);
 	}
 	free(cmd_table);
