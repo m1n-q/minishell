@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/15 14:34:25 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:50:56 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ char		*case_env(char *s, char *arg, char **argv, int i);
 /* join_env */
 int			join_exit_code(char **p_arg);
 int			join_dollar_at_end(char **p_arg);
-int			join_env(char *s, char **p_arg, char ***argv, int i);
+int			join_env(char *s, char **p_arg, char *prev_arg, char c);
 
 /* join_non_env */
 int			join_non_env(char *s, char **p_arg);
