@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 16:11:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 19:36:01 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,24 @@ int	skip_empty_q_in_delimiter(char *s)
 int	cnt_empty_q(char *s)
 {
 	int		i;
+	int		len;
 	int		ret;
 	char	c;
 
 	i = 0;
+	len = 0;
 	ret = 0;
 	while (s[i])
 	{
 		if (s[i] == '<' && s[i + 1] == '<')
-			i += skip_empty_q_in_delimiter(&s[i]);
-		if (!s[i])
-			break ;
+			i += skip_empty_q_in_delimiter(&s[i]) - 1;
 		if (is_q(s[i]))
 		{
-			c = s[i++];
-			if (!s[i])
-				break ;
-			if (c == s[i++] && s[i] && !ft_isspace(s[i]))
+			c = s[i];
+			while (s[++i] != c)
+				len++;
+			if (!len)
 				ret++;
-			if (!s[i])
-				break ;
 		}
 		i++;
 	}
@@ -71,7 +69,7 @@ char	*rm_empty_q(char *s)
 	while (*s)
 	{
 		if (*s == '<' && *(s + 1) == '<')
-			s += skip_empty_q_in_delimiter(s + 2);
+			s += skip_empty_q_in_delimiter(s);
 		if (is_empty_q(s) && ((*(s + 2) && !ft_isspace(*(s + 2))) || !*(s + 2)))
 			s += 2;
 		else
