@@ -81,7 +81,10 @@ void	join_env_var(char *env, char **p_arg, char c)
 	if (!*p_arg)
 	{
 		free(*p_arg);
-		*p_arg = strdup_(new);
+		if (*new)
+			*p_arg = strdup_(new);
+		else
+			*p_arg = EMPTY_VAR;
 	}
 	else if (*p_arg)
 	{
