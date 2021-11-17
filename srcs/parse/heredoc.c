@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/15 14:35:41 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 19:15:53 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*cpy_delimiter(char *s, char *arg)
 {
 	int		i;
 	int		j;
+	char	c;
 	char	*ret;
 
 	i = 0;
@@ -26,7 +27,16 @@ char	*cpy_delimiter(char *s, char *arg)
 	ret = (char *)calloc_(i + 1, sizeof(char));
 	i = 0;
 	while (s[i] && !ft_isspace(s[i]))
+	{
+		if (is_q(s[i]))
+		{
+			c = s[i];
+			ret[j++] = c;
+			while (s[++i] != c)
+				ret[j++] = s[i];
+		}
 		ret[j++] = s[i++];
+	}
 	ret[j] = 0;
 	return (ret);
 }
@@ -66,7 +76,7 @@ char	*adjust_delimiter(char *s)
 	ret = (char *)calloc_(cnt_delimiter_len(s) + 1, sizeof(char));
 	i = 0;
 	j = 0;
-	while (s[i] && !ft_isspace(s[i]))
+	while (s[i])
 	{
 		if (is_q(s[i]))
 		{
