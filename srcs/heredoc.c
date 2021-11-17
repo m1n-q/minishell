@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 17:42:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 16:22:57 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 char	*write_until_env(int fd, char *line)
 {
 	int		i;
-	int		cnt;
 	char	*tmp;
 
 	i = 0;
-	cnt = 0;
 	while (line[i])
 	{
 		if (line[i] == '$' && line[i + 1] == '$')
@@ -33,7 +31,7 @@ char	*write_until_env(int fd, char *line)
 			ft_putstr_fd(tmp, fd);
 			i += 2;
 		}
-		else if (getenv(&line[i + 1]))
+		else if (line[i] == '$' && line[i + 1])
 			break ;
 		else
 			write(fd, &line[i++], 1);
@@ -44,24 +42,22 @@ char	*write_until_env(int fd, char *line)
 /* expand environment variables */
 char	*expand_env(int fd, char *line)
 {
+	int		i;
 	char	*env_var;
 
 	line = write_until_env(fd, line);
-	if (line[0] == '$' && !line[1])
+	i = 0;
+	if (line[i] == '$' && !line[i + 1])
 		return (line);
-	else if (line[0] == '$' && line[1] == '?')
-		return (itoa_(get_or_set_exitcode(GET, 0)));
-	else if (line[0] == '$' && line[1] && line[1] != '?')
+	else if (line[i] == '$' && line[++i])
 	{
-		env_var = getenv(&line[1]);
+		env_var = getenv_length(&line[i], &i, 1);
 		if (!env_var)
-		{
-			ft_putendl_fd("", fd);
-			return (0);
-		}
-		line = calloc_n_lcpy(env_var, ft_strlen(env_var) + 1);
+			ft_putstr_fd("", fd);
+		else
+			ft_putstr_fd(env_var, fd);
 	}
-	return (line);
+	return (&line[i]);
 }
 
 /* check for expand and trim quotes in delimiter */

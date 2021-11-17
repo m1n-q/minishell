@@ -6,13 +6,13 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 18:34:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 14:28:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-int	env_has_space(char c, char *s)
+int	env_has_space(char *s, char c)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 16:47:12 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 17:08:13 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	count_space_in_env(char *s, char c)
 			if (s[i])
 				ret--;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (ret);
 }
@@ -69,21 +70,23 @@ char	*trim_space_in_env(char *s, char c)
 	return (ret);
 }
 
-int	expand(char *s, char **p_arg, char **argv, int j)
+int	expand(char *s, char **p_arg, char *prev_arg)
 {
 	int		i;
 	char	c;
 
 	i = 0;
 	c = s[i++];
-	while (s[i] != c)
+	while (s[i] && s[i] != c)
 	{
 		if (s[i] != '$')
 			i += join_non_env(&s[i], p_arg);
 		if (s[i] == '$' && s[i + 1] && s[i + 1] != '?')
-			i += join_env(&s[i - 1], p_arg, &argv, j);
+			i += join_env(&s[i], p_arg, prev_arg, c);
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 			i += join_exit_code(p_arg);
+		else if (s[i] == '$' && !s[i + 1])
+			i += join_dollar_at_end(p_arg);
 	}
 	return (++i);
 }
@@ -102,7 +105,7 @@ int	not_expand(char *s, char **p_arg)
 	if (*p_arg)
 		*p_arg = join_and_free(*p_arg, tmp, 3);
 	else
-		*p_arg = tmp;
+		*p_arg = dup_and_free(tmp);
 	i++;
 	return (++i);
 }
@@ -112,27 +115,27 @@ int	not_expand(char *s, char **p_arg)
 char	*case_env(char *s, char *arg, char **argv, int i)
 {
 	char	*ret;
+	char	*prev_arg;
 
 	ret = 0;
+	if (i > 0)
+		prev_arg = argv[i - 1];
 	free(arg);
 	while (*s && !ft_isspace(*s))
 	{
 		if (*s == '"')
-			s += expand(s, &ret, argv, i);
+			s += expand(s, &ret, prev_arg);
 		else if (*s == '\'')
 			s += not_expand(s, &ret);
 		else if (*s != '$')
 			s += join_non_env(s, &ret);
 		else if (*s == '$' && *(s + 1) && *(s + 1) != '?')
-			s += join_env(s - 1, &ret, &argv, i);
+			s += join_env(s, &ret, prev_arg, 0);
 		else if (*s == '$' && *(s + 1) && *(s + 1) == '?')
 			s += join_exit_code(&ret);
 		else if (*s == '$' && !*(s + 1))
-		{
-			ret = join_and_free(ret, "$", 1);
-			s++;
-		}
-		if (argv == (char **)AMBIG_REDIR)
+			s += join_dollar_at_end(&ret);
+		if (ret == (char *)AMBIG_REDIR)
 			return ((char *)AMBIG_REDIR);
 	}
 	return (ret);

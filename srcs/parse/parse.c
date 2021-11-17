@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/13 17:56:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 16:56:03 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**parse(char *s)
 	last = get_argc(ret) - 1;
 	if (find_token_error(ret) != -1)
 		return (token_error(ret));
-	if (ret[last] == (char *)PIPE && last != 0)
+	if (last > 0 && ret[last] == (char *)PIPE)
 		ret = cont_pipe(ret);
 	return (ret);
 }

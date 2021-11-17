@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 17:34:36 by shin             ###   ########.fr       */
+/*   Updated: 2021/11/17 17:07:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 	int		i;
 
 	i = 0;
-	if (argv[j - 1] == (char *)HEREDOC)
+	if (j > 0 && argv[j - 1] == (char *)HEREDOC)
 		return (cpy_delimiter(s, arg));
 	while (*s && !ft_isspace(*s))
 	{
 		if (has_dollar_sign(s) && is_q(*s))
-			return (case_env(s, arg, argv, j - 1));
+			return (case_env(s, arg, argv, j));
 		c = *s++;
 		while (*s && *s != c)
 			arg[i++] = *s++;
@@ -89,8 +89,9 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 	int		i;
 
 	i = 0;
-	if (has_dollar_sign(s) && argv[j - 1] != (char *)HEREDOC)
-		return (case_env(s, arg, argv, j - 1));
+	if (has_dollar_sign(s) && (j == 0
+			|| (j > 0 && argv[j - 1] != (char *)HEREDOC)))
+		return (case_env(s, arg, argv, j));
 	arg[i++] = *s++;
 	while (*s && !ft_isspace(*s))
 	{
@@ -126,7 +127,7 @@ char	**cpy_str(char *s, char **argv, int *i)
 		free(argv);
 		return ((char **)AMBIG_REDIR);
 	}
-	if (argv[*i] && env_has_space(s[0], argv[*i])
+	if (argv[*i] && env_has_space(argv[*i], s[0])
 		&& (*i == 0 || argv[*i - 1] == (char *)PIPE))
 		return (split_and_join_till(argv[*i], argv, i));
 	(*i)++;

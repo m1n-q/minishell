@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/12 16:46:11 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/15 14:00:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	join_non_env(char *s, char **p_arg)
 	int		i;
 
 	i = 0;
+	if (s[i] == '\'')
+		i++;
 	while (s[i] && s[i] != '$' && !is_q(s[i]))
 		i++;
 	tmp = calloc_n_lcpy(s, i + 1);
@@ -26,4 +28,10 @@ int	join_non_env(char *s, char **p_arg)
 	else
 		*p_arg = dup_and_free(tmp);
 	return (i);
+}
+
+int	join_dollar_at_end(char **p_arg)
+{
+	*p_arg = join_and_free(*p_arg, "$", 1);
+	return (1);
 }
