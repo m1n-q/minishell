@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 17:08:13 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 20:20:48 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,12 @@ int	not_expand(char *s, char **p_arg)
 		i++;
 	tmp = calloc_n_lcpy(s, i + 1);
 	if (*p_arg)
-		*p_arg = join_and_free(*p_arg, tmp, 3);
+	{
+		if (*p_arg != EMPTY_VAR)
+			*p_arg = join_and_free(*p_arg, tmp, 3);
+		else
+			*p_arg = dup_and_free(tmp);
+	}
 	else
 		*p_arg = dup_and_free(tmp);
 	i++;
