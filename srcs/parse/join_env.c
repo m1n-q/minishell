@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 18:38:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 20:16:58 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ int	join_exit_code(char **p_arg)
 	if (!*p_arg)
 		*p_arg = dup_and_free(tmp);
 	else if (*p_arg)
-		*p_arg = join_and_free(*p_arg, tmp, 3);
+	{
+		if (*p_arg != EMPTY_VAR)
+			*p_arg = join_and_free(*p_arg, tmp, 3);
+		else
+			*p_arg = dup_and_free(tmp);
+	}
 	return (2);
 }
 
@@ -39,7 +44,13 @@ int	join_dollar_sign(char *s, char **p_arg)
 	if (cnt % 2 && cnt > 0 && s[i] != '"')
 		cnt--;
 	tmp = calloc_n_lcpy(s, cnt + 1);
-	*p_arg = join_and_free(*p_arg, tmp, 3);
+	if (*p_arg)
+	{
+		if (*p_arg != EMPTY_VAR)
+			*p_arg = join_and_free(*p_arg, tmp, 3);
+		else
+			*p_arg = dup_and_free(tmp);
+	}
 	if (s[i] == '"')
 		cnt++;
 	return (cnt);
@@ -71,7 +82,12 @@ void	join_env_var(char *env, char **p_arg, char c)
 		*p_arg = strdup_(new);
 	}
 	else if (*p_arg)
-		*p_arg = join_and_free(*p_arg, new, 1);
+	{
+		if (*p_arg != EMPTY_VAR)
+			*p_arg = join_and_free(*p_arg, new, 1);
+		else
+			*p_arg = strdup_(new);
+	}
 	if (!is_equal(new, env))
 		free(new);
 }
