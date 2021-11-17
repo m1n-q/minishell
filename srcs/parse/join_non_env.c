@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 20:21:59 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/17 21:58:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int	join_dollar_at_end(char **p_arg)
 		else
 			*p_arg = strdup_("$");
 	}
+	else
+		*p_arg = strdup_("$");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 20:53:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 22:03:57 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ int	expand(char *s, char **p_arg, char *prev_arg)
 			i += join_env(&s[i], p_arg, prev_arg, c);
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 			i += join_exit_code(p_arg);
-		else if (s[i] == '$' && !s[i + 1])
+		else if (s[i] == '$' && s[i + 1] == c)
 			i += join_dollar_at_end(p_arg);
 	}
+	if (!s[i])
+		return (i);
 	return (++i);
 }
 

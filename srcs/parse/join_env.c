@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 20:48:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 22:04:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	join_dollar_sign(char *s, char **p_arg)
 		else
 			*p_arg = dup_and_free(tmp);
 	}
+	else
+		*p_arg = dup_and_free(tmp);
 	if (s[i] == '"')
 		cnt++;
 	return (cnt);
