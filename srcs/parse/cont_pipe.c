@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 18:42:11 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:19:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**join_argvs(char **argv, char **tmp)
 	i = -1;
 	while (argv[++i])
 	{
-		if (argv[i] > (char *)7LL)
+		if (argv[i] > (char *)11LL)
 			ret[i] = strdup_(argv[i]);
 		else
 			ret[i] = argv[i];
@@ -32,7 +32,7 @@ char	**join_argvs(char **argv, char **tmp)
 	j = -1;
 	while (tmp[++j])
 	{
-		if (tmp[j] > (char *)7LL)
+		if (tmp[j] > (char *)11LL)
 			ret[i++] = strdup_(tmp[j]);
 		else
 			ret[i++] = tmp[j];
