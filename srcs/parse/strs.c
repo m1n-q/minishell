@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 03:00:13 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 03:23:04 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	count_n_skip_env(char *s, char c, int *ret)
 
 	i = 1;
 	env = getenv_(&s[i], &i, 0);
-	*ret = env_has_space(env, c);
+	*ret += env_has_space(env, c);
 	while (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_')
 		i++;
 	return (i);
