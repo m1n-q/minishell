@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:40:16 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/03 21:47:18 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:40:07 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,32 @@ void	redir_append(t_cmd *cmd, char *file)
 	if (cmd->redir_stream.out != DEFAULT)
 		close(cmd->redir_stream.out);
 	cmd->redir_stream.out = fd;
+}
+
+int	is_redir(char *arg)
+{
+	if (arg == REDIRECT_OUT || \
+		arg == REDIRECT_IN || \
+		arg == REDIRECT_APPEND || \
+		arg == HEREDOC)
+		return (1);
+	return (0);
+}
+
+int	count_redir(t_cmd *cmd)
+{
+	int			i;
+	int			count;
+
+	count = 0;
+	i = -1;
+	while (cmd->argv[++i])
+	{
+		if (cmd->argv[i] == REDIRECT_OUT || \
+			cmd->argv[i] == REDIRECT_IN || \
+			cmd->argv[i] == REDIRECT_APPEND || \
+			cmd->argv[i] == HEREDOC)
+			count++;
+	}
+	return (count);
 }

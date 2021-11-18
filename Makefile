@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 GNULIB_DIR = /usr/local/opt/readline/lib
 GNUINC_DIR = /usr/local/opt/readline/include
 LIBFT_DIR = Libft

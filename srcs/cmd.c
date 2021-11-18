@@ -6,39 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 20:44:56 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:42:28 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-static int	count_redir(t_cmd *cmd)
-{
-	int			i;
-	int			count;
-
-	count = 0;
-	i = -1;
-	while (cmd->argv[++i])
-	{
-		if (cmd->argv[i] == REDIRECT_OUT || \
-			cmd->argv[i] == REDIRECT_IN || \
-			cmd->argv[i] == REDIRECT_APPEND || \
-			cmd->argv[i] == HEREDOC)
-			count++;
-	}
-	return (count);
-}
-
-static int	is_redir(char *arg)
-{
-	if (arg == REDIRECT_OUT || \
-		arg == REDIRECT_IN || \
-		arg == REDIRECT_APPEND || \
-		arg == HEREDOC)
-		return (1);
-	return (0);
-}
 
 static int	check_redir(t_cmd *cmd)
 {
@@ -95,10 +67,19 @@ static int	trim_redir(char ***argv, int count_redir)
 	return (0);
 }
 
+static void	empty_to_null(t_cmd cmd)
+{
+	int	j;
+
+	j = -1;
+	while (++j < cmd.argc)
+		if (cmd.argv[j] == EMPTY_VAR)
+			cmd.argv[j] = NULL;
+}
+
 int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 {
 	int	i;
-	int	j;
 	int	e;
 
 	i = -1;
@@ -109,17 +90,17 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 			if (e == FDERR)
 				cmd_table[i].any_err = 1;
 			else if (e == HEREDOC_INTR || e == FORKERR || e == MALLOCERR)
+			{
+				cmd_table[i].argc = get_argc(cmd_table[i].argv);
 				return (e);
+			}
 		}
 		trim_redir(&(cmd_table[i].argv), count_redir(&cmd_table[i]));
 		set_path(&cmd_table[i]);
 		if (i < len_cmd_table - 1)
 			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
 		cmd_table[i].argc = get_argc(cmd_table[i].argv);
-		j = -1;
-		while (++j < cmd_table[i].argc)
-			if (cmd_table[i].argv[j] == EMPTY_VAR)
-				cmd_table[i].argv[j] = NULL;
+		empty_to_null(cmd_table[i]);
 	}
 	return (0);
 }
