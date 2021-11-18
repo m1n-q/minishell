@@ -6,13 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 11:36:15 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 02:36:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//FIXME: "built-in" can be input
 t_exit	builtin_nofork(t_cmd cmd)
 {
 	t_exit	ext;
@@ -80,7 +79,7 @@ t_exit	c(t_cmd cmd)
 	else if (is_equal(cmd.path, "built-in"))
 		ext = builtin_fork(cmd);
 	else if (execve(cmd.path, cmd.argv, environ) == -1)
-		ext.code = check_error(cmd.argv[0]);			//TODO: test cases
+		ext.code = check_error(cmd.argv[0]);
 	return (ext);
 }
 

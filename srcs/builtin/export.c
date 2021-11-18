@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 15:50:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 02:34:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	__export(t_cmd cmd)
 	error = 0;
 	tmp = 0;
 	i = skip_empty_vars(cmd, 0);
-	if (i == cmd.argc)		//TODO: test with EMPTY_VAR
+	if (i == cmd.argc)
 		return (print_including_empty());
 	if (cmd.argv[i] && isoption(cmd.argv[i], TIL_END))
 	{
