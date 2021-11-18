@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 22:03:57 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 13:59:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* count spaces in arg */
 int	count_space_in_env(char *s, char c)
 {
 	int	i;
@@ -41,6 +42,8 @@ int	count_space_in_env(char *s, char c)
 	return (ret);
 }
 
+/* remove all spaces in arg except for one space
+ * that divides the arguments */
 char	*trim_space_in_env(char *s, char c)
 {
 	int		i;
@@ -70,6 +73,7 @@ char	*trim_space_in_env(char *s, char c)
 	return (ret);
 }
 
+/* if an arg is enclosed by double quotes, expand arg */
 int	expand(char *s, char **p_arg, char *prev_arg)
 {
 	int		i;
@@ -93,6 +97,7 @@ int	expand(char *s, char **p_arg, char *prev_arg)
 	return (++i);
 }
 
+/* if an arg is enclosed by single quotes, do not expand */
 int	not_expand(char *s, char **p_arg)
 {
 	int		i;
@@ -104,21 +109,17 @@ int	not_expand(char *s, char **p_arg)
 	while (s[i] != c)
 		i++;
 	tmp = calloc_n_lcpy(s, i + 1);
-	if (*p_arg)
-	{
-		if (*p_arg != EMPTY_VAR)
-			*p_arg = join_and_free(*p_arg, tmp, 3);
-		else
-			*p_arg = dup_and_free(tmp);
-	}
-	else
+	if (*p_arg && *p_arg != EMPTY_VAR)
+		*p_arg = join_and_free(*p_arg, tmp, 3);
+	else if (*p_arg && *p_arg == EMPTY_VAR)
+		*p_arg = dup_and_free(tmp);
+	else if (!*p_arg)
 		*p_arg = dup_and_free(tmp);
 	i++;
 	return (++i);
 }
 
-/* if the first letter is a dollar-sign or
- * a double quotation mark followed by a dollar sign */
+/* if an arg has a dollar-sign */
 char	*case_env(char *s, char *arg, char **argv, int i)
 {
 	char	*ret;

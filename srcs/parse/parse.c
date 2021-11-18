@@ -6,22 +6,21 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 18:42:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:25:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-/* if the numbers of each of the quotes are odd (mismatch) return 0,
- * otherwise return 1 */
+/* if any of the quotes don't have a match return 0, otherwise return 1 */
 int	quotes_match(char *s)
 {
-	char	c;
 	int		cnt_q;
+	char	c;
 	char	*tofree;
 
-	tofree = s;
 	cnt_q = 0;
+	tofree = s;
 	while (*s)
 	{
 		if (is_q(*s))
@@ -46,8 +45,8 @@ int	quotes_match(char *s)
 char	**ft_split_space(char *s)
 {
 	int		i;
-	char	**ret;
 	char	*tofree;
+	char	**ret;
 
 	if (!quotes_match(s))
 		return (Q_ERR);
@@ -73,8 +72,8 @@ char	**ft_split_space(char *s)
 
 char	**parse(char *s)
 {
-	char	**ret;
 	int		last;
+	char	**ret;
 
 	ret = ft_split_space(s);
 	if (ret == Q_ERR)
@@ -88,12 +87,3 @@ char	**parse(char *s)
 		ret = cont_pipe(ret);
 	return (ret);
 }
-
-/*	if (is_double_pipe_err(ret))
-		return (syntax_error(PIPE_ERR, "`||'", EX_USAGE, ret));
-	if (is_pipe_err(ret, last) == 1)
-		return (syntax_error(PIPE_ERR, "`|'", EX_USAGE, ret));
-	else if (is_pipe_err(ret, last) == 2)
-		return (syntax_error(PIPE_ERR, "`newline'", EX_USAGE, ret));
-	if (is_redir_err(ret, last))
-		return (return_redir_err(is_redir_err(ret, last), ret));*/

@@ -6,11 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 15:45:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 19:24:03 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:31:55 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../../incs/minishell.h"
 
 char	*toktos(char *tok)
 {
@@ -27,15 +27,6 @@ char	*toktos(char *tok)
 	if (tok == REDIRECT_APPEND)
 		return (joinjoin("`", ">>", "'"));
 	return (NULL);
-}
-
-int	is_token(char *s)
-{
-	if (s == NULL)
-		return (0);
-	if (is_redir_token(s) || is_pipe_token(s))
-		return (1);
-	return (0);
 }
 
 int	is_redir_token(char *s)
@@ -58,6 +49,15 @@ int	is_pipe_token(char *s)
 int	is_empty_token(char *s)
 {
 	if (s && s == EMPTY_VAR)
+		return (1);
+	return (0);
+}
+
+int	is_token(char *s)
+{
+	if (s == NULL)
+		return (0);
+	if (is_redir_token(s) || is_pipe_token(s))
 		return (1);
 	return (0);
 }

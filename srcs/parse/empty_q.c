@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 19:36:01 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:09:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* if an arg is a delimiter of heredoc, maintain all empty quotes */
 int	skip_empty_q_in_delimiter(char *s)
 {
 	int	i;
@@ -24,7 +25,7 @@ int	skip_empty_q_in_delimiter(char *s)
 	return (i);
 }
 
-/* count empty sets of quotes */
+/* count empty quotes */
 int	cnt_empty_q(char *s)
 {
 	int		i;
@@ -39,7 +40,7 @@ int	cnt_empty_q(char *s)
 	{
 		if (s[i] == '<' && s[i + 1] == '<')
 			i += skip_empty_q_in_delimiter(&s[i]) - 1;
-		if (is_q(s[i]))
+		else if (is_q(s[i]))
 		{
 			c = s[i];
 			while (s[++i] != c)
@@ -52,20 +53,20 @@ int	cnt_empty_q(char *s)
 	return (ret);
 }
 
-/* remove all empty sets of quotes */
+/* remove empty quotes that are not separated by spaces */
 char	*rm_empty_q(char *s)
 {
 	int		i;
 	int		len;
-	char	*ret;
 	char	*tofree;
+	char	*ret;
 
 	if (!cnt_empty_q(s))
 		return (s);
-	tofree = s;
 	i = 0;
 	len = ft_strlen(s) - cnt_empty_q(s) * 2;
 	ret = (char *)calloc_(len + 1, sizeof(char));
+	tofree = s;
 	while (*s)
 	{
 		if (*s == '<' && *(s + 1) == '<')

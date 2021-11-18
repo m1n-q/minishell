@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 19:26:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:31:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,6 @@ t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 void		adjust_envent(t_envent entry, char *value);
 
-/* token */
-int			is_token(char *s);
-int			is_redir_token(char *s);
-int			is_pipe_token(char *s);
-int			is_empty_token(char *s);
-char		*toktos(char *tok);
-
 /* ************************ parse ************************ */
 /* parse */
 char		**ft_split_space(char *s);
@@ -204,6 +197,13 @@ char		**token_error(char **argv);
 /* cont_pipe */
 char		**join_argvs(char **argv, char **tmp);
 char		**cont_pipe(char **argv);
+
+/* token */
+int			is_token(char *s);
+int			is_redir_token(char *s);
+int			is_pipe_token(char *s);
+int			is_empty_token(char *s);
+char		*toktos(char *tok);
 /* ************************ parse ************************ */
 
 /* heredoc */

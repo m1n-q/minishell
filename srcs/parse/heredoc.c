@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 19:15:53 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:14:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* copy the heredoc delimiter */
 char	*cpy_delimiter(char *s, char *arg)
 {
 	int		i;
@@ -41,11 +42,12 @@ char	*cpy_delimiter(char *s, char *arg)
 	return (ret);
 }
 
+/* count length of a heredoc delimiter */
 int	cnt_delimiter_len(char *s)
 {
-	char	c;
 	int		i;
 	int		ret;
+	char	c;
 
 	i = 0;
 	ret = 0;
@@ -66,6 +68,7 @@ int	cnt_delimiter_len(char *s)
 	return (ret);
 }
 
+/* remove all quotes in a heredoc delimiter */
 char	*adjust_delimiter(char *s)
 {
 	char	*ret;
@@ -91,6 +94,7 @@ char	*adjust_delimiter(char *s)
 	return (ret);
 }
 
+/* check if a delimiter is begins or ends with a quote */
 int	check_delimiter(char **delim)
 {
 	char	*ret;
@@ -105,6 +109,7 @@ int	check_delimiter(char **delim)
 	return (0);
 }
 
+/* getenv with length */
 char	*getenv_length(char *s, int *i, int check)
 {
 	char	*tmp;
