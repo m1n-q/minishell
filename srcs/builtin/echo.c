@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:21 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 15:38:02 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 02:35:12 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	__echo(t_cmd cmd)
 		{
 			if (cmd.argv[i])
 				printf("%s", cmd.argv[i]);
-			if (cmd.argv[i] && cmd.argv[skip_empty_vars(cmd, i)])		//TODO
+			if (cmd.argv[i] && cmd.argv[skip_empty_vars(cmd, i)])
 				printf(" ");
 			i = skip_empty_vars(cmd, i);
 		}

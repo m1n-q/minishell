@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:27:03 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 18:27:18 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 02:35:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_sample(char *command)
 	{
 		if (check_binary_file(sample, sample_len))
 		{
-			internal_error(command, "cannot execute binary file");		//OK
+			internal_error(command, "cannot execute binary file");
 			return (EX_BINARY_FILE);
 		}
 	}
@@ -83,12 +83,12 @@ int	check_error(char *command)
 		else
 		{
 			errno = e;
-			file_error(command);									//OK : ENAMETOOLONG | ENOENT
+			file_error(command);
 		}
 		if (e == ENOENT)
-			return (EX_NOTFOUND);									//OK : ENOENT (No such file or directory)
+			return (EX_NOTFOUND);
 		else
-			return (EX_NOEXEC);										//OK : is a direcory | ENAMETOOLONG (leaks?) | others ...
+			return (EX_NOEXEC);
 	}
-	return (check_sample(command));									// cannot execute binary file
+	return (check_sample(command));
 }
