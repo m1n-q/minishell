@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 22:41:58 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 02:00:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ char	**split_and_join_till(char *arg, char **argv, int *i, int argc)
 		if (is_token(argv[j]) || argv[j] == EMPTY_VAR)
 			ret[j] = argv[j];
 		else
-			ret[j] = dup_and_free(argv[j]);
+			ret[j] = strdup_(argv[j]);
 	}
 	while (++tmp_i < get_argc(tmp))
-		ret[j++] = dup_and_free(tmp[tmp_i]);
+		ret[j++] = strdup_(tmp[tmp_i]);
 	*i = j;
+	free_till(get_argc(argv), argv);
 	free(argv);
+	free_till(get_argc(tmp), tmp);
 	free(tmp);
 	return (ret);
 }
