@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 22:51:57 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 23:38:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	has_dollar_sign(char *s)
 	char	c;
 
 	i = -1;
+	if (s[0] == '$' && ft_isspace(s[1]))
+		return (0);
 	while (s[++i] && !is_q(s[i]) && !ft_isspace(s[i]))
 		if (s[i] == '$')
 			return (1);
@@ -90,7 +92,7 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 	char	c;
 
 	i = 0;
-	if (j > 0 && argv[j - 1] == HEREDOC && s[0] != '<' && s[0] != '>')
+	if (j > 0 && argv[j - 1] == HEREDOC && !is_pipe_redir(s[0]))
 		return (cpy_delimiter(s, arg));
 	if (has_dollar_sign(s) && (j == 0
 			|| (j > 0 && argv[j - 1] != HEREDOC)))
