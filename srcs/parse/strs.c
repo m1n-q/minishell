@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 03:23:04 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 04:31:53 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	count_n_skip_env(char *s, char c, int *ret)
 
 	i = 1;
 	env = getenv_(&s[i], &i, 0);
-	*ret += env_has_space(env, c);
+	if (ft_isspace(s[i]) || !s[i])
+		(*ret)++;
+	*ret += env_has_space(env, c) + 1;
 	while (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_')
 		i++;
 	return (i);
@@ -69,7 +71,7 @@ void	cnt_strs(char *s, int *ret)
 	{
 		if (s[i] == '$')
 			i += count_n_skip_env(&s[i], s[i], ret);
-		if (s[i] != '$' && !is_q(s[i]) && !ft_isspace(s[i]))
+		if (s[i] && s[i] != '$' && !is_q(s[i]) && !ft_isspace(s[i]))
 			i += count_n_skip_default(&s[i], ret);
 		if (is_q(s[i]))
 		{

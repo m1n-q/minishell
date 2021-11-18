@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 22:43:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 04:30:48 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	**parse(char *s)
 	char	**ret;
 
 	ret = ft_split_space(s);
+	ret = rm_empty_var(ret);
 	if (ret == Q_ERR)
 		return (syntax_error(Q_ERR, 0, EXECUTION_FAILURE));
 	if (ret == AMBIG_REDIR)
