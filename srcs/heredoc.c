@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:10:42 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 16:22:57 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:39:58 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*expand_env(int fd, char *line)
 		return (line);
 	else if (line[i] == '$' && line[++i])
 	{
-		env_var = getenv_length(&line[i], &i, 1);
+		env_var = getenv_(&line[i], &i, 1);
 		if (!env_var)
 			ft_putstr_fd("", fd);
 		else

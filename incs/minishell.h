@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 14:31:30 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:40:12 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ char		*calloc_n_lcpy(char *s, size_t dstsize);
 /* strs */
 int			skip_q(char *s);
 char		**malloc_strs(char *s);
-void		free_strs(char **argv, int i);
 
 /* str */
 int			cnt_str_len(char *s);
@@ -172,7 +171,7 @@ char		**cpy_str(char *s, char **argv, int *i);
 char		*cpy_delimiter(char *s, char *arg);
 char		*adjust_delimiter(char *s);
 int			check_delimiter(char **delim);
-char		*getenv_length(char *s, int *i, int check);
+char		*getenv_(char *s, int *i, int check);
 
 /* env */
 char		*trim_space_in_env(char *s, char c);
@@ -186,7 +185,7 @@ int			join_env(char *s, char **p_arg, char *prev_arg, char c);
 /* join_non_env */
 int			join_non_env(char *s, char **p_arg);
 
-/* env_with_space */
+/* split_env */
 int			env_has_space(char *s, char c);
 char		**split_and_join_till(char *arg, char **argv, int *i);
 

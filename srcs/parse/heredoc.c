@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:14:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:39:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	check_delimiter(char **delim)
 }
 
 /* getenv with length */
-char	*getenv_length(char *s, int *i, int check)
+char	*getenv_(char *s, int *i, int check)
 {
 	char	*tmp;
 	char	*ret;
