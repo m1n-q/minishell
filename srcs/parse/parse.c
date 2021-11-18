@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:25:19 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 17:02:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	quotes_match(char *s)
 char	**ft_split_space(char *s)
 {
 	int		i;
+	int		argc;
 	char	*tofree;
 	char	**ret;
 
@@ -52,14 +53,14 @@ char	**ft_split_space(char *s)
 		return (Q_ERR);
 	s = split_pipe_redir(s);
 	s = rm_empty_q(s);
-	ret = malloc_strs(s);
+	ret = malloc_strs(s, &argc);
 	i = 0;
 	tofree = s;
 	while (*s)
 	{
 		if (!ft_isspace(*s))
 		{
-			ret = cpy_str(s, ret, &i);
+			ret = cpy_str(s, ret, &i, argc);
 			if (ret == AMBIG_REDIR)
 				break ;
 			s += cnt_str_len(s) - 1;

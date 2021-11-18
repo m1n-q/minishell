@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:29:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 17:02:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	cnt_strs(char *s, int *ret)
 }
 
 /* memory allocations of argv */
-char	**malloc_strs(char *s)
+char	**malloc_strs(char *s, int *argc)
 {
 	int		num_of_strs;
 	char	**ret;
 
 	num_of_strs = 0;
 	cnt_strs(s, &num_of_strs);
+	*argc = num_of_strs;
 	ret = (char **)calloc_(num_of_strs + 1, sizeof(char *));
 	return (ret);
 }
