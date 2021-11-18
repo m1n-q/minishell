@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 18:39:53 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 11:36:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ t_exit	builtin_nofork(t_cmd cmd)
 	{
 		ext.pid = PARENT_EXIT;
 		ext.status = 0;
-		ext.code = __exit(cmd.argv);
+		ext.code = __exit(cmd);
 	}
 	else
 	{
 		ext.pid = BUILTIN;
 		ext.status = 0;
-		ext.code = run_builtin(cmd.argv);
+		ext.code = run_builtin(cmd);
 	}
 	return (ext);
 }
@@ -41,14 +41,14 @@ t_exit	builtin_fork(t_cmd cmd)
 	if (is_equal("exit", cmd.argv[0]))
 	{
 		ext.status = 0;
-		ext.code = __exit(cmd.argv);
+		ext.code = __exit(cmd);
 		if (ext.code == E2MANY)
 			ext.code = EXECUTION_FAILURE;
 	}
 	else
 	{
 		ext.status = 0;
-		ext.code = run_builtin(cmd.argv);
+		ext.code = run_builtin(cmd);
 	}
 	return (ext);
 }

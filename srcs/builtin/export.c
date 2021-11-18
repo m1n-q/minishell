@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:42:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 19:03:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:50:50 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	export_internal(char *arg)
 	return (EXECUTION_SUCCESS);
 }
 
-int	__export(char **argv)
+int	__export(t_cmd cmd)
 {
 	int		i;
 	int		tmp;
@@ -117,23 +117,21 @@ int	__export(char **argv)
 
 	error = 0;
 	tmp = 0;
-	if (get_argc(argv) == 1)
+	i = skip_empty_vars(cmd, 0);
+	if (i == cmd.argc)		//TODO: test with EMPTY_VAR
 		return (print_including_empty());
-	if (argv[1])
+	if (cmd.argv[i] && isoption(cmd.argv[i], TIL_END))
 	{
-		if (isoption(argv[1], TIL_END))
-		{
-			sh_invalidopt(argv[0], argv[1]);
-			builtin_usage(argv[0], EXPORT_SHORTDOC);
-			return (EX_BADUSAGE);
-		}
+		sh_invalidopt(cmd.argv[0], cmd.argv[i]);
+		builtin_usage(cmd.argv[0], EXPORT_SHORTDOC);
+		return (EX_BADUSAGE);
 	}
-	i = 0;
-	while (argv[++i])
+	while (i < cmd.argc)
 	{
-		tmp = export_internal(argv[i]);
+		tmp = export_internal(cmd.argv[i]);
 		if (tmp > error)
 			error = tmp;
+		i = skip_empty_vars(cmd, i);
 	}
 	return (error);
 }

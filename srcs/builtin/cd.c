@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:54:10 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:22:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ static int	bindpwd(char *oldpwd)
 	return (EXECUTION_SUCCESS);
 }
 
-static int	check_option(char **argv)
+static int	check_option(t_cmd cmd)
 {
-	if (argv[1])
+	int	i;
+
+	i = skip_empty_vars(cmd, 0);
+	if (cmd.argv[i])
 	{
-		if (isoption(argv[1], TIL_END))
+		if (isoption(cmd.argv[i], TIL_END))
 		{
-			sh_invalidopt(argv[0], argv[1]);
-			builtin_usage(argv[0], CD_SHORTDOC);
+			sh_invalidopt(cmd.argv[0], cmd.argv[i]);
+			builtin_usage(cmd.argv[i], CD_SHORTDOC);
 			return (EXECUTION_FAILURE);
 		}
 		return (0);
@@ -45,47 +48,48 @@ static int	check_option(char **argv)
 	return (0);
 }
 
-static int	check_arg(char **argv, char **dirname)
+static int	check_arg(t_cmd cmd, char **dirname)
 {
-	if (argv[1] == NULL)
+	int	i;
+
+	i = skip_empty_vars(cmd, 0);
+	if (cmd.argv[i] == NULL)
 	{
 		*dirname = getenv("HOME");
 		if (!*dirname)
 		{
-			builtin_error(argv[0], NULL, "HOME not set", 0);
+			builtin_error(cmd.argv[0], NULL, "HOME not set", 0);
 			return (EXECUTION_FAILURE);
 		}
-		return (0);
 	}
-	else if (is_equal(argv[1], "-"))
+	else if (is_equal(cmd.argv[i], "-"))
 	{
 		*dirname = getenv("OLDPWD");
 		if (!*dirname)
 		{
-			builtin_error(argv[0], NULL, "OLDPWD not set", 0);
+			builtin_error(cmd.argv[0], NULL, "OLDPWD not set", 0);
 			return (EXECUTION_FAILURE);
 		}
 		printf("%s\n", *dirname);
-		return (0);
 	}
 	else
-		*dirname = argv[1];
+		*dirname = cmd.argv[i];
 	return (0);
 }
 
-int	__cd(char **argv)
+int	__cd(t_cmd cmd)
 {
 	char	*dirname;
 	char	*cwd;
 
-	if (check_option(argv) == EXECUTION_FAILURE)
+	if (check_option(cmd) == EXECUTION_FAILURE)
 		return (EXECUTION_FAILURE);
-	if (check_arg(argv, &dirname) == EXECUTION_FAILURE)
+	if (check_arg(cmd, &dirname) == EXECUTION_FAILURE)
 		return (EXECUTION_FAILURE);
 	cwd = getcwd(NULL, 0);
 	if (chdir(dirname) == 0)
 		return (bindpwd(cwd));
 	free(cwd);
-	builtin_error(argv[0], dirname, strerror(errno), 0);
+	builtin_error(cmd.argv[0], dirname, strerror(errno), 0);
 	return (EXECUTION_FAILURE);
 }

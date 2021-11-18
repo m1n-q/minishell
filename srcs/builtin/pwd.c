@@ -6,23 +6,25 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:34:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:23:58 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__pwd(char **argv)
+int	__pwd(t_cmd cmd)
 {
 	char	*cwd;
 	char	*error_str;
+	int		i;
 
-	if (argv[1])
+	i = skip_empty_vars(cmd, 0);
+	if (cmd.argv[i])
 	{
-		if (isoption(argv[1], TIL_END))
+		if (isoption(cmd.argv[i], TIL_END))
 		{
-			sh_invalidopt(argv[0], argv[1]);
-			builtin_usage(argv[0], PWD_SHORTDOC);
+			sh_invalidopt(cmd.argv[0], cmd.argv[i]);
+			builtin_usage(cmd.argv[0], PWD_SHORTDOC);
 			return (EXECUTION_FAILURE);
 		}
 	}

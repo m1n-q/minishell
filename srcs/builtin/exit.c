@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:57:03 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:17:00 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,30 @@ void	before_exit(void)
 	free(environ);
 }
 
-//NOTE: case (argv[1] == NULL): NULL cannot be argument in minishell
-int	__exit(char **argv)
+//TODO: test with EMPTY_VAR
+int	__exit(t_cmd cmd)
 {
 	int			exit_code;
-	int			argc;
+	int			i;
 	intmax_t	retval;
 
-	argc = get_argc(argv);
 	exit_code = 0;
 	retval = 0;
-	if (argv[1])
+	i = 0;
+	i = skip_empty_vars(cmd, i);
+	if (cmd.argv[i])
 	{
-		if (legal_number(argv[1], &retval) == 0)
+		if (legal_number(cmd.argv[i], &retval) == 0)
 		{
-			sh_neednumarg(argv[0], argv[1]);
+			sh_neednumarg(cmd.argv[0], cmd.argv[i]);
 			return (255);
 		}
 	}
-	if (argc > 2)
+	// ft_putendl_fd("exit", STDERR_FILENO);
+	i = skip_empty_vars(cmd, i);
+	if (cmd.argv[i])
 	{
-		builtin_error(argv[0], NULL, "too many arguments", 0);
+		builtin_error(cmd.argv[0], NULL, "too many arguments", 0);
 		return (E2MANY);
 	}
 	exit_code = retval & 255;

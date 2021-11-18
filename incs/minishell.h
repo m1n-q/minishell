@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 14:40:12 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 16:02:23 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,16 @@ char		*itoa_(int nbr);
 char		*strlower_(char *str);
 
 /* built-in */
-int			__cd(char **argv);
-int			__pwd(char **argv);
-int			__env(char **argv);
-int			__echo(char **argv);
-int			__exit(char **argv);
-int			__unset(char **argv);
-int			__export(char **argv);
+int			__cd(t_cmd cmd);
+int			__pwd(t_cmd cmd);
+int			__env(t_cmd cmd);
+int			__echo(t_cmd cmd);
+int			__exit(t_cmd cmd);
+int			__unset(t_cmd cmd);
+int			__export(t_cmd cmd);
+int			run_builtin(t_cmd cmd);
+int			skip_empty_vars(t_cmd cmd, int cur);
 int			is_builtin(char *arg);
-int			run_builtin(char **argv);
 int			export_internal(char *arg);
 
 /* environ */

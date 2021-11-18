@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:40:55 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/09 18:21:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:55:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,22 @@
 	 명령을 찾을 수 없는 경우 해당 명령을 실행하기 위해 생성된 자식 프로세스는 상태 127을 반환합니다.
 	명령을 찾았지만 실행할 수 없는 경우 반환 상태는 126입니다.
 */
-int	__env(char **argv)
+int	__env(t_cmd cmd)
 {
 	int	i;
 
-	if (argv[1])
+	i = skip_empty_vars(cmd, 0);
+	if (cmd.argv[i])
 	{
-		if (isoption(argv[1], TIL_END))
+		if (isoption(cmd.argv[i], TIL_END))
 		{
-			sh_invalidopt(argv[0], argv[1]);
-			builtin_usage(argv[0], ENV_SHORTDOC);
+			sh_invalidopt(cmd.argv[0], cmd.argv[i]);
+			builtin_usage(cmd.argv[0], ENV_SHORTDOC);
 			return (EXECUTION_FAILURE);
 		}
 		else
 		{
-			builtin_usage(argv[0], ENV_SHORTDOC);
+			builtin_usage(cmd.argv[0], ENV_SHORTDOC);
 			return (EX_BADUSAGE);
 		}
 	}

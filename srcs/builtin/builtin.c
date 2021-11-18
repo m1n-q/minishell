@@ -6,11 +6,24 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/02 20:40:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:13:44 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+//what if argc == 1 ?
+int	skip_empty_vars(t_cmd cmd, int cur)
+{
+	int	i;
+
+	i = cur;
+	while (++i < cmd.argc)
+		if (cmd.argv[i])
+			break ;
+	if (i > cmd.argc)
+		i = cmd.argc;
+	return (i);
+}
 
 //NOTE: in bash, echo & pwd could get sh_wrerror (ferror(stdout))
 int	is_builtin(char *arg)
@@ -26,19 +39,19 @@ int	is_builtin(char *arg)
 	return (0);
 }
 
-int	run_builtin(char **argv)
+int	run_builtin(t_cmd cmd)
 {
-	if (is_equal(argv[0], "cd"))
-		return (__cd(argv));
-	if (is_equal(argv[0], "pwd"))
-		return (__pwd(argv));
-	if (is_equal(argv[0], "env"))
-		return (__env(argv));
-	if (is_equal(argv[0], "echo"))
-		return (__echo(argv));
-	if (is_equal(argv[0], "unset"))
-		return (__unset(argv));
-	if (is_equal(argv[0], "export"))
-		return (__export(argv));
+	if (is_equal(cmd.argv[0], "cd"))
+		return (__cd(cmd));
+	if (is_equal(cmd.argv[0], "pwd"))
+		return (__pwd(cmd));
+	if (is_equal(cmd.argv[0], "env"))
+		return (__env(cmd));
+	if (is_equal(cmd.argv[0], "echo"))
+		return (__echo(cmd));
+	if (is_equal(cmd.argv[0], "unset"))
+		return (__unset(cmd));
+	if (is_equal(cmd.argv[0], "export"))
+		return (__export(cmd));
 	return (0);
 }

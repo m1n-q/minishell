@@ -6,34 +6,33 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:21 by mishin            #+#    #+#             */
-/*   Updated: 2021/10/28 21:04:16 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:38:02 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__echo(char **argv)
+int	__echo(t_cmd cmd)
 {
 	int	nflag;
 	int	i;
 
 	nflag = 0;
-	i = 0;
-	if (argv[1])
+	i = skip_empty_vars(cmd, 0);
+	if (cmd.argv[i])
 	{
-		if (isoption(argv[1], TIL_SEC))
+		if (isoption(cmd.argv[i], TIL_SEC) && cmd.argv[i][1] == 'n')
 		{
-			if (argv[1][1] == 'n')
-			{
-				nflag++;
-				i++;
-			}
+			nflag++;
+			i++;
 		}
-		while (argv[++i])
+		while (i < cmd.argc)
 		{
-			printf("%s", argv[i]);
-			if (argv[i + 1] != NULL)
+			if (cmd.argv[i])
+				printf("%s", cmd.argv[i]);
+			if (cmd.argv[i] && cmd.argv[skip_empty_vars(cmd, i)])		//TODO
 				printf(" ");
+			i = skip_empty_vars(cmd, i);
 		}
 	}
 	if (!nflag)
