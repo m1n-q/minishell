@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 21:44:22 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 22:44:13 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	cnt_strs(char *s, int *ret)
 		{
 			(*ret)++;
 			if (env_has_space(getenv_(&s[i + 1], &i, 0), s[i]))
-				*ret += env_has_space(getenv_(&s[i + 1], &i, 0), s[i]) - 1;
+				*ret += env_has_space(getenv_(&s[i + 1], &i, 0), s[i]);
 			while (s[i] && !ft_isspace(s[i]))
 			{
 				if (is_q(s[i]))
