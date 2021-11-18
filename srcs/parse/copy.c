@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 22:05:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:13:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* check if an arg has a dollar-sign */
 int	has_dollar_sign(char *s)
 {
 	int		i;
@@ -56,11 +57,11 @@ char	*case_pipe_redir(char *s)
 	return (ret);
 }
 
-/* copy a string that is enclosed by q marks from (s) to (ret) */
+/* copy an arg that is enclosed by quotes */
 char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 {
-	char	c;
 	int		i;
+	char	c;
 
 	i = 0;
 	if (j > 0 && argv[j - 1] == HEREDOC)
@@ -82,13 +83,15 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 	return (arg);
 }
 
-/* copy a string that is not enclosed by q marks from (s) to (ret) */
+/* copy an arg that is not enclosed by quotes */
 char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 {
-	char	c;
 	int		i;
+	char	c;
 
 	i = 0;
+	if (j > 0 && argv[j - 1] == HEREDOC)
+		return (cpy_delimiter(s, arg));
 	if (has_dollar_sign(s) && (j == 0
 			|| (j > 0 && argv[j - 1] != HEREDOC)))
 		return (case_env(s, arg, argv, j));
@@ -110,7 +113,7 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 	return (arg);
 }
 
-/* copy a string from (s) to (ret) */
+/* copy an arg */
 char	**cpy_str(char *s, char **argv, int *i)
 {
 	int		len;

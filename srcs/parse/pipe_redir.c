@@ -6,14 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:15 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 16:23:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:24:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-/* check if a string contains a pipe or redirection
- * maybe we can use a function from libft */
+/* check if an arg contains a pipe or redirection */
 int	check_pipe_redir(char *s)
 {
 	while (*s)
@@ -30,8 +29,8 @@ void	cnt_pipe_redir(char *s, int *cnt)
 {
 	int	i;
 
-	i = 0;
-	while (i < (int)ft_strlen(s))
+	i = -1;
+	while (++i < (int)ft_strlen(s))
 	{
 		if (is_q(s[i]))
 			i += skip_q(&s[i]);
@@ -50,12 +49,11 @@ void	cnt_pipe_redir(char *s, int *cnt)
 				(*cnt)++;
 			i++;
 		}
-		i++;
 	}
 }
 
 /* insert space before and after the pipes and redirections
- * if they are not separated by space within a string */
+ * if they are not separated by space within an input */
 void	cpy_pipe_redir(char *s, char *argv, int *i, int *j)
 {
 	if (*j > 0 && s[(*j) - 1] != s[*j] && !ft_isspace(s[(*j) - 1]))
@@ -67,7 +65,7 @@ void	cpy_pipe_redir(char *s, char *argv, int *i, int *j)
 		argv[(*i)++] = ' ';
 }
 
-/* insert spaces between the pipes and redirections in the original string */
+/* insert spaces between the pipes and redirections in the original input */
 void	cpy_with_space(char *s, int len, char *argv, int i)
 {
 	int		j;
@@ -78,8 +76,8 @@ void	cpy_with_space(char *s, int len, char *argv, int i)
 	{
 		if (is_q(s[j]))
 		{
-			c = s[j];
-			argv[i++] = s[j++];
+			c = s[j++];
+			argv[i++] = c;
 			while (s[j] && s[j] != c)
 				argv[i++] = s[j++];
 			argv[i++] = s[j++];
@@ -92,6 +90,7 @@ void	cpy_with_space(char *s, int len, char *argv, int i)
 	argv[len] = 0;
 }
 
+/* split pipes and redirections with space */
 char	*split_pipe_redir(char *s)
 {
 	int		i;

@@ -6,30 +6,28 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 22:04:30 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:20:29 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* join exit_code with arg */
 int	join_exit_code(char **p_arg)
 {
 	char	*tmp;
 
 	tmp = itoa_(get_or_set_exitcode(GET, 0));
-	if (!*p_arg)
+	if (*p_arg && *p_arg != EMPTY_VAR)
+		*p_arg = join_and_free(*p_arg, tmp, 3);
+	else if (*p_arg && *p_arg == EMPTY_VAR)
 		*p_arg = dup_and_free(tmp);
-	else if (*p_arg)
-	{
-		if (*p_arg != EMPTY_VAR)
-			*p_arg = join_and_free(*p_arg, tmp, 3);
-		else
-			*p_arg = dup_and_free(tmp);
-	}
+	else if (!*p_arg)
+		*p_arg = dup_and_free(tmp);
 	return (2);
 }
 
-/* if some signs are followed by dollar signs */
+/* join other signs that are followed by a dollar-sign */
 int	join_dollar_sign(char *s, char **p_arg)
 {
 	int		i;
@@ -44,20 +42,18 @@ int	join_dollar_sign(char *s, char **p_arg)
 	if (cnt % 2 && cnt > 0 && s[i] != '"')
 		cnt--;
 	tmp = calloc_n_lcpy(s, cnt + 1);
-	if (*p_arg)
-	{
-		if (*p_arg != EMPTY_VAR)
-			*p_arg = join_and_free(*p_arg, tmp, 3);
-		else
-			*p_arg = dup_and_free(tmp);
-	}
-	else
+	if (*p_arg && *p_arg != EMPTY_VAR)
+		*p_arg = join_and_free(*p_arg, tmp, 3);
+	else if (*p_arg && *p_arg == EMPTY_VAR)
+		*p_arg = dup_and_free(tmp);
+	else if (!*p_arg)
 		*p_arg = dup_and_free(tmp);
 	if (s[i] == '"')
 		cnt++;
 	return (cnt);
 }
 
+/* if <, >, or << is followed by notexisting_env_var */
 char	*ambig_redir_err(char *tmp)
 {
 	get_or_set_exitcode(SET, 1);
@@ -67,6 +63,7 @@ char	*ambig_redir_err(char *tmp)
 	return ((char *)AMBIG_REDIR);
 }
 
+/* join the env_var_value with arg */
 void	join_env_var(char *env, char **p_arg, char c)
 {
 	char	*new;
@@ -78,7 +75,11 @@ void	join_env_var(char *env, char **p_arg, char c)
 		return ;
 	}
 	new = trim_space_in_env(env, c);
-	if (!*p_arg)
+	if (*p_arg && *p_arg != EMPTY_VAR)
+		*p_arg = join_and_free(*p_arg, new, 1);
+	else if (*p_arg && *p_arg == EMPTY_VAR)
+		*p_arg = strdup_(new);
+	else if (!*p_arg)
 	{
 		free(*p_arg);
 		if (*new)
@@ -86,23 +87,16 @@ void	join_env_var(char *env, char **p_arg, char c)
 		else
 			*p_arg = EMPTY_VAR;
 	}
-	else if (*p_arg)
-	{
-		if (*p_arg != EMPTY_VAR)
-			*p_arg = join_and_free(*p_arg, new, 1);
-		else
-			*p_arg = strdup_(new);
-	}
 	if (!is_equal(new, env))
 		free(new);
 }
 
-/* join the value of the environment variables */
+/* join env_var_value */
 int	join_env(char *s, char **p_arg, char *prev_arg, char c)
 {
 	int		i;
-	char	*env;
 	char	*tmp;
+	char	*env;
 
 	i = 0;
 	while (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')

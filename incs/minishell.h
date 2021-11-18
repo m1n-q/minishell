@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 19:26:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:40:12 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,6 @@ t_envent	find_envent(char *arg);
 int			remove_envent(t_envent env);
 void		adjust_envent(t_envent entry, char *value);
 
-/* token */
-int			is_token(char *s);
-int			is_redir_token(char *s);
-int			is_pipe_token(char *s);
-int			is_empty_token(char *s);
-char		*toktos(char *tok);
-
 /* ************************ parse ************************ */
 /* parse */
 char		**ft_split_space(char *s);
@@ -166,7 +159,6 @@ char		*calloc_n_lcpy(char *s, size_t dstsize);
 /* strs */
 int			skip_q(char *s);
 char		**malloc_strs(char *s);
-void		free_strs(char **argv, int i);
 
 /* str */
 int			cnt_str_len(char *s);
@@ -179,7 +171,7 @@ char		**cpy_str(char *s, char **argv, int *i);
 char		*cpy_delimiter(char *s, char *arg);
 char		*adjust_delimiter(char *s);
 int			check_delimiter(char **delim);
-char		*getenv_length(char *s, int *i, int check);
+char		*getenv_(char *s, int *i, int check);
 
 /* env */
 char		*trim_space_in_env(char *s, char c);
@@ -193,7 +185,7 @@ int			join_env(char *s, char **p_arg, char *prev_arg, char c);
 /* join_non_env */
 int			join_non_env(char *s, char **p_arg);
 
-/* env_with_space */
+/* split_env */
 int			env_has_space(char *s, char c);
 char		**split_and_join_till(char *arg, char **argv, int *i);
 
@@ -204,6 +196,13 @@ char		**token_error(char **argv);
 /* cont_pipe */
 char		**join_argvs(char **argv, char **tmp);
 char		**cont_pipe(char **argv);
+
+/* token */
+int			is_token(char *s);
+int			is_redir_token(char *s);
+int			is_pipe_token(char *s);
+int			is_empty_token(char *s);
+char		*toktos(char *tok);
 /* ************************ parse ************************ */
 
 /* heredoc */

@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:35:14 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 19:03:37 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:00:31 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* find token error (token: pipe, redirections) */
 int	find_token_error(char **argv)
 {
 	int	i;
@@ -38,11 +39,12 @@ int	find_token_error(char **argv)
 	return (-1);
 }
 
+/* return syntax error when token error */
 char	**token_error(char **argv)
 {
 	int		i;
-	char	*tok;
 	char	**e;
+	char	*tok;
 
 	i = find_token_error(argv);
 	e = 0;

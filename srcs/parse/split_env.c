@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_with_space.c                                   :+:      :+:    :+:   */
+/*   split_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 19:30:38 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 14:23:30 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* if env_var_value has space */
 int	env_has_space(char *s, char c)
 {
 	int	i;
@@ -29,16 +30,18 @@ int	env_has_space(char *s, char c)
 	return (0);
 }
 
+/* split env_var_value with space and join it to the original argv */
 char	**split_and_join_till(char *arg, char **argv, int *i)
 {
-	char	**ret;
-	char	**tmp;
 	int		j;
 	int		tmp_i;
+	char	**tmp;
+	char	**ret;
 
 	tmp = ft_split(arg, ' ');
 	ret = calloc_(get_argc(tmp) + *i + 1, sizeof(char **));
 	j = -1;
+	tmp_i = -1;
 	while (++j < *i)
 	{
 		if (is_token(argv[j]) || argv[j] == EMPTY_VAR)
@@ -46,7 +49,6 @@ char	**split_and_join_till(char *arg, char **argv, int *i)
 		else
 			ret[j] = ft_strdup(argv[j]);
 	}
-	tmp_i = -1;
 	while (++tmp_i < get_argc(tmp))
 		ret[j++] = ft_strdup(tmp[tmp_i]);
 	*i = j;

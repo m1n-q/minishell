@@ -6,13 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 16:21:11 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:29:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-/* skip q marks when counting how many strings there are */
+/* skip quotes when counting how many args there are */
 int	skip_q(char *s)
 {
 	int		i;
@@ -31,7 +31,7 @@ int	skip_q(char *s)
 	return (i);
 }
 
-/* count how many strings there are */
+/* count how many args there are */
 void	cnt_strs(char *s, int *ret)
 {
 	int	i;
@@ -59,7 +59,7 @@ void	cnt_strs(char *s, int *ret)
 	}
 }
 
-/* memory allocations of strings */
+/* memory allocations of argv */
 char	**malloc_strs(char *s)
 {
 	int		num_of_strs;
@@ -69,14 +69,4 @@ char	**malloc_strs(char *s)
 	cnt_strs(s, &num_of_strs);
 	ret = (char **)calloc_(num_of_strs + 1, sizeof(char *));
 	return (ret);
-}
-
-void	free_strs(char **argv, int i)
-{
-	int	j;
-
-	j = -1;
-	while (++j < i)
-		free(argv[j]);
-	free(argv);
 }

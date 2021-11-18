@@ -6,12 +6,13 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/17 19:25:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/18 13:55:23 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
+/* join the new line argv with the previous line argv */
 char	**join_argvs(char **argv, char **tmp)
 {
 	int		i;
@@ -19,9 +20,10 @@ char	**join_argvs(char **argv, char **tmp)
 	int		argc;
 	char	**ret;
 
+	i = -1;
+	j = -1;
 	argc = get_argc(argv) + get_argc(tmp);
 	ret = (char **)calloc_(argc + 1, sizeof(char *));
-	i = -1;
 	while (argv[++i])
 	{
 		if (argv[i] != EMPTY_VAR && is_token(argv[i]) == 0)
@@ -29,7 +31,6 @@ char	**join_argvs(char **argv, char **tmp)
 		else
 			ret[i] = argv[i];
 	}
-	j = -1;
 	while (tmp[++j])
 	{
 		if (tmp[j] != EMPTY_VAR && is_token(tmp[j]) == 0)
@@ -41,13 +42,14 @@ char	**join_argvs(char **argv, char **tmp)
 	return (ret);
 }
 
+/* get an argv of args on a new line */
 char	**copy_after_pipe(char **argv, char *s)
 {
-	char	**ret;
 	char	**tmp;
+	char	**ret;
 
 	tmp = parse(s);
-	if (tmp <= (char **)4LL)
+	if (tmp <= UNEXPECTED_EOF)
 		return (tmp);
 	ret = join_argvs(argv, tmp);
 	free_till(get_argc(argv), argv);
@@ -57,6 +59,7 @@ char	**copy_after_pipe(char **argv, char *s)
 	return (ret);
 }
 
+/* when an arg is followed by a pipe and then a new line */
 char	**cont_pipe(char **argv)
 {
 	int		i;
