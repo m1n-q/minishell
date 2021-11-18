@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:13:19 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 17:17:10 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 }
 
 /* copy an arg */
-char	**cpy_str(char *s, char **argv, int *i)
+char	**cpy_str(char *s, char **argv, int *i, int argc)
 {
 	int		len;
 
@@ -132,7 +132,7 @@ char	**cpy_str(char *s, char **argv, int *i)
 	}
 	if (argv[*i] && env_has_space(argv[*i], s[0])
 		&& (*i == 0 || argv[*i - 1] == PIPE))
-		return (split_and_join_till(argv[*i], argv, i));
+		return (split_and_join_till(argv[*i], argv, i, argc));
 	(*i)++;
 	return (argv);
 }

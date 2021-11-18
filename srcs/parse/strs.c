@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:29:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 21:44:22 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	cnt_strs(char *s, int *ret)
 		if (!is_q(s[i]) && !ft_isspace(s[i]))
 		{
 			(*ret)++;
+			if (env_has_space(getenv_(&s[i + 1], &i, 0), s[i]))
+				*ret += env_has_space(getenv_(&s[i + 1], &i, 0), s[i]) - 1;
 			while (s[i] && !ft_isspace(s[i]))
 			{
 				if (is_q(s[i]))
@@ -60,13 +62,11 @@ void	cnt_strs(char *s, int *ret)
 }
 
 /* memory allocations of argv */
-char	**malloc_strs(char *s)
+char	**malloc_strs(char *s, int *argc)
 {
-	int		num_of_strs;
 	char	**ret;
 
-	num_of_strs = 0;
-	cnt_strs(s, &num_of_strs);
-	ret = (char **)calloc_(num_of_strs + 1, sizeof(char *));
+	cnt_strs(s, argc);
+	ret = (char **)calloc_(*argc + 1, sizeof(char *));
 	return (ret);
 }
