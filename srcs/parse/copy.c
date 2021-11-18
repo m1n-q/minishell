@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 17:17:10 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 22:51:57 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 	char	c;
 
 	i = 0;
-	if (j > 0 && argv[j - 1] == HEREDOC)
+	if (j > 0 && argv[j - 1] == HEREDOC && s[0] != '<' && s[0] != '>')
 		return (cpy_delimiter(s, arg));
 	if (has_dollar_sign(s) && (j == 0
 			|| (j > 0 && argv[j - 1] != HEREDOC)))
