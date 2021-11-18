@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 23:40:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 04:29:34 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,9 @@ void		adjust_envent(t_envent entry, char *value);
 /* parse */
 char		**ft_split_space(char *s);
 char		**parse(char *s);
+
+/* rm_empty_var */
+char		**rm_empty_var(char **argv);
 
 /* pipe_redir */
 void		cnt_pipe_redir(char *s, int *cnt);
