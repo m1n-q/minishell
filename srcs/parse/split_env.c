@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 02:00:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 02:46:51 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ int	env_has_space(char *s, char c)
 	int	i;
 	int	cnt_space;
 
-	if (s == EMPTY_VAR || !s)
+	if (s == EMPTY_VAR || !s || c != '$')
 		return (0);
 	i = 0;
 	cnt_space = 0;
-	if (c != '$')
-		return (0);
 	while (ft_isspace(s[i]))
 		i++;
 	while (s[i])
