@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:39:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/18 21:47:55 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*getenv_(char *s, int *i, int check)
 	int		j;
 
 	j = 0;
-	while (s[j] && !is_q(s[j]) && !ft_isspace(s[j]))
+	while (ft_isdigit(s[j]) || ft_isalpha(s[j]) || s[j] == '_')
 		j++;
 	tmp = calloc_n_lcpy(s, j + 1);
 	ret = getenv(tmp);
