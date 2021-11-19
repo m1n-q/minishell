@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 17:04:47 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 18:04:58 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,5 @@ int	join_env(char *s, char **p_arg, char *prev_arg, char c)
 			join_env_var(EMPTY_VAR, p_arg, c);
 	}
 	free(tmp);
-	if (c == '"')
-		i++;
 	return (++i);
 }
