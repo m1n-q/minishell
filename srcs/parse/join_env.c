@@ -6,14 +6,14 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:20:29 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 17:04:47 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* join exit_code with arg */
-int	join_exit_code(char **p_arg)
+/*int	join_exit_code(char **p_arg)
 {
 	char	*tmp;
 
@@ -25,10 +25,10 @@ int	join_exit_code(char **p_arg)
 	else if (!*p_arg)
 		*p_arg = dup_and_free(tmp);
 	return (2);
-}
+}*/
 
 /* join other signs that are followed by a dollar-sign */
-int	join_dollar_sign(char *s, char **p_arg)
+/*int	join_dollar_sign(char *s, char **p_arg)
 {
 	int		i;
 	int		cnt;
@@ -51,7 +51,7 @@ int	join_dollar_sign(char *s, char **p_arg)
 	if (s[i] == '"')
 		cnt++;
 	return (cnt);
-}
+}*/
 
 /* if <, >, or << is followed by notexisting_env_var */
 char	*ambig_redir_err(char *tmp)
@@ -61,6 +61,37 @@ char	*ambig_redir_err(char *tmp)
 	ft_putstr_fd(tmp, STDERR_FILENO);
 	ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
 	return ((char *)AMBIG_REDIR);
+}
+
+void	join_wo_q(char **p_arg, char *env)
+{
+	if (*p_arg && *p_arg != EMPTY_VAR)
+		*p_arg = join_and_free(*p_arg, env, 1);
+	else if (*p_arg && *p_arg == EMPTY_VAR)
+		*p_arg = strdup_(env);
+	else if (!*p_arg)
+	{
+		free(*p_arg);
+		if (*env)
+			*p_arg = strdup_(env);
+		else
+			*p_arg = EMPTY_VAR;
+	}
+}
+
+void	join_with_q(char **p_arg, char *env)
+{
+	char	*tmp;
+
+	tmp = strdup_("\"");
+	tmp = join_and_free(tmp, env, 1);
+	tmp = join_and_free(tmp, "\"", 1);
+	if (*p_arg && *p_arg != EMPTY_VAR)
+		*p_arg = join_and_free(*p_arg, tmp, 3);
+	else if (*p_arg && *p_arg == EMPTY_VAR)
+		*p_arg = strdup_(env);
+	else if (!*p_arg)
+		*p_arg = strdup_(env);
 }
 
 /* join the env_var_value with arg */
@@ -75,18 +106,10 @@ void	join_env_var(char *env, char **p_arg, char c)
 		return ;
 	}
 	new = trim_space_in_env(env, c);
-	if (*p_arg && *p_arg != EMPTY_VAR)
-		*p_arg = join_and_free(*p_arg, new, 1);
-	else if (*p_arg && *p_arg == EMPTY_VAR)
-		*p_arg = strdup_(new);
-	else if (!*p_arg)
-	{
-		free(*p_arg);
-		if (*new)
-			*p_arg = strdup_(new);
-		else
-			*p_arg = EMPTY_VAR;
-	}
+	if (c == '"')
+		join_with_q(p_arg, new);
+	else if (c != '"')
+		join_wo_q(p_arg, new);
 	if (!is_equal(new, env))
 		free(new);
 }
@@ -115,5 +138,7 @@ int	join_env(char *s, char **p_arg, char *prev_arg, char c)
 			join_env_var(EMPTY_VAR, p_arg, c);
 	}
 	free(tmp);
+	if (c == '"')
+		i++;
 	return (++i);
 }
