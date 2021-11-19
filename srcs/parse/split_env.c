@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/20 00:53:14 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 01:00:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,9 @@ static size_t	count2(const char *str, size_t *arr_idx)
 				{
 					q = *str;
 					while (*++str != q)
-						;
-					str++;
-					break ;						// quotes 이 연속된 경우? "aaaa""a" 두개로 나눠야댐
+						;					// quotes 이 연속된 경우? "aaaa""a" =>두개로 나누는게 아니고 이어줘야댐
 				}
-				else
-					str++;
+				str++;
 			}
 		}
 		while (ft_isspace(*str))
@@ -185,12 +182,9 @@ char	**split2(char const *s)
 			{
 				q = s[i];
 				while (s[++i] != q)
-					;
-				i++;
-				break ;					// quotes 이 연속된 경우?
+					;							// quotes 이 연속된 경우? 한문자열로 붙어야댐.
 			}
-			else
-				i++;
+			i++;
 		}
 		ret[arr_idx] = (char *)calloc_(i + 1, sizeof(char));
 		ft_strlcpy(ret[arr_idx++], s, i + 1);
