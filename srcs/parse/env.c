@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 16:59:19 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/20 00:33:03 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,13 @@ int	not_expand(char *s, char **p_arg)
 	while (s[i] != c)
 		i++;
 	tmp = calloc_n_lcpy(s, i + 1);
-	if (*p_arg && *p_arg != EMPTY_VAR)
-		*p_arg = join_and_free(*p_arg, tmp, 3);
-	else if (*p_arg && *p_arg == EMPTY_VAR)
-		*p_arg = dup_and_free(tmp);
+	if (*p_arg)
+	{
+		if (*p_arg != EMPTY_VAR)
+			*p_arg = join_and_free(*p_arg, tmp, 3);
+		else if (*p_arg == EMPTY_VAR)
+			*p_arg = dup_and_free(tmp);
+	}
 	else if (!*p_arg)
 		*p_arg = dup_and_free(tmp);
 	i++;

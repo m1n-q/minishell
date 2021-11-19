@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 23:45:32 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 00:53:14 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,107 @@ char	**split_and_join_till(char **argv, int *i, int argc, char *raw)
 }
 
 
+
+static size_t	count2(const char *str, size_t *arr_idx)
+{
+	size_t	count;
+	char	q;
+
+	*arr_idx = 0;
+	count = 0;
+	q = 0;
+	while (*str)
+	{
+		if (*str && !ft_isspace(*str))
+		{
+			count++;
+			while (*str && !ft_isspace(*str))
+			{
+				if (is_q(*str))
+				{
+					q = *str;
+					while (*++str != q)
+						;
+					str++;
+					break ;						// quotes 이 연속된 경우? "aaaa""a" 두개로 나눠야댐
+				}
+				else
+					str++;
+			}
+		}
+		while (ft_isspace(*str))
+			str++;
+	}
+	return (count);
+}
+
+char	**split2(char const *s)
+{
+	char	**ret;
+	char	q;
+	size_t	count;
+	size_t	arr_idx;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	q = 0;
+	count = count2(s, &arr_idx);
+	ret = (char **)calloc_(count + 1, sizeof(char *));
+	while (arr_idx < count && *s)
+	{
+		i = 0;
+		while (ft_isspace(*s))
+			s++;
+		while (!ft_isspace(s[i]) && s[i])
+		{
+			if (is_q(s[i]))
+			{
+				q = s[i];
+				while (s[++i] != q)
+					;
+				i++;
+				break ;					// quotes 이 연속된 경우?
+			}
+			else
+				i++;
+		}
+		ret[arr_idx] = (char *)calloc_(i + 1, sizeof(char));
+		ft_strlcpy(ret[arr_idx++], s, i + 1);
+		s += i;
+	}
+	return (ret);
+}
+
+char	*strdup_wo_q(const char *s1)
+{
+	char	*new;
+	int		i;
+	int		j;
+	int		k;
+	int		q;
+
+	new = 0;
+	i = 0;
+	q = 0;
+	while (s1[i])
+	{
+		if (is_q(s1[i]))
+			q++;
+		i++;
+	}
+	new = (char *)calloc_((i - q + 1), sizeof(char));
+	j = 0;
+	k = 0;
+	while (j < i)
+	{
+		if (!is_q(s1[j]))
+			new[k++] = s1[j];
+		j++;
+	}
+	return (new);
+}
+
 char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 {
 	int		j;
@@ -136,7 +237,7 @@ char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 
 	(void)raw;
 
-	tmp = ft_split(argv[*i], ' ');
+	tmp = split2(argv[*i]);
 	ret = calloc_(argc + 1, sizeof(char **));
 	j = -1;
 	tmp_i = -1;
@@ -148,7 +249,7 @@ char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 			ret[j] = strdup_(argv[j]);
 	}
 	while (++tmp_i < get_argc(tmp))
-		ret[j++] = strdup_(tmp[tmp_i]);
+		ret[j++] = strdup_wo_q(tmp[tmp_i]);
 	*i = j;
 	free_till(get_argc(argv), argv);
 	free(argv);

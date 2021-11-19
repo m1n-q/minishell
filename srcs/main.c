@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/19 02:01:34 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 00:53:32 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ int	main(void)
 	t_cmd	*cmd_table;
 	int		len_cmd_table;
 	char	**argv;
+
+
+	int i = -1;
+	char	**s = split2("ls -l\" ls -l \"\"abc\"");
+	while (s[++i])
+		printf("[%s]\n", s[i]);
+	printf("[%s]\n", strdup_wo_q(s[1]));
 
 	init_shell();
 	while (1)

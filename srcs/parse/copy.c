@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 23:48:19 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 00:42:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,13 @@ char	**cpy_str(char *s, char **argv, int *i, int argc)
 		free(argv);
 		return (AMBIG_REDIR);
 	}
-	if (argv[*i] && was_expanded(s))
+	if (argv[*i] && was_expanded(s))			//need to change to has_dollar_sign?
 	{
-		if (!has_quotes(s))
-			return (split_and_join_till(argv, i, argc, s));
+		if (has_quotes(s))						//?
+			return (just_join_with_arg(argv, i, argc, s));			// $a"$d" 같은 경우, cpy_wo_q 가 실행되고 a의내용"d의내용" 식으로 quoting되어 나오나,
+																	// "$a"$d 같은 경우, cpy_with_q 가 실행되고 a의내용d의내용 식으로 나와서 묶어줄 (스플릿에서 배제) 부분을 알 수 없음.
 		else
-			return (just_join_with_arg());		//or next_arg..?
+			return (split_and_join_till(argv, i, argc, s));
 	}
 	(*i)++;
 	return (argv);

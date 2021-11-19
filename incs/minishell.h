@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/19 20:44:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 00:21:46 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,4 +274,7 @@ int	has_leading_space(char *s);
 int	has_trailing_space(char *s);
 int	count_n_skip(char *s, int *argc);
 int	count_n_skip_env(char *s, char c, int *argc);
+char	**split2(char const *s);
+char	*strdup_wo_q(const char *s1);
+char	**just_join_with_arg(char **argv, int *i, int argc, char *raw);
 #endif
