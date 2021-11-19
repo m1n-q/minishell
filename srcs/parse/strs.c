@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 16:42:25 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 18:01:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,12 @@ int	count_n_skip_env(char *s, char c, int *ret)
 	char	*env;
 
 	i = 0;
-	if (c == '"')
-		i++;
 	i++;
 	env = getenv_(&s[i], &i, 0);
 	if (ft_isspace(s[i]) || !s[i])
 		(*ret)++;
 	*ret += env_has_space(env, c);
 	while (ft_isalpha(s[i]) || ft_isdigit(s[i]) || s[i] == '_')
-		i++;
-	if (c == '"')
 		i++;
 	return (i);
 }
@@ -59,12 +55,11 @@ int	count_n_skip(char *s, int *ret)
 	(*ret)++;
 	while (s[i] && !ft_isspace(s[i]))
 	{
-		if (s[i] == '$' || (is_q(s[i]) && s[i + 1] == '$'))
-			i += count_n_skip_env(&s[i], s[i], ret);
-		else if (s[i] != '$' || (is_q(s[i]) && s[i + 1] != '$'))
-			i += skip_q(&s[i]);
-		else
-			i++;
+		if (is_q(s[i]))
+			i += skip_q(&s[i]) - 1;
+		if (s[i] == '$')
+			i += count_n_skip_env(&s[i], s[i], ret) - 1;
+		i++;
 	}
 	return (i);
 }
