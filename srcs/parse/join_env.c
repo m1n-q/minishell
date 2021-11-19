@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:22 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 18:04:58 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 21:03:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ void	join_env_var(char *env, char **p_arg, char c)
 			*p_arg = env;
 		return ;
 	}
-	new = trim_space_in_env(env, c);
+	// new = trim_space_in_env(env, c);
+	new = strdup_(env);
 	if (c == '"')
 		join_with_q(p_arg, new);
 	else if (c != '"')

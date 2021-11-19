@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/19 15:40:13 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 20:44:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int			join_non_env(char *s, char **p_arg);
 
 /* split_env */
 int			env_has_space(char *s, char c);
-char		**split_and_join_till(char *arg, char **argv, int *i, int argc);
+char		**split_and_join_till(char **argv, int *i, int argc, char *raw);
 
 /* error */
 int			find_token_error(char **argv);
@@ -269,4 +269,9 @@ void		builtin_usage(char *command, char *usage);
 int			isoption(char *s, int optlen);
 void		before_exit(void);
 
+int	next_idx(char *s, int cur);
+int	has_leading_space(char *s);
+int	has_trailing_space(char *s);
+int	count_n_skip(char *s, int *argc);
+int	count_n_skip_env(char *s, char c, int *argc);
 #endif

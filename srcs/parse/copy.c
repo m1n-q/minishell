@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 16:34:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/19 23:41:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,51 @@ char	*cpy_wo_q(char *s, char *arg, char **argv, int j)
 	return (arg);
 }
 
+int	get_end_index(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && !ft_isspace(s[i]))
+		i++;
+	return (i);
+}
+
+int	was_expanded(char *s)
+{
+	int	i;
+	int	end;
+
+	i = -1;
+	end = get_end_index(s);
+	while (++i < end)
+		if (s[i] == '$')
+			return (1);
+	return (0);
+}
+
+int	has_quotes(char *s)
+{
+	int	i;
+	int	end;
+
+	i = -1;
+	end = get_end_index(s);
+	while (++i < end)
+		if (is_q(s[i]))
+			return (1);
+	return (0);
+
+}
+
+
+
 /* copy an arg */
 char	**cpy_str(char *s, char **argv, int *i, int argc)
 {
 	int		len;
 
+	printf("s:[%s]\n", s);
 	len = cnt_str_len(s);
 	argv[*i] = malloc_str(argv, *i, len);
 	if (is_q(*s))
@@ -132,8 +172,13 @@ char	**cpy_str(char *s, char **argv, int *i, int argc)
 		free(argv);
 		return (AMBIG_REDIR);
 	}
-	if (argv[*i] && env_has_space(argv[*i], s[0]))
-		return (split_and_join_till(argv[*i], argv, i, argc));
+	if (argv[*i] && was_expanded(s))
+	{
+		if (!has_quotes(s))
+			return (split_and_join_till(argv, i, argc, s));
+		else
+			return (just_join_with_arg())		//or next_arg..?
+	}
 	(*i)++;
 	return (argv);
 }
