@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_empty_var.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 04:24:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 04:28:42 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/19 16:48:49 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**rm_empty_var(char **argv)
 	j = 0;
 	while (++i < argc)
 	{
-		if (argv[j] == EMPTY_VAR)
+		while (argv[j] == EMPTY_VAR)
 			j++;
 		if (is_token(argv[j]))
 			ret[i] = argv[j++];
