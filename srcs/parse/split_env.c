@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/20 01:00:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 22:16:09 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static size_t	count2(const char *str, size_t *arr_idx)
 			count++;
 			while (*str && !ft_isspace(*str))
 			{
-				if (is_q(*str))
+				if (*str == '"')
 				{
 					q = *str;
 					while (*++str != q)
@@ -178,7 +178,7 @@ char	**split2(char const *s)
 			s++;
 		while (!ft_isspace(s[i]) && s[i])
 		{
-			if (is_q(s[i]))
+			if (s[i] == '"')
 			{
 				q = s[i];
 				while (s[++i] != q)
@@ -206,7 +206,7 @@ char	*strdup_wo_q(const char *s1)
 	q = 0;
 	while (s1[i])
 	{
-		if (is_q(s1[i]))
+		if (s1[i] == '"')
 			q++;
 		i++;
 	}
@@ -215,7 +215,7 @@ char	*strdup_wo_q(const char *s1)
 	k = 0;
 	while (j < i)
 	{
-		if (!is_q(s1[j]))
+		if (s1[j] != '"')
 			new[k++] = s1[j];
 		j++;
 	}

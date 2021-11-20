@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 23:35:50 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/20 22:00:53 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ int	skip_q(char *s)
 	char	c;
 
 	i = 0;
-	while (is_q(s[i]))
-	{
-		c = s[i++];
-		while (s[i] != c)
-			i++;
+	c = s[i++];
+	while (s[i] && s[i] != c)
 		i++;
-	}
-	while (s[i] && !ft_isspace(s[i]))
+	i++;
+	while (s[i] && s[i] != c && s[i] != '$' && !ft_isspace(s[i]))
 		i++;
 	return (i);
 }

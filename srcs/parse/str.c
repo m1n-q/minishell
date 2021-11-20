@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:23 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:29:30 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/20 22:13:00 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 /* count length of an arg that is enclosed by quotes */
 int	case_q(char *s)
 {
-	int		ret;
+	int	ret;
 
 	ret = skip_q(s);
+	while (s[ret] && !ft_isspace(s[ret]))
+		ret++;
 	return (ret);
 }
 
