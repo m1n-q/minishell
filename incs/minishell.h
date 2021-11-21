@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/21 23:17:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 02:28:41 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@
 # define SAVE 5
 # define ON 1
 # define OFF 0
-
-# define SINGLE_Q 1
-# define DOUBLE_Q 2
 
 # define DEFAULT -2
 
@@ -142,91 +139,75 @@ int			remove_envent(t_envent env);
 void		adjust_envent(t_envent entry, char *value);
 
 /* ************************ parse ************************ */
-/* parse */
-char		**ft_split_space(char *s);
-char		**parse(char *s);
 
-/* rm_empty_var */
-char		**rm_empty_var(char **argv);
+/* cont_pipe */
+char		**cont_pipe(char **argv);
 
-/* pipe_redir */
-void		cnt_pipe_redir(char *s, int *cnt);
-char		*split_pipe_redir(char *s);
-
-/* empty_q */
-char		*rm_empty_q(char *s);
-
-/* utils */
-int			ft_isspace(char c);
-int			is_q(char c);
-int			is_pipe_redir(char c);
-int			is_empty_q(char *s);
-char		*calloc_n_lcpy(char *s, size_t dstsize);
-
-/* strs_utils */
-int			has_leading_space(char *s);
-int			has_trailing_space(char *s);
-int			next_idx(char *s, int cur);
-
-/* strs */
-int			skip_q(char *s);
-char		**malloc_strs(char *s, int *argc);
-
-/* str */
-int			cnt_str_len(char *s);
-char		*malloc_str(char **argv, int i, int len);
-
-/* copy_utils */
-int			expand(char *s);
-int			get_index(char *s);
-int			was_expanded(char *s);
-int			has_quotes(char *s);
+/* copy */
+char		**copy_arg(char *s, char **argv, int *i, int argc);
 
 /* copy_env */
 int			copy_non_env(char *arg, char **new_arg);
 int			copy_env_val(char *arg, char **new_arg, char *prev_arg);
 
-/* copy */
-char		**copy_arg(char *s, char **argv, int *i, int argc);
+/* copy_q */
+int			copy_quotes(char *arg, char **new_arg, char *prev_arg);
 
-/* heredoc */
-char		*cpy_delimiter(char *s, char *arg);
-char		*adjust_delimiter(char *s);
-int			check_delimiter(char **delim);
-char		*getenv_(char *s, int *i, int check);
+/* copy_utils */
+int			expand(char *s);
+int			has_quotes(char *s);
+int			count_env(char *arg);
+char		*ambiguous_redirect_error(char *env);
 
-/* env */
-char		*trim_space_in_env(char *s, char c);
-char		*case_env(char *s, char *arg, char **argv, int i);
-
-/* join_env */
-char		*ambig_redir_err(char *tmp);
-int			join_env(char *s, char **p_arg, char *prev_arg, char c);
-
-/* join_non_env */
-int			join_exit_code(char **p_arg);
-int			join_dollar_sign(char *s, char **p_arg);
-int			join_dollar_at_end(char **p_arg);
-int			join_non_env(char *s, char **p_arg);
-
-/* split_env */
-int			env_has_space(char *s, char c);
-char		**split_and_join_till(char **argv, int *i, int argc, char *raw);
+/* empty_q */
+char		*rm_empty_q(char *s);
 
 /* error */
 int			find_token_error(char **argv);
 char		**token_error(char **argv);
 
-/* cont_pipe */
-char		**join_argvs(char **argv, char **tmp);
-char		**cont_pipe(char **argv);
+/* heredoc */
+int			check_delimiter(char **delim);
+
+/* parse */
+char		**parse(char *s);
+
+/* pipe_redir */
+char		*split_pipe_redir(char *s);
+
+/* remove_empty_var */
+char		**rm_empty_var(char **argv);
+
+/* split_env */
+char		**split_except_quotes(char **argv, int *i, int argc, char *raw);
+
+/* str */
+int			cnt_str_len(char *s);
+char		*malloc_str(char **argv, int i, int len);
+
+/* strs */
+int			skip_q(char *s);
+char		**malloc_strs(char *s, int *argc);
+
+/* strs_utils */
+int			has_leading_space(char *s);
+int			has_trailing_space(char *s);
+int			next_idx(char *s, int cur);
+int			env_has_space(char *s, char c);
 
 /* token */
 int			is_token(char *s);
 int			is_redir_token(char *s);
 int			is_pipe_token(char *s);
-int			is_empty_token(char *s);
 char		*toktos(char *tok);
+
+/* utils */
+int			ft_isspace(char c);
+int			is_q(char c);
+int			is_pipe_redir(char c);
+char		*calloc_n_lcpy(char *s, size_t dstsize);
+char		*getenv_(char *s, int *i, int check);
+
 /* ************************ parse ************************ */
 
 /* heredoc */
@@ -288,7 +269,4 @@ void		builtin_usage(char *command, char *usage);
 int			isoption(char *s, int optlen);
 void		before_exit(void);
 
-
-
-char	**split_except_quotes(char **argv, int *i, int argc, char *raw);
 #endif

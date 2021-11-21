@@ -26,25 +26,23 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/signal.c \
 		$(SRC_DIR)/variable.c \
 		$(SRC_DIR)/loop.c \
-		$(SRC_DIR)/parse/parse.c \
-		$(SRC_DIR)/parse/remove_empty_var.c \
-		$(SRC_DIR)/parse/pipe_redir.c \
-		$(SRC_DIR)/parse/empty_q.c \
-		$(SRC_DIR)/parse/heredoc.c \
-		$(SRC_DIR)/parse/env.c \
-		$(SRC_DIR)/parse/join_env.c \
-		$(SRC_DIR)/parse/join_non_env.c \
-		$(SRC_DIR)/parse/utils.c \
-		$(SRC_DIR)/parse/copy_utils.c \
-		$(SRC_DIR)/parse/copy_env.c \
+		$(SRC_DIR)/parse/cont_pipe.c \
 		$(SRC_DIR)/parse/copy.c \
+		$(SRC_DIR)/parse/copy_env.c \
+		$(SRC_DIR)/parse/copy_q.c \
+		$(SRC_DIR)/parse/copy_utils.c \
+		$(SRC_DIR)/parse/empty_q.c \
+		$(SRC_DIR)/parse/error.c \
+		$(SRC_DIR)/parse/heredoc.c \
+		$(SRC_DIR)/parse/parse.c \
+		$(SRC_DIR)/parse/pipe_redir.c \
+		$(SRC_DIR)/parse/remove_empty_var.c \
 		$(SRC_DIR)/parse/split_env.c \
 		$(SRC_DIR)/parse/str.c \
-		$(SRC_DIR)/parse/strs_utils.c \
 		$(SRC_DIR)/parse/strs.c \
-		$(SRC_DIR)/parse/cont_pipe.c \
-		$(SRC_DIR)/parse/error.c \
+		$(SRC_DIR)/parse/strs_utils.c \
 		$(SRC_DIR)/parse/token.c \
+		$(SRC_DIR)/parse/utils.c \
 		$(SRC_DIR)/utils/utils.c \
 		$(SRC_DIR)/utils/qsort.c \
 		$(SRC_DIR)/utils/ft_strtoimax.c \

@@ -6,14 +6,14 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:10 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 02:52:07 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 01:56:21 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* copy the heredoc delimiter */
-char	*cpy_delimiter(char *s, char *arg)
+char	*copy_delimiter(char *s, char *arg)
 {
 	int		i;
 	int		j;
@@ -107,24 +107,4 @@ int	check_delimiter(char **delim)
 	free(*delim);
 	*delim = ret;
 	return (0);
-}
-
-/* getenv with length */
-char	*getenv_(char *s, int *i, int check)
-{
-	char	*tmp;
-	char	*ret;
-	int		j;
-
-	j = 0;
-	while (ft_isdigit(s[j]) || ft_isalpha(s[j]) || s[j] == '_')
-		j++;
-	tmp = calloc_n_lcpy(s, j + 1);
-	ret = getenv(tmp);
-	free(tmp);
-	if (!ret)
-		ret = EMPTY_VAR;
-	if (check)
-		*i = ++j;
-	return (ret);
 }

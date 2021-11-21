@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:10:04 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 22:33:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 02:28:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,42 @@ int	expand(char *s)
 	return (-1);
 }
 
-int	get_end_index(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && !ft_isspace(s[i]))
-		i++;
-	return (i);
-}
-
-int	was_expanded(char *s)
-{
-	int	i;
-	int	end;
-
-	i = -1;
-	end = get_end_index(s);
-	while (++i < end)
-		if (s[i] == '$')
-			return (1);
-	return (0);
-}
-
 int	has_quotes(char *s)
 {
 	int	i;
-	int	end;
 
 	i = -1;
-	end = get_end_index(s);
-	while (++i < end)
+	while (s[++i] && !ft_isspace(s[i]))
 	{
-		if (s[i] == '\'')
-			return (SINGLE_Q);
-		else if (s[i] == '"')
-			return (DOUBLE_Q);
+		if (is_q(s[i]))
+			return (1);
 	}
 	return (0);
+}
+
+int	count_env(char *arg)
+{
+	char	c;
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	c = arg[i];
+	while (arg[++i] != c)
+	{
+		if (arg[i] == '$')
+			ret++;
+	}
+	return (ret);
+}
+
+/* if <, >, or << is followed by notexisting_env_var */
+char	*ambiguous_redirect_error(char *env)
+{
+	get_or_set_exitcode(SET, 1);
+	ft_putstr_fd("minishell: $", STDERR_FILENO);
+	ft_putstr_fd(env, STDERR_FILENO);
+	ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
+	return ((char *)AMBIG_REDIR);
 }

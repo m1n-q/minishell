@@ -6,11 +6,18 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:09:21 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 01:52:07 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
+
+int	is_empty_q(char *s)
+{
+	if (*s && *(s + 1) && is_q(*s) && *s == *(s + 1))
+		return (1);
+	return (0);
+}
 
 /* if an arg is a delimiter of heredoc, maintain all empty quotes */
 int	skip_empty_q_in_delimiter(char *s)

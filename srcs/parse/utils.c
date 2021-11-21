@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:50 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/10 17:17:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 01:55:45 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,31 @@ int	is_pipe_redir(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-int	is_empty_q(char *s)
-{
-	if (*s && *(s + 1) && is_q(*s) && *s == *(s + 1))
-		return (1);
-	return (0);
-}
-
 char	*calloc_n_lcpy(char *s, size_t dstsize)
 {
 	char	*ret;
 
 	ret = (char *)calloc_(dstsize, sizeof(char));
 	ft_strlcpy(ret, s, dstsize);
+	return (ret);
+}
+
+/* getenv with length */
+char	*getenv_(char *s, int *i, int check)
+{
+	char	*tmp;
+	char	*ret;
+	int		j;
+
+	j = 0;
+	while (ft_isdigit(s[j]) || ft_isalpha(s[j]) || s[j] == '_')
+		j++;
+	tmp = calloc_n_lcpy(s, j + 1);
+	ret = getenv(tmp);
+	free(tmp);
+	if (!ret)
+		ret = EMPTY_VAR;
+	if (check)
+		*i = ++j;
 	return (ret);
 }

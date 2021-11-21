@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 22:15:33 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 02:09:54 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	copy_non_env(char *arg, char **new_arg)
 	char	*tmp;
 
 	i = 0;
-	while (arg[i] && arg[i] != '$')
+	while (arg[i] && arg[i] != '$' && !is_q(arg[i]))
 		i++;
 	tmp = calloc_n_lcpy(arg, i + 1);
 	if (*new_arg && *new_arg != EMPTY_VAR)
@@ -45,7 +45,7 @@ int	copy_other_signs(char *arg, char **new_arg)
 	int		i;
 	char	*tmp;
 	char	*signs;
-	
+
 	i = 0;
 	while (arg[i] && arg[i] != '"'
 		&& !ft_isdigit(arg[i]) && !ft_isalpha(arg[i]) && arg[i] != '_')
@@ -95,6 +95,7 @@ int	copy_env_val(char *arg, char **new_arg, char *prev_arg)
 	else if ((*new_arg == EMPTY_VAR || !*new_arg) && env_val)
 		*new_arg = strdup_(env_val);
 	if (is_redir_token(prev_arg))
-		*new_arg = ambig_redir_err(env_name);
+		*new_arg = ambiguous_redirect_error(env_name);
+	free(env_name);
 	return (++i);
 }

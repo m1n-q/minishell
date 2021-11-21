@@ -6,32 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 23:19:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 02:03:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
-
-/* if env_var_value has space */
-int	env_has_space(char *s, char c)
-{
-	int	i;
-	int	cnt_space;
-
-	if (s == EMPTY_VAR || !s || c != '$')
-		return (0);
-	i = 0;
-	cnt_space = 0;
-	while (ft_isspace(s[i]))
-		i++;
-	while (s[i])
-	{
-		if (ft_isspace(s[i]) && s[i + 1] && !ft_isspace(s[i + 1]))
-			cnt_space++;
-		i++;
-	}
-	return (cnt_space);
-}
 
 static size_t	count2(const char *str, size_t *arr_idx)
 {
