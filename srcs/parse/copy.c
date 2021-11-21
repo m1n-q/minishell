@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 22:24:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 22:58:21 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,9 @@ char	**copy_arg(char *s, char **argv, int *i, int argc)
 		free(argv);
 		return (AMBIG_REDIR);
 	}
-	if (argv[*i] && was_expanded(s))
-	{
-		if (has_quotes(s))
-			return (just_join_with_arg(argv, i, argc, s));
-		else
-			return (split_and_join_till(argv, i, argc, s));
-	}
+	// printf("string:[%s]\n", argv[*i]);
+	if (argv[*i])
+		return (split_except_quotes(argv, i, argc, s));
 	(*i)++;
 	return (argv);
 }

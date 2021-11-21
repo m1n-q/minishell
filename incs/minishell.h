@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/21 21:54:08 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 23:17:06 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ void		builtin_usage(char *command, char *usage);
 int			isoption(char *s, int optlen);
 void		before_exit(void);
 
-char	**split2(char const *s);
-char	*strdup_wo_q(const char *s1);
-char	**just_join_with_arg(char **argv, int *i, int argc, char *raw);
+
+
+char	**split_except_quotes(char **argv, int *i, int argc, char *raw);
 #endif

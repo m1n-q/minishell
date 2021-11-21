@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:10:04 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 21:27:42 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 22:33:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	expand(char *s)
 			while (s[++i] != c)
 				if (s[i] == '$')
 					return (i);
-			i++;
 		}
 		else if (s[i] == '$')
 			return (i);

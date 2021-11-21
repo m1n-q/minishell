@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 19:33:08 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 23:19:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,6 @@ int	env_has_space(char *s, char c)
 	return (cnt_space);
 }
 
-/* split env_var_value with space and join it to the original argv */
-char	**split_and_join_till(char **argv, int *i, int argc, char *raw)
-{
-	int		j;
-	int		tmp_i;
-	char	**tmp;
-	char	**ret;
-
-	(void)raw;
-	tmp = ft_split(argv[*i], ' ');
-	ret = (char **)calloc_(argc + 1, sizeof(char **));
-	j = -1;
-	tmp_i = -1;
-	while (++j < *i)
-	{
-		if (is_token(argv[j]) || argv[j] == EMPTY_VAR)
-			ret[j] = argv[j];
-		else
-			ret[j] = strdup_(argv[j]);
-	}
-	while (++tmp_i < get_argc(tmp))
-		ret[j++] = strdup_(tmp[tmp_i]);
-	*i = j;
-	free_till(get_argc(argv), argv);
-	free(argv);
-	free_till(get_argc(tmp), tmp);
-	free(tmp);
-	return (ret);
-}
-
-
-
 static size_t	count2(const char *str, size_t *arr_idx)
 {
 	size_t	count;
@@ -80,7 +48,7 @@ static size_t	count2(const char *str, size_t *arr_idx)
 			count++;
 			while (*str && !ft_isspace(*str))
 			{
-				if (*str == '"')
+				if (is_q(*str))
 				{
 					q = *str;
 					while (*++str != q)
@@ -95,7 +63,7 @@ static size_t	count2(const char *str, size_t *arr_idx)
 	return (count);
 }
 
-char	**split2(char const *s)
+static char	**split2(char const *s)
 {
 	char	**ret;
 	char	q;
@@ -115,7 +83,7 @@ char	**split2(char const *s)
 			s++;
 		while (!ft_isspace(s[i]) && s[i])
 		{
-			if (s[i] == '"')
+			if (is_q(s[i]))
 			{
 				q = s[i];
 				while (s[++i] != q)
@@ -130,36 +98,76 @@ char	**split2(char const *s)
 	return (ret);
 }
 
-char	*strdup_wo_q(const char *s1)
+char	*where_to_trim(char *s, int *trimcount)
 {
-	char	*new;
 	int		i;
-	int		j;
-	int		k;
-	int		q;
+	int		on_dq;
+	int		on_sq;
+	int		count;
+	char	*trim_index;
 
-	new = 0;
+	trim_index = (char *)calloc_(ft_strlen(s) + 1, sizeof(char));
+
 	i = 0;
-	q = 0;
-	while (s1[i])
+	on_sq = 0;
+	on_dq = 0;
+	count = 0;
+	while (s[i])
 	{
-		if (s1[i] == '"')
-			q++;
+		if (s[i] == '\'')
+		{
+			if (!on_dq && !on_sq)
+				on_sq = 1;
+			else
+				on_sq = 0;
+			if (!on_dq)
+			{
+				trim_index[i]++;
+				count++;
+			}
+		}
+		if (s[i] == '"')
+		{
+			if (!on_sq && !on_dq)
+				on_dq = 1;
+			else
+				on_dq = 0;
+			if (!on_sq)
+			{
+				trim_index[i]++;
+				count++;
+			}
+		}
 		i++;
 	}
-	new = (char *)calloc_((i - q + 1), sizeof(char));
-	j = 0;
-	k = 0;
-	while (j < i)
-	{
-		if (s1[j] != '"')
-			new[k++] = s1[j];
-		j++;
-	}
-	return (new);
+	*trimcount = count;
+	return (trim_index);
 }
 
-char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
+static char	*quotes_trimmer(char *s)
+{
+	int		i;
+	int		j;
+	int		trimcount;
+	char	*trim_index;
+	char	*trimmed_string;
+
+	trim_index = where_to_trim(s, &trimcount);
+	trimmed_string = NULL;
+	trimmed_string = (char *)calloc_(ft_strlen(s) - trimcount + 1, sizeof(char));
+	i = -1;
+	j = 0;
+	while (s[++i])
+	{
+		if (!trim_index[i])
+			trimmed_string[j++] = s[i];
+	}
+	free(trim_index);
+	return (trimmed_string);
+}
+
+/* split env_var_value with space and join it to the original argv, except q */
+char	**split_except_quotes(char **argv, int *i, int argc, char *raw)
 {
 	int		j;
 	int		tmp_i;
@@ -179,7 +187,7 @@ char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 			ret[j] = strdup_(argv[j]);
 	}
 	while (++tmp_i < get_argc(tmp))
-		ret[j++] = strdup_wo_q(tmp[tmp_i]);
+		ret[j++] = quotes_trimmer(tmp[tmp_i]);
 	*i = j;
 	free_till(get_argc(argv), argv);
 	free(argv);
@@ -187,13 +195,3 @@ char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 	free(tmp);
 	return (ret);
 }
-
-/*
-	methods 1
-	따옴표 안에 있는것들은 스플릿에 포함 안되게 새로운 스플릿 만들기
-*/
-
-/*
-	methods 2
-	따옴표안의 확장은 아예 다른 곳에서 하기
-*/
