@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/21 17:16:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 21:54:08 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@
 # define SAVE 5
 # define ON 1
 # define OFF 0
+
+# define SINGLE_Q 1
+# define DOUBLE_Q 2
 
 # define DEFAULT -2
 
@@ -174,13 +177,17 @@ int			cnt_str_len(char *s);
 char		*malloc_str(char **argv, int i, int len);
 
 /* copy_utils */
-int			has_dollar_sign(char *s);
+int			expand(char *s);
 int			get_index(char *s);
 int			was_expanded(char *s);
 int			has_quotes(char *s);
 
+/* copy_env */
+int			copy_non_env(char *arg, char **new_arg);
+int			copy_env_val(char *arg, char **new_arg, char *prev_arg);
+
 /* copy */
-char		**cpy_str(char *s, char **argv, int *i, int argc);
+char		**copy_arg(char *s, char **argv, int *i, int argc);
 
 /* heredoc */
 char		*cpy_delimiter(char *s, char *arg);
@@ -193,6 +200,7 @@ char		*trim_space_in_env(char *s, char c);
 char		*case_env(char *s, char *arg, char **argv, int i);
 
 /* join_env */
+char		*ambig_redir_err(char *tmp);
 int			join_env(char *s, char **p_arg, char *prev_arg, char c);
 
 /* join_non_env */

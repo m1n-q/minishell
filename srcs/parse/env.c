@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:08 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/20 00:33:03 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/21 20:49:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*trim_space_in_env(char *s, char c)
 	cnt = count_space_in_env(s, c);
 	if (!cnt)
 		return (s);
-	ret = calloc_(ft_strlen(s) - cnt + 1, sizeof(char));
+	ret = (char *)calloc_(ft_strlen(s) - cnt + 1, sizeof(char));
 	while (ft_isspace(*s))
 		s++;
 	while (*s)
@@ -74,7 +74,7 @@ char	*trim_space_in_env(char *s, char c)
 }
 
 /* if an arg is enclosed by double quotes, expand arg */
-int	expand(char *s, char **p_arg, char *prev_arg)
+/*int	expand(char *s, char **p_arg, char *prev_arg)
 {
 	int		i;
 	char	c;
@@ -95,7 +95,7 @@ int	expand(char *s, char **p_arg, char *prev_arg)
 	if (!s[i])
 		return (i);
 	return (++i);
-}
+}*/
 
 /* if an arg is enclosed by single quotes, do not expand */
 int	not_expand(char *s, char **p_arg)
@@ -135,7 +135,8 @@ char	*case_env(char *s, char *arg, char **argv, int i)
 	while (*s && !ft_isspace(*s))
 	{
 		if (*s == '"')
-			s += expand(s, &ret, prev_arg);
+			s++;
+//			s += expand(s, &ret, prev_arg);
 		else if (*s == '\'')
 			s += not_expand(s, &ret);
 		else if (*s != '$')

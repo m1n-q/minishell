@@ -6,35 +6,40 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:10:04 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 17:11:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 21:27:42 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
 /* check if an arg has a dollar-sign */
-int	has_dollar_sign(char *s)
+int	expand(char *s)
 {
 	int		i;
 	char	c;
 
-	i = -1;
-	if (s[0] == '$' && ft_isspace(s[1]))
-		return (0);
-	while (s[++i] && !is_q(s[i]) && !ft_isspace(s[i]))
-		if (s[i] == '$')
-			return (1);
-	if (ft_isspace(s[i]))
-		return (0);
-	if (is_q(s[i]))
+	i = 0;
+	while (s[i])
 	{
-		c = s[i];
-		while (s[++i] != c)
-			if (s[i] == '$')
-				return (1);
+		if (s[i] == '\'')
+		{
+			c = s[i];
+			while (s[++i] != c)
+				;
+		}
+		else if (s[i] == '"')
+		{
+			c = s[i];
+			while (s[++i] != c)
+				if (s[i] == '$')
+					return (i);
+			i++;
+		}
+		else if (s[i] == '$')
+			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	get_end_index(char *s)
@@ -68,7 +73,11 @@ int	has_quotes(char *s)
 	i = -1;
 	end = get_end_index(s);
 	while (++i < end)
-		if (is_q(s[i]))
-			return (1);
+	{
+		if (s[i] == '\'')
+			return (SINGLE_Q);
+		else if (s[i] == '"')
+			return (DOUBLE_Q);
+	}
 	return (0);
 }

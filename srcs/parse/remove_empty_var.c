@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 04:24:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 16:48:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/21 19:33:36 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**rm_empty_var(char **argv)
 	argc = get_argc(argv) - count_empty_var(argv);
 	if (argc == get_argc(argv))
 		return (argv);
-	ret = calloc_(argc + 1, sizeof(char **));
+	ret = (char **)calloc_(argc + 1, sizeof(char *));
 	i = -1;
 	j = 0;
 	while (++i < argc)

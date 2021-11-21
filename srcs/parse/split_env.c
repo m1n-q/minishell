@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 17:24:55 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/21 19:33:08 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**split_and_join_till(char **argv, int *i, int argc, char *raw)
 
 	(void)raw;
 	tmp = ft_split(argv[*i], ' ');
-	ret = calloc_(argc + 1, sizeof(char **));
+	ret = (char **)calloc_(argc + 1, sizeof(char **));
 	j = -1;
 	tmp_i = -1;
 	while (++j < *i)
@@ -168,7 +168,7 @@ char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 
 	(void)raw;
 	tmp = split2(argv[*i]);
-	ret = calloc_(argc + 1, sizeof(char **));
+	ret = (char **)calloc_(argc + 1, sizeof(char *));
 	j = -1;
 	tmp_i = -1;
 	while (++j < *i)

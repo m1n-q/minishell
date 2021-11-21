@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/19 16:33:43 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/21 22:02:42 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**ft_split_space(char *s)
 	{
 		if (!ft_isspace(*s))
 		{
-			ret = cpy_str(s, ret, &i, argc);
+			ret = copy_arg(s, ret, &i, argc);
 			if (ret == AMBIG_REDIR)
 				break ;
 			s += cnt_str_len(s) - 1;
@@ -84,11 +84,11 @@ char	**parse(char *s)
 	char	**ret;
 
 	ret = ft_split_space(s);
-	ret = rm_empty_var(ret);
 	if (ret == Q_ERR)
 		return (syntax_error(Q_ERR, 0, EXECUTION_FAILURE));
-	if (ret == AMBIG_REDIR)
+	else if (ret == AMBIG_REDIR)
 		return (ret);
+	ret = rm_empty_var(ret);
 	last = get_argc(ret) - 1;
 	if (find_token_error(ret) != -1)
 		return (token_error(ret));
