@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/20 00:21:46 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/21 17:12:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,12 @@ char		**malloc_strs(char *s, int *argc);
 /* str */
 int			cnt_str_len(char *s);
 char		*malloc_str(char **argv, int i, int len);
+
+/* copy_utils */
+int			has_dollar_sign(char *s);
+int			get_index(char *s);
+int			was_expanded(char *s);
+int			has_quotes(char *s);
 
 /* copy */
 char		**cpy_str(char *s, char **argv, int *i, int argc);
