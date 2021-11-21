@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 17:12:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 18:02:45 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,21 @@ char	*cpy_with_q(char *s, char *arg, char **argv, int j)
 	i = 0;
 	if (j > 0 && argv[j - 1] == HEREDOC)
 		return (cpy_delimiter(s, arg));
-	while (*s && !ft_isspace(*s))
-	{
-		if (has_dollar_sign(s) && is_q(*s))
-			return (case_env(s, arg, argv, j));
-		c = *s++;
-		while (*s && *s != c)
-			arg[i++] = *s++;
-		if (*++s && !ft_isspace(*s))
-		{
-			while (*s && !ft_isspace(*s) && !is_q(*s))
-				arg[i++] = *s++;
-		}
-	}
-	arg[i] = 0;
+	return (case_env(s, arg, argv, j));
+	// while (*s && !ft_isspace(*s))
+	// {
+	// 	if (has_dollar_sign(s) && is_q(*s))
+	// 		return (case_env(s, arg, argv, j));
+	// 	c = *s++;
+	// 	while (*s && *s != c)
+	// 		arg[i++] = *s++;
+	// 	if (*++s && !ft_isspace(*s))
+	// 	{
+	// 		while (*s && !ft_isspace(*s) && !is_q(*s))
+	// 			arg[i++] = *s++;
+	// 	}
+	// }
+	// arg[i] = 0;
 	return (arg);
 }
 

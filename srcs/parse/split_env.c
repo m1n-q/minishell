@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/20 22:16:09 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 17:24:55 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,73 +38,10 @@ char	**split_and_join_till(char **argv, int *i, int argc, char *raw)
 {
 	int		j;
 	int		tmp_i;
-	// char	*raw_env;
 	char	**tmp;
 	char	**ret;
 
 	(void)raw;
-	// int	cut =0;
-
-	// while (raw[cut] && !ft_isspace(raw[cut]))
-	// 	cut++;
-
-	// char *cutted;
-	// cutted = calloc_n_lcpy(raw, cut + 1);
-	// printf("cutted:[%s]\n", cutted);
-	// int cutted_argc =0;
-
-	// char	**expanded_list = malloc_strs(cutted, &cutted_argc);
-	// printf("cutted argc=%d\n", cutted_argc);
-
-
-
-	// int k = -1;
-	// int l = 0;
-	// int	dummy = 0;
-	// int	minicut;
-	// minicut = 0;
-	// printf("cut:%d\n", cut);
-	// while (++k < cut)
-	// {
-	// 	minicut = 0;
-	// 	if (cutted[k] == '$')
-	// 	{
-	// 		expanded_list[l++] = getenv_(&cutted[k + 1], NULL, 0);
-	// 	}
-	// 	else
-	// 	{
-	// 		while (cutted[minicut] && !ft_isspace(cutted[minicut]))
-	// 			minicut++;
-	// 		expanded_list[l++] = calloc_n_lcpy(&cutted[k], minicut + 1);
-	// 	}
-	// 	k += count_n_skip_env(&cutted[k], cutted[k], &dummy) - 1;
-	// 	printf("index k:%d\n",k);
-	// }
-
-	// int p = -1;
-	// while (expanded_list[++p])
-	// 	printf("expanded list[%d]=[%s]\n", p, expanded_list[p]);
-
-
-	// int p = -1;
-
-	// while (expanded_list[++p])
-	// {
-	// 	if (p > 0 && expanded_list[p - 1] && !has_trailing_space(expanded_list[p - 1]))
-	// 		p-1 & p will not join.
-
-	// 	if (expanded_list[p + 1] && has_leading_space(expanded_list[p + 1]))
-	// 		p & p+1 will not join.
-	// }
-
-
-
-
-
-
-
-
-
 	tmp = ft_split(argv[*i], ' ');
 	ret = calloc_(argc + 1, sizeof(char **));
 	j = -1;
@@ -230,7 +167,6 @@ char	**just_join_with_arg(char **argv, int *i, int argc, char *raw)
 	char	**ret;
 
 	(void)raw;
-
 	tmp = split2(argv[*i]);
 	ret = calloc_(argc + 1, sizeof(char **));
 	j = -1;

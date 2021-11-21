@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 17:15:21 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 17:42:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	skip_q(char *s)
 	while (s[i] && s[i] != c)
 		i++;
 	i++;
-	while (s[i] && s[i] != c && s[i] != '$' && !ft_isspace(s[i]))
-		i++;
+	// while (s[i] && s[i] != c && s[i] != '$' && !ft_isspace(s[i]))
+	// 	i++;
 	return (i);
 }
 
@@ -94,6 +94,7 @@ char	**malloc_strs(char *s, int *argc)
 	char	**ret;
 
 	cnt_strs(s, argc);
+	printf("argc=%d\n", *argc);
 	ret = (char **)calloc_(*argc + 1, sizeof(char *));
 	return (ret);
 }
