@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 22:05:44 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 22:24:50 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ char	*copy_env(char *arg, char *prev_arg)
 		if (arg[i] != '$')
 			i += copy_non_env(&arg[i], &ret);
 		else
-		{
-			printf("1\n");
 			i += copy_env_val(&arg[i], &ret, prev_arg);
-			printf("2\n");
-		}
 		if (ret == (char *)AMBIG_REDIR)
 			return (ret);
 	}
@@ -64,15 +60,15 @@ char	*adjust_arg(char **argv, char *arg, int i)
 	char	*ret;
 
 	prev_arg = 0;
+	ret = 0;
 	if (i > 0)
 		prev_arg = argv[i - 1];
-	ret = 0;
 	if (prev_arg == HEREDOC)
-		return (arg);
+		ret = arg;
 	if (expand(arg) != -1)
-		return (copy_env(arg, prev_arg));
+		ret = copy_env(arg, prev_arg);
 	else
-		return (arg);
+		ret = typecast_pipe_redir(arg);
 	return (ret);
 }
 
@@ -85,7 +81,6 @@ char	**copy_arg(char *s, char **argv, int *i, int argc)
 	argv[*i] = malloc_str(argv, *i, len);
 	ft_strlcpy(argv[*i], s, len + 1);
 	argv[*i] = adjust_arg(argv, argv[*i], *i);
-	argv[*i] = typecast_pipe_redir(argv[*i]);
 	if (argv[*i] == (char *)AMBIG_REDIR)
 	{
 		free_till(*i, argv);
