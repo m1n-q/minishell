@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/21 21:30:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 22:15:33 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ int	copy_env_val(char *arg, char **new_arg, char *prev_arg)
 		return (copy_others(arg, new_arg));
 	env_name = calloc_n_lcpy(arg, i + 1);
 	env_val = getenv(env_name);
-	if (*new_arg && *new_arg != EMPTY_VAR)
+	if (*new_arg && *new_arg != EMPTY_VAR && env_val)
 		*new_arg = join_and_free(*new_arg, env_val, 1);
-	else if (*new_arg == EMPTY_VAR || !*new_arg)
+	else if ((*new_arg == EMPTY_VAR || !*new_arg) && env_val)
 		*new_arg = strdup_(env_val);
 	if (is_redir_token(prev_arg))
 		*new_arg = ambig_redir_err(env_name);
