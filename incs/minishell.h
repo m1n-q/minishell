@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/21 17:12:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/21 17:16:24 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,11 @@ int			is_pipe_redir(char c);
 int			is_empty_q(char *s);
 char		*calloc_n_lcpy(char *s, size_t dstsize);
 
+/* strs_utils */
+int			has_leading_space(char *s);
+int			has_trailing_space(char *s);
+int			next_idx(char *s, int cur);
+
 /* strs */
 int			skip_q(char *s);
 char		**malloc_strs(char *s, int *argc);
@@ -275,11 +280,6 @@ void		builtin_usage(char *command, char *usage);
 int			isoption(char *s, int optlen);
 void		before_exit(void);
 
-int	next_idx(char *s, int cur);
-int	has_leading_space(char *s);
-int	has_trailing_space(char *s);
-int	count_n_skip(char *s, int *argc);
-int	count_n_skip_env(char *s, char c, int *argc);
 char	**split2(char const *s);
 char	*strdup_wo_q(const char *s1);
 char	**just_join_with_arg(char **argv, int *i, int argc, char *raw);
