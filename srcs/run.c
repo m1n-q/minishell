@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/19 02:36:37 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:39:53 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_exit	builtin_fork(t_cmd cmd)
 	• execve
 	• if execve fail
 */
-t_exit	c(t_cmd cmd)
+t_exit	child(t_cmd cmd)
 {
 	t_exit	ext;
 
@@ -98,13 +98,16 @@ t_exit	run(t_cmd cmd)
 	ext.status = 0;
 	ext.code = 0;
 	if (ext.pid < 0)
+	{
 		ft_putendl_fd("fork failed\n", STDERR_FILENO);
+		return ((t_exit){-1, 0, EXECUTION_FAILURE});
+	}
 	else if (ext.pid > 0)
 	{
 		destroy_stream(cmd.pipe_stream);
 		destroy_stream(cmd.redir_stream);
 	}
 	else if (ext.pid == CHILD)
-		ext = c(cmd);
+		ext = child(cmd);
 	return (ext);
 }

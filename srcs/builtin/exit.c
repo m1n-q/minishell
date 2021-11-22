@@ -6,7 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/11/22 22:23:46 by kyumlee          ###   ########.fr       */
+=======
+/*   Updated: 2021/11/22 22:34:09 by mishin           ###   ########.fr       */
+>>>>>>> c910b26b819ca744133bc366575d7d0d2fff83c5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +20,6 @@ void	before_exit(void)
 {
 	static_stream(DESTROY);
 	settty(RESTORE, 0);
-	ft_putendl_fd("exit", STDERR_FILENO);
 	free_till(get_argc(environ), environ);
 	free(environ);
 }
@@ -30,6 +33,7 @@ int	__exit(t_cmd cmd)
 	exit_code = 0;
 	retval = 0;
 	i = 0;
+	ft_putendl_fd("exit", STDERR_FILENO);
 	i = skip_empty_vars(cmd, i);
 	if (cmd.argv[i])
 	{

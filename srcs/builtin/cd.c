@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:33 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 15:22:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:41:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	check_arg(t_cmd cmd, char **dirname)
 	int	i;
 
 	i = skip_empty_vars(cmd, 0);
-	if (cmd.argv[i] == NULL)
+	if (cmd.argv[i] == NULL || is_equal(cmd.argv[i], "~"))
 	{
 		*dirname = getenv("HOME");
 		if (!*dirname)
