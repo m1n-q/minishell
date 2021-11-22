@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:10:04 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 15:32:19 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 19:07:26 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ int	count_env(char *arg)
 	while (arg[++i] != c)
 	{
 		if (arg[i] == '$')
+		{
 			ret++;
+			if (arg[i + 1] == '$')
+				ret--;
+		}
 	}
 	return (ret);
 }
