@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 17:30:50 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:54:41 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	**split_and_trim_quotes(char **argv, int *i, int argc)
 	char	**arr;
 	char	**ret;
 
-	if (is_token(argv[*i]) && (++*i))
+	if ((is_token(argv[*i]) || argv[*i] == EMPTY_VAR) && (++*i))
 		return (argv);
 	arr = split_except_quotes(argv[*i]);
 	ret = (char **)calloc_(argc + 1, sizeof(char *));
