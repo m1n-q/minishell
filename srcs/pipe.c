@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 17:32:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/23 00:05:43 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int	copy_args(char ***dst_ptr, char **src, int start, int end)
 	return (0);
 }
 
-//TODO: test
 t_cmd	*split_pipe(char **argv, int len_cmd_table)
 {
 	t_cmd	*cmd_table;

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:47:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 18:42:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 23:52:56 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,3 @@ int	builtin_error(char *command, char *arg, char *message, int optflag)
 	ft_putendl_fd(message, STDERR_FILENO);
 	return (0);
 }
-
-//  if (fd < 0)
-//     {
-//       e = errno;
-//       file_error (filename);
-//       exit ((e == ENOENT) ? EX_NOTFOUND : EX_NOINPUT);
-//     }

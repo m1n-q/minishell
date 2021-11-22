@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 22:55:17 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/23 00:05:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ int			copy_quotes(char *arg, char **new_arg, char *prev_arg, char q);
 
 /* copy_utils */
 int			expand(char *s);
-int			has_quotes(char *s);
 int			count_env(char *arg);
 char		*ambiguous_redirect_error(char *env);
 
@@ -208,7 +207,6 @@ char		*getenv_(char *s, int *i, int check);
 /* ************************ parse ************************ */
 
 /* heredoc */
-int			is_heredoc(char	*s);
 int			heredoc(t_cmd *cmd, char *eof);
 
 /* redirection */

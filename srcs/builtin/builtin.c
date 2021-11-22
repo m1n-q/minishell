@@ -6,12 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:30:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 15:13:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 00:05:09 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//what if argc == 1 ?
+
 int	skip_empty_vars(t_cmd cmd, int cur)
 {
 	int	i;
@@ -25,7 +25,6 @@ int	skip_empty_vars(t_cmd cmd, int cur)
 	return (i);
 }
 
-//NOTE: in bash, echo & pwd could get sh_wrerror (ferror(stdout))
 int	is_builtin(char *arg)
 {
 	if (is_equal(arg, "cd") || \

@@ -6,13 +6,12 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:47:17 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 17:29:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 00:05:15 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//NOTE: env.string == environ[i]
 t_envent	find_envent(char *name)
 {
 	t_envent	env;

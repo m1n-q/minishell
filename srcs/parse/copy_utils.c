@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:10:04 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 19:07:26 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/23 00:05:27 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,6 @@ int	expand(char *s)
 		i++;
 	}
 	return (-1);
-}
-
-int	has_quotes(char *s)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i] && !ft_isspace(s[i]))
-	{
-		if (is_q(s[i]))
-			return (1);
-	}
-	return (0);
 }
 
 int	count_env(char *arg)
