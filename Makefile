@@ -109,7 +109,7 @@ NO_COLOR = \033[0m
 all : $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS) link
-	$(CC) $(CFLAGS) -ltermcap -lncurses \
+	$(CC) $(CFLAGS) -lncurses \
 	-L $(GNULIB_DIR) -lreadline -lhistory \
 	-L $(LIBFT_DIR) -lft \
 	$(OBJS) -o $@
