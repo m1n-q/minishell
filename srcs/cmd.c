@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 17:22:55 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:24:37 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 			}
 		}
 		trim_redir(&(cmd_table[i].argv), count_redir(&cmd_table[i]));
-		set_path(&cmd_table[i]);
 		if (i < len_cmd_table - 1)
 			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
 		cmd_table[i].argc = get_argc(cmd_table[i].argv);
 		empty_to_null(cmd_table[i]);
+		set_path(&cmd_table[i]);
 	}
 	return (0);
 }
