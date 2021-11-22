@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 13:38:23 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 13:59:07 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*copy_env(char *arg, char *prev_arg)
 	return (ret);
 }
 
-char	*adjust_arg(char **argv, char *arg, int i)
+char	*adjust_arg(char **argv, char *arg, int i, int *is_delimiter)
 {
 	char	*prev_arg;
 	char	*ret;
@@ -66,7 +66,10 @@ char	*adjust_arg(char **argv, char *arg, int i)
 	if (i > 0)
 		prev_arg = argv[i - 1];
 	if (prev_arg == HEREDOC)
+	{
+		*is_delimiter = 1;
 		ret = arg;
+	}
 	if (expand(arg) != -1)
 		ret = copy_env(arg, prev_arg);
 	else
@@ -77,20 +80,27 @@ char	*adjust_arg(char **argv, char *arg, int i)
 /* copy an arg */
 char	**copy_arg(char *s, char **argv, int *i, int argc)
 {
-	int		len;
+	int	len;
+	int	is_delimiter;
 
 	len = cnt_str_len(s);
+	is_delimiter = 0;
 	argv[*i] = malloc_str(argv, *i, len);
 	ft_strlcpy(argv[*i], s, len + 1);
-	argv[*i] = adjust_arg(argv, argv[*i], *i);
-	printf("argv[%d] : [%s]\n", *i, argv[*i]);
+	argv[*i] = adjust_arg(argv, argv[*i], *i, &is_delimiter);
+
+//	if (is_token(argv[*i]))
+//		printf("argv[%d] = TOKEN\n", *i);
+//	else
+//		printf("argv[%d] = [%s]\n", *i, argv[*i]);
+
 	if (argv[*i] == (char *)AMBIG_REDIR)
 	{
 		free_till(*i, argv);
 		free(argv);
 		return (AMBIG_REDIR);
 	}
-	if (argv[*i])
+	if (argv[*i] && !is_delimiter)
 		return (split_except_quotes(argv, i, argc, s));
 	(*i)++;
 	return (argv);
