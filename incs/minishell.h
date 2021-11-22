@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 16:04:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 16:55:11 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ char		**parse(char *s);
 char		*split_pipe_redir(char *s);
 
 /* split_env */
-char		**split_except_quotes(char **argv, int *i, int argc, char *raw);
+char		**split_and_trim_quotes(char **argv, int *i, int argc);
 
 /* str */
 int			cnt_str_len(char *s);
