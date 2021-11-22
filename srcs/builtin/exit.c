@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 22:34:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 01:36:35 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	before_exit(void)
 	free(environ);
 }
 
-int	__exit(t_cmd cmd)
+int	__exit(t_cmd cmd, int is)
 {
 	int			exit_code;
 	int			i;
@@ -28,9 +28,9 @@ int	__exit(t_cmd cmd)
 
 	exit_code = 0;
 	retval = 0;
-	i = 0;
-	ft_putendl_fd("exit", STDERR_FILENO);
-	i = skip_empty_vars(cmd, i);
+	if (is == PARENT_EXIT)
+		ft_putendl_fd("exit", STDERR_FILENO);
+	i = skip_empty_vars(cmd, 0);
 	if (cmd.argv[i])
 	{
 		if (legal_number(cmd.argv[i], &retval) == 0)

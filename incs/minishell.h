@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/23 00:05:51 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 01:37:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ int			__cd(t_cmd cmd);
 int			__pwd(t_cmd cmd);
 int			__env(t_cmd cmd);
 int			__echo(t_cmd cmd);
-int			__exit(t_cmd cmd);
 int			__unset(t_cmd cmd);
 int			__export(t_cmd cmd);
 int			run_builtin(t_cmd cmd);
+int			__exit(t_cmd cmd, int is);
 int			skip_empty_vars(t_cmd cmd, int cur);
 int			is_builtin(char *arg);
 int			export_internal(char *arg);

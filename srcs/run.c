@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 19:01:59 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 22:39:53 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 01:37:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_exit	builtin_nofork(t_cmd cmd)
 	{
 		ext.pid = PARENT_EXIT;
 		ext.status = 0;
-		ext.code = __exit(cmd);
+		ext.code = __exit(cmd, PARENT_EXIT);
 	}
 	else
 	{
@@ -40,7 +40,7 @@ t_exit	builtin_fork(t_cmd cmd)
 	if (is_equal("exit", cmd.argv[0]))
 	{
 		ext.status = 0;
-		ext.code = __exit(cmd);
+		ext.code = __exit(cmd, CHILD);
 		if (ext.code == E2MANY)
 			ext.code = EXECUTION_FAILURE;
 	}
