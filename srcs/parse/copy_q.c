@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 00:19:20 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 15:41:25 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 16:23:39 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	double_q_length(char *arg)
 	return (i);
 }
 
-void	copy_till(char *arg, char **new_arg, int i)
+int	copy_till(char *arg, char **new_arg, int i)
 {
 	char	*tmp;
 
@@ -34,6 +34,7 @@ void	copy_till(char *arg, char **new_arg, int i)
 		*new_arg = join_and_free(*new_arg, tmp, 3);
 	else
 		*new_arg = dup_and_free(tmp);
+	return (i);
 }
 
 int	copy_single_quotes(char *arg, char **new_arg)
@@ -60,7 +61,7 @@ int	copy_double_quotes(char *arg, char **new_arg, char *prev_arg, char q)
 	count = count_env(arg);
 	ret = double_q_length(arg);
 	if (!count)
-		i++;
+		return (copy_till(arg, new_arg, ret));
 	while (count--)
 	{
 		while (arg[i] != '$')
