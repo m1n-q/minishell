@@ -6,18 +6,17 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 14:26:55 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 16:03:13 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incs/minishell.h"
 
-static size_t	count2(const char *str, size_t *arr_idx)
+static size_t	count2(const char *str)
 {
 	size_t	count;
 	char	q;
 
-	*arr_idx = 0;
 	count = 0;
 	q = 0;
 	while (*str)
@@ -31,7 +30,7 @@ static size_t	count2(const char *str, size_t *arr_idx)
 				{
 					q = *str;
 					while (*++str != q)
-						;					// quotes 이 연속된 경우? "aaaa""a" =>두개로 나누는게 아니고 이어줘야댐
+						;
 				}
 				str++;
 			}
@@ -53,8 +52,9 @@ static char	**split2(char const *s)
 	if (!s)
 		return (NULL);
 	q = 0;
-	count = count2(s, &arr_idx);
+	count = count2(s);
 	ret = (char **)calloc_(count + 1, sizeof(char *));
+	arr_idx = 0;
 	while (arr_idx < count && *s)
 	{
 		i = 0;
@@ -66,7 +66,7 @@ static char	**split2(char const *s)
 			{
 				q = s[i];
 				while (s[++i] != q)
-					;							// quotes 이 연속된 경우? 한문자열로 붙어야댐.
+					;
 			}
 			i++;
 		}
@@ -75,74 +75,6 @@ static char	**split2(char const *s)
 		s += i;
 	}
 	return (ret);
-}
-
-char	*where_to_trim(char *s, int *trimcount)
-{
-	int		i;
-	int		on_dq;
-	int		on_sq;
-	int		count;
-	char	*trim_index;
-
-	trim_index = (char *)calloc_(ft_strlen(s) + 1, sizeof(char));
-
-	i = 0;
-	on_sq = 0;
-	on_dq = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] == '\'')
-		{
-			if (!on_dq && !on_sq)
-				on_sq = 1;
-			else
-				on_sq = 0;
-			if (!on_dq)
-			{
-				trim_index[i]++;
-				count++;
-			}
-		}
-		if (s[i] == '"')
-		{
-			if (!on_sq && !on_dq)
-				on_dq = 1;
-			else
-				on_dq = 0;
-			if (!on_sq)
-			{
-				trim_index[i]++;
-				count++;
-			}
-		}
-		i++;
-	}
-	*trimcount = count;
-	return (trim_index);
-}
-
-static char	*quotes_trimmer(char *s)
-{
-	int		i;
-	int		j;
-	int		trimcount;
-	char	*trim_index;
-	char	*trimmed_string;
-
-	trim_index = where_to_trim(s, &trimcount);
-	trimmed_string = NULL;
-	trimmed_string = (char *)calloc_(ft_strlen(s) - trimcount + 1, sizeof(char));
-	i = -1;
-	j = 0;
-	while (s[++i])
-	{
-		if (!trim_index[i])
-			trimmed_string[j++] = s[i];
-	}
-	free(trim_index);
-	return (trimmed_string);
 }
 
 /* split env_var_value with space and join it to the original argv, except q */

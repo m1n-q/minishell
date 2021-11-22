@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 14:41:41 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 16:04:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,5 +264,5 @@ char		*sh_double_quote(char *string);
 void		builtin_usage(char *command, char *usage);
 int			isoption(char *s, int optlen);
 void		before_exit(void);
-
+char		*quotes_trimmer(char *s);
 #endif
