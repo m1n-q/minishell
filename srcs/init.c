@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/13 17:54:44 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:27:47 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	environ_to_heap(void)
 }
 
 /* add dummy variable $LINES, $COLUMNS to prevent realloc environ by readline */
-void	lc(void)
+void	dummy_lc(void)
 {
 	static int	init;
 	static char	*lp;
@@ -106,7 +106,7 @@ int	init_shell(void)
 		return (puterr(error));
 	environ_to_heap();
 	shell_level();
-	lc();
+	dummy_lc();
 	set_sighandlers();
 	static_stream(DUPLCTE);
 	settty(SAVE, 0);

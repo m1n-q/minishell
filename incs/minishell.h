@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 17:25:18 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 22:28:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "myerror.h"
 # include "struct.h"
 
-# define PROMPT "\e[1;46mminishell\e[0m "
+# define PROMPT "minishell> "
 # define TMP_HD_FILE "/tmp/minishell_heredoc_file"
 
 # define CHILD 0
@@ -77,7 +77,7 @@ int			shell_level(void);
 int			static_stream(int mode);
 void		environ_to_heap(void);
 int			init_shell(void);
-void		lc(void);
+void		dummy_lc(void);
 
 /* term */
 void		settty(int mode, unsigned long flag);

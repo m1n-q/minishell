@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 22:01:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:28:21 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ char	**parse(char *s)
 	int		last;
 	char	**ret;
 
-	ft_putstr_fd("\033[107m\033[30m", 1);
-	ft_putstr_fd(s, 1);
-	ft_putstr_fd("\033[0m\n", 1);
 	ret = ft_split_space(s);
 	if (ret == Q_ERR)
 		return (syntax_error(Q_ERR, 0, EXECUTION_FAILURE));
