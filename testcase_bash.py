@@ -52,8 +52,10 @@ strings = [
 	f'$empty cat $empty {env3}{env4}$P{env2}$P{env4} $empty'
 ]
 
+import sys
+
 for s in strings:
+	print("cat << '^'\n")
+	print(f"\033[107m\033[30m{s}\033[0m")
+	print("^")
 	print(s)
-	print("\n")
-
-
