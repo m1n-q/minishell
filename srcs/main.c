@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 15:38:48 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 21:58:30 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	main(void)
 	init_shell();
 	while (1)
 	{
-		input = readline(PROMPT);
+		// input = readline(PROMPT);
+		input = readline(NULL);
 		lc();
 		if (!input)
 			break ;
@@ -43,7 +44,7 @@ int	main(void)
 		free_cmd_table(cmd_table, len_cmd_table);
 		check_exit(ext);
 		reset_shell();
-		system("leaks minishell -quiet");
+		// system("leaks minishell -quiet");
 	}
 	before_exit();
 	system("leaks minishell -quiet");
