@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 18:12:20 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:14:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,11 @@ int	count_n_skip(char *s, int *argc)
 		{
 			if (i > 0 && s[i - 1] && !ft_isspace(s[i - 1]))
 			{
-//				if (getenv_(&s[i + 1], NULL, 0) == EMPTY_VAR)
-//					printf("getenv_(&s[i + 1] = [NULL]\n");
 				if (has_leading_space(getenv_(&s[i + 1], NULL, 0)))
 					*argc += 1;
 			}
 			if (s[next_idx(s, i + 1)] && !ft_isspace(s[next_idx(s, i + 1)]))
 			{
-//				if (getenv_(&s[i + 1], NULL, 0) == EMPTY_VAR)
-//					printf("getenv_(&s[i + 1] = [NULL]\n");
 				if (has_trailing_space(getenv_(&s[i + 1], NULL, 0)))
 					*argc += 1;
 			}
