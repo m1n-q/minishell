@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 15:08:25 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 15:53:26 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,16 @@ int	copy_env_val(char *arg, char **new_arg, char *prev_arg, char q)
 		return (copy_others(arg, new_arg));
 	env_name = calloc_n_lcpy(arg, i + 1);
 	env_val = getenv(env_name);
+	free(env_name);
 	if (*new_arg)
 		*new_arg = join_and_free(*new_arg, env_val, 1);
 	else
 		*new_arg = strdup_(env_val);
 	if (is_redir_token(prev_arg) && prev_arg != HEREDOC
 		&& (!env_val || (env_has_space(env_val, '$') && q != '"' )))
+	{
+		free(*new_arg);
 		*new_arg = (char *)AMBIG_REDIR;
-	free(env_name);
+	}
 	return (++i);
 }
