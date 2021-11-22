@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:31 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 17:45:15 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:12:20 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ char	**malloc_strs(char *s, int *argc)
 	char	**ret;
 
 	cnt_strs(s, argc);
-	printf("argc = [%d]\n", *argc);
 	ret = (char **)calloc_(*argc + 1, sizeof(char *));
 	return (ret);
 }
