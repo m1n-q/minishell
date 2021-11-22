@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 16:58:53 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:23:32 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,6 @@ char	**copy_arg(char *s, char **argv, int *i, int argc)
 	argv[*i] = malloc_str(argv, *i, len);
 	ft_strlcpy(argv[*i], s, len + 1);
 	argv[*i] = adjust_arg(argv, argv[*i], *i, &is_delimiter);
-
-//	if (is_token(argv[*i]))
-//		printf("argv[%d] = TOKEN\n", *i);
-//	else
-//		printf("argv[%d] = [%s]\n", *i, argv[*i]);
-
 	if (argv[*i] == (char *)AMBIG_REDIR)
 	{
 		free_till(*i, argv);

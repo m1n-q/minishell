@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:21:38 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 21:58:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:23:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,10 @@ int	main(void)
 	int		len_cmd_table;
 	char	**argv;
 
-
-	// int i = -1;
-	// char	**s = split2("ls -l\" ls -l \"\"abc\"");
-	// while (s[++i])
-	// 	printf("[%s]\n", s[i]);
-	// printf("[%s]\n", strdup_wo_q(s[1]));
-
 	init_shell();
 	while (1)
 	{
-		// input = readline(PROMPT);
-		input = readline(NULL);
+		input = readline(PROMPT);
 		lc();
 		if (!input)
 			break ;
@@ -44,9 +36,7 @@ int	main(void)
 		free_cmd_table(cmd_table, len_cmd_table);
 		check_exit(ext);
 		reset_shell();
-		// system("leaks minishell -quiet");
 	}
 	before_exit();
-	system("leaks minishell -quiet");
 	exit(get_or_set_exitcode(GET, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 14:29:29 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 22:23:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	__exit(t_cmd cmd)
 			return (255);
 		}
 	}
-	// ft_putendl_fd("exit", STDERR_FILENO);
 	i = skip_empty_vars(cmd, i);
 	if (cmd.argv[i])
 	{

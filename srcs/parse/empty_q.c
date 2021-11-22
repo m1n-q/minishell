@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 21:27:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 22:23:39 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*rm_empty_q(char *s)
 	if (!cnt_empty_q(s))
 		return (s);
 	ret = (char *)calloc_((ft_strlen(s) - cnt_empty_q(s) * 2) + 1,
-		sizeof(char *));
+			sizeof(char *));
 	i = -1;
 	j = 0;
 	c = 0;
