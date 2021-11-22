@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 14:49:26 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 15:08:25 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	copy_env_val(char *arg, char **new_arg, char *prev_arg, char q)
 	else
 		*new_arg = strdup_(env_val);
 	if (is_redir_token(prev_arg) && prev_arg != HEREDOC
-		&& (!env_val || (env_val && q != '"')))
-		*new_arg = ambiguous_redirect_error(env_name);
+		&& (!env_val || (env_has_space(env_val, '$') && q != '"' )))
+		*new_arg = (char *)AMBIG_REDIR;
 	free(env_name);
 	return (++i);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 14:41:35 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 15:11:21 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ char	*copy_env(char *arg, char *prev_arg)
 		else if (is_q(arg[i]))
 			i += copy_quotes(&arg[i], &ret, prev_arg, arg[i]);
 		if (ret == (char *)AMBIG_REDIR)
+		{
+			ambiguous_redirect_error(arg);
 			return (ret);
+		}
 	}
 	free(arg);
 	return (ret);
