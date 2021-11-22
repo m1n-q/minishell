@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 17:52:29 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:52:08 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,10 @@ int	copy_env_val(char *arg, char **new_arg, char *prev_arg, char q)
 	else if (!*new_arg || is_empty(*new_arg))
 		*new_arg = strdup_(env_val);
 	if (is_redir_token(prev_arg) && prev_arg != HEREDOC
-		&& (!env_val || (env_has_space(env_val, '$') && q != '"' )))
+		&& (is_empty(env_val) || (env_has_space(env_val, '$') && q != '"' )))
 	{
-		free(*new_arg);
+		if (!(is_empty(*new_arg)))
+			free(*new_arg);
 		*new_arg = (char *)AMBIG_REDIR;
 	}
 	return (++i);
