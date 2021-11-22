@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 00:19:20 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 16:23:39 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:29:02 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	copy_till(char *arg, char **new_arg, int i)
 	char	*tmp;
 
 	tmp = calloc_n_lcpy(arg, i + 1);
-	if (*new_arg)
+	if (*new_arg && !is_empty(*new_arg))
 		*new_arg = join_and_free(*new_arg, tmp, 3);
-	else
+	else if (!*new_arg || is_empty(*new_arg))
 		*new_arg = dup_and_free(tmp);
 	return (i);
 }

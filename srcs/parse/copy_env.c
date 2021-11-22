@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 15:53:26 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:52:29 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	copy_non_env(char *arg, char **new_arg)
 	while (arg[i] && arg[i] != '$' && !is_q(arg[i]))
 		i++;
 	tmp = calloc_n_lcpy(arg, i + 1);
-	if (*new_arg)
+	if (*new_arg && !is_empty(*new_arg))
 		*new_arg = join_and_free(*new_arg, tmp, 3);
-	else
+	else if (!*new_arg || is_empty(*new_arg))
 		*new_arg = dup_and_free(tmp);
 	return (i);
 }
@@ -33,9 +33,9 @@ int	copy_exit_code(char **new_arg)
 	char	*tmp;
 
 	tmp = itoa_(get_or_set_exitcode(GET, 0));
-	if (*new_arg)
+	if (*new_arg && !is_empty(*new_arg))
 		*new_arg = join_and_free(*new_arg, tmp, 3);
-	else
+	else if (!*new_arg || is_empty(*new_arg))
 		*new_arg = dup_and_free(tmp);
 	return (2);
 }
@@ -55,9 +55,9 @@ int	copy_other_signs(char *arg, char **new_arg)
 	tmp = strdup_("$");
 	signs = calloc_n_lcpy(arg, i + 1);
 	tmp = join_and_free(tmp, signs, 3);
-	if (*new_arg)
+	if (*new_arg && !is_empty(*new_arg))
 		*new_arg = join_and_free(*new_arg, tmp, 3);
-	else
+	else if (!*new_arg || is_empty(*new_arg))
 		*new_arg = dup_and_free(tmp);
 	return (i + 1);
 }
@@ -89,11 +89,11 @@ int	copy_env_val(char *arg, char **new_arg, char *prev_arg, char q)
 	if (!i)
 		return (copy_others(arg, new_arg));
 	env_name = calloc_n_lcpy(arg, i + 1);
-	env_val = getenv(env_name);
+	env_val = getenv_(env_name, NULL, 0);
 	free(env_name);
-	if (*new_arg)
+	if (*new_arg && !is_empty(*new_arg))
 		*new_arg = join_and_free(*new_arg, env_val, 1);
-	else
+	else if (!*new_arg || is_empty(*new_arg))
 		*new_arg = strdup_(env_val);
 	if (is_redir_token(prev_arg) && prev_arg != HEREDOC
 		&& (!env_val || (env_has_space(env_val, '$') && q != '"' )))
