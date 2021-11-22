@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:15 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 14:24:24 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 21:30:11 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	cnt_pipe_redir(char *s, int *cnt)
 	while (++i < (int)ft_strlen(s))
 	{
 		if (is_q(s[i]))
-			i += skip_q(&s[i]);
+			i += skip_q(&s[i]) - 1;
 		if (is_pipe_redir(s[i]) && s[i] != s[i + 1])
 		{
 			if (i > 0 && !ft_isspace(s[i - 1]) && s[i] != s[i - 1])

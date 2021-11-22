@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 19:42:40 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 21:27:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 int	is_empty_q(char *s)
 {
-	if (*s && *(s + 1) && is_q(*s) && *s == *(s + 1))
-		return (1);
+	int		i;
+	char	c;
+
+	i = 0;
+	c = s[i++];
+	if (c == '$')
+		return (0);
+	if (s[i] && s[i + 1] && is_q(s[i]) && s[i] == s[i + 1])
+	{
+		if ((s[i + 2] && !ft_isspace(s[i + 2])) || !s[i + 2])
+			return (1);
+	}
 	return (0);
 }
 
@@ -28,33 +38,38 @@ int	skip_empty_q_in_delimiter(char *s)
 	while (ft_isspace(s[i]))
 		i++;
 	while (s[i] && !ft_isspace(s[i]))
+	{
+		if (is_q(s[i]))
+			i += skip_q(&s[i]) - 1;
 		i++;
+	}
 	return (i);
 }
 
 /* count empty quotes */
 int	cnt_empty_q(char *s)
 {
+	char	c;
 	int		i;
-	int		len;
 	int		ret;
 
-	i = 0;
-	len = 0;
+	c = 0;
+	i = -1;
 	ret = 0;
-	while (s[i])
+	while (s[++i])
 	{
 		if (s[i] == '<' && s[i + 1] == '<')
 			i += skip_empty_q_in_delimiter(&s[i]) - 1;
 		else if (is_q(s[i]))
 		{
-			if (is_empty_q(&s[i]) && !ft_isspace(s[i + 2]))
+			if (i > 0 && is_empty_q(&s[i - 1]))
 			{
 				i++;
 				ret++;
 			}
+			else
+				i += skip_q(&s[i]) - 1;
 		}
-		i++;
 	}
 	return (ret);
 }
@@ -63,26 +78,27 @@ int	cnt_empty_q(char *s)
 char	*rm_empty_q(char *s)
 {
 	int		i;
-	int		len;
-	char	*tofree;
+	int		j;
+	char	c;
 	char	*ret;
 
 	if (!cnt_empty_q(s))
 		return (s);
-	i = 0;
-	len = ft_strlen(s) - cnt_empty_q(s) * 2;
-	ret = (char *)calloc_(len + 1, sizeof(char));
-	tofree = s;
-	while (*s)
+	ret = (char *)calloc_((ft_strlen(s) - cnt_empty_q(s) * 2) + 1,
+		sizeof(char *));
+	i = -1;
+	j = 0;
+	c = 0;
+	while (s[++i])
 	{
-		if (*s == '<' && *(s + 1) == '<')
-			s += skip_empty_q_in_delimiter(s);
-		if (is_empty_q(s) && !ft_isspace(*(s + 2)))
-			s += 2;
+		if (s[i] == '<' && s[i + 1] == '<')
+			i += skip_empty_q_in_delimiter(s);
+		if (i > 0 && is_empty_q(&s[i - 1]))
+			i++;
 		else
-			ret[i++] = *s++;
+			ret[j++] = s[i];
 	}
-	ret[i] = 0;
-	free(tofree);
+	ret[j] = 0;
+	free(s);
 	return (ret);
 }
