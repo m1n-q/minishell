@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 02:29:54 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 13:38:23 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char	**copy_arg(char *s, char **argv, int *i, int argc)
 	argv[*i] = malloc_str(argv, *i, len);
 	ft_strlcpy(argv[*i], s, len + 1);
 	argv[*i] = adjust_arg(argv, argv[*i], *i);
+	printf("argv[%d] : [%s]\n", *i, argv[*i]);
 	if (argv[*i] == (char *)AMBIG_REDIR)
 	{
 		free_till(*i, argv);
