@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:50 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 01:55:45 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:26:42 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*getenv_(char *s, int *i, int check)
 	tmp = calloc_n_lcpy(s, j + 1);
 	ret = getenv(tmp);
 	free(tmp);
-	if (!ret)
-		ret = EMPTY_VAR;
 	if (check)
 		*i = ++j;
 	return (ret);

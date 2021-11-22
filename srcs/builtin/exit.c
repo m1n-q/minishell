@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 15:17:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 14:29:29 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	before_exit(void)
 	free(environ);
 }
 
-//TODO: test with EMPTY_VAR
 int	__exit(t_cmd cmd)
 {
 	int			exit_code;

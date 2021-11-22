@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:14:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 02:28:52 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:27:20 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	has_leading_space(char *s)
 {
-	if (!s || s == EMPTY_VAR || !*s)
+	if (!s || !*s)
 		return (0);
 	if (ft_isspace(s[0]))
 		return (1);
@@ -23,7 +23,7 @@ int	has_leading_space(char *s)
 
 int	has_trailing_space(char *s)
 {
-	if (!s || s == EMPTY_VAR || !*s)
+	if (!s || !*s)
 		return (0);
 	if (ft_isspace(s[ft_strlen(s) - 1]))
 		return (1);
@@ -43,7 +43,7 @@ int	env_has_space(char *s, char c)
 	int	i;
 	int	cnt_space;
 
-	if (s == EMPTY_VAR || !s || c != '$')
+	if (!s || c != '$')
 		return (0);
 	i = 0;
 	cnt_space = 0;

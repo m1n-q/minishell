@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:19:31 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/18 23:42:28 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 14:26:04 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,6 @@ static int	trim_redir(char ***argv, int count_redir)
 	return (0);
 }
 
-static void	empty_to_null(t_cmd cmd)
-{
-	int	j;
-
-	j = -1;
-	while (++j < cmd.argc)
-		if (cmd.argv[j] == EMPTY_VAR)
-			cmd.argv[j] = NULL;
-}
-
 int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 {
 	int	i;
@@ -100,7 +90,6 @@ int	check_cmd_table(t_cmd *cmd_table, int len_cmd_table)
 		if (i < len_cmd_table - 1)
 			set_pipe_stream(&cmd_table[i], &(cmd_table[i + 1]));
 		cmd_table[i].argc = get_argc(cmd_table[i].argv);
-		empty_to_null(cmd_table[i]);
 	}
 	return (0);
 }

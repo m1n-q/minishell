@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 13:53:07 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:26:55 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ char	**split_except_quotes(char **argv, int *i, int argc, char *raw)
 	tmp_i = -1;
 	while (++j < *i)
 	{
-		if (is_token(argv[j]) || argv[j] == EMPTY_VAR)
+		if (is_token(argv[j]))
 			ret[j] = argv[j];
 		else
 			ret[j] = strdup_(argv[j]);

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 02:28:41 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:30:46 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 # define REDIRECT_OUT (char *)6LL
 # define REDIRECT_APPEND (char *)7LL
 # define NOCMD (char *)8LL
-# define EMPTY_VAR (char *)10LL
 
 # define TIL_SEC 0
 # define TIL_END 1
@@ -174,9 +173,6 @@ char		**parse(char *s);
 
 /* pipe_redir */
 char		*split_pipe_redir(char *s);
-
-/* remove_empty_var */
-char		**rm_empty_var(char **argv);
 
 /* split_env */
 char		**split_except_quotes(char **argv, int *i, int argc, char *raw);

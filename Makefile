@@ -36,7 +36,6 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/heredoc.c \
 		$(SRC_DIR)/parse/parse.c \
 		$(SRC_DIR)/parse/pipe_redir.c \
-		$(SRC_DIR)/parse/remove_empty_var.c \
 		$(SRC_DIR)/parse/split_env.c \
 		$(SRC_DIR)/parse/str.c \
 		$(SRC_DIR)/parse/strs.c \

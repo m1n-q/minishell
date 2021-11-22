@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:22:01 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 19:28:34 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 14:25:43 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	copy_args(char ***dst_ptr, char **src, int start, int end)
 	i = -1;
 	while (++i < end - start)
 	{
-		if (is_token(src[start + i]) || src[start + i] == EMPTY_VAR)
+		if (is_token(src[start + i]))
 			ret[i] = src[start + i];
 		else
 			ret[i] = strdup_(src[start + i]);

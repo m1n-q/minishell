@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:08:37 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/18 13:55:23 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:26:49 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ char	**join_argvs(char **argv, char **tmp)
 	ret = (char **)calloc_(argc + 1, sizeof(char *));
 	while (argv[++i])
 	{
-		if (argv[i] != EMPTY_VAR && is_token(argv[i]) == 0)
+		if (is_token(argv[i]) == 0)
 			ret[i] = strdup_(argv[i]);
 		else
 			ret[i] = argv[i];
 	}
 	while (tmp[++j])
 	{
-		if (tmp[j] != EMPTY_VAR && is_token(tmp[j]) == 0)
+		if (is_token(tmp[j]) == 0)
 			ret[i++] = strdup_(tmp[j]);
 		else
 			ret[i++] = tmp[j];

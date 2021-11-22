@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 13:59:07 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:04:41 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*adjust_arg(char **argv, char *arg, int i, int *is_delimiter)
 	if (prev_arg == HEREDOC)
 	{
 		*is_delimiter = 1;
-		ret = arg;
+		return (arg);
 	}
 	if (expand(arg) != -1)
 		ret = copy_env(arg, prev_arg);

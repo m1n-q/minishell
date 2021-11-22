@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 16:10:27 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/10 16:31:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 14:20:09 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*strdup_(char *s)
 {
 	char	*ret;
 
+	if (!s)
+		return (s);
 	ret = ft_strdup(s);
 	if (!ret)
 		exit(-1);
