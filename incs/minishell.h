@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 22:28:52 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 22:55:17 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 
 # include <stdio.h>
 # include <errno.h>
-# include <curses.h>
 # include <term.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <dirent.h>
-# include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
