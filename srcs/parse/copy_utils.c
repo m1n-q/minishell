@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:10:04 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 15:11:17 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 15:32:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ char	*ambiguous_redirect_error(char *arg)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
+	free(arg);
 	return ((char *)AMBIG_REDIR);
 }
