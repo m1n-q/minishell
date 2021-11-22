@@ -6,7 +6,7 @@
 /*   By: kyumlee <kyumlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 00:19:20 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 14:28:20 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:40:56 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	copy_single_quotes(char *arg, char **new_arg)
 	return (i);
 }
 
-int	copy_double_quotes(char *arg, char **new_arg, char *prev_arg)
+int	copy_double_quotes(char *arg, char **new_arg, char *prev_arg, char q)
 {
 	int		i;
 	int		j;
@@ -66,7 +66,7 @@ int	copy_double_quotes(char *arg, char **new_arg, char *prev_arg)
 		while (arg[i] != '$')
 			i++;
 		copy_till(arg, new_arg, i);
-		arg += copy_env_val(&arg[i], new_arg, prev_arg) + i;
+		arg += copy_env_val(&arg[i], new_arg, prev_arg, q) + i;
 	}
 	i = 0;
 	if (!count)
@@ -78,11 +78,11 @@ int	copy_double_quotes(char *arg, char **new_arg, char *prev_arg)
 	return (ret);
 }
 
-int	copy_quotes(char *arg, char **new_arg, char *prev_arg)
+int	copy_quotes(char *arg, char **new_arg, char *prev_arg, char q)
 {
 	if (*arg == '\'')
 		return (copy_single_quotes(arg, new_arg));
 	else if (*arg == '"')
-		return (copy_double_quotes(arg, new_arg, prev_arg));
+		return (copy_double_quotes(arg, new_arg, prev_arg, q));
 	return (0);
 }

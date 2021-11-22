@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:01:02 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 14:04:41 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:41:35 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ char	*copy_env(char *arg, char *prev_arg)
 		if (arg[i] != '$' && !is_q(arg[i]))
 			i += copy_non_env(&arg[i], &ret);
 		else if (arg[i] == '$')
-			i += copy_env_val(&arg[i], &ret, prev_arg);
+			i += copy_env_val(&arg[i], &ret, prev_arg, arg[i]);
 		else if (is_q(arg[i]))
-			i += copy_quotes(&arg[i], &ret, prev_arg);
+			i += copy_quotes(&arg[i], &ret, prev_arg, arg[i]);
 		if (ret == (char *)AMBIG_REDIR)
 			return (ret);
 	}

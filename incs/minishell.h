@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 14:30:46 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 14:41:41 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,10 +147,10 @@ char		**copy_arg(char *s, char **argv, int *i, int argc);
 
 /* copy_env */
 int			copy_non_env(char *arg, char **new_arg);
-int			copy_env_val(char *arg, char **new_arg, char *prev_arg);
+int			copy_env_val(char *arg, char **new_arg, char *prev_arg, char q);
 
 /* copy_q */
-int			copy_quotes(char *arg, char **new_arg, char *prev_arg);
+int			copy_quotes(char *arg, char **new_arg, char *prev_arg, char q);
 
 /* copy_utils */
 int			expand(char *s);
