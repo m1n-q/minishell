@@ -40,6 +40,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/str.c \
 		$(SRC_DIR)/parse/strs.c \
 		$(SRC_DIR)/parse/strs_utils.c \
+		$(SRC_DIR)/parse/quotes_trimmer.c \
 		$(SRC_DIR)/parse/token.c \
 		$(SRC_DIR)/parse/utils.c \
 		$(SRC_DIR)/utils/utils.c \
