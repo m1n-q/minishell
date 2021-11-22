@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 11:46:59 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 01:52:07 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/22 19:42:40 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	cnt_empty_q(char *s)
 	int		i;
 	int		len;
 	int		ret;
-	char	c;
 
 	i = 0;
 	len = 0;
@@ -49,11 +48,11 @@ int	cnt_empty_q(char *s)
 			i += skip_empty_q_in_delimiter(&s[i]) - 1;
 		else if (is_q(s[i]))
 		{
-			c = s[i];
-			while (s[++i] != c)
-				len++;
-			if (!len)
+			if (is_empty_q(&s[i]) && !ft_isspace(s[i + 2]))
+			{
+				i++;
 				ret++;
+			}
 		}
 		i++;
 	}
@@ -78,7 +77,7 @@ char	*rm_empty_q(char *s)
 	{
 		if (*s == '<' && *(s + 1) == '<')
 			s += skip_empty_q_in_delimiter(s);
-		if (is_empty_q(s) && ((*(s + 2) && !ft_isspace(*(s + 2))) || !*(s + 2)))
+		if (is_empty_q(s) && !ft_isspace(*(s + 2)))
 			s += 2;
 		else
 			ret[i++] = *s++;

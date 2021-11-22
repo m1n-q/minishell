@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 21:28:30 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 18:52:08 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 19:36:19 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ int	copy_other_signs(char *arg, char **new_arg)
 
 int	copy_others(char *arg, char **new_arg)
 {
-	if (!*arg)
+	if (!*arg || (*arg && !is_q(*arg)))
 	{
 		*new_arg = join_and_free(*new_arg, "$", 1);
 		return (1);
 	}
-	if (*arg == '?')
+	else if (*arg == '?')
 		return (copy_exit_code(new_arg));
-	else
+	else if (*arg && !is_q(*arg))
 		return (copy_other_signs(arg, new_arg));
-	return (0);
+	return (1);
 }
 
 int	copy_env_val(char *arg, char **new_arg, char *prev_arg, char q)

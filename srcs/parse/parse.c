@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:00:51 by kyumlee           #+#    #+#             */
-/*   Updated: 2021/11/22 18:18:06 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 19:43:03 by kyumlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ char	**parse(char *s)
 		return (syntax_error(Q_ERR, 0, EXECUTION_FAILURE));
 	else if (ret == AMBIG_REDIR)
 		return (ret);
-	// ret = rm_empty_var(ret);
 	last = get_argc(ret) - 1;
 	if (find_token_error(ret) != -1)
 		return (token_error(ret));
