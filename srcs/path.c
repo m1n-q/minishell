@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 19:10:16 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 18:24:31 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/22 18:30:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,16 @@ static char	*find_path(char *arg)
 /* NOCMD: only redir w/o command */
 int	set_path(t_cmd *cmd)
 {
-	int	i;
-
-	i = skip_empty_vars(*cmd, -1);
-	if (cmd->argv[i] == NULL)
+	if (cmd->argv[0] == NULL)
 		cmd->path = NOCMD;
-	else if (has_slash(cmd->argv[i]))
-		cmd->path = strdup_(cmd->argv[i]);
+	else if (has_slash(cmd->argv[0]))
+		cmd->path = strdup_(cmd->argv[0]);
 	else
 	{
-		if (is_builtin(cmd->argv[i]))
+		if (is_builtin(cmd->argv[0]))
 			cmd->path = strdup_("built-in");
 		else
-			cmd->path = find_path(cmd->argv[i]);
+			cmd->path = find_path(cmd->argv[0]);
 	}
 	return (0);
 }
