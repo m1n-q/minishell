@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:41:49 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/23 01:36:35 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:05:05 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	before_exit(void)
 {
 	static_stream(DESTROY);
+	__siglist(DESTROY, 0);
 	settty(RESTORE, 0);
 	free_till(get_argc(environ), environ);
 	free(environ);

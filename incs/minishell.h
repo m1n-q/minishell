@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 13:14:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/23 01:37:26 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:27:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define PROMPT "minishell> "
 # define TMP_HD_FILE "/tmp/minishell_heredoc_file"
-
+# define NOJOBCTL_MSG "\nminishell does not support job control.\nkill [%d]\n"
 # define CHILD 0
 # define BUILTIN -1
 # define PARENT_EXIT -2
@@ -72,7 +72,7 @@ void		reset_shell(void);
 int			shell_level(void);
 int			static_stream(int mode);
 void		environ_to_heap(void);
-int			init_shell(void);
+void		init_shell(void);
 void		dummy_lc(void);
 
 /* term */
@@ -204,6 +204,8 @@ int			is_pipe_redir(char c);
 char		*calloc_n_lcpy(char *s, size_t dstsize);
 char		*getenv_(char *s, int *i, int check);
 
+/* etc. */
+char		*quotes_trimmer(char *s);
 /* ************************ parse ************************ */
 
 /* heredoc */
@@ -239,6 +241,8 @@ void		sigstop_handler(int sig);
 void		sigcont_handler(int sig);
 void		sig_jobcontrol(int mode);
 void		set_sighandlers(void);
+char		*__siglist(int mode, int sig);
+void		put_signame(int sig);
 
 /* islegal */
 int			legal_variable_starter(char c);
@@ -255,13 +259,13 @@ int			get_assign_pos(const char *string);
 int			get_or_set_exitcode(int mode, int val);
 int			get_or_set_interactive(int mode, int val);
 
-/* not categoried yet */
+/* etc. */
+void		builtin_usage(char *command, char *usage);
+void		nojobcontrol(t_exit *ext);
+void		before_exit(void);
+int			isoption(char *s, int optlen);
 void		sh_neednumarg(char *command, char *s);
 void		sh_invalidid(char *command, char *s);
 void		sh_invalidopt(char *command, char *opt);
 char		*sh_double_quote(char *string);
-void		builtin_usage(char *command, char *usage);
-int			isoption(char *s, int optlen);
-void		before_exit(void);
-char		*quotes_trimmer(char *s);
 #endif

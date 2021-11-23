@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 GNULIB_DIR = /usr/local/opt/readline/lib
 GNUINC_DIR = /usr/local/opt/readline/include
 LIBFT_DIR = Libft
@@ -24,6 +24,7 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/cmd.c \
 		$(SRC_DIR)/term.c \
 		$(SRC_DIR)/signal.c \
+		$(SRC_DIR)/siglist.c \
 		$(SRC_DIR)/variable.c \
 		$(SRC_DIR)/loop.c \
 		$(SRC_DIR)/parse/cont_pipe.c \
@@ -44,12 +45,12 @@ SRCS =  $(SRC_DIR)/main.c \
 		$(SRC_DIR)/parse/quotes_trimmer.c \
 		$(SRC_DIR)/parse/token.c \
 		$(SRC_DIR)/parse/utils.c \
-		$(SRC_DIR)/utils/utils.c \
 		$(SRC_DIR)/utils/qsort.c \
 		$(SRC_DIR)/utils/ft_strtoimax.c \
-		$(SRC_DIR)/utils/free.c \
 		$(SRC_DIR)/utils/mallocexit.c \
 		$(SRC_DIR)/utils/string.c \
+		$(SRC_DIR)/utils/free.c \
+		$(SRC_DIR)/utils/etc.c \
 		$(SRC_DIR)/builtin/islegal.c \
 		$(SRC_DIR)/builtin/builtin.c \
 		$(SRC_DIR)/builtin/builtin_common.c \

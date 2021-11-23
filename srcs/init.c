@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:18:57 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 22:27:47 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:23:14 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,23 @@ void	dummy_lc(void)
 		return ;
 }
 
-int	init_shell(void)
+void	init_shell(void)
 {
 	int	error;
 
 	error = init_terminal_data();
 	if (error)
-		return (puterr(error));
+	{
+		puterr(error);
+		exit(-1);
+	}
 	environ_to_heap();
 	shell_level();
+	__siglist(SET, 0);
 	dummy_lc();
 	set_sighandlers();
 	static_stream(DUPLCTE);
 	settty(SAVE, 0);
 	settty(OFF, ECHOCTL);
 	get_or_set_interactive(SET, ON);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/17 18:42:29 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:26:42 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	check_exit(t_exit ext)
 {
+	int	sig;
+
 	if (ext.pid == PARENT_EXIT)
 	{
 		if (ext.code == E2MANY)
@@ -27,13 +29,10 @@ void	check_exit(t_exit ext)
 		get_or_set_exitcode(SET, WEXITSTATUS(ext.status));
 	else if (WIFSIGNALED(ext.status))
 	{
-		if (WTERMSIG(ext.status) == SIGINT)
-			get_or_set_exitcode(SET, EX_SIGINT);
-		else if (WTERMSIG(ext.status) == SIGQUIT)
-		{
-			ft_putstr_fd("Quit: 3", STDERR_FILENO);
-			get_or_set_exitcode(SET, EX_SIGQUIT);
-		}
+		sig = WTERMSIG(ext.status);
+		get_or_set_exitcode(SET, 128 + sig);
+		if (sig != SIGINT)
+			put_signame(sig);
 		ft_putendl_fd("", static_stream(STDOUT));
 	}
 	else
@@ -93,12 +92,14 @@ t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 		if (i == len_cmd_table - 1)
 			last = ext;
 	}
-	ext.pid = waitpid(-1, &ext.status, 0);
+	ext.pid = waitpid(-1, &ext.status, WUNTRACED);
 	while (ext.pid > 0)
 	{
+		if (WIFSTOPPED(ext.status))
+			nojobcontrol(&ext);
 		if (ext.pid == last.pid)
 			last.status = ext.status;
-		ext.pid = waitpid(-1, &ext.status, 0);
+		ext.pid = waitpid(-1, &ext.status, WUNTRACED);
 	}
 	return (last);
 }

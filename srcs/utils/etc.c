@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   etc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:49:25 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/11 18:59:36 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:26:48 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,9 @@ void	exit_(int exitcode)
 	exit(exitcode);
 }
 
-char	*strlower_(char *str)
+void	nojobcontrol(t_exit *ext)
 {
-	char	*ret;
-	int		i;
-
-	ret = strdup_(str);
-	i = -1;
-	while (ret[++i])
-		ret[i] = ft_tolower(ret[i]);
-	return (ret);
+	printf(NOJOBCTL_MSG, ext->pid);
+	kill(ext->pid, SIGTERM);
+	waitpid(ext->pid, &(ext->status), 0);
 }

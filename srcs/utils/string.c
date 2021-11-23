@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:24:02 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/22 18:10:26 by kyumlee          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:25:36 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,17 @@ char	*dup_and_free(char *s)
 
 	ret = strdup_(s);
 	free(s);
+	return (ret);
+}
+
+char	*strlower_(char *str)
+{
+	char	*ret;
+	int		i;
+
+	ret = strdup_(str);
+	i = -1;
+	while (ret[++i])
+		ret[i] = ft_tolower(ret[i]);
 	return (ret);
 }
