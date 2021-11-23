@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 20:21:10 by mishin            #+#    #+#             */
-/*   Updated: 2021/11/23 15:26:42 by mishin           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:34:26 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	get_cmd_table(t_cmd **ptr_cmd_table, char **argv, int len_cmd_table)
 	return (0);
 }
 
-/* line 96: execve failed | forked built-in */
+/* line 91: execve failed | forked built-in */
 t_exit	run_table(t_cmd *cmd_table, int len_cmd_table)
 {
 	int		i;
